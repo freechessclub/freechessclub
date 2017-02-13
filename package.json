@@ -10,7 +10,6 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "ejs": "2.4.1",
     "express": "4.13.3"
   },
   "repository": {
@@ -18,9 +17,9 @@
     "url": "https://github.com/adk9/freechessclub"
   },
   "keywords": [
-    "node",
-    "heroku",
-    "express"
+    "chess",
+    "fics",
+    "freechessclub"
   ],
   "license": "MIT"
 }
