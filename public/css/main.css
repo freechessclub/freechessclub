@@ -54,13 +54,13 @@ p.paragraph {
 }
 .logo {
   font-family: 'Pacifico', serif;
-  font-size: 40px;
-  line-height: 40px;
+  font-size: 30px;
+  line-height: 30px;
   font-weight: 900;
 }
 @media (max-width: 420px) {
   .logo {
-    font-size: 32px;
+    font-size: 22px;
   }
 }
 .nav-link2,
