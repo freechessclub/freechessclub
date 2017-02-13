@@ -1,6 +1,6 @@
 {
   "name": "freechessclub",
-  "version": "0.1",
+  "version": "0.1.0",
   "description": "Free Chess Club: A modern web client for FICS.",
   "engines": {
     "node": "5.9.1"
