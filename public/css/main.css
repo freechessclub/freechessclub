@@ -57,7 +57,7 @@ p.paragraph {
   font-size: 40px;
   line-height: 30px;
   font-weight: 900;
-  color: Plum;
+  color: PaleGoldenRod;
 }
 @media (max-width: 420px) {
   .logo {
