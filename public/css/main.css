@@ -54,9 +54,10 @@ p.paragraph {
 }
 .logo {
   font-family: 'Pacifico', serif;
-  font-size: 40px;
+  font-size: 36px;
   line-height: 30px;
   font-weight: 900;
+  text-shadow: 0 0.032em 0 #b0b0b0, 0px 0.15em 0.11em rgba(0,0,0,0.15), 0px 0.25em 0.021em rgba(0,0,0,0.1), 0px 0.32em 0.32em rgba(0,0,0,0.1);
   color: PaleGoldenRod;
 }
 @media (max-width: 420px) {
