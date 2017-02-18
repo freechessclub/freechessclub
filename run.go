@@ -1,9 +1,10 @@
 package main
 
 import (
+	"os"
 	"time"
 	"github.com/Sirupsen/logrus"
-	"github.com/garyburd/redigo/redis"
+	"github.com/heroku/x/redis"
 )
 
 var (
@@ -12,7 +13,7 @@ var (
 	rw          redisWriter
 )
 
-func main() {
+func runRedis() {
 	redisURL := os.Getenv("REDIS_URL")
 	if redisURL == "" {
 		log.WithField("REDIS_URL", redisURL).Fatal("$REDIS_URL must be set")
