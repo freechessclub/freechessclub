@@ -27,10 +27,6 @@
 			"revisionTime": "2017-02-16T21:52:12Z"
 		},
 		{
-			"path": "github.com/heroku/x/redis",
-			"revision": ""
-		},
-		{
 			"checksumSHA1": "ynJSWoF6v+3zMnh9R0QmmG6iGV8=",
 			"path": "github.com/pkg/errors",
 			"revision": "248dadf4e9068a0b3e79f02ed0a610d935de5302",
