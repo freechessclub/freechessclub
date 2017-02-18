@@ -19,7 +19,7 @@ func main() {
 	}
 
 	http.Handle("/", http.FileServer(http.Dir("./public")))
-	http.Handle("/chat/", http.FileServer(http.Dir("./chat/public")))
+	http.Handle("/chat/", http.FileServer(http.Dir("./chat/")))
 	http.HandleFunc("/ws", handleWebsocket)
 	log.Println(http.ListenAndServe(":"+port, nil))
 }
