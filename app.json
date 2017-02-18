@@ -1,8 +1,12 @@
 {
   "name": "The Free Chess Club",
   "description": "The Free Chess Club: A modern web client for FICS.",
-  "repository": "https://github.com/adk9/freechessclub",
-  "logo": "",
   "keywords": ["chess", "fics", "freechessclub"],
-  "image": "heroku/nodejs"
+  "image": "heroku/go:latest",
+  "mount_dir": "src/github.com/adk9/freechessclub",
+  "website": "http://www.freechess.club",
+  "repository": "https://github.com/adk9/freechessclub",
+  "addons": [
+    "heroku-redis"
+  ]
 }
