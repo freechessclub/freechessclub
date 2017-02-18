@@ -17,8 +17,12 @@ func main() {
 		log.WithField("PORT", port).Fatal("$PORT must be set")
 	}
 
-	http.Handle("/", http.FileServer(http.Dir("./public")))
-	http.Handle("/chat/", http.FileServer(http.Dir("./chat/")))
+	runRedis()
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./public/" + r.URL.Path[1:])
+	})
+	http.HandleFunc("/chat/", handleChat)
 	http.HandleFunc("/ws", handleWebsocket)
 	log.Println(http.ListenAndServe(":"+port, nil))
 }

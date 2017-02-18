@@ -39,6 +39,11 @@ func validateMessage(data []byte) (message, error) {
 	return msg, nil
 }
 
+func handleChat(w http.ResponseWriter, r *http.Request) {
+	log.Printf("handling chat: %s\n", r.URL.Path)
+	http.ServeFile(w, r, "." + r.URL.Path)
+}
+
 // handleWebsocket connection.
 func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
