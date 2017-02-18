@@ -1,43 +1,48 @@
 {
 	"comment": "",
-	"ignore": "test",
+	"ignore": "test solaris",
 	"package": [
 		{
-			"checksumSHA1": "XFl7nlkh1EUa3RvYEsT8Q4O1Mvc=",
+			"checksumSHA1": "SdEcxwaW92m0H3pao3BPj2ZpvaU=",
+			"comment": "v0.8.7-55-gf7f79f7",
 			"path": "github.com/Sirupsen/logrus",
-			"revision": "7f4b1adc791766938c29457bed0703fb9134421a",
-			"revisionTime": "2017-02-15T16:43:24Z"
+			"revision": "f7f79f729e0fbe2fcc061db48a9ba0263f588252"
 		},
 		{
 			"checksumSHA1": "2UmMbNHc8FBr98mJFN1k8ISOIHk=",
 			"path": "github.com/garyburd/redigo/internal",
-			"revision": "0d253a66e6e1349f4581d6d2b300ee434ee2da9f",
-			"revisionTime": "2017-02-16T21:49:44Z"
+			"revision": "836b6e58b3358112c8291565d01c35b8764070d7"
 		},
 		{
-			"checksumSHA1": "81OSg/NapmTaRpSS+oYsPVE0b1Y=",
+			"checksumSHA1": "507OiSqTxfGCje7xDT5eq9CCaNQ=",
 			"path": "github.com/garyburd/redigo/redis",
-			"revision": "0d253a66e6e1349f4581d6d2b300ee434ee2da9f",
-			"revisionTime": "2017-02-16T21:49:44Z"
+			"revision": "b8dc90050f24c1a73a52f107f3f575be67b21b7c",
+			"revisionTime": "2016-05-25T16:57:06Z"
 		},
 		{
-			"checksumSHA1": "EMr5ZpqWL2bUYtJDbKwmcJe8G9c=",
+			"checksumSHA1": "klfNfdEPsrWYLps2qBkLgfJsNYI=",
 			"path": "github.com/gorilla/websocket",
-			"revision": "9acaa683f0aa83bd1b9dbec8d43b7d07a16216fa",
-			"revisionTime": "2017-02-16T21:52:12Z"
+			"revision": "a69d25be2fe2923a97c2af6849b2f52426f68fc0",
+			"revisionTime": "2016-08-02T13:32:03Z"
 		},
 		{
-			"checksumSHA1": "ynJSWoF6v+3zMnh9R0QmmG6iGV8=",
+			"checksumSHA1": "9ls9FVOrI6ixJi7BWkTCjRSNOMQ=",
+			"path": "github.com/heroku/x/redis",
+			"revision": "7ec1b023d6ef07ea214fa234ca9952ae01b9135a",
+			"revisionTime": "2016-08-18T00:10:40Z"
+		},
+		{
+			"checksumSHA1": "QoVjlQFru1ixgV8vh63T4/JAtLI=",
 			"path": "github.com/pkg/errors",
-			"revision": "248dadf4e9068a0b3e79f02ed0a610d935de5302",
-			"revisionTime": "2016-10-29T09:36:37Z"
+			"revision": "a22138067af1c4942683050411a841ade67fe1eb",
+			"revisionTime": "2016-08-08T05:55:40Z"
 		},
 		{
-			"checksumSHA1": "ruEvGIBt119UK7KTkoNaYnYhZuI=",
-			"path": "golang.org/x/sys/unix",
-			"revision": "075e574b89e4c2d22f2286a7e2b919519c6f3547",
-			"revisionTime": "2017-02-16T21:06:26Z"
+			"checksumSHA1": "zmC8/3V4ls53DJlNTKDZwPSC/dA=",
+			"path": "github.com/satori/go.uuid",
+			"revision": "0aa62d5ddceb50dbcb909d790b5345affd3669b6",
+			"revisionTime": "2016-07-13T18:03:06Z"
 		}
 	],
-	"rootPath": "github.com/freechessclub/go-freechessclub"
+	"rootPath": "github.com/heroku-examples/go-websocket-chat-demo"
 }
