@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/Sirupsen/logrus"
-	"github.com/heroku/x/redis"
+	"github.com/garyburd/redigo/redis"
 )
 
 var (
