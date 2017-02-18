@@ -1,13 +1,13 @@
 package main
 
 import (
+	"time"
 	"github.com/Sirupsen/logrus"
 	"github.com/garyburd/redigo/redis"
 )
 
 var (
 	waitTimeout = time.Minute * 10
-	log         = logrus.WithField("cmd", "go-freechessclub")
 	rr          redisReceiver
 	rw          redisWriter
 )
