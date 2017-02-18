@@ -9,7 +9,12 @@ import (
 
 var (
 	log         = logrus.WithField("cmd", "go-freechessclub")
+	rr          Receiver
 )
+
+func handlePlay(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "." + r.URL.Path)
+}
 
 func main() {
 	port := os.Getenv("PORT")
@@ -17,12 +22,13 @@ func main() {
 		log.WithField("PORT", port).Fatal("$PORT must be set")
 	}
 
-	runRedis()
+	rr = newReceiver()
+	go rr.run()
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "./public/" + r.URL.Path[1:])
 	})
-	http.HandleFunc("/chat/", handleChat)
+	http.HandleFunc("/play/", handlePlay)
 	http.HandleFunc("/ws", handleWebsocket)
 	log.Println(http.ListenAndServe(":"+port, nil))
 }

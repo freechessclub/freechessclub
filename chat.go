@@ -39,11 +39,6 @@ func validateMessage(data []byte) (message, error) {
 	return msg, nil
 }
 
-func handleChat(w http.ResponseWriter, r *http.Request) {
-	log.Printf("handling chat: %s\n", r.URL.Path)
-	http.ServeFile(w, r, "." + r.URL.Path)
-}
-
 // handleWebsocket connection.
 func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
@@ -79,7 +74,7 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 				l.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("Invalid Message")
 				break
 			}
-			rw.publish(data)
+			rr.publish(data)
 		default:
 			l.Warning("Unknown Message!")
 		}

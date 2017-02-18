@@ -6,7 +6,4 @@
   "mount_dir": "src/github.com/freechessclub/go-freechessclub",
   "website": "http://www.freechess.club",
   "repository": "https://github.com/freechessclub/go-freechessclub",
-  "addons": [
-    "heroku-redis"
-  ]
 }
