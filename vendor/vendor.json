@@ -9,18 +9,6 @@
 			"revisionTime": "2017-02-15T16:43:24Z"
 		},
 		{
-			"checksumSHA1": "2UmMbNHc8FBr98mJFN1k8ISOIHk=",
-			"path": "github.com/garyburd/redigo/internal",
-			"revision": "0d253a66e6e1349f4581d6d2b300ee434ee2da9f",
-			"revisionTime": "2017-02-16T21:49:44Z"
-		},
-		{
-			"checksumSHA1": "81OSg/NapmTaRpSS+oYsPVE0b1Y=",
-			"path": "github.com/garyburd/redigo/redis",
-			"revision": "0d253a66e6e1349f4581d6d2b300ee434ee2da9f",
-			"revisionTime": "2017-02-16T21:49:44Z"
-		},
-		{
 			"checksumSHA1": "EMr5ZpqWL2bUYtJDbKwmcJe8G9c=",
 			"path": "github.com/gorilla/websocket",
 			"revision": "9acaa683f0aa83bd1b9dbec8d43b7d07a16216fa",
