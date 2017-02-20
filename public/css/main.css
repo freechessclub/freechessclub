@@ -1,11 +1,11 @@
 /*neutral*/
 * {
-	font-family: 'karla', sans-serif;
+	font-family: 'Signika', sans-serif;
 }.footer,
 .header {
 	background: linear-gradient(to right bottom,#3b1f5d,#633c84,#a25fa7,#b672ba);
 	color: white;
-}@import url('https://fonts.googleapis.com/css?family=Karla:400,700');
+}
 *,
 *:before,
 *:after {
@@ -55,9 +55,10 @@ p.paragraph {
 .logo {
   font-family: 'Pacifico', serif;
   font-size: 36px;
-  line-height: 30px;
+  line-height: 60px;
   font-weight: 900;
   text-shadow: 0 0.032em 0 #b0b0b0, 0px 0.15em 0.11em rgba(0,0,0,0.15), 0px 0.25em 0.021em rgba(0,0,0,0.1), 0px 0.32em 0.32em rgba(0,0,0,0.1);
+	text-decoration: none;
   color: PaleGoldenRod;
 }
 @media (max-width: 420px) {

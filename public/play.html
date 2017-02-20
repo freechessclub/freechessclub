@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>The Free Chess Club</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link href="../css/chessboard-0.3.0.min.css" rel="stylesheet" media="screen">
+  <link href="../css/main.css" rel="stylesheet" media="screen">
+  <link href="../css/application.css" rel="stylesheet" media="screen">
+  <link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Pacifico&text=The%20Free%20Chess%20Club">
+</head>
+<body>
+  <header class="header">
+    <div class="container-lrg">
+      <div class="col-12 spread">
+        <div>
+          <a class="logo" href="/">
+            The Free Chess Club
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="container-lrg flex">
+    <div class="col-6 centervertical">
+      <div class="card">
+        <div class="card-block">
+          <div id="board" style="width: 450px"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-5 centervertical">
+      <div class="card">
+        <div class="card-header">
+          <div id="chat-status"></div>
+        </div>
+        <div class="card-block">
+          <div id="chat-text" style="height: 378px"></div>
+        </div>
+        <form id="input-form" class="form-inline">
+          <div class="input-group input-group-sm" style="width: 100%">
+            <span class="input-group-addon">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input id="input-command" class="form-check-input" type="checkbox" data-toggle="tooltip" data-placement="bottom" title="Commands can also be prefixed with a + (example: +showa)." aria-label="Console command">Command
+                </label>
+              </div>
+            </span>
+            <input id="input-text" type="text" class="form-control" placeholder="Press Enter to send message!">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container-sml">
+      <div class="col-12 text-center">
+        <div>
+          <a class="nav-link" href="/contact">
+            Contact
+          </a>
+          <a class="nav-link" href="http://www.freechess.org">
+            FICS
+          </a>
+          <a class="nav-link" href="/privacy">
+            Privacy
+          </a>
+        </div>
+        <br>
+        <div>
+          <span>
+            © 2017 The Free Chess Club.
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
+  <script type="text/javascript" src="../js/chessboard-0.3.0.min.js"></script>
+  <script type="text/javascript" src="../js/reconnecting-websocket.min.js"></script>
+  <script type="text/javascript" src="../js/application.js"></script>
+</body>
+</html>

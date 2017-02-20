@@ -8,27 +8,28 @@ import (
 )
 
 var (
-	log         = logrus.WithField("cmd", "go-freechessclub")
-	rr          Receiver
+	log = logrus.New()
 )
-
-func handlePlay(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "." + r.URL.Path)
-}
 
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
-		log.WithField("PORT", port).Fatal("$PORT must be set")
+		port = "8080"
+		log.Println("Using default port 8080")
 	}
 
-	rr = newReceiver()
-	go rr.run()
-
+	http.HandleFunc("/ws", handleWebsocket)
+	http.HandleFunc("/privacy", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./public/privacy.html")
+	})
+	http.HandleFunc("/contact", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./public/contact.html")
+	})
+	http.HandleFunc("/play", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./public/play.html")
+	})
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "./public/" + r.URL.Path[1:])
 	})
-	http.HandleFunc("/play/", handlePlay)
-	http.HandleFunc("/ws", handleWebsocket)
 	log.Println(http.ListenAndServe(":"+port, nil))
 }
