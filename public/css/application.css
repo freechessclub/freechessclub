@@ -1,4 +1,27 @@
 #chat-text {
   overflow: auto;
-  height: 500px;
+  height: 400px;
+  font-size: 14px;
+  font-weight: 100;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#chat-text strong {
+  font-weight: bold;
+  color: rgba(80, 80, 120, 0.5);
+}
+
+#chat-text strong.mine {
+  font-weight: bold;
+  color: rgba(30, 60, 180, 0.8);
+}
+
+.card-header a {
+  float: right;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#chat-toggle {
+  font-size: 20px;
 }
