@@ -21,7 +21,6 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/gorilla/websocket"
 	"github.com/ziutek/telnet"
 	"github.com/pkg/errors"
@@ -121,6 +120,7 @@ func Login(conn *telnet.Conn, username, password string) (string, error) {
 	}
 
 	// wait for the login prompt
+	conn.SetReadDeadline(time.Now().Add(10 * time.Second))
 	conn.ReadUntil(loginPrompt)
 	//fmt.Println(string(r[:]))
 	out, err := sendAndReadUntil(conn, username, prompt)
@@ -160,26 +160,13 @@ func (s *Session) ficsReader() {
 
 		username := s.username
 		msg := string(out[:])
-		re := regexp.MustCompile(`([a-zA-Z]+)(?:\(U\))?\(53\):(.*)(?:\(told [0-9]+ players in channel [0-9]+.*\))?`)
+		re := regexp.MustCompile(`([a-zA-Z]+)(?:\(.+\)+)?\(53\):(.*)(?:\(told [0-9]+ players in channel [0-9]+.*\))?`)
 		matches := re.FindSubmatch(out)
 		if matches != nil {
 			username = string(matches[1][:])
 			msg = string(matches[2][:])
 		}
-
-		m := &message{
-			Handle: username,
-			Text: msg,
-		}
-		bytes, _ := json.Marshal(m)
-		if err = s.ws.WriteMessage(websocket.TextMessage, bytes); err != nil {
-			log.WithFields(logrus.Fields{
-				"data": bytes,
-				"err":  err,
-				"conn": s.conn,
-				"ws":   s.ws,
-			}).Error("Error writting data to connection. Closing session.")
-		}
+		sendWebsocket(s.ws, username, msg)
 	}
 }
 
@@ -197,6 +184,8 @@ func newSession(ws *websocket.Conn) *Session {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	sendWebsocket(ws, username, "")
 
 	_, err = sendAndReadUntil(conn, "set interface fcc", ficsPrompt)
 	if err != nil {

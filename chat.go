@@ -15,12 +15,29 @@
 package main
 
 import (
+	"encoding/json"
 	"io"
 	"net/http"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/gorilla/websocket"
 )
+
+func sendWebsocket(ws *websocket.Conn, handle, msg string) error {
+	m := &message{
+		Handle: handle,
+		Text: msg,
+	}
+	bs, err := json.Marshal(m)
+	if err = ws.WriteMessage(websocket.TextMessage, bs); err != nil {
+		log.WithFields(logrus.Fields{
+			"data": bs,
+			"err":  err,
+			"ws":   ws,
+		}).Error("Error writting data to connection.")
+	}
+	return err
+}
 
 // handleWebsocket connection.
 func handleWebsocket(w http.ResponseWriter, r *http.Request) {
@@ -38,8 +55,6 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 	}
 
 	s := newSession(ws)
-	defer s.end()
-
 	for {
 		mt, data, err := ws.ReadMessage()
 		l := log.WithFields(logrus.Fields{"mt": mt, "data": data, "err": err})
@@ -49,6 +64,7 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 			} else {
 				l.Error("Error reading websocket message")
 			}
+			s.end()
 			break
 		}
 		switch mt {
