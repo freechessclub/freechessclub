@@ -21,6 +21,12 @@
 			"revisionTime": "2016-10-29T09:36:37Z"
 		},
 		{
+			"checksumSHA1": "HSzEA32rVv/GeWvRLRQXXGXTPTA=",
+			"path": "github.com/ziutek/telnet",
+			"revision": "49d9be70897fe0a7400a152121453075b2835866",
+			"revisionTime": "2015-04-27T11:54:47Z"
+		},
+		{
 			"checksumSHA1": "ruEvGIBt119UK7KTkoNaYnYhZuI=",
 			"path": "golang.org/x/sys/unix",
 			"revision": "075e574b89e4c2d22f2286a7e2b919519c6f3547",
