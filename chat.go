@@ -18,6 +18,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"time"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/gorilla/websocket"
@@ -53,6 +54,8 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, m, http.StatusBadRequest)
 		return
 	}
+	ws.SetReadDeadline(time.Now().Add(3600 * time.Second))
+	ws.SetWriteDeadline(time.Now().Add(60 * time.Second))
 
 	s := newSession(ws)
 	for {

@@ -38,7 +38,7 @@ chat.onmessage = function(message) {
 
 chat.onclose = function(){
   connected = false;
-  $("#chat-status").text("Disconnected.");
+  $("#chat-status").text("Disconnected");
   this.chat = new WebSocket(chat.url);
 };
 
