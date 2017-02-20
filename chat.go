@@ -27,7 +27,7 @@ import (
 func sendWebsocket(ws *websocket.Conn, handle, msg string) error {
 	m := &message{
 		Handle: handle,
-		Text: msg,
+		Text:   msg,
 	}
 	bs, err := json.Marshal(m)
 	if err = ws.WriteMessage(websocket.TextMessage, bs); err != nil {
@@ -38,6 +38,28 @@ func sendWebsocket(ws *websocket.Conn, handle, msg string) error {
 		}).Error("Error writting data to connection.")
 	}
 	return err
+}
+
+func keepAlive(ws *websocket.Conn, timeout time.Duration) {
+	lastResponse := time.Now()
+	ws.SetPongHandler(func(msg string) error {
+		lastResponse = time.Now()
+		return nil
+	})
+
+	go func() {
+		for {
+			err := ws.WriteMessage(websocket.PingMessage, []byte("keepalive"))
+			if err != nil {
+				return
+			}
+			time.Sleep(timeout / 2)
+			if time.Now().Sub(lastResponse) > timeout {
+				ws.Close()
+				return
+			}
+		}
+	}()
 }
 
 // handleWebsocket connection.
@@ -54,9 +76,8 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, m, http.StatusBadRequest)
 		return
 	}
-	ws.SetReadDeadline(time.Now().Add(3600 * time.Second))
-	ws.SetWriteDeadline(time.Now().Add(60 * time.Second))
 
+	keepAlive(ws, 50*time.Second)
 	s := newSession(ws)
 	for {
 		mt, data, err := ws.ReadMessage()

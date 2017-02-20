@@ -22,14 +22,14 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
-	"github.com/ziutek/telnet"
 	"github.com/pkg/errors"
+	"github.com/ziutek/telnet"
 )
 
 const (
-	loginPrompt = "login:"
+	loginPrompt    = "login:"
 	passwordPrompt = "password:"
-	ficsPrompt = "fics%"
+	ficsPrompt     = "fics%"
 )
 
 var (
@@ -42,12 +42,12 @@ var (
 // message sent to us by the javascript client
 type message struct {
 	Handle string `json:"handle"`
-	Text   string  `json:"text"`
+	Text   string `json:"text"`
 }
 
 type Session struct {
-	conn *telnet.Conn
-	ws   *websocket.Conn
+	conn     *telnet.Conn
+	ws       *websocket.Conn
 	username string
 }
 
@@ -81,12 +81,12 @@ func Connect(network, addr string, timeout, retries int) (*telnet.Conn, error) {
 		}
 		connected = true
 	}
-	if err != nil  || connected == false {
+	if err != nil || connected == false {
 		return nil, fmt.Errorf("error connecting to server %s: %v", addr, err)
 	}
 	log.Printf("Connected!")
 
-  conn.SetUnixWriteMode(true)
+	conn.SetUnixWriteMode(true)
 	conn.SetReadDeadline(time.Now().Add(ts))
 	conn.SetWriteDeadline(time.Now().Add(ts))
 	return conn, nil
@@ -112,7 +112,7 @@ func sendAndReadUntil(conn *telnet.Conn, cmd string, delims ...string) ([]byte, 
 func Login(conn *telnet.Conn, username, password string) (string, error) {
 	var prompt string
 	// guests have no passwords
-	if (username != "guest") {
+	if username != "guest" {
 		prompt = passwordPrompt
 	} else {
 		prompt = "Press return to enter the server as"
@@ -198,8 +198,8 @@ func newSession(ws *websocket.Conn) *Session {
 	}
 
 	s := &Session{
-		conn: conn,
-		ws: ws,
+		conn:     conn,
+		ws:       ws,
 		username: username,
 	}
 
@@ -212,4 +212,3 @@ func (s *Session) end() {
 	send(s.conn, "exit")
 	s.conn.Close()
 }
-

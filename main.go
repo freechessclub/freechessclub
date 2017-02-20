@@ -29,7 +29,7 @@ func main() {
 		http.ServeFile(w, r, "./public/play.html")
 	})
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./public/" + r.URL.Path[1:])
+		http.ServeFile(w, r, "./public/"+r.URL.Path[1:])
 	})
 	log.Println(http.ListenAndServe(":"+port, nil))
 }
