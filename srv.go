@@ -122,7 +122,6 @@ func Login(conn *telnet.Conn, username, password string) (string, error) {
 	// wait for the login prompt
 	conn.SetReadDeadline(time.Now().Add(10 * time.Second))
 	conn.ReadUntil(loginPrompt)
-	//fmt.Println(string(r[:]))
 	out, err := sendAndReadUntil(conn, username, prompt)
 	if err != nil {
 		return "", fmt.Errorf("error creating new login session for %s: %v", username, err)
@@ -157,14 +156,20 @@ func (s *Session) ficsReader() {
 		}
 
 		out = bytes.TrimSuffix(out, []byte(ficsPrompt))
+		out = bytes.Replace(out, []byte("\x00"), []byte{}, -1)
+		out = bytes.Replace(out, []byte("\\   "), []byte{}, -1)
+		out = bytes.Replace(out, []byte("\r"), []byte{}, -1)
+		out = bytes.Replace(out, []byte("\n"), []byte{}, -1)
 
-		username := s.username
-		msg := string(out[:])
-		re := regexp.MustCompile(`([a-zA-Z]+)(?:\(.+\)+)?\(53\):(.*)(?:\(told [0-9]+ players in channel [0-9]+.*\))?`)
+		var username, msg string
+		re := regexp.MustCompile(`([a-zA-Z]+)(?:\([\*A-Z]+\))*\([0-9]+\):(.*)(?:\(told [0-9]+ players in channel [0-9]+.*\))?`)
 		matches := re.FindSubmatch(out)
 		if matches != nil {
 			username = string(matches[1][:])
 			msg = string(matches[2][:])
+		} else {
+			username = s.username
+			msg = string(out[:])
 		}
 		sendWebsocket(s.ws, username, msg)
 	}
