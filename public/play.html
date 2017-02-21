@@ -24,43 +24,45 @@
     </div>
   </header>
   <div class="feature3">
-    <div class="container-lrg flex">
-      <div class="col-6 centervertical">
-        <div class="card">
-          <div class="card-header">
-            <div id="opponent-time"></div>
-          </div>
-          <div class="card-block">
-            <div id="board" style="width: 450px"></div>
-          </div>
-          <div class="card-footer">
-            <div id="player-time"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-5 centervertical">
-        <div class="card">
-          <div class="card-header" id="cardHeader">
-            <a id="chat-toggle" data-toggle="collapse" href="#collapse-chat" aria-expanded="true" aria-controls="collapse-chat">&ndash;</a>
-            <div id="chat-status"></div>
-          </div>
-          <div id="collapse-chat" class="collapse show" aria-labelledby="cardHeader">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <div id="opponent-time"></div>
+            </div>
             <div class="card-block">
-              <div id="chat-text"></div>
+              <div id="board"></div>
             </div>
             <div class="card-footer">
-              <form id="input-form" class="form-inline">
-                <div class="input-group input-group-sm" style="width: 100%">
-                  <span class="input-group-addon">
-                    <div class="form-check">
-                      <label class="form-check-label" data-toggle="tooltip" data-placement="bottom" title="Commands can also be prefixed with a @ (eg: @showa)">
-                        <input id="input-command" class="form-check-input" type="checkbox" aria-label="Console command">Command
-                      </label>
-                    </div>
-                  </span>
-                  <input id="input-text" type="text" class="form-control" placeholder="Press Enter to send message!" autocomplete="off">
-                </div>
-              </form>
+              <div id="player-time"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header" id="cardHeader">
+              <a id="chat-toggle" data-toggle="collapse" href="#collapse-chat" aria-expanded="true" aria-controls="collapse-chat">&ndash;</a>
+              <div id="chat-status"></div>
+            </div>
+            <div id="collapse-chat" class="collapse show" aria-labelledby="cardHeader">
+              <div class="card-block">
+                <div id="chat-text"></div>
+              </div>
+              <div class="card-footer">
+                <form id="input-form" class="form-inline">
+                  <div class="input-group input-group-sm" style="width: 100%">
+                    <span class="input-group-addon">
+                      <div class="form-check">
+                        <label class="form-check-label" data-toggle="tooltip" data-placement="bottom" title="Commands can also be prefixed with a @ (eg: @showa)">
+                          <input id="input-command" class="form-check-input" type="checkbox" aria-label="Console command">Command
+                        </label>
+                      </div>
+                    </span>
+                    <input id="input-text" type="text" class="form-control" placeholder="Press Enter to send message!" autocomplete="off">
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>

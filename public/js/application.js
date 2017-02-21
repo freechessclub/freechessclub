@@ -65,4 +65,10 @@ $("#input-form").on("submit", function(event) {
 $(document).ready(function() {
   connected = false;
   $("#chat-status").text("Connecting...");
+  $("#chat-text").height($("#board").height()-55);
+});
+
+$(window).resize(function() {
+  board.resize();
+  $("#chat-text").height($("#board").height()-55);
 });

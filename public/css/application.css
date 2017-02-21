@@ -1,9 +1,15 @@
 #chat-text {
+  width:100%;
+  height:auto;
   overflow: auto;
-  height: 400px;
   font-size: 14px;
   font-weight: 100;
   color: rgba(0, 0, 0, 0.5);
+}
+
+#board {
+  width:100%;
+  height:auto;
 }
 
 #chat-text strong {
