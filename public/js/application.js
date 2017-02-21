@@ -45,11 +45,18 @@ chat.onclose = function(){
 $("#input-form").on("submit", function(event) {
   event.preventDefault();
   var text;
-  if (!$("#input-command").is(':checked') &&
-  $("#input-text").val().charAt(0) !== "@") {
-    text = "t 53 " + $("#input-text").val()
+  if (!$("#input-command").is(':checked')) {
+    if ($("#input-text").val().charAt(0) != "@") {
+      text = "t 53 " + $("#input-text").val()
+    } else {
+      text = $("#input-text").val().substr(1);
+    }
   } else {
-    text = $("#input-text").val().substr(1);
+    if ($("#input-text").val().charAt(0) != "@") {
+      text = $("#input-text").val();
+    } else {
+      text = $("#input-text").val().substr(1);
+    }
   }
   chat.send(JSON.stringify({ handle: "", text: text }));
   $("#input-text").val("");
