@@ -80,6 +80,7 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 	keepAlive(ws, 50*time.Second)
 	s := newSession(ws)
 	for {
+		ws.SetReadLimit(2048)
 		mt, data, err := ws.ReadMessage()
 		l := log.WithFields(logrus.Fields{"mt": mt, "data": data, "err": err})
 		if err != nil {
