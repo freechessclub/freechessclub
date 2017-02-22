@@ -149,7 +149,7 @@ func (s *Session) decodeMessage(msg []byte) (MessageType, string, string, error)
 
 	// channel tell
 	// MoosMutz(*)(SR)(TM)(53): then maybe behave better, to make my work easier ;-)
-	cre := regexp.MustCompile(`([a-zA-Z]+)(?:\([\*A-Z]+\))*\([0-9]+\):(.*)(?:\(told [0-9]+ players in channel [0-9]+.*\))?`)
+	cre := regexp.MustCompile(`([a-zA-Z]+)(?:\([\*A-Z]+\)*)\([0-9]+\): (.*)(?:\(told [0-9]+ players in channel [0-9]+ \".*\"\)?)`)
 
 	var username, text string
 	matches = cre.FindSubmatch(msg)
