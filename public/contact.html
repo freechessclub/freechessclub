@@ -26,15 +26,15 @@
       <div class="col-8">
         <div class="card">
           <div class="card-block">
-            <form action="/contact/submit" method="post">
+            <form id="contact-form" role="form" data-toggle="validator">
               <div class="form-group">
-                <label for="contact-email">Email address</label>
-                <input type="email" class="form-control" id="contact-email" aria-describedby="emailHelp" placeholder="Enter email">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" required="true">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
               </div>
               <div class="form-group">
-                <label for="contact-type">Message Type</label>
-                <select class="form-control" id="contact-type">
+                <label for="type">Message Type</label>
+                <select class="form-control" id="type" name="type">
                   <option>General</option>
                   <option>Complaint</option>
                   <option>Suggestion</option>
@@ -43,10 +43,11 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="contact-message">Message</label>
-                <textarea class="form-control" id="contact-message" rows="3"></textarea>
+                <label for="message">Message</label>
+                <textarea class="form-control" id="message" name="message" rows="3" required="true"></textarea>
               </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <div id="result" class="form-text"></div><br/>
+              <button type="submit" id="submit" class="btn btn-primary">Submit</button>
             </form>
           </div>
         </div>
@@ -76,8 +77,38 @@
       </div>
     </div>
   </div>
-  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script>
+  $(function() {
+    $("#contact-form :input").change(function() {
+      $("#result").html("");
+    });
+    $("#contact-form").submit(function(event) {
+      event.preventDefault();
+      var jsonData = {};
+      $.each($("#contact-form").serializeArray(), function() {
+        jsonData[this.name] = this.value;
+      });
+      var data = JSON.stringify(jsonData);
+      $.ajax({
+        method: "POST",
+        url: "/contact/submit",
+        contentType: 'text/json; charset=UTF-8',
+        data: data,
+        success: function(data) {
+          $("#result").html(data);
+          $("#result").css("color", "green");
+          $('#contact-form').get(0).reset()
+        },
+        error: function() {
+          $("#result").html("Failed to submit message. Try again!");
+          $("#result").css("color", "red");
+        }
+      });
+    });
+  });
+  </script>
 </body>
 </html>

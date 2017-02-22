@@ -22,20 +22,63 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/gorilla/websocket"
+	"github.com/pkg/errors"
 )
 
-func sendWebsocket(ws *websocket.Conn, handle, msg string) error {
-	m := &message{
-		Handle: handle,
-		Text:   msg,
+const (
+	ctlMsg   = iota // control message
+	chTell          // channel tell
+	pTell           // private tell
+	gameMove        // game move
+)
+
+type MessageType int
+
+// message sent to us by the javascript client
+type chTellMsg struct {
+	Type   MessageType `json:"type"`
+	Handle string      `json:"handle"`
+	Text   string      `json:"text"`
+}
+
+type gameMoveMsg struct {
+	Type     MessageType `json:"type"`
+	Handle   string      `json:"handle"`
+	Opponent string      `json:"opponent"`
+	FEN      string      `json:"fen"`
+	Text     string      `json:"text"`
+}
+
+// validateMessage so that we know it's valid JSON and contains a Handle and
+// Text
+func validateMessage(data []byte) (chTellMsg, error) {
+	var msg chTellMsg
+	if err := json.Unmarshal(data, &msg); err != nil {
+		return msg, errors.Wrap(err, "unmarshaling message")
 	}
-	bs, err := json.Marshal(m)
+
+	if msg.Text == "" {
+		return msg, errors.New("message has no text")
+	}
+	if msg.Type < ctlMsg || msg.Type > gameMove {
+		return msg, errors.New("invalid message type")
+	}
+	return msg, nil
+}
+
+func sendWebsocket(ws *websocket.Conn, mt MessageType, handle, text string) error {
+	msg := &chTellMsg{
+		Type:   mt,
+		Handle: handle,
+		Text:   text,
+	}
+	bs, err := json.Marshal(msg)
 	if err = ws.WriteMessage(websocket.TextMessage, bs); err != nil {
 		log.WithFields(logrus.Fields{
 			"data": bs,
 			"err":  err,
 			"ws":   ws,
-		}).Error("Error writting data to connection.")
+		}).Error("error writting data to connection.")
 	}
 	return err
 }
@@ -65,13 +108,13 @@ func keepAlive(ws *websocket.Conn, timeout time.Duration) {
 // handleWebsocket connection.
 func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		m := "Unable to upgrade to websockets"
+		m := "unable to upgrade to websockets"
 		log.WithField("err", err).Println(m)
 		http.Error(w, m, http.StatusBadRequest)
 		return
@@ -85,9 +128,9 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 		l := log.WithFields(logrus.Fields{"mt": mt, "data": data, "err": err})
 		if err != nil {
 			if err == io.EOF {
-				l.Info("Websocket closed!")
+				l.Info("websocket closed!")
 			} else {
-				l.Error("Error reading websocket message")
+				l.Error("error reading websocket message")
 			}
 			s.end()
 			break
@@ -96,16 +139,16 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 		case websocket.TextMessage:
 			msg, err := validateMessage(data)
 			if err != nil {
-				l.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("Invalid Message")
+				l.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("invalid message")
 				break
 			}
 			log.Printf("Sending text to server: %s", msg.Text)
 			err = s.send(msg.Text)
 			if err != nil {
-				l.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("Error sending message")
+				l.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("error sending message")
 			}
 		default:
-			l.Warning("Unknown Message!")
+			l.Warning("unknown message!")
 		}
 	}
 }

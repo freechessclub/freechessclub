@@ -16,13 +16,11 @@ package main
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"regexp"
 	"time"
 
 	"github.com/gorilla/websocket"
-	"github.com/pkg/errors"
 	"github.com/ziutek/telnet"
 )
 
@@ -39,31 +37,10 @@ var (
 	}
 )
 
-// message sent to us by the javascript client
-type message struct {
-	Handle string `json:"handle"`
-	Text   string `json:"text"`
-}
-
 type Session struct {
 	conn     *telnet.Conn
 	ws       *websocket.Conn
 	username string
-}
-
-// validateMessage so that we know it's valid JSON and contains a Handle and
-// Text
-func validateMessage(data []byte) (message, error) {
-	var msg message
-
-	if err := json.Unmarshal(data, &msg); err != nil {
-		return msg, errors.Wrap(err, "Unmarshaling message")
-	}
-
-	if msg.Text == "" {
-		return msg, errors.New("Message has no Text")
-	}
-	return msg, nil
 }
 
 func Connect(network, addr string, timeout, retries int) (*telnet.Conn, error) {
@@ -92,6 +69,15 @@ func Connect(network, addr string, timeout, retries int) (*telnet.Conn, error) {
 	return conn, nil
 }
 
+func sanitize(b []byte) []byte {
+	b = bytes.TrimSuffix(b, []byte(ficsPrompt))
+	b = bytes.Replace(b, []byte("\x00"), []byte{}, -1)
+	b = bytes.Replace(b, []byte("\\   "), []byte{}, -1)
+	b = bytes.Replace(b, []byte("\r"), []byte{}, -1)
+	b = bytes.Replace(b, []byte("\n"), []byte(" "), -1)
+	return b
+}
+
 func send(conn *telnet.Conn, cmd string) error {
 	conn.SetWriteDeadline(time.Now().Add(20 * time.Second))
 	buf := make([]byte, len(cmd)+1)
@@ -106,7 +92,8 @@ func sendAndReadUntil(conn *telnet.Conn, cmd string, delims ...string) ([]byte, 
 	if err != nil {
 		return nil, err
 	}
-	return conn.ReadUntil(delims...)
+	b, err := conn.ReadUntil(delims...)
+	return sanitize(b), err
 }
 
 func Login(conn *telnet.Conn, username, password string) (string, error) {
@@ -145,6 +132,39 @@ func Login(conn *telnet.Conn, username, password string) (string, error) {
 	return username, nil
 }
 
+func (s *Session) decodeMessage(msg []byte) (MessageType, string, string, error) {
+	var mt MessageType
+
+	// game move
+	// <12> rnbqkb-r pppppppp -----n-- -------- ----P--- -------- PPPPKPPP RNBQ-BNR B -1 0 0 1 1 0 7 Newton Einstein 1 2 12 39 39 119 122 2 K/e1-e2 (0:06) Ke2 0
+	gre := regexp.MustCompile(`<12>\s*([rnbqkpRNBQKP1-8]+\/){7}([rnbqkpRNBQKP1-8]+)\s([BW-])\s(\-?[0-7])\s([01])\s([01])\s([01])\s([01])\s([0-9]+)\s([0-9]+)\s([a-zA-Z]+)\s([a-zA-Z]+).*`)
+
+	matches := gre.FindSubmatch(msg)
+	if matches != nil && len(matches) > 12 {
+		fen := append(matches[1], matches[2][0])
+		mt = gameMove
+		u := string(matches[12][:])
+		return mt, u, string(fen[:]), nil
+	}
+
+	// channel tell
+	// MoosMutz(*)(SR)(TM)(53): then maybe behave better, to make my work easier ;-)
+	cre := regexp.MustCompile(`([a-zA-Z]+)(?:\([\*A-Z]+\))*\([0-9]+\):(.*)(?:\(told [0-9]+ players in channel [0-9]+.*\))?`)
+
+	var username, text string
+	matches = cre.FindSubmatch(msg)
+	if matches != nil && len(matches) > 2 {
+		username = string(matches[1][:])
+		text = string(matches[2][:])
+		mt = chTell
+	} else {
+		username = s.username
+		text = string(msg[:])
+		mt = chTell
+	}
+	return mt, username, text, nil
+}
+
 func (s *Session) ficsReader() {
 	for {
 		s.conn.SetReadDeadline(time.Now().Add(3600 * time.Second))
@@ -154,24 +174,12 @@ func (s *Session) ficsReader() {
 			log.Println("Closing session.")
 			return
 		}
-
-		out = bytes.TrimSuffix(out, []byte(ficsPrompt))
-		out = bytes.Replace(out, []byte("\x00"), []byte{}, -1)
-		out = bytes.Replace(out, []byte("\\   "), []byte{}, -1)
-		out = bytes.Replace(out, []byte("\r"), []byte{}, -1)
-		out = bytes.Replace(out, []byte("\n"), []byte{}, -1)
-
-		var username, msg string
-		re := regexp.MustCompile(`([a-zA-Z]+)(?:\([\*A-Z]+\))*\([0-9]+\):(.*)(?:\(told [0-9]+ players in channel [0-9]+.*\))?`)
-		matches := re.FindSubmatch(out)
-		if matches != nil {
-			username = string(matches[1][:])
-			msg = string(matches[2][:])
-		} else {
-			username = s.username
-			msg = string(out[:])
+		out = sanitize(out)
+		mt, username, text, err := s.decodeMessage(out)
+		if err != nil {
+			log.Println("error decoding message")
 		}
-		sendWebsocket(s.ws, username, msg)
+		sendWebsocket(s.ws, mt, username, text)
 	}
 }
 
@@ -190,14 +198,19 @@ func newSession(ws *websocket.Conn) *Session {
 		log.Fatal(err)
 	}
 
-	sendWebsocket(ws, username, "")
+	sendWebsocket(ws, ctlMsg, username, "")
 
-	_, err = sendAndReadUntil(conn, "set interface fcc", ficsPrompt)
+	_, err = sendAndReadUntil(conn, "set seek 0", ficsPrompt)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	_, err = sendAndReadUntil(conn, "set seek 0", ficsPrompt)
+	_, err = sendAndReadUntil(conn, "set style 12", ficsPrompt)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = sendAndReadUntil(conn, "set interface fcc", ficsPrompt)
 	if err != nil {
 		log.Fatal(err)
 	}
