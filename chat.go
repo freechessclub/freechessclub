@@ -120,8 +120,9 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	keepAlive(ws, 50*time.Second)
 	s := newSession(ws)
+	keepAlive(ws, 50*time.Second)
+
 	for {
 		ws.SetReadLimit(2048)
 		mt, data, err := ws.ReadMessage()
