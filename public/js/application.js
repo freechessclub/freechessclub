@@ -1,5 +1,4 @@
-var board = ChessBoard('board', 'start');
-var chat = new ReconnectingWebSocket(location.protocol.replace("http","ws") + "//" + location.host + "/ws");
+var chat;
 var connected = false;
 var handle = "";
 
@@ -65,6 +64,8 @@ $("#input-form").on("submit", function(event) {
 $(document).ready(function() {
   connected = false;
   $("#chat-status").text("Connecting...");
+  chat = new ReconnectingWebSocket(location.protocol.replace("http","ws") + "//" + location.host + "/ws");
+  var board = ChessBoard('board', 'start');
   $("#chat-text").height($("#board").height()-55);
 });
 
