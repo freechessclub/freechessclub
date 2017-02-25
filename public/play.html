@@ -45,7 +45,13 @@
             </div>
             <div id="collapse-chat" class="collapse show" aria-labelledby="cardHeader">
               <div class="card-block">
-                <div id="chat-text"></div>
+                <ul class="nav nav-tabs flex-column flex-sm-row" id="tabs">
+                  <a class="flex-sm-fill text-sm-center nav-link active" data-toggle="tab" href="#ch53-content" id="ch53" role="tab">Guest Chat</a>
+                </ul>
+                <br/>
+                <div class="tab-content">
+                  <div class="tab-pane active chat-text" id="ch53-content" role="tabpanel"></div>
+                </div>
               </div>
               <div class="card-footer">
                 <form id="input-form" class="form-inline">

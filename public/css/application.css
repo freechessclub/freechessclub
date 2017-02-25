@@ -1,4 +1,4 @@
-#chat-text {
+.chat-text {
   width:100%;
   height:auto;
   overflow: auto;
@@ -7,25 +7,37 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
-#board {
-  width:100%;
-  height:auto;
-}
-
-#chat-text strong {
+.chat-text strong {
   font-weight: bold;
   color: rgba(80, 80, 120, 0.5);
 }
 
-#chat-text strong.mine {
+.chat-text strong.mine {
   font-weight: bold;
   color: rgba(30, 60, 180, 0.8);
+}
+
+#board {
+  width:100%;
+  height:auto;
 }
 
 .card-header a {
   float: right;
   font-weight: bold;
   text-decoration: none;
+}
+
+.nav-tabs .nav-link .closeTab {
+  margin: -2px 0 0 -3px;
+  padding-right: 1px;
+  font-size: 20px;
+}
+
+.nav-tabs .nav-link {
+  font-size: 14px;
+  padding-top: 1px;
+  padding-bottom: 1px;
 }
 
 #chat-toggle {
