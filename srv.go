@@ -43,6 +43,11 @@ type Session struct {
 	username string
 }
 
+var chTellRE *regexp.Regexp
+var pTellRE *regexp.Regexp
+var gameMoveRE *regexp.Regexp
+var toldMsgRE *regexp.Regexp
+
 func Connect(network, addr string, timeout, retries int) (*telnet.Conn, error) {
 	ts := time.Duration(timeout) * time.Second
 
@@ -75,6 +80,7 @@ func sanitize(b []byte) []byte {
 	b = bytes.Replace(b, []byte("\\   "), []byte{}, -1)
 	b = bytes.Replace(b, []byte("\r"), []byte{}, -1)
 	b = bytes.Replace(b, []byte("\n"), []byte(" "), -1)
+	
 	return b
 }
 
@@ -132,37 +138,46 @@ func Login(conn *telnet.Conn, username, password string) (string, error) {
 	return username, nil
 }
 
-func (s *Session) decodeMessage(msg []byte) (MessageType, string, string, error) {
-	var mt MessageType
-
+func init() {
 	// game move
 	// <12> rnbqkb-r pppppppp -----n-- -------- ----P--- -------- PPPPKPPP RNBQ-BNR B -1 0 0 1 1 0 7 Newton Einstein 1 2 12 39 39 119 122 2 K/e1-e2 (0:06) Ke2 0
-	gre := regexp.MustCompile(`<12>\s*([rnbqkpRNBQKP1-8]+\/){7}([rnbqkpRNBQKP1-8]+)\s([BW-])\s(\-?[0-7])\s([01])\s([01])\s([01])\s([01])\s([0-9]+)\s([0-9]+)\s([a-zA-Z]+)\s([a-zA-Z]+).*`)
-
-	matches := gre.FindSubmatch(msg)
-	if matches != nil && len(matches) > 12 {
-		fen := append(matches[1], matches[2][0])
-		mt = gameMove
-		u := string(matches[12][:])
-		return mt, u, string(fen[:]), nil
-	}
+	gameMoveRE = regexp.MustCompile(`<12>\s*([rnbqkpRNBQKP1-8]+\/){7}([rnbqkpRNBQKP1-8]+)\s([BW-])\s(\-?[0-7])\s([01])\s([01])\s([01])\s([01])\s([0-9]+)\s([0-9]+)\s([a-zA-Z]+)\s([a-zA-Z]+).*`)
 
 	// channel tell
-	// MoosMutz(*)(SR)(TM)(53): then maybe behave better, to make my work easier ;-)
-	cre := regexp.MustCompile(`([a-zA-Z]+)(?:\([\*A-Z]+\)*)\([0-9]+\): (.*)(?:\(told [0-9]+ players in channel [0-9]+ \".*\"\)?)`)
+	chTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:\([\*A-Z]+\))*\(([0-9]+)\):\s+(.*)`)
 
-	var username, text string
-	matches = cre.FindSubmatch(msg)
-	if matches != nil && len(matches) > 2 {
-		username = string(matches[1][:])
-		text = string(matches[2][:])
-		mt = chTell
-	} else {
-		username = s.username
-		text = string(msg[:])
-		mt = chTell
+	// private tell
+	pTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:\([\*A-Z]+\)*) tells you:\s+(.*)`)
+
+	// told status
+	toldMsgRE = regexp.MustCompile(`\(told .+\)`)
+}
+
+func (s *Session) decodeMessage(msg []byte) (MessageType, string, string, error) {
+	matches := gameMoveRE.FindSubmatch(msg)
+	if matches != nil && len(matches) > 12 {
+		fen := append(matches[1], matches[2][0])
+		u := string(matches[12][:])
+		return gameMove, u, string(fen[:]), nil
 	}
-	return mt, username, text, nil
+
+	matches = chTellRE.FindSubmatch(msg)
+	if matches != nil && len(matches) > 3 {
+		username := string(matches[1][:])
+		t := toldMsgRE.ReplaceAll(matches[3][:], []byte{})
+		text := string(t[:])
+		return chTell, username, text, nil
+	}
+
+	matches = pTellRE.FindSubmatch(msg)
+	if matches != nil && len(matches) > 2 {
+		username := string(matches[1][:])
+		t := toldMsgRE.ReplaceAll(matches[2][:], []byte{})
+		text := string(t[:])
+		return pTell, username, text, nil
+	}
+
+	return unknown, s.username, string(msg[:]), nil
 }
 
 func (s *Session) ficsReader() {
