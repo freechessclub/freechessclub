@@ -30,6 +30,7 @@ const (
 	chTell          // channel tell
 	pTell           // private tell
 	gameMove        // game move
+  unknown         // game move
 )
 
 type MessageType int
