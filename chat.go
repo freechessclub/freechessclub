@@ -26,17 +26,29 @@ import (
 )
 
 const (
-	ctlMsg   = iota // control message
+	ctl      = iota // control message
 	chTell          // channel tell
 	pTell           // private tell
 	gameMove        // game move
-  unknown         // game move
+	unknown         // unknown message
 )
 
 type MessageType int
 
-// message sent to us by the javascript client
+type ctlMsg struct {
+	Type    MessageType `json:"type"`
+	Command int         `json:"command"`
+	Text    string      `json:"text"`
+}
+
 type chTellMsg struct {
+	Type    MessageType `json:"type"`
+	Channel string      `json:"channel"`
+	Handle  string      `json:"handle"`
+	Text    string      `json:"text"`
+}
+
+type pTellMsg struct {
 	Type   MessageType `json:"type"`
 	Handle string      `json:"handle"`
 	Text   string      `json:"text"`
@@ -50,6 +62,11 @@ type gameMoveMsg struct {
 	Text     string      `json:"text"`
 }
 
+type unknownMsg struct {
+	Type MessageType `json:"type"`
+	Text string      `json:"text"`
+}
+
 // validateMessage so that we know it's valid JSON and contains a Handle and
 // Text
 func validateMessage(data []byte) (chTellMsg, error) {
@@ -61,19 +78,14 @@ func validateMessage(data []byte) (chTellMsg, error) {
 	if msg.Text == "" {
 		return msg, errors.New("message has no text")
 	}
-	if msg.Type < ctlMsg || msg.Type > gameMove {
+	if msg.Type < ctl || msg.Type > unknown {
 		return msg, errors.New("invalid message type")
 	}
 	return msg, nil
 }
 
-func sendWebsocket(ws *websocket.Conn, mt MessageType, handle, text string) error {
-	msg := &chTellMsg{
-		Type:   mt,
-		Handle: handle,
-		Text:   text,
-	}
-	bs, err := json.Marshal(msg)
+func sendWebsocket(ws *websocket.Conn, bs []byte) error {
+	var err error
 	if err = ws.WriteMessage(websocket.TextMessage, bs); err != nil {
 		log.WithFields(logrus.Fields{
 			"data": bs,

@@ -1,8 +1,16 @@
 var chat = new ReconnectingWebSocket(location.protocol.replace("http","ws") + "//" + location.host + "/ws");
 var board = ChessBoard('board', 'start');
 var connected = false;
-var handle = "";
+var myHandle = "";
 var tabs;
+
+var msgType = {
+  ctl: 0,
+  chTell: 1,
+  pTell: 2,
+  gameMove: 3,
+  unknown: 4
+};
 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
@@ -18,7 +26,7 @@ $('#collapse-chat').on('show.bs.collapse', function () {
 jQuery(document.body).on('click', '.closeTab', function(event) {
   var tabContentId = $(this).parent().attr("href");
   $(this).parent().remove();
-  delete tabs[tabContentId.substr(1)+"-content"];
+  delete tabs["content-"+tabContentId.substr(1)];
   $('#tabs a:last').tab('show');
   $(tabContentId).remove();
 });
@@ -28,45 +36,65 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
   tab.css('color', 'black');
 });
 
+function handleMsg(tab, data) {
+  who = "";
+  var tabheader = $("#53");
+  if (data.hasOwnProperty('handle')) {
+    var textclass = "";
+    if (myHandle == data.handle) {
+      textclass = " class=\"mine\"";
+    }
+    who = "<strong"+textclass+">"+$('<span/>').text(data.handle).html()+"</strong>: ";
+    if (data.type == msgType.chTell) {
+      tabheader = $("#"+data.channel);
+    } else {
+      tabheader = $("#"+data.handle);
+    }
+  }
+  tab.append(who +
+    $('<span/>').text(data.text).html()+"</br>");
+
+  if (tabheader.hasClass('active')) {
+    tab.scrollTop(tab[0].scrollHeight);
+  } else {
+    tabheader.css('color', 'red');
+  }
+}
+
 chat.onmessage = function(message) {
   var data = JSON.parse(message.data);
-  if (connected == false && data.handle != "" && data.type == 0) {
-    connected = true;
-    handle = data.handle;
-    $("#chat-status").text("Connected as " + handle);
-    if (data.text == "") {
-      return;
-    }
-  }
-
-  var tab = tabs["ch53"];
-  if (data.type == 2) {
-    if (!tabs.hasOwnProperty(data.handle)) {
-      $('<a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" href="#'+data.handle+'-content" id="'+data.handle+'" role="tab">'+data.handle+'<span class="btn btn-default btn-sm closeTab">×</span></a>').appendTo('#tabs');
-      $('<div class="tab-pane chat-text" id="'+data.handle+'-content" role="tabpanel"></div>').appendTo('.tab-content');
-      $(".chat-text").height($("#board").height()-115);
-      tab = $("#"+data.handle+"-content");
-      tabs[data.handle] = tab;
-    } else {
-      tab = tabs[data.handle];
-    }
-  }
-
-  var textclass = "";
-  if (handle == data.handle) {
-    textclass = " class=\"mine\"";
-  }
-
-  if (data.type == 1 || data.type == 2 || data.type == 4) {
-    tab.append(
-      "<strong"+textclass+">"+$('<span/>').text(data.handle).html()+"</strong>: "+
-      $('<span/>').text(data.text).html()+"</br>");
-      tabheader = $("#"+data.handle);
-      if (tabheader.hasClass('active')) {
-        tab.scrollTop(tab[0].scrollHeight);
-      } else {
-        tabheader.css('color', 'red');
+  switch(data.type) {
+    case msgType.ctl:
+      if (connected == false && data.command == 1) {
+        connected = true;
+        myHandle = data.text;
+        $("#chat-status").text("Connected as " + myHandle);
       }
+      break;
+    case msgType.chTell:
+      var tab = tabs[data.channel];
+      handleMsg(tab, data)
+      break;
+    case msgType.pTell:
+      var tab;
+      if (!tabs.hasOwnProperty(data.handle)) {
+        $('<a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" href="#content-'+data.handle+'" id="'+data.handle+'" role="tab">'+data.handle+'<span class="btn btn-default btn-sm closeTab">×</span></a>').appendTo('#tabs');
+        $('<div class="tab-pane chat-text" id="content-'+data.handle+'" role="tabpanel"></div>').appendTo('.tab-content');
+        $(".chat-text").height($("#board").height()-115);
+        tab = $("#content-"+data.handle);
+        tabs[data.handle] = tab;
+      } else {
+        tab = tabs[data.handle];
+      }
+      handleMsg(tab, data);
+      break;
+    case msgType.gameMove:
+      break;
+    case msgType.unknown:
+    default:
+      var tab = tabs["53"];
+      handleMsg(tab, data);
+      break;
   }
 };
 
@@ -80,7 +108,8 @@ $("#input-form").on("submit", function(event) {
   var text;
   if (!$("#input-command").is(':checked')) {
     if ($("#input-text").val().charAt(0) != "@") {
-      text = "t 53 " + $("#input-text").val()
+      tab = $("ul#tabs a.active").attr("id")
+      text = "t " + tab + " " + $("#input-text").val()
     } else {
       text = $("#input-text").val().substr(1);
     }
@@ -99,7 +128,7 @@ $(document).ready(function() {
   connected = false;
   $("#chat-status").text("Connecting...");
   $(".chat-text").height($("#board").height()-115);
-  tabs = { ch53: $("#ch53-content") };
+  tabs = { "53": $("#content-53") };
 });
 
 $(window).resize(function() {
