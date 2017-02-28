@@ -16,6 +16,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"regexp"
 	"time"
@@ -80,7 +81,7 @@ func sanitize(b []byte) []byte {
 	b = bytes.Replace(b, []byte("\\   "), []byte{}, -1)
 	b = bytes.Replace(b, []byte("\r"), []byte{}, -1)
 	b = bytes.Replace(b, []byte("\n"), []byte(" "), -1)
-	
+
 	return b
 }
 
@@ -153,31 +154,47 @@ func init() {
 	toldMsgRE = regexp.MustCompile(`\(told .+\)`)
 }
 
-func (s *Session) decodeMessage(msg []byte) (MessageType, string, string, error) {
+func (s *Session) decodeMessage(msg []byte) ([]byte, error) {
 	matches := gameMoveRE.FindSubmatch(msg)
 	if matches != nil && len(matches) > 12 {
-		fen := append(matches[1], matches[2][0])
-		u := string(matches[12][:])
-		return gameMove, u, string(fen[:]), nil
+		m := &gameMoveMsg{
+			Type:     gameMove,
+			Handle:   string(matches[12][:]),
+			Opponent: string(matches[13][:]),
+			FEN:      string(append(matches[1], matches[2][0])),
+			Text:     "",
+		}
+		return json.Marshal(m)
 	}
 
 	matches = chTellRE.FindSubmatch(msg)
 	if matches != nil && len(matches) > 3 {
-		username := string(matches[1][:])
-		t := toldMsgRE.ReplaceAll(matches[3][:], []byte{})
-		text := string(t[:])
-		return chTell, username, text, nil
+		text := toldMsgRE.ReplaceAll(matches[3][:], []byte{})
+		m := &chTellMsg{
+			Type:    chTell,
+			Channel: string(matches[2][:]),
+			Handle:  string(matches[1][:]),
+			Text:    string(text[:]),
+		}
+		return json.Marshal(m)
 	}
 
 	matches = pTellRE.FindSubmatch(msg)
 	if matches != nil && len(matches) > 2 {
-		username := string(matches[1][:])
-		t := toldMsgRE.ReplaceAll(matches[2][:], []byte{})
-		text := string(t[:])
-		return pTell, username, text, nil
+		text := toldMsgRE.ReplaceAll(matches[2][:], []byte{})
+		m := &pTellMsg{
+			Type:   pTell,
+			Handle: string(matches[1][:]),
+			Text:   string(text[:]),
+		}
+		return json.Marshal(m)
 	}
 
-	return unknown, s.username, string(msg[:]), nil
+	m := &unknownMsg{
+		Type: unknown,
+		Text: string(msg[:]),
+	}
+	return json.Marshal(m)
 }
 
 func (s *Session) ficsReader() {
@@ -190,11 +207,11 @@ func (s *Session) ficsReader() {
 			return
 		}
 		out = sanitize(out)
-		mt, username, text, err := s.decodeMessage(out)
+		bs, err := s.decodeMessage(out)
 		if err != nil {
 			log.Println("error decoding message")
 		}
-		sendWebsocket(s.ws, mt, username, text)
+		sendWebsocket(s.ws, bs)
 	}
 }
 
@@ -213,7 +230,13 @@ func newSession(ws *websocket.Conn) *Session {
 		log.Fatal(err)
 	}
 
-	sendWebsocket(ws, ctlMsg, username, "")
+	msg := &ctlMsg{
+		Type:    ctl,
+		Command: 1,
+		Text:    username,
+	}
+	bs, _ := json.Marshal(msg)
+	sendWebsocket(ws, bs)
 
 	_, err = sendAndReadUntil(conn, "set seek 0", ficsPrompt)
 	if err != nil {
