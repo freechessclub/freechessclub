@@ -38,7 +38,7 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
 
 function handleMsg(tab, data) {
   who = "";
-  var tabheader = $("#53");
+  var tabheader = $("#" + $("ul#tabs a.active").attr("id"));
   if (data.hasOwnProperty('handle')) {
     var textclass = "";
     if (myHandle == data.handle) {
@@ -92,8 +92,8 @@ chat.onmessage = function(message) {
       break;
     case msgType.unknown:
     default:
-      var tab = tabs["53"];
-      handleMsg(tab, data);
+      var tab = $("ul#tabs a.active").attr("id");
+      handleMsg(tabs[tab], data);
       break;
   }
 };
@@ -105,11 +105,13 @@ chat.onclose = function(){
 
 $("#input-form").on("submit", function(event) {
   event.preventDefault();
+  var tab = $("ul#tabs a.active").attr("id");
   var text;
   if (!$("#input-command").is(':checked')) {
     if ($("#input-text").val().charAt(0) != "@") {
-      tab = $("ul#tabs a.active").attr("id")
-      text = "t " + tab + " " + $("#input-text").val()
+      msg = $("#input-text").val();
+      text = "t " + tab + " " + msg;
+      handleMsg(tabs[tab], { type: msgType.chTell, channel: tab, handle: myHandle, text: msg });
     } else {
       text = $("#input-text").val().substr(1);
     }
@@ -120,7 +122,7 @@ $("#input-form").on("submit", function(event) {
       text = $("#input-text").val().substr(1);
     }
   }
-  chat.send(JSON.stringify({ handle: "", text: text }));
+  chat.send(JSON.stringify({ type: msgType.pTell, handle: myHandle, text: text }));
   $("#input-text").val("");
 });
 

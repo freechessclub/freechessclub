@@ -148,13 +148,17 @@ func init() {
 	chTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:\([\*A-Z]+\))*\(([0-9]+)\):\s+(.*)`)
 
 	// private tell
-	pTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:\([\*A-Z]+\)*) tells you:\s+(.*)`)
+	pTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:\([A-Z|\*]+\)*) tells you:\s+(.*)`)
 
 	// told status
-	toldMsgRE = regexp.MustCompile(`\(told .+\)`)
+	toldMsgRE = regexp.MustCompile(`\s*\(told .+\)\s*`)
 }
 
 func (s *Session) decodeMessage(msg []byte) ([]byte, error) {
+	msg = toldMsgRE.ReplaceAll(msg, []byte{})
+	if msg == nil {
+		return nil, nil
+	}
 	matches := gameMoveRE.FindSubmatch(msg)
 	if matches != nil && len(matches) > 12 {
 		m := &gameMoveMsg{
@@ -169,23 +173,21 @@ func (s *Session) decodeMessage(msg []byte) ([]byte, error) {
 
 	matches = chTellRE.FindSubmatch(msg)
 	if matches != nil && len(matches) > 3 {
-		text := toldMsgRE.ReplaceAll(matches[3][:], []byte{})
 		m := &chTellMsg{
 			Type:    chTell,
 			Channel: string(matches[2][:]),
 			Handle:  string(matches[1][:]),
-			Text:    string(text[:]),
+			Text:    string(matches[3][:]),
 		}
 		return json.Marshal(m)
 	}
 
 	matches = pTellRE.FindSubmatch(msg)
 	if matches != nil && len(matches) > 2 {
-		text := toldMsgRE.ReplaceAll(matches[2][:], []byte{})
 		m := &pTellMsg{
 			Type:   pTell,
 			Handle: string(matches[1][:]),
-			Text:   string(text[:]),
+			Text:   string(matches[2][:]),
 		}
 		return json.Marshal(m)
 	}
@@ -211,7 +213,9 @@ func (s *Session) ficsReader() {
 		if err != nil {
 			log.Println("error decoding message")
 		}
-		sendWebsocket(s.ws, bs)
+		if bs != nil {
+			sendWebsocket(s.ws, bs)
+		}
 	}
 }
 
@@ -239,6 +243,11 @@ func newSession(ws *websocket.Conn) *Session {
 	sendWebsocket(ws, bs)
 
 	_, err = sendAndReadUntil(conn, "set seek 0", ficsPrompt)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = sendAndReadUntil(conn, "set echo 0", ficsPrompt)
 	if err != nil {
 		log.Fatal(err)
 	}
