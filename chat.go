@@ -69,8 +69,8 @@ type unknownMsg struct {
 
 // validateMessage so that we know it's valid JSON and contains a Handle and
 // Text
-func validateMessage(data []byte) (chTellMsg, error) {
-	var msg chTellMsg
+func validateMessage(data []byte) (pTellMsg, error) {
+	var msg pTellMsg
 	if err := json.Unmarshal(data, &msg); err != nil {
 		return msg, errors.Wrap(err, "unmarshaling message")
 	}
