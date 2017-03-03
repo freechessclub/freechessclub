@@ -1,5 +1,10 @@
 var chat = new ReconnectingWebSocket(location.protocol.replace("http","ws") + "//" + location.host + "/ws");
-var board = ChessBoard('board', 'start');
+var cfg = {
+  position: 'start',
+  showNotation: true,
+  draggable: true,
+};
+var board = ChessBoard('board', cfg);
 var connected = false;
 var myHandle = "";
 var tabs;
