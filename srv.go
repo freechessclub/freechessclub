@@ -81,8 +81,7 @@ func sanitize(b []byte) []byte {
 	b = bytes.Replace(b, []byte("\\   "), []byte{}, -1)
 	b = bytes.Replace(b, []byte("\r"), []byte{}, -1)
 	b = bytes.Replace(b, []byte("\n"), []byte(" "), -1)
-
-	return b
+  return bytes.TrimSpace(b)
 }
 
 func send(conn *telnet.Conn, cmd string) error {
@@ -142,13 +141,13 @@ func Login(conn *telnet.Conn, username, password string) (string, error) {
 func init() {
 	// game move
 	// <12> rnbqkb-r pppppppp -----n-- -------- ----P--- -------- PPPPKPPP RNBQ-BNR B -1 0 0 1 1 0 7 Newton Einstein 1 2 12 39 39 119 122 2 K/e1-e2 (0:06) Ke2 0
-	gameMoveRE = regexp.MustCompile(`<12>\s*([rnbqkpRNBQKP1-8]+\/){7}([rnbqkpRNBQKP1-8]+)\s([BW-])\s(\-?[0-7])\s([01])\s([01])\s([01])\s([01])\s([0-9]+)\s([0-9]+)\s([a-zA-Z]+)\s([a-zA-Z]+).*`)
+	gameMoveRE = regexp.MustCompile(`<12>\s([rnbqkpRNBQKP1-8\-]{8})\s([rnbqkpRNBQKP1-8\-]{8})\s([rnbqkpRNBQKP1-8\-]{8})\s([rnbqkpRNBQKP1-8\-]{8})\s([rnbqkpRNBQKP1-8\-]{8})\s([rnbqkpRNBQKP1-8\-]{8})\s([rnbqkpRNBQKP1-8\-]{8})\s([rnbqkpRNBQKP1-8\-]{8})\s([BW\-])\s(\-?[0-7])\s([01])\s([01])\s([01])\s([01])\s([0-9]+)\s([0-9]+)\s([a-zA-Z]+)\s([a-zA-Z]+).*`)
 
 	// channel tell
-	chTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:\([\*A-Z]+\))*\(([0-9]+)\):\s+(.*)`)
+	chTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:\([A-Z\*]+\))*\(([0-9]+)\):\s+(.*)`)
 
 	// private tell
-	pTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:\([A-Z|\*]+\)*) tells you:\s+(.*)`)
+	pTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:\([A-Z\*]+\))* tells you:\s+(.*)`)
 
 	// told status
 	toldMsgRE = regexp.MustCompile(`\s*\(told .+\)\s*`)
