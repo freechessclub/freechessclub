@@ -56,10 +56,18 @@ type pTellMsg struct {
 
 type gameMoveMsg struct {
 	Type     MessageType `json:"type"`
+	FEN      string      `json:"fen"`
+	Turn     string      `json:"turn"`
+	Game     int         `json:"game"`
 	Handle   string      `json:"handle"`
 	Opponent string      `json:"opponent"`
-	FEN      string      `json:"fen"`
-	Text     string      `json:"text"`
+	Role     int         `json:"role"`
+	Time     int         `json:"time"`
+	Inc      int         `json:"inc"`
+	WTime    int         `json:"wtime"`
+	BTime    int         `json:"btime"`
+	LMoveMin int         `json:"lmovem"`
+	LMoveSec int         `json:"lmoves"`
 }
 
 type unknownMsg struct {
