@@ -19,6 +19,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"regexp"
+	"strconv"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -81,7 +82,7 @@ func sanitize(b []byte) []byte {
 	b = bytes.Replace(b, []byte("\\   "), []byte{}, -1)
 	b = bytes.Replace(b, []byte("\r"), []byte{}, -1)
 	b = bytes.Replace(b, []byte("\n"), []byte(" "), -1)
-  return bytes.TrimSpace(b)
+	return bytes.TrimSpace(b)
 }
 
 func send(conn *telnet.Conn, cmd string) error {
@@ -141,7 +142,7 @@ func Login(conn *telnet.Conn, username, password string) (string, error) {
 func init() {
 	// game move
 	// <12> rnbqkb-r pppppppp -----n-- -------- ----P--- -------- PPPPKPPP RNBQ-BNR B -1 0 0 1 1 0 7 Newton Einstein 1 2 12 39 39 119 122 2 K/e1-e2 (0:06) Ke2 0
-	gameMoveRE = regexp.MustCompile(`<12>\s([rnbqkpRNBQKP1-8\-]{8})\s([rnbqkpRNBQKP1-8\-]{8})\s([rnbqkpRNBQKP1-8\-]{8})\s([rnbqkpRNBQKP1-8\-]{8})\s([rnbqkpRNBQKP1-8\-]{8})\s([rnbqkpRNBQKP1-8\-]{8})\s([rnbqkpRNBQKP1-8\-]{8})\s([rnbqkpRNBQKP1-8\-]{8})\s([BW\-])\s(\-?[0-7])\s([01])\s([01])\s([01])\s([01])\s([0-9]+)\s([0-9]+)\s([a-zA-Z]+)\s([a-zA-Z]+).*`)
+	gameMoveRE = regexp.MustCompile(`<12>\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([BW\-])\s(?:\-?[0-7])\s(?:[01])\s(?:[01])\s(?:[01])\s(?:[01])\s(?:[0-9]+)\s([0-9]+)\s([a-zA-Z]+)\s([a-zA-Z]+)\s(\-?[0-3])\s([0-9]+)\s([0-9]+)\s(?:[0-9]+)\s(?:[0-9]+)\s([0-9]+)\s([0-9]+)\s(?:[0-9]+)\s(?:.+)\s\(([0-9]+)\:([0-9]+)\)\s(?:.+)\s(?:[01]).*`)
 
 	// channel tell
 	chTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:\([A-Z\*]+\))*\(([0-9]+)\):\s+(.*)`)
@@ -153,19 +154,60 @@ func init() {
 	toldMsgRE = regexp.MustCompile(`\s*\(told .+\)\s*`)
 }
 
+func style12ToFEN(b []byte) string {
+	str := string(b[:])
+	var fen string
+	count := 0
+	for i := 0; i < 8; i++ {
+		if str[i] == '-' {
+			count++
+			if i == 7 {
+				fen += strconv.Itoa(count)
+			}
+		} else {
+			if count > 0 {
+				fen += strconv.Itoa(count)
+				count = 0
+			}
+			fen += string(str[i])
+		}
+	}
+	return fen
+}
+
+func atoi(b []byte) int {
+	i, _ := strconv.Atoi(string(b))
+	return i
+}
+
 func (s *Session) decodeMessage(msg []byte) ([]byte, error) {
 	msg = toldMsgRE.ReplaceAll(msg, []byte{})
 	if msg == nil {
 		return nil, nil
 	}
 	matches := gameMoveRE.FindSubmatch(msg)
-	if matches != nil && len(matches) > 12 {
+	if matches != nil && len(matches) > 16 {
+		fen := ""
+		for i := 1; i < 8; i++ {
+			fen += style12ToFEN(matches[i][:])
+			fen += "/"
+		}
+		fen += style12ToFEN(matches[8][:])
+
 		m := &gameMoveMsg{
 			Type:     gameMove,
-			Handle:   string(matches[12][:]),
-			Opponent: string(matches[13][:]),
-			FEN:      string(append(matches[1], matches[2][0])),
-			Text:     "",
+			FEN:      fen,
+			Turn:     string(matches[9][:]),
+			Game:     atoi(matches[10][:]),
+			Handle:   string(matches[11][:]),
+			Opponent: string(matches[12][:]),
+			Role:     atoi(matches[13][:]),
+			Time:     atoi(matches[14][:]),
+			Inc:      atoi(matches[15][:]),
+			WTime:    atoi(matches[16][:]),
+			BTime:    atoi(matches[17][:]),
+			LMoveMin: atoi(matches[18][:]),
+			LMoveSec: atoi(matches[19][:]),
 		}
 		return json.Marshal(m)
 	}
