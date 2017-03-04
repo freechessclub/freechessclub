@@ -40,11 +40,7 @@ var onDragStart = function(source, piece, position, orientation) {
   }
 
   // get list of possible moves for this square
-  validMoves = game.moves({
-    square: source,
-    verbose: true
-  });
-
+  validMoves = game.moves({square: source, verbose: true});
   if (validMoves.length === 0) return;
   highlightSquare(source);
   for (var i = 0; i < validMoves.length; i++) {
@@ -76,6 +72,8 @@ var onDrop = function(source, target) {
   unHighlightSquare();
   highlightSquare(source);
   highlightSquare(target);
+
+  chat.send(JSON.stringify({ type: msgType.pTell, handle: "", text: source+"-"+target }));
 };
 
 // update the board position after the piece snap
@@ -173,7 +171,10 @@ chat.onmessage = function(message) {
       handleChatMsg(tab, data);
       break;
     case msgType.gameMove:
-      board.position(data.fen, false);
+      if (data.role === 1) {
+        game.move(data.move);
+        board.position(data.fen, false);
+      }
       break;
     case msgType.unknown:
     default:
