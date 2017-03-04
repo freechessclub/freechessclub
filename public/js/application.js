@@ -2,7 +2,10 @@ var chat = new ReconnectingWebSocket(location.protocol.replace("http","ws") + "/
 var connected = false;
 var myHandle = "";
 
-var game = new Chess();
+var game;
+var inCheck = false;
+var inGame = false;
+var validMoves;
 
 var tabs;
 var msgType = {
@@ -10,10 +13,14 @@ var msgType = {
   chTell: 1,
   pTell: 2,
   gameMove: 3,
-  unknown: 4
+  gameStart: 4,
+  unknown: 5
 };
 
 var highlightSquare = function(square) {
+  if (square === undefined) {
+    return;
+  }
   var squareEl = $('#board .square-' + square);
   var background = '#e6ffdd';
   if (squareEl.hasClass('black-3c85d') === true) {
@@ -30,9 +37,17 @@ var unHighlightSquare = function(square) {
   }
 }
 
-var validMoves;
+var highlightLastMove = function(source, target) {
+  unHighlightSquare();
+  highlightSquare(source);
+  highlightSquare(target);
+}
 
 var onDragStart = function(source, piece, position, orientation) {
+  if (game === undefined || inGame === false) {
+    return false;
+  }
+
   if (game.game_over() === true ||
       (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
       (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
@@ -68,12 +83,8 @@ var onDrop = function(source, target) {
     return 'snapback';
   }
 
-  // valid move
-  unHighlightSquare();
-  highlightSquare(source);
-  highlightSquare(target);
-
   chat.send(JSON.stringify({ type: msgType.pTell, handle: "", text: source+"-"+target }));
+  highlightLastMove(source, target);
 };
 
 // update the board position after the piece snap
@@ -88,7 +99,7 @@ var cfg = {
   draggable: true,
   onDragStart: onDragStart,
   onDrop: onDrop,
-  onSnapEnd: onSnapEnd
+  onSnapEnd: onSnapEnd,
 };
 var board = ChessBoard('board', cfg);
 
@@ -171,10 +182,24 @@ chat.onmessage = function(message) {
       handleChatMsg(tab, data);
       break;
     case msgType.gameMove:
-      if (data.role === 1) {
-        game.move(data.move);
-        board.position(data.fen, false);
+      if (inGame === false) {
+        game = new Chess();
+        if (data.role === 1) {
+          board.orientation('white');
+        } else if (data.role === -1) {
+          board.orientation('black');
+        }
+        inGame = true;
       }
+
+      if (data.role === 1) {
+        board.position(data.fen);
+        move = game.move(data.move);
+        highlightLastMove(move.from, move.to);
+        inCheck = game.in_check();
+      }
+      break;
+    case msgType.gameStart:
       break;
     case msgType.unknown:
     default:
@@ -214,9 +239,11 @@ $("#input-form").on("submit", function(event) {
 
 $(document).ready(function() {
   connected = false;
+  inGame = false;
   $("#chat-status").text("Connecting...");
   $(".chat-text").height($("#board").height()-115);
   tabs = { "53": $("#content-53") };
+  board.start(false);
 });
 
 $(window).resize(function() {
