@@ -20,6 +20,7 @@ import (
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 	"net/http"
 	"net/http/httputil"
+	"os"
 )
 
 type Contact struct {
@@ -48,11 +49,11 @@ func handleContact(w http.ResponseWriter, r *http.Request) {
 	request.Body = mail.GetRequestBody(m)
 	response, err := sendgrid.API(request)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	} else {
-		fmt.Println(response.StatusCode)
-		fmt.Println(response.Body)
-		fmt.Println(response.Headers)
+		log.Println(response.StatusCode)
+		log.Println(response.Body)
+		log.Println(response.Headers)
 	}
 	w.Write([]byte("Message submitted successfully. Thank you!"))
 }
