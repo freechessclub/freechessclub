@@ -26,11 +26,12 @@ import (
 )
 
 const (
-	ctl      = iota // control message
-	chTell          // channel tell
-	pTell           // private tell
-	gameMove        // game move
-	unknown         // unknown message
+	ctl       = iota // control message
+	chTell           // channel tell
+	pTell            // private tell
+	gameMove         // game move
+	gameStart        // game start
+	unknown          // unknown message
 )
 
 type MessageType int
@@ -52,6 +53,13 @@ type pTellMsg struct {
 	Type   MessageType `json:"type"`
 	Handle string      `json:"handle"`
 	Text   string      `json:"text"`
+}
+
+type gameStartMsg struct {
+	Type      MessageType `json:"type"`
+	Id        int         `json:"id"`
+	PlayerOne string      `json:"playerone"`
+	PlayerTwo string      `json:"playertwo"`
 }
 
 type gameMoveMsg struct {
@@ -165,7 +173,7 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 				l.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("invalid message")
 				break
 			}
-			log.Printf("Sending text to server: %s", msg.Text)
+			// log.Printf("Sending text to server: %s", msg.Text)
 			err = s.send(msg.Text)
 			if err != nil {
 				l.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("error sending message")
