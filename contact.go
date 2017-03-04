@@ -16,6 +16,8 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/sendgrid/sendgrid-go"
+	"github.com/sendgrid/sendgrid-go/helpers/mail"
 	"net/http"
 	"net/http/httputil"
 )
@@ -36,6 +38,21 @@ func handleContact(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 	defer r.Body.Close()
-	log.Println(contact)
+	from := mail.NewEmail(contact.Email, contact.Email)
+	to := mail.NewEmail("The Free Chess Club", "feedback@freechess.club")
+	content := mail.NewContent("text/plain", contact.Msg)
+	m := mail.NewV3MailInit(from, contact.Type, to, content)
+
+	request := sendgrid.GetRequest(os.Getenv("SENDGRID_API_KEY"), "/v3/mail/send", "https://api.sendgrid.com")
+	request.Method = "POST"
+	request.Body = mail.GetRequestBody(m)
+	response, err := sendgrid.API(request)
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(response.StatusCode)
+		fmt.Println(response.Body)
+		fmt.Println(response.Headers)
+	}
 	w.Write([]byte("Message submitted successfully. Thank you!"))
 }

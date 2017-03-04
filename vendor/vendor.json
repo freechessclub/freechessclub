@@ -21,6 +21,24 @@
 			"revisionTime": "2016-10-29T09:36:37Z"
 		},
 		{
+			"checksumSHA1": "2maWQ1yZbk4iipKQmxpb447hxSA=",
+			"path": "github.com/sendgrid/rest",
+			"revision": "3ec51b4f1754e13e92409355851a0a82e9a06461",
+			"revisionTime": "2016-10-14T18:48:02Z"
+		},
+		{
+			"checksumSHA1": "028WGCCcsm0bEq6NhpF/bf37Ro0=",
+			"path": "github.com/sendgrid/sendgrid-go",
+			"revision": "d087004b4d47c2a378ade9eb3957571114b91493",
+			"revisionTime": "2016-11-08T23:34:08Z"
+		},
+		{
+			"checksumSHA1": "69178/wsna2SAuhDRhY6NIIfJg0=",
+			"path": "github.com/sendgrid/sendgrid-go/helpers/mail",
+			"revision": "d087004b4d47c2a378ade9eb3957571114b91493",
+			"revisionTime": "2016-11-08T23:34:08Z"
+		},
+		{
 			"checksumSHA1": "HSzEA32rVv/GeWvRLRQXXGXTPTA=",
 			"path": "github.com/ziutek/telnet",
 			"revision": "49d9be70897fe0a7400a152121453075b2835866",
