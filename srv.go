@@ -143,7 +143,7 @@ func Login(conn *telnet.Conn, username, password string) (string, error) {
 func init() {
 	// game move
 	// <12> rnbqkb-r pppppppp -----n-- -------- ----P--- -------- PPPPKPPP RNBQ-BNR B -1 0 0 1 1 0 7 Newton Einstein 1 2 12 39 39 119 122 2 K/e1-e2 (0:06) Ke2 0
-	gameMoveRE = regexp.MustCompile(`<12>\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([BW\-])\s(?:\-?[0-7])\s(?:[01])\s(?:[01])\s(?:[01])\s(?:[01])\s(?:[0-9]+)\s([0-9]+)\s([a-zA-Z]+)\s([a-zA-Z]+)\s(\-?[0-3])\s([0-9]+)\s([0-9]+)\s(?:[0-9]+)\s(?:[0-9]+)\s([0-9]+)\s([0-9]+)\s(?:[0-9]+)\s(?:\S+)\s\(([0-9]+)\:([0-9]+)\)\s(\S+)\s(?:[01]).*`)
+	gameMoveRE = regexp.MustCompile(`<12>\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([BW\-])\s(?:\-?[0-7])\s(?:[01])\s(?:[01])\s(?:[01])\s(?:[01])\s(?:[0-9]+)\s([0-9]+)\s([a-zA-Z]+)\s([a-zA-Z]+)\s(\-?[0-3])\s([0-9]+)\s([0-9]+)\s(?:[0-9]+)\s(?:[0-9]+)\s([0-9]+)\s([0-9]+)\s(?:[0-9]+)\s(?:\S+)\s\((?:[0-9]+)\:(?:[0-9]+)\)\s(\S+)\s(?:[01]).*`)
 
 	// {Game 117 (GuestMDPS vs. guestl) Creating unrated blitz match.}
 	gameStartRE = regexp.MustCompile(`\s*\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\sCreating.*\}`)
@@ -190,7 +190,7 @@ func (s *Session) decodeMessage(msg []byte) ([]byte, error) {
 		return nil, nil
 	}
 	matches := gameMoveRE.FindSubmatch(msg)
-	if matches != nil && len(matches) >= 20 {
+	if matches != nil && len(matches) >= 18 {
 		fen := ""
 		for i := 1; i < 8; i++ {
 			fen += style12ToFEN(matches[i][:])
@@ -210,9 +210,7 @@ func (s *Session) decodeMessage(msg []byte) ([]byte, error) {
 			Inc:      atoi(matches[15][:]),
 			WTime:    atoi(matches[16][:]),
 			BTime:    atoi(matches[17][:]),
-			LMoveMin: atoi(matches[18][:]),
-			LMoveSec: atoi(matches[19][:]),
-			Move:     string(matches[20][:]),
+			Move:     string(matches[18][:]),
 		}
 		return json.Marshal(m)
 	}
