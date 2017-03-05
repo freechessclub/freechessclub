@@ -1,13 +1,26 @@
-var chat = new ReconnectingWebSocket(location.protocol.replace("http","ws") + "//" + location.host + "/ws");
-var connected = false;
-var myHandle = "";
+var ws = new ReconnectingWebSocket(location.protocol.replace("http","ws") + "//" + location.host + "/ws");
 
-var game;
-var inCheck = false;
-var inGame = false;
-var validMoves;
+// A FICS session
+var session = {
+  connected: false,
+  handle: ""
+}
 
+// List of active tabs
 var tabs;
+
+// An online chess game
+var game = {
+  chess: null,
+  color: '',
+  bclock: null,
+  wclock: null,
+  btime: 0,
+  wtime: 0,
+  validMoves: []
+}
+
+// Type of messages we receive from the proxy
 var msgType = {
   ctl: 0,
   chTell: 1,
@@ -21,12 +34,24 @@ var highlightSquare = function(square) {
   if (square === undefined) {
     return;
   }
-  var squareEl = $('#board .square-' + square);
-  var background = '#e6ffdd';
-  if (squareEl.hasClass('black-3c85d') === true) {
-    background = '#278881';
+  var e = $('#board .square-' + square);
+  if (e.hasClass('black-3c85d') === true) {
+    e.css('background', '#278881');
+  } else {
+    e.css('background', '#e6ffdd');
   }
-  squareEl.css('background', background);
+};
+
+var highlightCheck = function(square) {
+  if (square === undefined) {
+    return;
+  }
+  var e = $('#board .square-' + square);
+  if (e.hasClass('black-3c85d') === true) {
+    e.css('background', '#aa8881');
+  } else {
+    e.css('background', '#ffdddd');
+  }
 };
 
 var unHighlightSquare = function(square) {
@@ -37,35 +62,65 @@ var unHighlightSquare = function(square) {
   }
 }
 
-var highlightLastMove = function(source, target) {
+var highlightMove = function(source, target) {
   unHighlightSquare();
   highlightSquare(source);
   highlightSquare(target);
 }
 
+function SToHHMMSS(s) {
+  var h = Math.floor(s / 3600);
+  var m = Math.floor(s % 3600 / 60);
+  var s = Math.floor(s % 3600 % 60);
+  return ((h > 0 ? (h >= 0 && h < 10 ? "0" : "") + h + ":" : "") + (m >= 0 && m < 10 ? "0" : "") + m + ":" + (s >= 0 && s < 10 ? "0" : "") + s);
+}
+
+var startBclock = function(clock) {
+  return setInterval(function() {
+    if (game.chess.turn() === 'w') {
+      return;
+    }
+    game.btime = game.btime - 1;
+    clock.text(SToHHMMSS(game.btime));
+  }, 1000);
+}
+
+var startWclock = function(clock) {
+  return setInterval(function() {
+    if (game.chess.turn() === 'b') {
+      return;
+    }
+    game.wtime = game.wtime - 1;
+    clock.text(SToHHMMSS(game.wtime));
+  }, 1000);
+}
+
 var onDragStart = function(source, piece, position, orientation) {
-  if (game === undefined || inGame === false) {
+  var chess = game.chess;
+  if (chess === null) {
     return false;
   }
 
-  if (game.game_over() === true ||
-      (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-      (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+  if (chess.game_over() === true ||
+      (chess.turn() !== chess.color) ||
+      (chess.turn() === 'w' && piece.search(/^b/) !== -1) ||
+      (chess.turn() === 'b' && piece.search(/^w/) !== -1)) {
     return false;
   }
 
   // get list of possible moves for this square
-  validMoves = game.moves({square: source, verbose: true});
-  if (validMoves.length === 0) return;
+  chess.validMoves = chess.moves({square: source, verbose: true});
+  if (chess.validMoves.length === 0) return;
   highlightSquare(source);
-  for (var i = 0; i < validMoves.length; i++) {
-    highlightSquare(validMoves[i].to);
+  for (var i = 0; i < chess.validMoves.length; i++) {
+    highlightSquare(chess.validMoves[i].to);
   }
 };
 
 var onDrop = function(source, target) {
+  var chess = game.chess;
   // see if the move is legal
-  var move = game.move({
+  var move = chess.move({
     from: source,
     to: target,
     promotion: 'q' // TODO: Allow non-queen promotes
@@ -74,34 +129,38 @@ var onDrop = function(source, target) {
   // illegal move
   if (move === null) {
     unHighlightSquare(source);
-    if (validMoves.length > 0) {
-      for (var i = 0; i < validMoves.length; i++) {
-        unHighlightSquare(validMoves[i].to);
+    if (chess.validMoves.length > 0) {
+      for (var i = 0; i < chess.validMoves.length; i++) {
+        unHighlightSquare(chess.validMoves[i].to);
       }
-      validMoves = [];
+      chess.validMoves = [];
     }
     return 'snapback';
   }
 
-  chat.send(JSON.stringify({ type: msgType.pTell, handle: "", text: source+"-"+target }));
-  highlightLastMove(source, target);
+  if (chess.in_check() === true) {
+  }
+
+  // TODO: send a game move message
+  ws.send(JSON.stringify({ type: msgType.pTell, handle: "", text: source+"-"+target }));
+  highlightMove(source, target);
 };
 
 // update the board position after the piece snap
 // for castling, en passant, pawn promotion
 var onSnapEnd = function() {
-  board.position(game.fen());
+  board.position(game.chess.fen());
 };
 
-var cfg = {
+// Chess board
+var board = ChessBoard('board', {
   position: 'start',
   showNotation: true,
   draggable: true,
   onDragStart: onDragStart,
   onDrop: onDrop,
-  onSnapEnd: onSnapEnd,
-};
-var board = ChessBoard('board', cfg);
+  onSnapEnd: onSnapEnd
+});
 
 // enable tooltips
 $(function () {
@@ -134,7 +193,7 @@ function handleChatMsg(tab, data) {
   var tabheader = $("#" + $("ul#tabs a.active").attr("id"));
   if (data.hasOwnProperty('handle')) {
     var textclass = "";
-    if (myHandle == data.handle) {
+    if (session.handle == data.handle) {
       textclass = " class=\"mine\"";
     }
     who = "<strong"+textclass+">"+$('<span/>').text(data.handle).html()+"</strong>: ";
@@ -154,14 +213,14 @@ function handleChatMsg(tab, data) {
   }
 }
 
-chat.onmessage = function(message) {
+ws.onmessage = function(message) {
   var data = JSON.parse(message.data);
   switch(data.type) {
     case msgType.ctl:
-      if (connected == false && data.command == 1) {
-        connected = true;
-        myHandle = data.text;
-        $("#chat-status").text("Connected as " + myHandle);
+      if (session.connected == false && data.command == 1) {
+        session.connected = true;
+        session.handle = data.text;
+        $("#chat-status").text("Connected as " + session.handle);
       }
       break;
     case msgType.chTell:
@@ -182,21 +241,36 @@ chat.onmessage = function(message) {
       handleChatMsg(tab, data);
       break;
     case msgType.gameMove:
-      if (inGame === false) {
-        game = new Chess();
+      game.btime = data.btime;
+      game.wtime = data.wtime;
+
+      if (game.chess === null) {
+        game.chess = new Chess();
         if (data.role === 1) {
+          game.color = 'w';
           board.orientation('white');
+          game.wclock = startWclock($("#player-time"));
+          game.bclock = startBclock($("#opponent-time"));
+          $("#player-name").text(data.wname);
+          $("#opponent-name").text(data.bname);
         } else if (data.role === -1) {
+          game.color = 'b';
           board.orientation('black');
+          game.bclock = startBclock($("#player-time"));
+          game.wclock = startWclock($("#opponent-time"));
+          $("#player-name").text(data.bname);
+          $("#opponent-name").text(data.wname);
         }
-        inGame = true;
       }
 
       if (data.role === 1) {
         board.position(data.fen);
-        move = game.move(data.move);
-        highlightLastMove(move.from, move.to);
-        inCheck = game.in_check();
+        if (data.move !== "none") {
+          move = game.chess.move(data.move);
+          if (move !== null) {
+            highlightMove(move.from, move.to);
+          }
+        }
       }
       break;
     case msgType.gameStart:
@@ -209,8 +283,9 @@ chat.onmessage = function(message) {
   }
 };
 
-chat.onclose = function(){
-  connected = false;
+ws.onclose = function(){
+  session.connected = false;
+  session.handle = "";
   $("#chat-status").text("Disconnected");
 };
 
@@ -222,7 +297,7 @@ $("#input-form").on("submit", function(event) {
     if ($("#input-text").val().charAt(0) != "@") {
       msg = $("#input-text").val();
       text = "t " + tab + " " + msg;
-      handleChatMsg(tabs[tab], { type: msgType.chTell, channel: tab, handle: myHandle, text: msg });
+      handleChatMsg(tabs[tab], { type: msgType.chTell, channel: tab, handle: session.handle, text: msg });
     } else {
       text = $("#input-text").val().substr(1);
     }
@@ -233,20 +308,21 @@ $("#input-form").on("submit", function(event) {
       text = $("#input-text").val().substr(1);
     }
   }
-  chat.send(JSON.stringify({ type: msgType.pTell, handle: myHandle, text: text }));
+  ws.send(JSON.stringify({ type: msgType.pTell, handle: session.handle, text: text }));
   $("#input-text").val("");
 });
 
 $(document).ready(function() {
-  connected = false;
-  inGame = false;
+  session.connected = false;
   $("#chat-status").text("Connecting...");
-  $(".chat-text").height($("#board").height()-115);
+  $("#opponent-time").text("00:00");
+  $("#player-time").text("00:00");
+  $(".chat-text").height($("#board").height()-64);
   tabs = { "53": $("#content-53") };
   board.start(false);
 });
 
 $(window).resize(function() {
   board.resize();
-  $(".chat-text").height($("#board").height()-115);
+  $(".chat-text").height($("#board").height()-64);
 });

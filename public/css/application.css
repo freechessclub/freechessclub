@@ -1,4 +1,5 @@
 .noselect {
+  cursor: default;
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -33,10 +34,34 @@
   height:auto;
 }
 
+.chat-status {
+  float: left;
+}
+
+.card-header {
+  line-height: 20px;
+}
+
+.card-footer {
+  line-height: 20px;
+}
+
 .card-header a {
   float: right;
   font-weight: bold;
   text-decoration: none;
+}
+
+.player-name {
+  float: left;
+  font-size: 22px;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.clock {
+  float: right;
+  font-size: 26px;
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .nav-tabs .nav-link .closeTab {
