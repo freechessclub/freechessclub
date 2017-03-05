@@ -63,18 +63,18 @@ type gameStartMsg struct {
 }
 
 type gameMoveMsg struct {
-	Type     MessageType `json:"type"`
-	FEN      string      `json:"fen"`
-	Turn     string      `json:"turn"`
-	Game     int         `json:"game"`
-	Handle   string      `json:"handle"`
-	Opponent string      `json:"opponent"`
-	Role     int         `json:"role"`
-	Time     int         `json:"time"`
-	Inc      int         `json:"inc"`
-	WTime    int         `json:"wtime"`
-	BTime    int         `json:"btime"`
-	Move     string      `json:"move"`
+	Type  MessageType `json:"type"`
+	FEN   string      `json:"fen"`
+	Turn  string      `json:"turn"`
+	Game  int         `json:"game"`
+	WName string      `json:"wname"`
+	BName string      `json:"bname"`
+	Role  int         `json:"role"`
+	Time  int         `json:"time"`
+	Inc   int         `json:"inc"`
+	WTime int         `json:"wtime"`
+	BTime int         `json:"btime"`
+	Move  string      `json:"move"`
 }
 
 type unknownMsg struct {

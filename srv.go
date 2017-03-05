@@ -199,18 +199,18 @@ func (s *Session) decodeMessage(msg []byte) ([]byte, error) {
 		fen += style12ToFEN(matches[8][:])
 
 		m := &gameMoveMsg{
-			Type:     gameMove,
-			FEN:      fen,
-			Turn:     string(matches[9][:]),
-			Game:     atoi(matches[10][:]),
-			Handle:   string(matches[11][:]),
-			Opponent: string(matches[12][:]),
-			Role:     atoi(matches[13][:]),
-			Time:     atoi(matches[14][:]),
-			Inc:      atoi(matches[15][:]),
-			WTime:    atoi(matches[16][:]),
-			BTime:    atoi(matches[17][:]),
-			Move:     string(matches[18][:]),
+			Type:  gameMove,
+			FEN:   fen,
+			Turn:  string(matches[9][:]),
+			Game:  atoi(matches[10][:]),
+			WName: string(matches[11][:]),
+			BName: string(matches[12][:]),
+			Role:  atoi(matches[13][:]),
+			Time:  atoi(matches[14][:]),
+			Inc:   atoi(matches[15][:]),
+			WTime: atoi(matches[16][:]),
+			BTime: atoi(matches[17][:]),
+			Move:  string(matches[18][:]),
 		}
 		return json.Marshal(m)
 	}
