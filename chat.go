@@ -74,8 +74,6 @@ type gameMoveMsg struct {
 	Inc      int         `json:"inc"`
 	WTime    int         `json:"wtime"`
 	BTime    int         `json:"btime"`
-	LMoveMin int         `json:"lmovem"`
-	LMoveSec int         `json:"lmoves"`
 	Move     string      `json:"move"`
 }
 
