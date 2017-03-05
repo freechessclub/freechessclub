@@ -23,25 +23,27 @@
   </header>
   <div class="feature3">
     <div class="container">
-      <div class="row">
-        <div class="col-md-6">
+      <div class="row justify-content-md-center">
+        <div class="col-5">
           <div class="card">
             <div class="card-header">
-              <div id="opponent-time"></div>
+              <div id="opponent-name"></div>
+              <div class="time noselect" id="opponent-time"></div>
             </div>
             <div class="card-block">
               <div id="board"></div>
             </div>
             <div class="card-footer">
-              <div id="player-time"></div>
+              <div id="player-name"></div>
+              <div class="time noselect" id="player-time"></div>
             </div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-5">
           <div class="card">
             <div class="card-header" id="cardHeader">
               <a id="chat-toggle" data-toggle="collapse" href="#collapse-chat" aria-expanded="true" aria-controls="collapse-chat">&ndash;</a>
-              <div id="chat-status"></div>
+              <div class="noselect" id="chat-status" style="cursor: default"></div>
             </div>
             <div id="collapse-chat" class="collapse show" aria-labelledby="cardHeader">
               <div class="card-block">
