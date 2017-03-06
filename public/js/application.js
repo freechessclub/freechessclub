@@ -68,10 +68,10 @@ var highlightMove = function(source, target) {
   highlightSquare(target);
 }
 
-function SToHHMMSS(s) {
-  var h = Math.floor(s / 3600);
-  var m = Math.floor(s % 3600 / 60);
-  var s = Math.floor(s % 3600 % 60);
+function SToHHMMSS(sec) {
+  var h = Math.floor(sec / 3600);
+  var m = Math.floor(sec % 3600 / 60);
+  var s = Math.floor(sec % 3600 % 60);
   return ((h > 0 ? (h >= 0 && h < 10 ? "0" : "") + h + ":" : "") + (m >= 0 && m < 10 ? "0" : "") + m + ":" + (s >= 0 && s < 10 ? "0" : "") + s);
 }
 
@@ -102,9 +102,7 @@ var onDragStart = function(source, piece, position, orientation) {
   }
 
   if (chess.game_over() === true ||
-      (chess.turn() !== chess.color) ||
-      (chess.turn() === 'w' && piece.search(/^b/) !== -1) ||
-      (chess.turn() === 'b' && piece.search(/^w/) !== -1)) {
+      (game.color !== piece.charAt(0))) {
     return false;
   }
 
@@ -188,7 +186,22 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
   tab.css('color', 'black');
 });
 
-function handleChatMsg(tab, data) {
+function handleChatMsg(from, data) {
+  var tab;
+  if (!tabs.hasOwnProperty(from)) {
+    var chName = from;
+    if (from === "4") {
+      chName = "Help";
+    }
+    $('<a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" href="#content-'+from+'" id="'+from+'" role="tab">'+chName+'<span class="btn btn-default btn-sm closeTab">×</span></a>').appendTo('#tabs');
+    $('<div class="tab-pane chat-text" id="content-'+from+'" role="tabpanel"></div>').appendTo('.tab-content');
+    $(".chat-text").height($("#board").height()-115);
+    tab = $("#content-"+from);
+    tabs[from] = tab;
+  } else {
+    tab = tabs[from];
+  }
+
   who = "";
   var tabheader = $("#" + $("ul#tabs a.active").attr("id"));
   if (data.hasOwnProperty('handle')) {
@@ -224,21 +237,10 @@ ws.onmessage = function(message) {
       }
       break;
     case msgType.chTell:
-      var tab = tabs[data.channel];
-      handleChatMsg(tab, data)
+      handleChatMsg(data.channel, data)
       break;
     case msgType.pTell:
-      var tab;
-      if (!tabs.hasOwnProperty(data.handle)) {
-        $('<a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" href="#content-'+data.handle+'" id="'+data.handle+'" role="tab">'+data.handle+'<span class="btn btn-default btn-sm closeTab">×</span></a>').appendTo('#tabs');
-        $('<div class="tab-pane chat-text" id="content-'+data.handle+'" role="tabpanel"></div>').appendTo('.tab-content');
-        $(".chat-text").height($("#board").height()-115);
-        tab = $("#content-"+data.handle);
-        tabs[data.handle] = tab;
-      } else {
-        tab = tabs[data.handle];
-      }
-      handleChatMsg(tab, data);
+      handleChatMsg(data.handle, data);
       break;
     case msgType.gameMove:
       game.btime = data.btime;
@@ -277,8 +279,7 @@ ws.onmessage = function(message) {
       break;
     case msgType.unknown:
     default:
-      var tab = $("ul#tabs a.active").attr("id");
-      handleChatMsg(tabs[tab], data);
+      handleChatMsg($("ul#tabs a.active").attr("id"), data);
       break;
   }
 };
@@ -291,13 +292,13 @@ ws.onclose = function(){
 
 $("#input-form").on("submit", function(event) {
   event.preventDefault();
-  var tab = $("ul#tabs a.active").attr("id");
   var text;
   if (!$("#input-command").is(':checked')) {
     if ($("#input-text").val().charAt(0) != "@") {
       msg = $("#input-text").val();
+      var tab = $("ul#tabs a.active").attr("id")
       text = "t " + tab + " " + msg;
-      handleChatMsg(tabs[tab], { type: msgType.chTell, channel: tab, handle: session.handle, text: msg });
+      handleChatMsg(tab, { type: msgType.chTell, channel: tab, handle: session.handle, text: msg });
     } else {
       text = $("#input-text").val().substr(1);
     }
