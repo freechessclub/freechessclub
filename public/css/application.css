@@ -29,6 +29,10 @@
   color: rgba(30, 60, 180, 0.8);
 }
 
+.chat-text a {
+  text-decoration: none;
+}
+
 #board {
   width:100%;
   height:auto;

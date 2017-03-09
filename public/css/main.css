@@ -72,12 +72,15 @@ a.logo {
 .nav-link2,
 .nav-link {
   text-decoration: none;
-  font-size: 18px;
+  font-size: 22px;
   line-height: 30px;
-  color: inherit;
+  color: #e6f5ff;
 }
 .nav-link:not(:first-of-type) {
   margin-left: 20px;
+}
+.nav-link:hover {
+	color: #a6ffcc;
 }
 .text-center {
   text-align: center;

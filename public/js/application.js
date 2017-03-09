@@ -227,7 +227,7 @@ function handleChatMsg(from, data) {
     }
   }
   tab.append(who +
-    $('<span/>').text(data.text).html()+"</br>");
+    anchorme($('<span/>').text(data.text).html(), {attributes:[{name:"target",value:"_blank"}]})+"</br>");
 
   if (tabheader.hasClass('active')) {
     tab.scrollTop(tab[0].scrollHeight);
