@@ -152,7 +152,7 @@ func init() {
 	chTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:\([A-Z\*]+\))*\(([0-9]+)\):\s+(.*)`)
 
 	// private tell
-	pTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:\([A-Z\*]+\))* tells you:\s+(.*)`)
+	pTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:[\(\[][A-Z0-9\*\-]+[\)\]])* (?:tells you|says|kibitzes):\s+(.*)`)
 
 	// told status
 	toldMsgRE = regexp.MustCompile(`\s*\(told .+\)\s*`)
