@@ -12,12 +12,12 @@ var tabs;
 // An online chess game
 var game = {
   chess: null,
+  premoves: [],
   color: '',
   bclock: null,
   wclock: null,
   btime: 0,
-  wtime: 0,
-  validMoves: []
+  wtime: 0
 }
 
 // Type of messages we receive from the proxy
@@ -68,6 +68,11 @@ var highlightMove = function(source, target) {
   highlightSquare(target);
 }
 
+var highlightPreMove = function(source, target) {
+  highlightCheck(source);
+  highlightCheck(target);
+}
+
 function SToHHMMSS(sec) {
   var h = Math.floor(sec / 3600);
   var m = Math.floor(sec % 3600 / 60);
@@ -80,7 +85,9 @@ var startBclock = function(clock) {
     if (game.chess.turn() === 'w') {
       return;
     }
-    game.btime = game.btime - 1;
+    if (game.btime > 0) {
+      game.btime = game.btime - 1;
+    }
     clock.text(SToHHMMSS(game.btime));
   }, 1000);
 }
@@ -90,7 +97,9 @@ var startWclock = function(clock) {
     if (game.chess.turn() === 'b') {
       return;
     }
-    game.wtime = game.wtime - 1;
+    if (game.wtime > 0) {
+      game.wtime = game.wtime - 1;
+    }
     clock.text(SToHHMMSS(game.wtime));
   }, 1000);
 }
@@ -102,20 +111,20 @@ var onDragStart = function(source, piece, position, orientation) {
   }
 
   if (chess.game_over() === true ||
-      (game.color !== piece.charAt(0))) {
+      (game.color !== piece.charAt(0)) ||
+      (game.premoves.length !== 0)) {
     return false;
   }
 
   // get list of possible moves for this square
-  chess.validMoves = chess.moves({square: source, verbose: true});
-  if (chess.validMoves.length === 0) return;
+  var moves = chess.moves({square: source, verbose: true});
   highlightSquare(source);
-  for (var i = 0; i < chess.validMoves.length; i++) {
-    highlightSquare(chess.validMoves[i].to);
+  for (var i = 0; i < moves.length; i++) {
+    highlightSquare(moves[i].to);
   }
 };
 
-var onDrop = function(source, target) {
+function movePlayer(source, target) {
   var chess = game.chess;
   // see if the move is legal
   var move = chess.move({
@@ -126,22 +135,23 @@ var onDrop = function(source, target) {
 
   // illegal move
   if (move === null) {
-    unHighlightSquare(source);
-    if (chess.validMoves.length > 0) {
-      for (var i = 0; i < chess.validMoves.length; i++) {
-        unHighlightSquare(chess.validMoves[i].to);
-      }
-      chess.validMoves = [];
-    }
+    unHighlightSquare();
     return 'snapback';
-  }
-
-  if (chess.in_check() === true) {
   }
 
   // TODO: send a game move message
   ws.send(JSON.stringify({ type: msgType.pTell, handle: "", text: source+"-"+target }));
   highlightMove(source, target);
+}
+
+var onDrop = function(source, target) {
+  // premove if it is not my turn yet
+  if (game.color !== game.chess.turn()) {
+    game.premoves.push({source: source, target: target});
+    return highlightPreMove(source, target);
+  } else {
+    return movePlayer(source, target);
+  }
 };
 
 // update the board position after the piece snap
@@ -266,14 +276,18 @@ ws.onmessage = function(message) {
       }
 
       if (data.role === 1) {
-        board.position(data.fen);
         if (data.move !== "none") {
-          move = game.chess.move(data.move);
+          var move = game.chess.move(data.move);
           if (move !== null) {
             highlightMove(move.from, move.to);
           }
+          if (game.premoves.length > 0) {
+            var move = game.premoves.shift();
+            movePlayer(move.source, move.target);
+          }
         }
       }
+      board.position(data.fen);
       break;
     case msgType.gameStart:
       break;
