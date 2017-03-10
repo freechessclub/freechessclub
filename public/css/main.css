@@ -74,13 +74,13 @@ a.logo {
   text-decoration: none;
   font-size: 22px;
   line-height: 30px;
-  color: #e6f5ff;
+  color: inherit;
 }
 .nav-link:not(:first-of-type) {
   margin-left: 20px;
 }
 .nav-link:hover {
-	color: #a6ffcc;
+	color: #DB7093;
 }
 .text-center {
   text-align: center;
