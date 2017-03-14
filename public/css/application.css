@@ -34,6 +34,7 @@
 }
 
 #board {
+  borderLeftWidth: 0;
   width:100%;
   height:auto;
 }
@@ -42,12 +43,8 @@
   float: left;
 }
 
-.card-header {
-  line-height: 20px;
-}
-
-.card-footer {
-  line-height: 20px;
+.status {
+  line-height: 22px;
 }
 
 .card-header a {
