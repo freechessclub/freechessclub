@@ -12,7 +12,7 @@ var tabs;
 // An online chess game
 var game = {
   chess: null,
-  premoves: [],
+  premove: null,
   color: '',
   bclock: null,
   wclock: null,
@@ -35,7 +35,7 @@ var highlightSquare = function(square) {
     return;
   }
   var e = $('#board .square-' + square);
-  if (e.hasClass('black-3c85d') === true) {
+  if (e.hasClass('black-3c85d') == true) {
     e.css('background', '#278881');
   } else {
     e.css('background', '#e6ffdd');
@@ -47,7 +47,7 @@ var highlightCheck = function(square) {
     return;
   }
   var e = $('#board .square-' + square);
-  if (e.hasClass('black-3c85d') === true) {
+  if (e.hasClass('black-3c85d') == true) {
     e.css('background', '#aa8881');
   } else {
     e.css('background', '#ffdddd');
@@ -110,10 +110,15 @@ var onDragStart = function(source, piece, position, orientation) {
     return false;
   }
 
-  if (chess.game_over() === true ||
-      (game.color !== piece.charAt(0)) ||
-      (game.premoves.length !== 0)) {
+  if (chess.game_over() == true ||
+      (game.color !== piece.charAt(0))) {
     return false;
+  }
+
+  if (game.premove !== null) {
+    unHighlightSquare(game.premove.source);
+    unHighlightSquare(game.premove.target);
+    game.premove = null;
   }
 
   // get list of possible moves for this square
@@ -147,7 +152,7 @@ function movePlayer(source, target) {
 var onDrop = function(source, target) {
   // premove if it is not my turn yet
   if (game.color !== game.chess.turn()) {
-    game.premoves.push({source: source, target: target});
+    game.premove = {source: source, target: target};
     return highlightPreMove(source, target);
   } else {
     return movePlayer(source, target);
@@ -281,9 +286,9 @@ ws.onmessage = function(message) {
           if (move !== null) {
             highlightMove(move.from, move.to);
           }
-          if (game.premoves.length > 0) {
-            var move = game.premoves.shift();
-            movePlayer(move.source, move.target);
+          if (game.premove !== null) {
+            movePlayer(game.premove.source, game.premove.target);
+            game.premove = null;
           }
         }
       }
@@ -335,6 +340,95 @@ $(document).ready(function() {
   $(".chat-text").height($("#board").height()-64);
   tabs = { "53": $("#content-53") };
   board.start(false);
+});
+
+// History of game moves (in the form of a FEN array)
+var game_history = {
+  moves: [],
+  game: null,
+  id: -1
+};
+
+function displayHistory() {
+  if (game.chess === null) {
+    return;
+  }
+
+  if (game_history.game === null) {
+    game_history.game = new Chess();
+  }
+
+  // refresh history
+  var moves = game.chess.history();
+  if (game_history.moves.length < moves.length) {
+    for (i = game_history.moves.length-1; i < moves.length; i++) {
+      game_history.game.move(moves[i]);
+      game_history.moves.push(game_history.game.fen());
+    }
+  }
+  if (game_history.id < 0) {
+    game_history.id = moves.length-1;
+  }
+
+  board.position(game_history.moves[game_history.id]);
+}
+
+$("#fast-backward").on("click", function(event) {
+  game_history.id = 0;
+  displayHistory();
+});
+
+$("#backward").on("click", function(event) {
+  if (game_history.id > 0) {
+    game_history.id = game_history.id-1;
+  }
+  displayHistory();
+});
+
+$("#forward").on("click", function(event) {
+  if (game_history.id < game_history.moves.length-1) {
+    game_history.id = game_history.id+1;
+  }
+  displayHistory();
+});
+
+$("#fast-forward").on("click", function(event) {
+  game_history.id = game_history.moves.length-1;
+  displayHistory();
+});
+
+$("#resign").on("click", function(event) {
+  if (game.chess !== null && ws !== null) {
+    ws.send(JSON.stringify({ type: msgType.pTell, handle: "", text: "resign" }));
+  }
+});
+
+$("#abort").on("click", function(event) {
+  if (game.chess !== null && ws !== null) {
+    ws.send(JSON.stringify({ type: msgType.pTell, handle: "", text: "abort" }));
+  }
+});
+
+$("#takeback").on("click", function(event) {
+  if (game.chess !== null && ws !== null) {
+    if (game.chess.turn() === game.color) {
+      ws.send(JSON.stringify({ type: msgType.pTell, handle: "", text: "take 2"}));
+    } else {
+      ws.send(JSON.stringify({ type: msgType.pTell, handle: "", text: "take 1"}));
+    }
+  }
+});
+
+$("#draw").on("click", function(event) {
+  if (game.chess !== null && ws !== null) {
+    ws.send(JSON.stringify({ type: msgType.pTell, handle: "", text: "draw" }));
+  }
+});
+
+$(window).focus(function() {
+  if (game.chess !== null) {
+    board.position(game.chess.fen(), false);
+  }
 });
 
 $(window).resize(function() {

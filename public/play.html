@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
   <link href="css/chessboard-0.3.0.min.css" rel="stylesheet" media="screen">
   <link href="css/main.css" rel="stylesheet" media="screen">
   <link href="css/application.css" rel="stylesheet" media="screen">
@@ -13,8 +14,8 @@
 </head>
 <body>
   <header class="header">
-    <div class="container-lrg">
-      <div class="col-12">
+    <div class="container">
+      <div class="col-sm-12">
         <div>
           <a class="logo" href="/">The Free Chess Club</a>
         </div>
@@ -24,24 +25,54 @@
   <div class="feature3">
     <div class="container">
       <div class="row">
-        <div class="col-6">
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-5">
           <div class="card">
-            <div class="card-header">
+            <div class="card-header widget">
+              <button type="button" id="fast-backward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Beginning">
+                <span class="fa fa-fast-backward" aria-hidden="false"></span>
+              </button>
+              <button type="button" id="backward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Back">
+                <span class="fa fa-backward" aria-hidden="false"></span>
+              </button>
+              <button type="button" id="forward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Forward">
+                <span class="fa fa-forward" aria-hidden="false"></span>
+              </button>
+              <button type="button" id="fast-forward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Current">
+                <span class="fa fa-fast-forward" aria-hidden="false"></span>
+              </button>
+            </div>
+            <div class="card-header status">
               <div class="player-name noselect" id="opponent-name"></div>
               <div class="clock noselect" id="opponent-time"></div>
             </div>
-            <div class="card-block">
+            <div class="card-block" id="board-card">
               <div id="board"></div>
             </div>
-            <div class="card-footer">
+            <div class="card-footer status">
               <div class="player-name noselect" id="player-name"></div>
               <div class="clock noselect" id="player-time"></div>
             </div>
+            <div class="card-footer widget">
+              <button type="button" id="takeback" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Takeback">
+                <span class="fa fa-undo" aria-hidden="false"></span>
+              </button>
+              <button type="button" id="draw" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Draw">
+                <span class="fa fa-handshake-o" aria-hidden="false"></span>
+              </button>
+              <button type="button" id="abort" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Abort">
+                <span class="fa fa-times-circle" aria-hidden="false"></span>
+              </button>
+              <button type="button" id="resign" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Resign">
+                <span class="fa fa-flag-o" aria-hidden="false"></span>
+              </button>
+            </div>
           </div>
         </div>
-        <div class="col-5">
+        <div class="col-sm-4">
           <div class="card">
-            <div class="card-header" id="cardHeader">
+            <div class="card-header status" id="cardHeader">
               <a id="chat-toggle" data-toggle="collapse" href="#collapse-chat" aria-expanded="true" aria-controls="collapse-chat">&ndash;</a>
               <div class="noselect" id="chat-status"></div>
             </div>
@@ -55,7 +86,7 @@
                   <div class="tab-pane active chat-text" id="content-53" role="tabpanel"></div>
                 </div>
               </div>
-              <div class="card-footer">
+              <div class="card-footer widget">
                 <form id="input-form" class="form-inline">
                   <div class="input-group input-group-sm" style="width: 100%">
                     <span class="input-group-addon">
@@ -76,8 +107,8 @@
     </div>
   </div>
   <div class="footer">
-    <div class="container-sml">
-      <div class="col-12 text-center">
+    <div class="container">
+      <div class="col-sm-12 text-center">
         <div>
           <a class="nav-link" href="/contact">
             Contact
@@ -102,7 +133,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.min.js"></script>
-  <script type="text/javascript" src="js/chessboard.min.js"></script>
+  <script type="text/javascript" src="js/chessboard.js"></script>
   <script type="text/javascript" src="js/reconnecting-websocket.min.js"></script>
   <script type="text/javascript" src="js/anchorme.min.js"></script>
   <script type="text/javascript" src="js/application.js"></script>
