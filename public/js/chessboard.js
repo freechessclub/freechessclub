@@ -1152,7 +1152,7 @@ function dropDraggedPieceOnSquare(square) {
       return;
     }
   }
-  
+
   CLICK_MOVE = false;
 
   removeSquareHighlights();
@@ -1280,10 +1280,6 @@ function stopDraggedPiece(location) {
     typeof cfg.onDrop === 'function') {
     var newPosition = deepCopy(CURRENT_POSITION);
 
-    // source piece is a spare piece and position is off the board
-    //if (DRAGGED_PIECE_SOURCE === 'spare' && location === 'offboard') {...}
-    // position has not changed; do nothing
-
     // source piece is a spare piece and position is on the board
     if (DRAGGED_PIECE_SOURCE === 'spare' && validSquare(location) === true) {
       // add the piece to the board
@@ -1299,6 +1295,16 @@ function stopDraggedPiece(location) {
     // source piece was on the board and position is on the board
     if (validSquare(DRAGGED_PIECE_SOURCE) === true &&
       validSquare(location) === true) {
+      if (DRAGGED_PIECE_SOURCE === location) {
+        if (CLICK_MOVE == false) {
+          // pick up spare piece and put it down on next clicked square
+          CLICK_MOVE = true;
+          return;
+        } else {
+          CLICK_MOVE = false;
+        }
+      }
+
       // move the piece
       delete newPosition[DRAGGED_PIECE_SOURCE];
       newPosition[location] = DRAGGED_PIECE;
@@ -1310,17 +1316,6 @@ function stopDraggedPiece(location) {
       newPosition, oldPosition, CURRENT_ORIENTATION);
     if (result === 'snapback' || result === 'trash') {
       action = result;
-    }
-  } else {
-    // source piece is a spare piece and position is off the board
-    if (DRAGGED_PIECE_SOURCE === 'spare' && location === 'offboard') {
-      if (CLICK_MOVE == false) {
-        // pick up spare piece and put it down on next clicked square
-        CLICK_MOVE = true;
-        return;
-      } else {
-        CLICK_MOVE = false;
-      }
     }
   }
 
@@ -1516,13 +1511,13 @@ widget.resize = function() {
 widget.start = function(useAnimation) {
   widget.position('start', useAnimation);
 };
-  
+
 // turn notation on or off
 widget.showNotation = function(show) {
   cfg.showNotation = show;
   drawBoard();
 }
-  
+
 //------------------------------------------------------------------------------
 // Browser Events
 //------------------------------------------------------------------------------
