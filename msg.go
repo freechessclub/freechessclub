@@ -15,9 +15,11 @@
 package main
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"io"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/Sirupsen/logrus"
@@ -31,6 +33,7 @@ const (
 	pTell            // private tell
 	gameMove         // game move
 	gameStart        // game start
+	gameEnd          // game end
 	unknown          // unknown message
 )
 
@@ -62,6 +65,13 @@ type gameStartMsg struct {
 	PlayerTwo string      `json:"playertwo"`
 }
 
+type gameEndMsg struct {
+	Type   MessageType `json:"type"`
+	Id     int         `json:"id"`
+	Winner string      `json:"playerone"`
+	Loser  string      `json:"playertwo"`
+}
+
 type gameMoveMsg struct {
 	Type  MessageType `json:"type"`
 	FEN   string      `json:"fen"`
@@ -82,21 +92,39 @@ type unknownMsg struct {
 	Text string      `json:"text"`
 }
 
+type incomingMsg struct {
+	Type MessageType `json:"type"`
+}
+
 // validateMessage so that we know it's valid JSON and contains a Handle and
 // Text
-func validateMessage(data []byte) (pTellMsg, error) {
-	var msg pTellMsg
+func validateMessage(data []byte) (interface{}, error) {
+	var msg incomingMsg
 	if err := json.Unmarshal(data, &msg); err != nil {
-		return msg, errors.Wrap(err, "unmarshaling message")
+		return nil, errors.Wrap(err, "unmarshaling message")
 	}
 
-	if msg.Text == "" {
-		return msg, errors.New("message has no text")
+	switch msg.Type {
+	case ctl:
+		var c ctlMsg
+		if err := json.Unmarshal(data, &c); err != nil {
+			return nil, errors.Wrap(err, "unmarshaling ctl message")
+		}
+		return c, nil
+	case chTell:
+		var c chTellMsg
+		if err := json.Unmarshal(data, &c); err != nil {
+			return nil, errors.Wrap(err, "unmarshaling chTell message")
+		}
+		return c, nil
+	case pTell:
+		var p pTellMsg
+		if err := json.Unmarshal(data, &p); err != nil {
+			return nil, errors.Wrap(err, "unmarshaling pTell message")
+		}
+		return p, nil
 	}
-	if msg.Type < ctl || msg.Type > unknown {
-		return msg, errors.New("invalid message type")
-	}
-	return msg, nil
+	return nil, errors.New("invalid message type")
 }
 
 func sendWebsocket(ws *websocket.Conn, bs []byte) error {
@@ -109,6 +137,33 @@ func sendWebsocket(ws *websocket.Conn, bs []byte) error {
 		}).Error("error writting data to connection.")
 	}
 	return err
+}
+
+func recvWebsocket(ws *websocket.Conn) interface{} {
+	ws.SetReadLimit(2048)
+	mt, data, err := ws.ReadMessage()
+	l := log.WithFields(logrus.Fields{"mt": mt, "data": data, "err": err})
+	if err != nil {
+		if err == io.EOF {
+			l.Info("websocket closed!")
+		} else {
+			l.Error("error reading websocket message")
+		}
+		return nil
+	}
+
+	switch mt {
+	case websocket.TextMessage:
+		msg, err := validateMessage(data)
+		if err != nil {
+			l.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("invalid message")
+			return nil
+		}
+		return msg
+	default:
+		l.Warning("unknown message!")
+		return nil
+	}
 }
 
 func keepAlive(ws *websocket.Conn, timeout time.Duration) {
@@ -148,36 +203,58 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s := newSession(ws)
+	user := "guest"
+	pass := ""
+	login := r.URL.Query().Get("login")
+	if login != "" {
+		msg := recvWebsocket(ws)
+		if msg == nil {
+			return
+		}
+		switch msg.(type) {
+		case ctlMsg:
+			m := msg.(ctlMsg)
+			if m.Command == 1 {
+				up := strings.Split(m.Text, ",")
+				if len(up) != 2 {
+					log.WithField("err", err).Println("ignoring malformed user/pass request")
+					return
+				}
+				user = up[0][1:]
+				b, err := base64.StdEncoding.DecodeString(up[1][:len(up[1])-1])
+				if err != nil {
+					log.WithField("err", err).Println("error decoding password")
+					return
+				}
+				pass = string(b)
+			}
+		}
+	}
+
+	s := newSession(user, pass, ws)
 	keepAlive(ws, 50*time.Second)
 
 	for {
-		ws.SetReadLimit(2048)
-		mt, data, err := ws.ReadMessage()
-		l := log.WithFields(logrus.Fields{"mt": mt, "data": data, "err": err})
-		if err != nil {
-			if err == io.EOF {
-				l.Info("websocket closed!")
-			} else {
-				l.Error("error reading websocket message")
-			}
+		msg := recvWebsocket(ws)
+		if msg == nil {
 			s.end()
-			break
+			return
 		}
-		switch mt {
-		case websocket.TextMessage:
-			msg, err := validateMessage(data)
-			if err != nil {
-				l.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("invalid message")
-				break
-			}
-			// log.Printf("Sending text to server: %s", msg.Text)
-			err = s.send(msg.Text)
-			if err != nil {
-				l.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("error sending message")
+
+		switch msg.(type) {
+		case ctlMsg:
+			m := msg.(ctlMsg)
+			if m.Command == 0 {
+				// log.Printf("Sending text to server: %s", msg.Text)
+				err = s.send(m.Text)
+				if err != nil {
+					log.WithField("err", err).Println("error sending message")
+				}
+			} else {
+				log.WithField("err", err).Println("unknown ctl command")
 			}
 		default:
-			l.Warning("unknown message!")
+			log.WithField("err", err).Println("ignoring unknown message from client")
 		}
 	}
 }

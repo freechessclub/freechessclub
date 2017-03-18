@@ -1,9 +1,8 @@
-var ws = new ReconnectingWebSocket(location.protocol.replace("http","ws") + "//" + location.host + "/ws");
-
 // A FICS session
 var session = {
   connected: false,
-  handle: ""
+  handle: "",
+  ws: null
 }
 
 // List of active tabs
@@ -145,7 +144,7 @@ function movePlayer(source, target) {
   }
 
   // TODO: send a game move message
-  ws.send(JSON.stringify({ type: msgType.pTell, handle: "", text: source+"-"+target }));
+  session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: source+"-"+target }));
   highlightMove(source, target);
 }
 
@@ -182,10 +181,10 @@ $(function () {
 
 // Allow chat card to be collapsed
 $('#collapse-chat').on('hidden.bs.collapse', function () {
-  $("#chat-toggle").text("+");
+  $('#chat-toggle-icon').removeClass('fa-toggle-up').addClass('fa-toggle-down');
 })
 $('#collapse-chat').on('show.bs.collapse', function () {
-  $("#chat-toggle").text(String.fromCharCode(8211));
+  $('#chat-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
 })
 
 jQuery(document.body).on('click', '.closeTab', function(event) {
@@ -241,7 +240,7 @@ function handleChatMsg(from, data) {
   }
 }
 
-ws.onmessage = function(message) {
+function handleICSMsg(message) {
   var data = JSON.parse(message.data);
   switch(data.type) {
     case msgType.ctl:
@@ -301,13 +300,30 @@ ws.onmessage = function(message) {
       handleChatMsg($("ul#tabs a.active").attr("id"), data);
       break;
   }
-};
+}
 
-ws.onclose = function(){
+function disconnectICS() {
+  $("#chat-status").text("Disconnected");
   session.connected = false;
   session.handle = "";
-  $("#chat-status").text("Disconnected");
 };
+
+function connectToICS(user, pass) {
+  var login = (typeof user !== 'undefined' && typeof pass !== 'undefined');
+  var loginOptions = "";
+  if (login) {
+    loginOptions += "?login=1"
+  }
+  var conn = new ReconnectingWebSocket(location.protocol.replace("http","ws") + "//" + location.host + "/ws" + loginOptions)
+  conn.onmessage = handleICSMsg;
+  conn.onclose = disconnectICS;
+  if (login) {
+    conn.onopen = function() {
+      conn.send(JSON.stringify({ type: msgType.ctl, command: 1, text: "[" + user + "," + btoa(pass) + "]" }));
+    }
+  }
+  return conn;
+}
 
 $("#input-form").on("submit", function(event) {
   event.preventDefault();
@@ -328,11 +344,12 @@ $("#input-form").on("submit", function(event) {
       text = $("#input-text").val().substr(1);
     }
   }
-  ws.send(JSON.stringify({ type: msgType.pTell, handle: session.handle, text: text }));
+  session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: text }));
   $("#input-text").val("");
 });
 
 $(document).ready(function() {
+  session.ws = connectToICS();
   session.connected = false;
   $("#chat-status").text("Connecting...");
   $("#opponent-time").text("00:00");
@@ -398,30 +415,56 @@ $("#fast-forward").on("click", function(event) {
 });
 
 $("#resign").on("click", function(event) {
-  if (game.chess !== null && ws !== null) {
-    ws.send(JSON.stringify({ type: msgType.pTell, handle: "", text: "resign" }));
+  if (game.chess !== null && session.ws !== null) {
+    session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: "resign" }));
   }
 });
 
 $("#abort").on("click", function(event) {
-  if (game.chess !== null && ws !== null) {
-    ws.send(JSON.stringify({ type: msgType.pTell, handle: "", text: "abort" }));
+  if (game.chess !== null && session.ws !== null) {
+    session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: "abort" }));
   }
 });
 
 $("#takeback").on("click", function(event) {
-  if (game.chess !== null && ws !== null) {
+  if (game.chess !== null && session.ws !== null) {
     if (game.chess.turn() === game.color) {
-      ws.send(JSON.stringify({ type: msgType.pTell, handle: "", text: "take 2"}));
+      session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: "take 2"}));
     } else {
-      ws.send(JSON.stringify({ type: msgType.pTell, handle: "", text: "take 1"}));
+      session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: "take 1"}));
     }
   }
 });
 
 $("#draw").on("click", function(event) {
-  if (game.chess !== null && ws !== null) {
-    ws.send(JSON.stringify({ type: msgType.pTell, handle: "", text: "draw" }));
+  if (game.chess !== null && session.ws !== null) {
+    session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: "draw" }));
+  }
+});
+
+$("#disconnect").on("click", function(event) {
+  $("#chat-status").text("Disconnecting...");
+  session.ws.close();
+});
+
+$("#login").on("click", function(event) {
+  $("#chat-status").text("Connecting...");
+  var user = $("#login-user").val();
+  var pass = $("#login-pass").val();
+  session.ws = connectToICS(user, pass);
+  $("#login-screen").modal("hide");
+});
+
+$("#connect-user").on("click", function(event) {
+  if (session.connected !== true) {
+    $("#login-screen").modal("show");
+  }
+});
+
+$("#connect-guest").on("click", function(event) {
+  if (session.connected !== true) {
+    $("#chat-status").text("Connecting...");
+    session.ws = connectToICS();
   }
 });
 

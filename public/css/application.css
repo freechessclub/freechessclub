@@ -33,24 +33,30 @@
   text-decoration: none;
 }
 
+.dropdown-toggle::after {
+  display:none
+}
+
+#settings-dropdown {
+  float: right;
+  display: inline-block;
+}
+
+#chat-toggle-btn {
+  float:right;
+  display: inline-block;
+}
+
+#chat-status {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 20px;
+}
+
 #board {
   borderLeftWidth: 0;
   width:100%;
   height:auto;
-}
-
-.chat-status {
-  float: left;
-}
-
-.status {
-  line-height: 22px;
-}
-
-.card-header a {
-  float: right;
-  font-weight: bold;
-  text-decoration: none;
 }
 
 .player-name {
@@ -75,8 +81,4 @@
   font-size: 14px;
   padding-top: 1px;
   padding-bottom: 1px;
-}
-
-#chat-toggle {
-  font-size: 20px;
 }
