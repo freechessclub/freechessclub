@@ -278,13 +278,13 @@ func (s *Session) send(msg string) error {
 	return send(s.conn, msg)
 }
 
-func newSession(ws *websocket.Conn) *Session {
+func newSession(user, pass string, ws *websocket.Conn) *Session {
 	conn, err := Connect("tcp", "freechess.org:5000", 5, 5)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	username, err := Login(conn, "guest", "")
+	username, err := Login(conn, user, pass)
 	if err != nil {
 		log.Fatal(err)
 	}
