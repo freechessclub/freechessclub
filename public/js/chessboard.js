@@ -639,45 +639,18 @@ function buildBoard(orientation) {
   return html;
 }
 
-var imgCache = {}
-function cacheImages() {
-  var pieces = ['wK', 'wQ', 'wR', 'wB', 'wN', 'wP', 'bK', 'bQ', 'bR', 'bB', 'bN', 'bP'];
-  pieces.forEach(function(piece) {
-    var img = new Image()
-    img.onload = function() {
-      imgCache[piece] = getBase64Image(img)
-    }
-    img.src = buildPieceImgSrc(piece)
-  })
-
-  function getBase64Image(img) {
-    var canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-    var dataURL = canvas.toDataURL("image/png");
-    return dataURL;
-  }
-}
-
 function buildPieceImgSrc(piece) {
-  if(imgCache[piece]) return imgCache[piece]
-  else return getUrl(piece)
-
-  function getUrl(piece) {
-    if (typeof cfg.pieceTheme === 'function') {
-      return cfg.pieceTheme(piece);
-    }
-
-    if (typeof cfg.pieceTheme === 'string') {
-      return cfg.pieceTheme.replace(/{piece}/g, piece);
-    }
-
-    // NOTE: this should never happen
-    error(8272, 'Unable to build image source for cfg.pieceTheme.');
-    return '';
+  if (typeof cfg.pieceTheme === 'function') {
+    return cfg.pieceTheme(piece);
   }
+
+  if (typeof cfg.pieceTheme === 'string') {
+    return cfg.pieceTheme.replace(/{piece}/g, piece);
+  }
+
+  // NOTE: this should never happen
+  error(8272, 'Unable to build image source for cfg.pieceTheme.');
+  return '';
 }
 
 function buildPiece(piece, hidden, id) {
@@ -801,6 +774,9 @@ function animateSparePieceToSquare(piece, dest, completeFn) {
 
 // execute an array of animations
 function doAnimations(a, oldPos, newPos) {
+  if (a.length === 0) {
+    return;
+  }
   ANIMATION_HAPPENING = true;
 
   var numFinished = 0;
@@ -1340,17 +1316,6 @@ widget.clear = function(useAnimation) {
   widget.position({}, useAnimation);
 };
 
-/*
-// get or set config properties
-// TODO: write this, GitHub Issue #1
-widget.config = function(arg1, arg2) {
-  // get the current config
-  if (arguments.length === 0) {
-    return deepCopy(cfg);
-  }
-};
-*/
-
 // remove the widget from the page
 widget.destroy = function() {
   // remove markup
@@ -1377,7 +1342,6 @@ widget.highlight = function() {
 
 };
 */
-widget.cache = cacheImages
 // move pieces
 widget.move = function() {
   // no need to throw an error here; just do nothing
@@ -1723,7 +1687,6 @@ function initDom() {
   createElIds();
 
   // build board and save it in memory
-  cacheImages();
   containerEl.html(buildBoardContainer());
   boardEl = containerEl.find('.' + CSS.board);
 

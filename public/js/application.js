@@ -29,7 +29,7 @@ var msgType = {
   unknown: 5
 };
 
-var highlightSquare = function(square) {
+function highlightSquare(square) {
   if (square === undefined) {
     return;
   }
@@ -41,7 +41,7 @@ var highlightSquare = function(square) {
   }
 };
 
-var highlightCheck = function(square) {
+function highlightCheck(square) {
   if (square === undefined) {
     return;
   }
@@ -53,7 +53,7 @@ var highlightCheck = function(square) {
   }
 };
 
-var unHighlightSquare = function(square) {
+function unHighlightSquare(square) {
   if (square !== undefined) {
     $('#board .square-' + square).css('background', '');
   } else {
@@ -61,15 +61,25 @@ var unHighlightSquare = function(square) {
   }
 }
 
-var highlightMove = function(source, target) {
+function highlightMove(source, target) {
   unHighlightSquare();
   highlightSquare(source);
   highlightSquare(target);
 }
 
-var highlightPreMove = function(source, target) {
+function highlightPreMove(source, target) {
   highlightCheck(source);
   highlightCheck(target);
+}
+
+function showCapture(color, captured) {
+  if (typeof captured !== 'undefined') {
+    if (color == game.color) {
+      $('#player-captured').append(captured);
+    } else {
+      $('#opponent-captured').append(captured);
+    }
+  }
 }
 
 function SToHHMMSS(sec) {
@@ -145,7 +155,8 @@ function movePlayer(source, target) {
 
   // TODO: send a game move message
   session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: source+"-"+target }));
-  highlightMove(source, target);
+  highlightMove(move.from, move.to);
+  showCapture(move.color, move.captured);
 }
 
 var onDrop = function(source, target) {
@@ -171,7 +182,8 @@ var board = ChessBoard('board', {
   draggable: true,
   onDragStart: onDragStart,
   onDrop: onDrop,
-  onSnapEnd: onSnapEnd
+  onSnapEnd: onSnapEnd,
+  pieceTheme: 'img/chesspieces/wikipedia-svg/{piece}.svg'
 });
 
 // enable tooltips
@@ -260,16 +272,19 @@ function handleICSMsg(message) {
       game.btime = data.btime;
       game.wtime = data.wtime;
 
+      // role 1: I am playing and it is my move
+      // role -1: I am playing and it is my opponent's move
       if (game.chess === null) {
         game.chess = new Chess();
-        if (data.role === 1) {
+
+        if (data.role == 1) {
           game.color = 'w';
           board.orientation('white');
           game.wclock = startWclock($("#player-time"));
           game.bclock = startBclock($("#opponent-time"));
           $("#player-name").text(data.wname);
           $("#opponent-name").text(data.bname);
-        } else if (data.role === -1) {
+        } else if (data.role == -1) {
           game.color = 'b';
           board.orientation('black');
           game.bclock = startBclock($("#player-time"));
@@ -279,11 +294,12 @@ function handleICSMsg(message) {
         }
       }
 
-      if (data.role === 1) {
+      if (data.role == 1) {
         if (data.move !== "none") {
           var move = game.chess.move(data.move);
           if (move !== null) {
             highlightMove(move.from, move.to);
+            showCapture(move.color, move.captured);
           }
           if (game.premove !== null) {
             movePlayer(game.premove.source, game.premove.target);
