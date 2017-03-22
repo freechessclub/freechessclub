@@ -278,15 +278,15 @@ func (s *Session) send(msg string) error {
 	return send(s.conn, msg)
 }
 
-func newSession(user, pass string, ws *websocket.Conn) *Session {
+func newSession(user, pass string, ws *websocket.Conn) (*Session, error) {
 	conn, err := Connect("tcp", "freechess.org:5000", 5, 5)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	username, err := Login(conn, user, pass)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	msg := &ctlMsg{
@@ -299,22 +299,22 @@ func newSession(user, pass string, ws *websocket.Conn) *Session {
 
 	_, err = sendAndReadUntil(conn, "set seek 0", ficsPrompt)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	_, err = sendAndReadUntil(conn, "set echo 0", ficsPrompt)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	_, err = sendAndReadUntil(conn, "set style 12", ficsPrompt)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	_, err = sendAndReadUntil(conn, "set interface fcc", ficsPrompt)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	s := &Session{
@@ -324,7 +324,7 @@ func newSession(user, pass string, ws *websocket.Conn) *Session {
 	}
 
 	go s.ficsReader()
-	return s
+	return s, nil
 }
 
 func (s *Session) end() {

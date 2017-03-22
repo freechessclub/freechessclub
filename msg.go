@@ -231,13 +231,15 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	s := newSession(user, pass, ws)
+	s, err := newSession(user, pass, ws)
 	keepAlive(ws, 50*time.Second)
 
 	for {
 		msg := recvWebsocket(ws)
 		if msg == nil {
-			s.end()
+			if s != nil {
+				s.end()
+			}
 			return
 		}
 
@@ -246,9 +248,11 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 			m := msg.(ctlMsg)
 			if m.Command == 0 {
 				// log.Printf("Sending text to server: %s", msg.Text)
-				err = s.send(m.Text)
-				if err != nil {
-					log.WithField("err", err).Println("error sending message")
+				if s != nil {
+					err = s.send(m.Text)
+					if err != nil {
+						log.WithField("err", err).Println("error sending message")
+					}
 				}
 			} else {
 				log.WithField("err", err).Println("unknown ctl command")
