@@ -25,36 +25,46 @@
   <div class="feature3">
     <div class="container">
       <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-header center" id="cardHeader">
+              <div class="btn-toolbar">
+                <button type="button" id="fast-backward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Beginning">
+                  <span class="fa fa-fast-backward" aria-hidden="false"></span>
+                </button>
+                <button type="button" id="backward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Back">
+                  <span class="fa fa-backward" aria-hidden="false"></span>
+                </button>
+                <button type="button" id="forward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Forward">
+                  <span class="fa fa-forward" aria-hidden="false"></span>
+                </button>
+                <button type="button" id="fast-forward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Current">
+                  <span class="fa fa-fast-forward" aria-hidden="false"></span>
+                </button>
+              </div>
+            </div>
+            <div class="card-block">
+            </div>
+            <div class="card-footer center">
+              <div class="btn-toolbar">
+                <button type="button" id="takeback" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Takeback">
+                  <span class="fa fa-undo" aria-hidden="false"></span>
+                </button>
+                <button type="button" id="draw" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Draw">
+                  <span class="fa fa-handshake-o" aria-hidden="false"></span>
+                </button>
+                <button type="button" id="abort" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Abort">
+                  <span class="fa fa-times-circle" aria-hidden="false"></span>
+                </button>
+                <button type="button" id="resign" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Resign">
+                  <span class="fa fa-flag-o" aria-hidden="false"></span>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-sm-5">
           <div class="card">
-            <div class="card-header widget">
-              <button type="button" id="fast-backward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Beginning">
-                <span class="fa fa-fast-backward" aria-hidden="false"></span>
-              </button>
-              <button type="button" id="backward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Back">
-                <span class="fa fa-backward" aria-hidden="false"></span>
-              </button>
-              <button type="button" id="forward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Forward">
-                <span class="fa fa-forward" aria-hidden="false"></span>
-              </button>
-              <button type="button" id="fast-forward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Current">
-                <span class="fa fa-fast-forward" aria-hidden="false"></span>
-              </button>
-              <button type="button" id="takeback" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Takeback">
-                <span class="fa fa-undo" aria-hidden="false"></span>
-              </button>
-              <button type="button" id="draw" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Draw">
-                <span class="fa fa-handshake-o" aria-hidden="false"></span>
-              </button>
-              <button type="button" id="abort" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Abort">
-                <span class="fa fa-times-circle" aria-hidden="false"></span>
-              </button>
-              <button type="button" id="resign" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Resign">
-                <span class="fa fa-flag-o" aria-hidden="false"></span>
-              </button>
-            </div>
             <div class="card-header status">
               <div class="noselect" id="opponent-captured"></div>
               <div class="name noselect" id="opponent-name"></div>
@@ -74,19 +84,21 @@
           <div class="card">
             <div class="card-header status" id="cardHeader">
               <div class="noselect" id="chat-status"></div>
-              <div id="settings-dropdown" class="dropdown">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="connectButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Settings">
-                  <span class="fa fa-gear" aria-hidden="false"></span>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="connectButton">
-                  <a class="dropdown-item noselect" id="connect-guest">Connect as Guest</a>
-                  <a class="dropdown-item noselect" id="connect-user">Connect as Registered User</a>
-                  <a class="dropdown-item noselect" id="disconnect">Disconnect</a>
+              <div class="btn-toolbar inline-block pull-right">
+                <div id="settings-dropdown" class="dropdown">
+                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="connectButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Settings">
+                    <span class="fa fa-gear" aria-hidden="false"></span>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="connectButton">
+                    <a class="dropdown-item noselect" id="connect-guest">Connect as Guest</a>
+                    <a class="dropdown-item noselect" id="connect-user">Connect as Registered User</a>
+                    <a class="dropdown-item noselect" id="disconnect">Disconnect</a>
+                  </div>
                 </div>
+                <button id="chat-toggle-btn" class="btn btn-secondary btn-sm" type="button" data-toggle="collapse" data-target="#collapse-chat" data-placement="top" aria-expanded="true" aria-controls="collapse-chat" title="Minimize">
+                  <span id="chat-toggle-icon" class="fa fa-toggle-up" aria-hidden="false"></span>
+                </button>
               </div>
-              <button id="chat-toggle-btn" class="btn btn-secondary btn-sm" type="button" data-toggle="collapse" data-target="#collapse-chat" data-placement="top" aria-expanded="true" aria-controls="collapse-chat" title="Minimize">
-                <span id="chat-toggle-icon" class="fa fa-toggle-up" aria-hidden="false"></span>
-              </button>
             </div>
             <div id="collapse-chat" class="collapse show" aria-labelledby="cardHeader">
               <div class="card-block">

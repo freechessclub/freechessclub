@@ -16,7 +16,8 @@ var game = {
   bclock: null,
   wclock: null,
   btime: 0,
-  wtime: 0
+  wtime: 0,
+  history: null
 }
 
 // Type of messages we receive from the proxy
@@ -26,7 +27,8 @@ var msgType = {
   pTell: 2,
   gameMove: 3,
   gameStart: 4,
-  unknown: 5
+  gameEnd: 5,
+  unknown: 6
 };
 
 function highlightSquare(square) {
@@ -94,9 +96,16 @@ var startBclock = function(clock) {
     if (game.chess.turn() === 'w') {
       return;
     }
-    if (game.btime > 0) {
-      game.btime = game.btime - 1;
+
+    game.btime = game.btime - 1;
+    if (game.btime < 20 && clock.css('color') !== 'red') {
+      clock.css('color', 'red');
     }
+
+    if (game.btime > 20) {
+      clock.css('color', '');
+    }
+
     clock.text(SToHHMMSS(game.btime));
   }, 1000);
 }
@@ -106,9 +115,16 @@ var startWclock = function(clock) {
     if (game.chess.turn() === 'b') {
       return;
     }
-    if (game.wtime > 0) {
-      game.wtime = game.wtime - 1;
+
+    game.wtime = game.wtime - 1;
+    if (game.wtime < 20 && clock.css('color') !== 'red') {
+      clock.css('color', 'red');
     }
+
+    if (game.wtime > 20) {
+      clock.css('color', '');
+    }
+
     clock.text(SToHHMMSS(game.wtime));
   }, 1000);
 }
@@ -153,7 +169,6 @@ function movePlayer(source, target) {
     return 'snapback';
   }
 
-  // TODO: send a game move message
   session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: source+"-"+target }));
   highlightMove(move.from, move.to);
   showCapture(move.color, move.captured);
@@ -221,7 +236,7 @@ function handleChatMsg(from, data) {
     }
     $('<a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" href="#content-'+from+'" id="'+from+'" role="tab">'+chName+'<span class="btn btn-default btn-sm closeTab">×</span></a>').appendTo('#tabs');
     $('<div class="tab-pane chat-text" id="content-'+from+'" role="tabpanel"></div>').appendTo('.tab-content');
-    $(".chat-text").height($("#board").height()-115);
+    $(".chat-text").height($("#board").height()-40);
     tab = $("#content-"+from);
     tabs[from] = tab;
   } else {
@@ -276,7 +291,10 @@ function handleICSMsg(message) {
       // role -1: I am playing and it is my opponent's move
       if (game.chess === null) {
         game.chess = new Chess();
-
+        board.start(false);
+        game.history = {moves: [], chess: null, id: -1};
+        $('#player-captured').text("");
+        $('#opponent-captured').text("");
         if (data.role == 1) {
           game.color = 'w';
           board.orientation('white');
@@ -310,6 +328,13 @@ function handleICSMsg(message) {
       board.position(data.fen);
       break;
     case msgType.gameStart:
+      break;
+    case msgType.gameEnd:
+      clearInterval(game.wclock);
+      clearInterval(game.bclock);
+      displayHistory();
+      delete game.chess;
+      game.chess = null;
       break;
     case msgType.unknown:
     default:
@@ -370,63 +395,56 @@ $(document).ready(function() {
   $("#chat-status").text("Connecting...");
   $("#opponent-time").text("00:00");
   $("#player-time").text("00:00");
-  $(".chat-text").height($("#board").height()-64);
+  $(".chat-text").height($("#board").height()-40);
   tabs = { "53": $("#content-53") };
   board.start(false);
+  game.history = {moves: [], chess: null, id: -1};
 });
 
-// History of game moves (in the form of a FEN array)
-var game_history = {
-  moves: [],
-  game: null,
-  id: -1
-};
-
 function displayHistory() {
-  if (game.chess === null) {
-    return;
-  }
-
-  if (game_history.game === null) {
-    game_history.game = new Chess();
+  if (game.history.chess === null) {
+    game.history.chess = new Chess();
   }
 
   // refresh history
-  var moves = game.chess.history();
-  if (game_history.moves.length < moves.length) {
-    for (i = game_history.moves.length-1; i < moves.length; i++) {
-      game_history.game.move(moves[i]);
-      game_history.moves.push(game_history.game.fen());
+  if (game.chess !== null) {
+    var moves = game.chess.history();
+    if (game.history.moves.length < moves.length) {
+      for (i = game.history.moves.length-1; i < moves.length; i++) {
+        game.history.chess.move(moves[i]);
+        game.history.moves.push(game.history.chess.fen());
+      }
     }
   }
-  if (game_history.id < 0) {
-    game_history.id = moves.length-1;
+
+  if (game.history.id < 0) {
+    game.history.id = game.history.moves.length-1;
   }
 
-  board.position(game_history.moves[game_history.id]);
+  board.position(game.history.moves[game.history.id]);
 }
 
 $("#fast-backward").on("click", function(event) {
-  game_history.id = 0;
+  game.history.id = 0;
   displayHistory();
 });
 
 $("#backward").on("click", function(event) {
-  if (game_history.id > 0) {
-    game_history.id = game_history.id-1;
+  if (game.history.id > 0) {
+    game.history.id = game.history.id-1;
   }
   displayHistory();
 });
 
 $("#forward").on("click", function(event) {
-  if (game_history.id < game_history.moves.length-1) {
-    game_history.id = game_history.id+1;
+  if (game.history.id < game.history.moves.length-1) {
+    game.history.id = game.history.id+1;
   }
   displayHistory();
 });
 
 $("#fast-forward").on("click", function(event) {
-  game_history.id = game_history.moves.length-1;
+  game.history.id = game.history.moves.length-1;
   displayHistory();
 });
 
@@ -492,5 +510,5 @@ $(window).focus(function() {
 
 $(window).resize(function() {
   board.resize();
-  $(".chat-text").height($("#board").height()-64);
+  $(".chat-text").height($("#board").height()-40);
 });

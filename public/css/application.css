@@ -37,14 +37,11 @@
   display:none
 }
 
-#settings-dropdown {
-  float: right;
-  display: inline-block;
+.btn-toolbar .btn {
+    margin-right: 10px;
 }
-
-#chat-toggle-btn {
-  float:right;
-  display: inline-block;
+.btn-toolbar .btn:last-child {
+    margin-right: 0;
 }
 
 #chat-status {
