@@ -65,11 +65,68 @@ type gameStartMsg struct {
 	PlayerTwo string      `json:"playertwo"`
 }
 
+const (
+	Resign = iota
+	Disconnect
+	Checkmate
+	Draw
+	Adjourn
+	Abort
+	TimeForfeit
+	unknownReason
+)
+
+func decodeEndMessage(p1, p2, who, action string) (string, string, int) {
+	switch action {
+	case "resigns":
+		if p1 == who {
+			return p2, p1, Resign
+		} else if p2 == who {
+			return p1, p2, Resign
+		}
+	case "forfeits by disconnection":
+		if p1 == who {
+			return p2, p1, Disconnect
+		} else if p2 == who {
+			return p1, p2, Disconnect
+		}
+	case "checkmated":
+		if p1 == who {
+			return p2, p1, Checkmate
+		} else if p2 == who {
+			return p1, p2, Checkmate
+		}
+	case "forfeits on time":
+		if p1 == who {
+			return p2, p1, TimeForfeit
+		} else if p2 == who {
+			return p1, p2, TimeForfeit
+		}
+	case "aborted on move 1":
+	case "aborted by mutual agreement":
+		return p1, p2, Abort
+	case "drawn by mutual agreement":
+	case "drawn because both players ran out of time":
+	case "drawn by repetition":
+	case "drawn by the 50 move rule":
+	case "drawn due to length":
+	case "was drawn":
+	case "player has mating material":
+	case "drawn by adjudication":
+	case "drawn by stalemate":
+		return p1, p2, Draw
+	case "adjourned by mutual agreement":
+		return p1, p2, Adjourn
+	}
+	return p1, p2, unknownReason
+}
+
 type gameEndMsg struct {
 	Type   MessageType `json:"type"`
 	Id     int         `json:"id"`
-	Winner string      `json:"playerone"`
-	Loser  string      `json:"playertwo"`
+	Winner string      `json:"winner"`
+	Loser  string      `json:"loser"`
+	Reason int         `json:"reason"`
 }
 
 type gameMoveMsg struct {

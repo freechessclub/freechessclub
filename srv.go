@@ -49,6 +49,7 @@ var chTellRE *regexp.Regexp
 var pTellRE *regexp.Regexp
 var gameMoveRE *regexp.Regexp
 var gameStartRE *regexp.Regexp
+var gameEndRE *regexp.Regexp
 var toldMsgRE *regexp.Regexp
 
 func Connect(network, addr string, timeout, retries int) (*telnet.Conn, error) {
@@ -146,7 +147,9 @@ func init() {
 	gameMoveRE = regexp.MustCompile(`<12>\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([BW\-])\s(?:\-?[0-7])\s(?:[01])\s(?:[01])\s(?:[01])\s(?:[01])\s(?:[0-9]+)\s([0-9]+)\s([a-zA-Z]+)\s([a-zA-Z]+)\s(\-?[0-3])\s([0-9]+)\s([0-9]+)\s(?:[0-9]+)\s(?:[0-9]+)\s(\-?[0-9]+)\s(\-?[0-9]+)\s(?:[0-9]+)\s(?:\S+)\s\((?:[0-9]+)\:(?:[0-9]+)\)\s(\S+)\s(?:[01]).*`)
 
 	// {Game 117 (GuestMDPS vs. guestl) Creating unrated blitz match.}
-	gameStartRE = regexp.MustCompile(`\s*\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\sCreating.*\}`)
+	gameStartRE = regexp.MustCompile(`.*\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\sCreating.*\}`)
+
+	gameEndRE = regexp.MustCompile(`\s*(?:Game\s[0-9]+:.*)\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\s([a-zA-Z]+)\s([a-zA-Z ]+)\}.*`)
 
 	// channel tell
 	chTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:\([A-Z\*]+\))*\(([0-9]+)\):\s+(.*)`)
@@ -222,6 +225,24 @@ func (s *Session) decodeMessage(msg []byte) ([]byte, error) {
 			Id:        atoi(matches[1][:]),
 			PlayerOne: string(matches[2][:]),
 			PlayerTwo: string(matches[3][:]),
+		}
+		return json.Marshal(m)
+	}
+
+	matches = gameEndRE.FindSubmatch(msg)
+	if matches != nil && len(matches) > 4 {
+		p1 := string(matches[2][:])
+		p2 := string(matches[3][:])
+		who := string(matches[4][:])
+		action := string(matches[5][:])
+
+		winner, loser, reason := decodeEndMessage(p1, p2, who, action)
+		m := &gameEndMsg{
+			Type:   gameEnd,
+			Id:     atoi(matches[1][:]),
+			Winner: winner,
+			Loser:  loser,
+			Reason: reason,
 		}
 		return json.Marshal(m)
 	}
