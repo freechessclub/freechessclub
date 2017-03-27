@@ -1,7 +1,7 @@
 // A FICS session
 var session = {
   connected: false,
-  handle: "",
+  handle: '',
   ws: null
 }
 
@@ -76,11 +76,22 @@ function highlightPreMove(source, target) {
 
 function showCapture(color, captured) {
   if (typeof captured !== 'undefined') {
-    if (color == game.color) {
-      $('#player-captured').append(captured);
-    } else {
+    if (color === game.color) {
       $('#opponent-captured').append(captured);
+    } else {
+      $('#player-captured').append(captured);
     }
+  }
+}
+
+function swapColor(color) {
+  return color === 'w' ? 'b' : 'w';
+}
+
+function showCheck(color, san) {
+  if (san.slice(-1) === '+') {
+    var sq = $("div").find("[data-piece='" + swapColor(color) + "K']");
+    highlightCheck(sq.parent().data('square'));
   }
 }
 
@@ -88,7 +99,7 @@ function SToHHMMSS(sec) {
   var h = Math.floor(sec / 3600);
   var m = Math.floor(sec % 3600 / 60);
   var s = Math.floor(sec % 3600 % 60);
-  return ((h > 0 ? (h >= 0 && h < 10 ? "0" : "") + h + ":" : "") + (m >= 0 && m < 10 ? "0" : "") + m + ":" + (s >= 0 && s < 10 ? "0" : "") + s);
+  return ((h > 0 ? (h >= 0 && h < 10 ? '0' : '') + h + ':' : '') + (m >= 0 && m < 10 ? '0' : '') + m + ':' + (s >= 0 && s < 10 ? '0' : '') + s);
 }
 
 var startBclock = function(clock) {
@@ -172,6 +183,7 @@ function movePlayer(source, target) {
   session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: source+"-"+target }));
   highlightMove(move.from, move.to);
   showCapture(move.color, move.captured);
+  showCheck(move.color, move.san);
 }
 
 var onDrop = function(source, target) {
@@ -217,7 +229,7 @@ $('#collapse-chat').on('show.bs.collapse', function () {
 jQuery(document.body).on('click', '.closeTab', function(event) {
   var tabContentId = $(this).parent().attr("href");
   $(this).parent().remove();
-  delete tabs["content-"+tabContentId.substr(1)];
+  delete tabs['content-'+tabContentId.substr(1)];
   $('#tabs a:last').tab('show');
   $(tabContentId).remove();
 });
@@ -231,7 +243,7 @@ function handleChatMsg(from, data) {
   var tab;
   if (!tabs.hasOwnProperty(from)) {
     var chName = from;
-    if (from === "4") {
+    if (from === '4') {
       chName = "Help";
     }
     $('<a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" href="#content-'+from+'" id="'+from+'" role="tab">'+chName+'<span class="btn btn-default btn-sm closeTab">×</span></a>').appendTo('#tabs');
@@ -318,6 +330,7 @@ function handleICSMsg(message) {
           if (move !== null) {
             highlightMove(move.from, move.to);
             showCapture(move.color, move.captured);
+            showCheck(move.color, move.san);
           }
           if (game.premove !== null) {
             movePlayer(game.premove.source, game.premove.target);
