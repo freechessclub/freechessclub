@@ -1,2 +1,4 @@
 go-freechessclub
 .env
+.DS_Store
+
