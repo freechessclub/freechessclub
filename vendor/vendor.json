@@ -9,6 +9,12 @@
 			"revisionTime": "2017-02-15T16:43:24Z"
 		},
 		{
+			"checksumSHA1": "+/oy2SsS8YvHVvQGcWUDbaajeXQ=",
+			"path": "github.com/gorilla/handlers",
+			"revision": "13d73096a474cac93275c679c7b8a2dc17ddba82",
+			"revisionTime": "2017-02-24T19:39:55Z"
+		},
+		{
 			"checksumSHA1": "EMr5ZpqWL2bUYtJDbKwmcJe8G9c=",
 			"path": "github.com/gorilla/websocket",
 			"revision": "9acaa683f0aa83bd1b9dbec8d43b7d07a16216fa",
