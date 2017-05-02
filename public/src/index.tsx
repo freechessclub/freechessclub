@@ -1,5 +1,8 @@
 // Copyright 2017 Abhishek Kulkarni
 
+import * as $ from "jquery";
+import "bootstrap";
+
 import ReconnectingWebSocket = require("reconnecting-websocket");
 import anchorme from "anchorme";
 import * as chess from "chess.js";
