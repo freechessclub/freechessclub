@@ -18,6 +18,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gorilla/handlers"
 	"github.com/Sirupsen/logrus"
 )
 
@@ -46,5 +47,7 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "./public/"+r.URL.Path[1:])
 	})
-	log.Println(http.ListenAndServe(":"+port, nil))
+	w := log.Writer()
+	defer w.Close()
+	log.Println(http.ListenAndServe(":"+port, handlers.LoggingHandler(w, http.DefaultServeMux)))
 }
