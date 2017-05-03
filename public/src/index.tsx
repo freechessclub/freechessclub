@@ -5,8 +5,8 @@ import "bootstrap";
 
 import ReconnectingWebSocket = require("reconnecting-websocket");
 import anchorme from "anchorme";
-import * as chess from "chess.js";
-import * as ChessBoard from "chessboardjs";
+import ChessBoard from "chessboardjs";
+import Chess from "chess.js";
 
 // A FICS session
 var session = {
@@ -41,31 +41,27 @@ var msgType = {
   unknown: 6
 };
 
-function highlightSquare(square) {
+/**
+ * Highlight an arbitrary square (to show possible moves or the last move)
+ * @param square Square to highlight
+ */
+function highlightSquare(square: string): void {
   if (square === undefined) {
     return;
   }
   var e = $('#board .square-' + square);
-  if (e.hasClass('black-3c85d') == true) {
+  if (e.hasClass('black-3c85d')) {
     e.css('background', '#278881');
   } else {
     e.css('background', '#e6ffdd');
   }
 };
 
-function highlightCheck(square) {
-  if (square === undefined) {
-    return;
-  }
-  var e = $('#board .square-' + square);
-  if (e.hasClass('black-3c85d') == true) {
-    e.css('background', '#aa8881');
-  } else {
-    e.css('background', '#ffdddd');
-  }
-};
-
-function unHighlightSquare(square?: string) {
+/**
+ * Remove highlights from a square or all squares on the board.
+ * @param square Square to unhighlight
+ */
+function unHighlightSquare(square?: string): void {
   if (square !== undefined) {
     $('#board .square-' + square).css('background', '');
   } else {
@@ -73,17 +69,49 @@ function unHighlightSquare(square?: string) {
   }
 }
 
-function highlightMove(source, target) {
+/**
+ * Highlight a square to show an active check.
+ * @param square Square to highlight
+ */
+function highlightCheck(square: string): void {
+  if (square === undefined) {
+    return;
+  }
+  var e = $('#board .square-' + square);
+  if (e.hasClass('black-3c85d')) {
+    e.css('background', '#aa8881');
+  } else {
+    e.css('background', '#ffdddd');
+  }
+};
+
+/**
+ * Highlight a move. This is used to provide a visual cue to display the 
+ * previous move on the board.
+ * @param source The source square to highlight
+ * @param target The target square to highlight
+ */
+function highlightMove(source: string, target: string): void {
   unHighlightSquare();
   highlightSquare(source);
   highlightSquare(target);
 }
 
-function highlightPreMove(source, target) {
+/**
+ * Highlight a premove. Premoves are highlighted with a different color than the last played move.
+ * @param source The source square to highlight
+ * @param target The target square to highlight
+ */
+function highlightPreMove(source: string, target: string): void {
   highlightCheck(source);
   highlightCheck(target);
 }
 
+/**
+ * Show captured piece.
+ * @param color 
+ * @param captured 
+ */
 function showCapture(color, captured) {
   if (typeof captured !== 'undefined') {
     if (color === game.color) {
@@ -94,7 +122,7 @@ function showCapture(color, captured) {
   }
 }
 
-function swapColor(color) {
+function swapColor(color: string): string {
   return color === 'w' ? 'b' : 'w';
 }
 
@@ -312,7 +340,7 @@ function handleICSMsg(message) {
       // role 1: I am playing and it is my move
       // role -1: I am playing and it is my opponent's move
       if (game.chess === null) {
-        game.chess = chess.Chess();
+        game.chess = Chess();
         board.start(false);
         game.history = {moves: [], chess: null, id: -1};
         $('#player-captured').text("");
@@ -426,7 +454,7 @@ $(document).ready(function() {
 
 function displayHistory() {
   if (game.history.chess === null) {
-    game.history.chess = chess.Chess();
+    game.history.chess = Chess();
   }
 
   // refresh history

@@ -10,24 +10,24 @@
     "name": "Abhishek Kulkarni"
   },
   "dependencies": {
-    "@types/jquery": "^2.0.42",
     "anchorme": "^1.1.2",
     "bootstrap": "v4.0.0-alpha.6",
     "chess.js": "^0.10.2",
     "chessboardjs": "freechessclub/chessboardjs",
-    "css-loader": "^0.28.0",
-    "exports-loader": "^0.6.4",
-    "file-loader": "^0.11.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "reconnecting-websocket": "^3.0.3",
-    "style-loader": "^0.17.0",
-    "tether": "^1.4.0",
-    "ts-loader": "^2.0.3",
-    "typescript": "^2.3.2",
-    "url-loader": "^0.5.8"
+    "tether": "^1.4.0"
   },
   "devDependencies": {
+    "@types/jquery": "^2.0.42",
+    "css-loader": "^0.28.0",
+    "exports-loader": "^0.6.4",
+    "file-loader": "^0.11.1",
+    "style-loader": "^0.17.0",
+    "ts-loader": "^2.0.3",
+    "typescript": "^2.3.2",
+    "url-loader": "^0.5.8",
     "webpack": "^2.4.1"
   }
 }
