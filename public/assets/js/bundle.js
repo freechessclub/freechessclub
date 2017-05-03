@@ -19773,8 +19773,8 @@ var $ = __webpack_require__(0);
 __webpack_require__(9);
 var ReconnectingWebSocket = __webpack_require__(12);
 var anchorme_1 = __webpack_require__(8);
-var chessboardjs_1 = __webpack_require__(11);
-var chess_js_1 = __webpack_require__(10);
+var ChessBoard = __webpack_require__(11);
+var Chess = __webpack_require__(10);
 var session = {
     connected: false,
     handle: '',
@@ -19946,7 +19946,7 @@ var onDrop = function (source, target) {
 var onSnapEnd = function () {
     board.position(game.chess.fen());
 };
-var board = chessboardjs_1["default"]('board', {
+var board = ChessBoard('board', {
     position: 'start',
     showNotation: true,
     draggable: true,
@@ -20035,7 +20035,7 @@ function handleICSMsg(message) {
             game.btime = data.btime;
             game.wtime = data.wtime;
             if (game.chess === null) {
-                game.chess = chess_js_1["default"]();
+                game.chess = Chess();
                 board.start(false);
                 game.history = { moves: [], chess: null, id: -1 };
                 $('#player-captured').text("");
@@ -20148,7 +20148,7 @@ $(document).ready(function () {
 });
 function displayHistory() {
     if (game.history.chess === null) {
-        game.history.chess = chess_js_1["default"]();
+        game.history.chess = Chess();
     }
     if (game.chess !== null) {
         var moves = game.chess.history();

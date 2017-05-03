@@ -5,8 +5,8 @@ import "bootstrap";
 
 import ReconnectingWebSocket = require("reconnecting-websocket");
 import anchorme from "anchorme";
-import ChessBoard from "chessboardjs";
-import Chess from "chess.js";
+import * as ChessBoard from "chessboardjs";
+import * as Chess from "chess.js";
 
 // A FICS session
 var session = {
