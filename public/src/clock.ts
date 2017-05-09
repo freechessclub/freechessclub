@@ -1,4 +1,4 @@
-// Copyright 2017 Abhishek Kulkarni
+// Copyright 2017 The Free Chess Club.
 
 /**
  * Convert seconds to HH:MM:SS.

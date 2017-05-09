@@ -4,6 +4,16 @@
         "tslint:recommended"
     ],
     "jsRules": {},
-    "rules": {},
+    "rules": {
+        "quotemark" : [
+            true,
+            "single",
+            "avoid-escape"
+        ],
+        "file-header" : [
+            true,
+            "Copyright \\d{4} The Free Chess Club."
+        ]
+    },
     "rulesDirectory": []
 }

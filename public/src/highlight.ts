@@ -1,4 +1,4 @@
-// Copyright 2017 Abhishek Kulkarni
+// Copyright 2017 The Free Chess Club.
 
 /**
  * Highlight an arbitrary square (to show possible moves or the last move)
