@@ -2,6 +2,9 @@
   "name": "freechessclub",
   "version": "1.0.0",
   "description": "The Free Chess Club: A modern web client for FICS.",
+  "scripts": {
+    "lint": "./node_modules/.bin/tslint -c tslint.json --type-check --fix -p tsconfig.json"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/freechessclub/go-freechessclub"
@@ -17,7 +20,8 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "reconnecting-websocket": "^3.0.3",
-    "tether": "^1.4.0"
+    "tether": "^1.4.0",
+    "tslint": "^5.2.0"
   },
   "devDependencies": {
     "@types/jquery": "^2.0.42",

@@ -7,6 +7,8 @@ import ReconnectingWebSocket = require("reconnecting-websocket");
 import anchorme from "anchorme";
 import * as ChessBoard from "chessboardjs";
 import * as Chess from "chess.js";
+import * as clock from "./clock";
+import * as highlight from "./highlight";
 
 // A FICS session
 var session = {
@@ -31,81 +33,15 @@ var game = {
 }
 
 // Type of messages we receive from the proxy
-var msgType = {
-  ctl: 0,
-  chTell: 1,
-  pTell: 2,
-  gameMove: 3,
-  gameStart: 4,
-  gameEnd: 5,
-  unknown: 6
+enum MessageType {
+  Control = 0,
+  ChannelTell,
+  PrivateTell,
+  GameMove,
+  GameStart,
+  GameEnd,
+  Unknown
 };
-
-/**
- * Highlight an arbitrary square (to show possible moves or the last move)
- * @param square Square to highlight
- */
-function highlightSquare(square: string): void {
-  if (square === undefined) {
-    return;
-  }
-  var e = $('#board .square-' + square);
-  if (e.hasClass('black-3c85d')) {
-    e.css('background', '#278881');
-  } else {
-    e.css('background', '#e6ffdd');
-  }
-};
-
-/**
- * Remove highlights from a square or all squares on the board.
- * @param square Square to unhighlight
- */
-function unHighlightSquare(square?: string): void {
-  if (square !== undefined) {
-    $('#board .square-' + square).css('background', '');
-  } else {
-    $('#board .square-55d63').css('background', '');
-  }
-}
-
-/**
- * Highlight a square to show an active check.
- * @param square Square to highlight
- */
-function highlightCheck(square: string): void {
-  if (square === undefined) {
-    return;
-  }
-  var e = $('#board .square-' + square);
-  if (e.hasClass('black-3c85d')) {
-    e.css('background', '#aa8881');
-  } else {
-    e.css('background', '#ffdddd');
-  }
-};
-
-/**
- * Highlight a move. This is used to provide a visual cue to display the 
- * previous move on the board.
- * @param source The source square to highlight
- * @param target The target square to highlight
- */
-function highlightMove(source: string, target: string): void {
-  unHighlightSquare();
-  highlightSquare(source);
-  highlightSquare(target);
-}
-
-/**
- * Highlight a premove. Premoves are highlighted with a different color than the last played move.
- * @param source The source square to highlight
- * @param target The target square to highlight
- */
-function highlightPreMove(source: string, target: string): void {
-  highlightCheck(source);
-  highlightCheck(target);
-}
 
 /**
  * Show captured piece.
@@ -122,62 +58,6 @@ function showCapture(color, captured) {
   }
 }
 
-function swapColor(color: string): string {
-  return color === 'w' ? 'b' : 'w';
-}
-
-function showCheck(color, san) {
-  if (san.slice(-1) === '+') {
-    var sq = $("div").find("[data-piece='" + swapColor(color) + "K']");
-    highlightCheck(sq.parent().data('square'));
-  }
-}
-
-function SToHHMMSS(sec) {
-  var h = Math.abs(Math.floor(sec / 3600));
-  var m = Math.abs(Math.floor(sec % 3600 / 60));
-  var s = Math.abs(Math.floor(sec % 3600 % 60));
-  return ((sec < 0 ? '-' : '') + (h > 0 ? (h >= 0 && h < 10 ? '0' : '') + h + ':' : '') + (m >= 0 && m < 10 ? '0' : '') + m + ':' + (s >= 0 && s < 10 ? '0' : '') + s);
-}
-
-var startBclock = function(clock) {
-  return setInterval(function() {
-    if (game.chess.turn() === 'w') {
-      return;
-    }
-
-    game.btime = game.btime - 1;
-    if (game.btime < 20 && clock.css('color') !== 'red') {
-      clock.css('color', 'red');
-    }
-
-    if (game.btime > 20) {
-      clock.css('color', '');
-    }
-
-    clock.text(SToHHMMSS(game.btime));
-  }, 1000);
-}
-
-var startWclock = function(clock) {
-  return setInterval(function() {
-    if (game.chess.turn() === 'b') {
-      return;
-    }
-
-    game.wtime = game.wtime - 1;
-    if (game.wtime < 20 && clock.css('color') !== 'red') {
-      clock.css('color', 'red');
-    }
-
-    if (game.wtime > 20) {
-      clock.css('color', '');
-    }
-
-    clock.text(SToHHMMSS(game.wtime));
-  }, 1000);
-}
-
 var onDragStart = function(source, piece, position, orientation) {
   var chess = game.chess;
   if (chess === null) {
@@ -190,16 +70,16 @@ var onDragStart = function(source, piece, position, orientation) {
   }
 
   if (game.premove !== null) {
-    unHighlightSquare(game.premove.source);
-    unHighlightSquare(game.premove.target);
+    highlight.unHighlightSquare(game.premove.source);
+    highlight.unHighlightSquare(game.premove.target);
     game.premove = null;
   }
 
   // get list of possible moves for this square
   var moves = chess.moves({square: source, verbose: true});
-  highlightSquare(source);
+  highlight.highlightSquare(source);
   for (var i = 0; i < moves.length; i++) {
-    highlightSquare(moves[i].to);
+    highlight.highlightSquare(moves[i].to);
   }
 };
 
@@ -214,21 +94,21 @@ function movePlayer(source, target) {
 
   // illegal move
   if (move === null) {
-    unHighlightSquare();
+    highlight.unHighlightSquare();
     return 'snapback';
   }
 
-  session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: source+"-"+target }));
-  highlightMove(move.from, move.to);
+  session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: source+"-"+target }));
+  highlight.highlightMove(move.from, move.to);
   showCapture(move.color, move.captured);
-  showCheck(move.color, move.san);
+  highlight.showCheck(move.color, move.san);
 }
 
 var onDrop = function(source, target) {
   // premove if it is not my turn yet
   if (game.color !== game.chess.turn()) {
     game.premove = {source: source, target: target};
-    return highlightPreMove(source, target);
+    return highlight.highlightPreMove(source, target);
   } else {
     return movePlayer(source, target);
   }
@@ -301,7 +181,7 @@ function handleChatMsg(from, data) {
       textclass = " class=\"mine\"";
     }
     who = "<strong"+textclass+">"+$('<span/>').text(data.handle).html()+"</strong>: ";
-    if (data.type == msgType.chTell) {
+    if (data.type == MessageType.ChannelTell) {
       tabheader = $("#"+data.channel);
     } else {
       tabheader = $("#"+data.handle);
@@ -320,20 +200,20 @@ function handleChatMsg(from, data) {
 function handleICSMsg(message) {
   var data = JSON.parse(message.data);
   switch(data.type) {
-    case msgType.ctl:
+    case MessageType.Control:
       if (session.connected == false && data.command == 1) {
         session.connected = true;
         session.handle = data.text;
         $("#chat-status").text("Connected as " + session.handle);
       }
       break;
-    case msgType.chTell:
+    case MessageType.ChannelTell:
       handleChatMsg(data.channel, data)
       break;
-    case msgType.pTell:
+    case MessageType.PrivateTell:
       handleChatMsg(data.handle, data);
       break;
-    case msgType.gameMove:
+    case MessageType.GameMove:
       game.btime = data.btime;
       game.wtime = data.wtime;
 
@@ -348,15 +228,15 @@ function handleICSMsg(message) {
         if (data.role == 1) {
           game.color = 'w';
           board.orientation('white');
-          game.wclock = startWclock($("#player-time"));
-          game.bclock = startBclock($("#opponent-time"));
+          game.wclock = clock.startWhiteClock(game, $("#player-time"));
+          game.bclock = clock.startBlackClock(game, $("#opponent-time"));
           $("#player-name").text(data.wname);
           $("#opponent-name").text(data.bname);
         } else if (data.role == -1) {
           game.color = 'b';
           board.orientation('black');
-          game.bclock = startBclock($("#player-time"));
-          game.wclock = startWclock($("#opponent-time"));
+          game.bclock = clock.startBlackClock(game, $("#player-time"));
+          game.wclock = clock.startWhiteClock(game, $("#opponent-time"));
           $("#player-name").text(data.bname);
           $("#opponent-name").text(data.wname);
         }
@@ -366,9 +246,9 @@ function handleICSMsg(message) {
         if (data.move !== "none") {
           var move = game.chess.move(data.move);
           if (move !== null) {
-            highlightMove(move.from, move.to);
+            highlight.highlightMove(move.from, move.to);
             showCapture(move.color, move.captured);
-            showCheck(move.color, move.san);
+            highlight.showCheck(move.color, move.san);
           }
           if (game.premove !== null) {
             movePlayer(game.premove.source, game.premove.target);
@@ -378,16 +258,16 @@ function handleICSMsg(message) {
       }
       board.position(data.fen);
       break;
-    case msgType.gameStart:
+    case MessageType.GameStart:
       break;
-    case msgType.gameEnd:
+    case MessageType.GameEnd:
       clearInterval(game.wclock);
       clearInterval(game.bclock);
       displayHistory();
       delete game.chess;
       game.chess = null;
       break;
-    case msgType.unknown:
+    case MessageType.Unknown:
     default:
       handleChatMsg($("ul#tabs a.active").attr("id"), data);
       break;
@@ -411,7 +291,7 @@ function connectToICS(user?: string, pass?: string) {
   conn.onclose = disconnectICS;
   if (login) {
     conn.onopen = function() {
-      conn.send(JSON.stringify({ type: msgType.ctl, command: 1, text: "[" + user + "," + btoa(pass) + "]" }));
+      conn.send(JSON.stringify({ type: MessageType.Control, command: 1, text: "[" + user + "," + btoa(pass) + "]" }));
     }
   }
   return conn;
@@ -425,7 +305,7 @@ $("#input-form").on("submit", function(event) {
       var msg = $("#input-text").val();
       var tab = $("ul#tabs a.active").attr("id")
       text = "t " + tab + " " + msg;
-      handleChatMsg(tab, { type: msgType.chTell, channel: tab, handle: session.handle, text: msg });
+      handleChatMsg(tab, { type: MessageType.ChannelTell, channel: tab, handle: session.handle, text: msg });
     } else {
       text = $("#input-text").val().substr(1);
     }
@@ -436,7 +316,7 @@ $("#input-form").on("submit", function(event) {
       text = $("#input-text").val().substr(1);
     }
   }
-  session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: text }));
+  session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: text }));
   $("#input-text").val("");
 });
 
@@ -501,29 +381,29 @@ $("#fast-forward").on("click", function(event) {
 
 $("#resign").on("click", function(event) {
   if (game.chess !== null && session.ws !== null) {
-    session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: "resign" }));
+    session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: "resign" }));
   }
 });
 
 $("#abort").on("click", function(event) {
   if (game.chess !== null && session.ws !== null) {
-    session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: "abort" }));
+    session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: "abort" }));
   }
 });
 
 $("#takeback").on("click", function(event) {
   if (game.chess !== null && session.ws !== null) {
     if (game.chess.turn() === game.color) {
-      session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: "take 2"}));
+      session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: "take 2"}));
     } else {
-      session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: "take 1"}));
+      session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: "take 1"}));
     }
   }
 });
 
 $("#draw").on("click", function(event) {
   if (game.chess !== null && session.ws !== null) {
-    session.ws.send(JSON.stringify({ type: msgType.ctl, command: 0, text: "draw" }));
+    session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: "draw" }));
   }
 });
 
