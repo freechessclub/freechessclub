@@ -17804,7 +17804,6 @@ function highlightSquare(square) {
     }
 }
 exports.highlightSquare = highlightSquare;
-;
 function unHighlightSquare(square) {
     if (square) {
         $('#board .square-' + square).css('background', '');
@@ -17827,7 +17826,6 @@ function highlightCheck(square) {
     }
 }
 exports.highlightCheck = highlightCheck;
-;
 function highlightMove(source, target) {
     unHighlightSquare();
     highlightSquare(source);
@@ -17840,12 +17838,12 @@ function highlightPreMove(source, target) {
 }
 exports.highlightPreMove = highlightPreMove;
 function swapColor(color) {
-    return color === 'w' ? 'b' : 'w';
+    return (color === 'w') ? 'b' : 'w';
 }
 exports.swapColor = swapColor;
 function showCheck(color, san) {
     if (san.slice(-1) === '+') {
-        var square = $("div").find("[data-piece='" + swapColor(color) + "K']");
+        var square = $('div').find("[data-piece='" + swapColor(color) + "K']");
         highlightCheck(square.parent().data('square'));
     }
 }
