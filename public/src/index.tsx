@@ -134,10 +134,10 @@ function showCheck(color, san) {
 }
 
 function SToHHMMSS(sec) {
-  var h = Math.floor(sec / 3600);
-  var m = Math.floor(sec % 3600 / 60);
-  var s = Math.floor(sec % 3600 % 60);
-  return ((h > 0 ? (h >= 0 && h < 10 ? '0' : '') + h + ':' : '') + (m >= 0 && m < 10 ? '0' : '') + m + ':' + (s >= 0 && s < 10 ? '0' : '') + s);
+  var h = Math.abs(Math.floor(sec / 3600));
+  var m = Math.abs(Math.floor(sec % 3600 / 60));
+  var s = Math.abs(Math.floor(sec % 3600 % 60));
+  return ((sec < 0 ? '-' : '') + (h > 0 ? (h >= 0 && h < 10 ? '0' : '') + h + ':' : '') + (m >= 0 && m < 10 ? '0' : '') + m + ':' + (s >= 0 && s < 10 ? '0' : '') + s);
 }
 
 var startBclock = function(clock) {
