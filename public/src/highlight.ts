@@ -8,13 +8,13 @@ export function highlightSquare(square?: string): void {
   if (square === undefined) {
     return;
   }
-  var e = $('#board .square-' + square);
-  if (e.hasClass('black-3c85d')) {
-    e.css('background', '#278881');
+  const e = $("#board .square-" + square);
+  if (e.hasClass("black-3c85d")) {
+    e.css("background", "#278881");
   } else {
-    e.css('background', '#e6ffdd');
+    e.css("background", "#e6ffdd");
   }
-};
+}
 
 /**
  * Remove highlights from a square or all squares on the board.
@@ -22,9 +22,9 @@ export function highlightSquare(square?: string): void {
  */
 export function unHighlightSquare(square?: string): void {
   if (square) {
-    $('#board .square-' + square).css('background', '');
+    $("#board .square-" + square).css("background", "");
   } else {
-    $('#board .square-55d63').css('background', '');
+    $("#board .square-55d63").css("background", "");
   }
 }
 
@@ -36,16 +36,16 @@ export function highlightCheck(square?: string): void {
   if (square === undefined) {
     return;
   }
-  var e = $('#board .square-' + square);
-  if (e.hasClass('black-3c85d')) {
-    e.css('background', '#aa8881');
+  const e = $("#board .square-" + square);
+  if (e.hasClass("black-3c85d")) {
+    e.css("background", "#aa8881");
   } else {
-    e.css('background', '#ffdddd');
+    e.css("background", "#ffdddd");
   }
-};
+}
 
 /**
- * Highlight a move. This is used to provide a visual cue to display the 
+ * Highlight a move. This is used to provide a visual cue to display the
  * previous move on the board.
  * @param source The source square to highlight
  * @param target The target square to highlight
@@ -70,15 +70,15 @@ export function highlightPreMove(source: string, target: string): void {
  * Function to swap the color: B -> W or W -> B.
  */
 export function swapColor(color: string): string {
-  return color === 'w' ? 'b' : 'w';
+  return (color === "w") ? "b": "w";
 }
 
 /**
  * Show check on the board by highlighting the king square.
  */
 export function showCheck(color: string, san: string) {
-  if (san.slice(-1) === '+') {
-    var square = $("div").find("[data-piece='" + swapColor(color) + "K']");
-    highlightCheck(square.parent().data('square'));
+  if (san.slice(-1) === "+") {
+    const square = $("div").find("[data-piece='" + swapColor(color) + "K']");
+    highlightCheck(square.parent().data("square"));
   }
 }
