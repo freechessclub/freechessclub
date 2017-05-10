@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 19);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10404,8 +10404,28 @@ exports.isPort = isPort;
 
 "use strict";
 
+exports.__esModule = true;
+var MessageType;
+(function (MessageType) {
+    MessageType[MessageType["Control"] = 0] = "Control";
+    MessageType[MessageType["ChannelTell"] = 1] = "ChannelTell";
+    MessageType[MessageType["PrivateTell"] = 2] = "PrivateTell";
+    MessageType[MessageType["GameMove"] = 3] = "GameMove";
+    MessageType[MessageType["GameStart"] = 4] = "GameStart";
+    MessageType[MessageType["GameEnd"] = 5] = "GameEnd";
+    MessageType[MessageType["Unknown"] = 6] = "Unknown";
+})(MessageType = exports.MessageType || (exports.MessageType = {}));
+exports["default"] = MessageType;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 Object.defineProperty(exports, "__esModule", { value: true });
-var fix_1 = __webpack_require__(15);
+var fix_1 = __webpack_require__(16);
 /**
  *
  * Split the string with word separators
@@ -10433,7 +10453,7 @@ exports.deSeparate = deSeparate;
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10470,7 +10490,7 @@ exports.default = default_1;
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10497,7 +10517,7 @@ exports.default = default_1;
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10536,7 +10556,7 @@ exports.default = default_1;
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10564,18 +10584,18 @@ exports.default = default_1;
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = __webpack_require__(2);
-var email_1 = __webpack_require__(4);
-var ip_1 = __webpack_require__(6);
-var url_1 = __webpack_require__(7);
-var transform_1 = __webpack_require__(17);
-var hasprotocol_1 = __webpack_require__(5);
+var email_1 = __webpack_require__(5);
+var ip_1 = __webpack_require__(7);
+var url_1 = __webpack_require__(8);
+var transform_1 = __webpack_require__(18);
+var hasprotocol_1 = __webpack_require__(6);
 var anchorme = function (str, options) {
     options = util_1.defaultOptions(options);
     var result = transform_1.default(str, options);
@@ -10598,7 +10618,7 @@ exports.default = anchorme;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery, Tether) {/*!
@@ -14137,10 +14157,10 @@ var Popover = function ($) {
 
 }();
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(18)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(19)))
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -15788,7 +15808,7 @@ if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = function () { return Chess;  }.call(
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {/*!
@@ -17522,218 +17542,6 @@ module.exports = ChessBoard;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var isWebSocket = function (constructor) {
-    return constructor && constructor.CLOSING === 2;
-};
-var isGlobalWebSocket = function () {
-    return typeof WebSocket !== 'undefined' && isWebSocket(WebSocket);
-};
-var getDefaultOptions = function () { return ({
-    constructor: isGlobalWebSocket() ? WebSocket : null,
-    maxReconnectionDelay: 10000,
-    minReconnectionDelay: 1500,
-    reconnectionDelayGrowFactor: 1.3,
-    connectionTimeout: 4000,
-    maxRetries: Infinity,
-    debug: false,
-}); };
-var bypassProperty = function (src, dst, name) {
-    Object.defineProperty(dst, name, {
-        get: function () { return src[name]; },
-        set: function (value) { src[name] = value; },
-        enumerable: true,
-        configurable: true,
-    });
-};
-var initReconnectionDelay = function (config) {
-    return (config.minReconnectionDelay + Math.random() * config.minReconnectionDelay);
-};
-var updateReconnectionDelay = function (config, previousDelay) {
-    var newDelay = previousDelay * config.reconnectionDelayGrowFactor;
-    return (newDelay > config.maxReconnectionDelay)
-        ? config.maxReconnectionDelay
-        : newDelay;
-};
-var LEVEL_0_EVENTS = ['onopen', 'onclose', 'onmessage', 'onerror'];
-var reassignEventListeners = function (ws, oldWs, listeners) {
-    Object.keys(listeners).forEach(function (type) {
-        listeners[type].forEach(function (_a) {
-            var listener = _a[0], options = _a[1];
-            ws.addEventListener(type, listener, options);
-        });
-    });
-    if (oldWs) {
-        LEVEL_0_EVENTS.forEach(function (name) { ws[name] = oldWs[name]; });
-    }
-};
-var ReconnectingWebsocket = function (url, protocols, options) {
-    var _this = this;
-    if (options === void 0) { options = {}; }
-    var ws;
-    var connectingTimeout;
-    var reconnectDelay = 0;
-    var retriesCount = 0;
-    var shouldRetry = true;
-    var savedOnClose = null;
-    var listeners = {};
-    // require new to construct
-    if (!(this instanceof ReconnectingWebsocket)) {
-        throw new TypeError("Failed to construct 'ReconnectingWebSocket': Please use the 'new' operator");
-    }
-    // Set config. Not using `Object.assign` because of IE11
-    var config = getDefaultOptions();
-    Object.keys(config)
-        .filter(function (key) { return options.hasOwnProperty(key); })
-        .forEach(function (key) { return config[key] = options[key]; });
-    if (!isWebSocket(config.constructor)) {
-        throw new TypeError('Invalid WebSocket constructor. Set `options.constructor`');
-    }
-    var log = config.debug ? function () {
-        var params = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            params[_i - 0] = arguments[_i];
-        }
-        return console.log.apply(console, ['RWS:'].concat(params));
-    } : function () { };
-    /**
-     * Not using dispatchEvent, otherwise we must use a DOM Event object
-     * Deferred because we want to handle the close event before this
-     */
-    var emitError = function (code, msg) { return setTimeout(function () {
-        var err = new Error(msg);
-        err.code = code;
-        if (Array.isArray(listeners.error)) {
-            listeners.error.forEach(function (_a) {
-                var fn = _a[0];
-                return fn(err);
-            });
-        }
-        if (ws.onerror) {
-            ws.onerror(err);
-        }
-    }, 0); };
-    var handleClose = function () {
-        log('close');
-        retriesCount++;
-        log('retries count:', retriesCount);
-        if (retriesCount > config.maxRetries) {
-            emitError('EHOSTDOWN', 'Too many failed connection attempts');
-            return;
-        }
-        if (!reconnectDelay) {
-            reconnectDelay = initReconnectionDelay(config);
-        }
-        else {
-            reconnectDelay = updateReconnectionDelay(config, reconnectDelay);
-        }
-        log('reconnectDelay:', reconnectDelay);
-        if (shouldRetry) {
-            setTimeout(connect, reconnectDelay);
-        }
-    };
-    var connect = function () {
-        log('connect');
-        var oldWs = ws;
-        ws = new config.constructor(url, protocols);
-        connectingTimeout = setTimeout(function () {
-            log('timeout');
-            ws.close();
-            emitError('ETIMEDOUT', 'Connection timeout');
-        }, config.connectionTimeout);
-        log('bypass properties');
-        for (var key in ws) {
-            // @todo move to constant
-            if (['addEventListener', 'removeEventListener', 'close', 'send'].indexOf(key) < 0) {
-                bypassProperty(ws, _this, key);
-            }
-        }
-        ws.addEventListener('open', function () {
-            clearTimeout(connectingTimeout);
-            log('open');
-            reconnectDelay = initReconnectionDelay(config);
-            log('reconnectDelay:', reconnectDelay);
-            retriesCount = 0;
-        });
-        ws.addEventListener('close', handleClose);
-        reassignEventListeners(ws, oldWs, listeners);
-        // because when closing with fastClose=true, it is saved and set to null to avoid double calls
-        ws.onclose = ws.onclose || savedOnClose;
-        savedOnClose = null;
-    };
-    log('init');
-    connect();
-    this.close = function (code, reason, _a) {
-        if (code === void 0) { code = 1000; }
-        if (reason === void 0) { reason = ''; }
-        var _b = _a === void 0 ? {} : _a, _c = _b.keepClosed, keepClosed = _c === void 0 ? false : _c, _d = _b.fastClose, fastClose = _d === void 0 ? true : _d, _e = _b.delay, delay = _e === void 0 ? 0 : _e;
-        if (delay) {
-            reconnectDelay = delay;
-        }
-        shouldRetry = !keepClosed;
-        ws.close(code, reason);
-        if (fastClose) {
-            var fakeCloseEvent_1 = {
-                code: code,
-                reason: reason,
-                wasClean: true,
-            };
-            // execute close listeners soon with a fake closeEvent
-            // and remove them from the WS instance so they
-            // don't get fired on the real close.
-            handleClose();
-            ws.removeEventListener('close', handleClose);
-            // run and remove level2
-            if (Array.isArray(listeners.close)) {
-                listeners.close.forEach(function (_a) {
-                    var listener = _a[0], options = _a[1];
-                    listener(fakeCloseEvent_1);
-                    ws.removeEventListener('close', listener, options);
-                });
-            }
-            // run and remove level0
-            if (ws.onclose) {
-                savedOnClose = ws.onclose;
-                ws.onclose(fakeCloseEvent_1);
-                ws.onclose = null;
-            }
-        }
-    };
-    this.send = function (data) {
-        ws.send(data);
-    };
-    this.addEventListener = function (type, listener, options) {
-        if (Array.isArray(listeners[type])) {
-            if (!listeners[type].some(function (_a) {
-                var l = _a[0];
-                return l === listener;
-            })) {
-                listeners[type].push([listener, options]);
-            }
-        }
-        else {
-            listeners[type] = [[listener, options]];
-        }
-        ws.addEventListener(type, listener, options);
-    };
-    this.removeEventListener = function (type, listener, options) {
-        if (Array.isArray(listeners[type])) {
-            listeners[type] = listeners[type].filter(function (_a) {
-                var l = _a[0];
-                return l !== listener;
-            });
-        }
-        ws.removeEventListener(type, listener, options);
-    };
-};
-module.exports = ReconnectingWebsocket;
-
-
-/***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17856,6 +17664,78 @@ exports.showCheck = showCheck;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+exports.__esModule = true;
+var message_1 = __webpack_require__(3);
+var Session = (function () {
+    function Session(onMessage, user, pass) {
+        this.connected = false;
+        this.handle = '';
+        this.connect(onMessage, user, pass);
+    }
+    Session.prototype.getHandle = function () {
+        return this.handle;
+    };
+    Session.prototype.setHandle = function (handle) {
+        this.connected = true;
+        this.handle = handle;
+        $('#chat-status').text('Connected as ' + handle);
+    };
+    Session.prototype.isConnected = function () {
+        return this.connected;
+    };
+    Session.prototype.connect = function (onMessage, user, pass) {
+        var _this = this;
+        $('#chat-status').text('Connecting...');
+        var login = (user !== undefined && pass !== undefined);
+        var loginOptions = '';
+        if (login) {
+            loginOptions += '?login=1';
+        }
+        this.websocket = new WebSocket(location.protocol.replace('http', 'ws') + '//' + location.host + '/ws' + loginOptions);
+        this.websocket.onmessage = onMessage;
+        this.websocket.onclose = this.reset;
+        if (login) {
+            this.websocket.onopen = function () {
+                _this.websocket.send(JSON.stringify({ type: message_1["default"].Control, command: 1, text: '[' + user + ',' + btoa(pass) + ']' }));
+            };
+        }
+    };
+    Session.prototype.disconnect = function () {
+        if (this.isConnected()) {
+            $('#chat-status').text('Disconnecting...');
+            this.websocket.close();
+            this.connected = false;
+            this.handle = '';
+        }
+    };
+    Session.prototype.reset = function (evt) {
+        $('#chat-status').text('Disconnected');
+    };
+    Session.prototype.send = function (payload) {
+        if (!this.isConnected()) {
+            throw new Error('Session not connected.');
+        }
+        var data;
+        if (typeof payload === 'object') {
+            data = JSON.stringify(payload);
+        }
+        else {
+            data = payload;
+        }
+        this.websocket.send(data);
+    };
+    return Session;
+}());
+exports["default"] = Session;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /**
  *
  * @hack
@@ -17919,17 +17799,17 @@ exports.default = default_1;
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var email_1 = __webpack_require__(4);
-var hasprotocol_1 = __webpack_require__(5);
+var email_1 = __webpack_require__(5);
+var hasprotocol_1 = __webpack_require__(6);
 var lists_1 = __webpack_require__(1);
-var ip_1 = __webpack_require__(6);
-var url_1 = __webpack_require__(7);
+var ip_1 = __webpack_require__(7);
+var url_1 = __webpack_require__(8);
 function default_1(inputArr, options) {
     return inputArr.map(function (fragment, index) {
         var encoded = encodeURI(fragment);
@@ -17991,15 +17871,15 @@ exports.default = default_1;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var separate_1 = __webpack_require__(3);
-var identify_1 = __webpack_require__(16);
-var separate_2 = __webpack_require__(3);
+var separate_1 = __webpack_require__(4);
+var identify_1 = __webpack_require__(17);
+var separate_2 = __webpack_require__(4);
 function default_1(str, options) {
     var arr = separate_2.separate(str);
     var identified = identify_1.default(arr, options);
@@ -18060,7 +17940,7 @@ function url2tag(fragment, options) {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.4.0 */
@@ -19881,26 +19761,23 @@ return Tether;
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(jQuery) {
 var _this = this;
 exports.__esModule = true;
+__webpack_require__(10);
 var $ = __webpack_require__(0);
-var ReconnectingWebSocket = __webpack_require__(12);
-var anchorme_1 = __webpack_require__(8);
-__webpack_require__(9);
-var Chess = __webpack_require__(10);
-var ChessBoard = __webpack_require__(11);
+var anchorme_1 = __webpack_require__(9);
+var Chess = __webpack_require__(11);
+var ChessBoard = __webpack_require__(12);
 var clock = __webpack_require__(13);
 var highlight = __webpack_require__(14);
-var session = {
-    connected: false,
-    handle: '',
-    ws: null
-};
+var message_1 = __webpack_require__(3);
+var session_1 = __webpack_require__(15);
+var session;
 var tabs;
 var game = {
     chess: null,
@@ -19912,16 +19789,6 @@ var game = {
     wclock: null,
     wtime: 0
 };
-var MessageType;
-(function (MessageType) {
-    MessageType[MessageType["Control"] = 0] = "Control";
-    MessageType[MessageType["ChannelTell"] = 1] = "ChannelTell";
-    MessageType[MessageType["PrivateTell"] = 2] = "PrivateTell";
-    MessageType[MessageType["GameMove"] = 3] = "GameMove";
-    MessageType[MessageType["GameStart"] = 4] = "GameStart";
-    MessageType[MessageType["GameEnd"] = 5] = "GameEnd";
-    MessageType[MessageType["Unknown"] = 6] = "Unknown";
-})(MessageType || (MessageType = {}));
 function showCapture(color, captured) {
     if (typeof captured !== 'undefined') {
         if (color === game.color) {
@@ -19963,7 +19830,7 @@ function movePlayer(source, target) {
         highlight.unHighlightSquare();
         return 'snapback';
     }
-    session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: source + '-' + target }));
+    session.send({ type: message_1["default"].Control, command: 0, text: source + '-' + target });
     highlight.highlightMove(move.from, move.to);
     showCapture(move.color, move.captured);
     highlight.showCheck(move.color, move.san);
@@ -20031,11 +19898,11 @@ function handleChatMsg(from, data) {
     var tabheader = $('#' + $('ul#tabs a.active').attr('id'));
     if (data.hasOwnProperty('handle')) {
         var textclass = '';
-        if (session.handle === data.handle) {
+        if (session.getHandle() === data.handle) {
             textclass = ' class="mine"';
         }
         who = '<strong' + textclass + '>' + $('<span/>').text(data.handle).html() + '</strong>: ';
-        if (data.type === MessageType.ChannelTell) {
+        if (data.type === message_1["default"].ChannelTell) {
             tabheader = $('#' + data.channel);
         }
         else {
@@ -20051,23 +19918,21 @@ function handleChatMsg(from, data) {
         tabheader.css('color', 'red');
     }
 }
-function handleICSMsg(message) {
+function ICSMessageHandler(message) {
     var data = JSON.parse(message.data);
     switch (data.type) {
-        case MessageType.Control:
-            if (session.connected === false && data.command === 1) {
-                session.connected = true;
-                session.handle = data.text;
-                $('#chat-status').text('Connected as ' + session.handle);
+        case message_1["default"].Control:
+            if (!session.isConnected() && data.command === 1) {
+                session.setHandle(data.text);
             }
             break;
-        case MessageType.ChannelTell:
+        case message_1["default"].ChannelTell:
             handleChatMsg(data.channel, data);
             break;
-        case MessageType.PrivateTell:
+        case message_1["default"].PrivateTell:
             handleChatMsg(data.handle, data);
             break;
-        case MessageType.GameMove:
+        case message_1["default"].GameMove:
             game.btime = data.btime;
             game.wtime = data.wtime;
             if (game.chess === null) {
@@ -20109,41 +19974,20 @@ function handleICSMsg(message) {
             }
             board.position(data.fen);
             break;
-        case MessageType.GameStart:
+        case message_1["default"].GameStart:
             break;
-        case MessageType.GameEnd:
+        case message_1["default"].GameEnd:
             clearInterval(game.wclock);
             clearInterval(game.bclock);
             displayHistory();
             delete game.chess;
             game.chess = null;
             break;
-        case MessageType.Unknown:
+        case message_1["default"].Unknown:
         default:
             handleChatMsg($('ul#tabs a.active').attr('id'), data);
             break;
     }
-}
-function disconnectICS() {
-    $('#chat-status').text('Disconnected');
-    session.connected = false;
-    session.handle = '';
-}
-function connectToICS(user, pass) {
-    var login = (typeof user !== 'undefined' && typeof pass !== 'undefined');
-    var loginOptions = '';
-    if (login) {
-        loginOptions += '?login=1';
-    }
-    var conn = new ReconnectingWebSocket(location.protocol.replace('http', 'ws') + '//' + location.host + '/ws' + loginOptions);
-    conn.onmessage = handleICSMsg;
-    conn.onclose = disconnectICS;
-    if (login) {
-        conn.onopen = function () {
-            conn.send(JSON.stringify({ type: MessageType.Control, command: 1, text: '[' + user + ',' + btoa(pass) + ']' }));
-        };
-    }
-    return conn;
 }
 $('#input-form').on('submit', function (event) {
     event.preventDefault();
@@ -20153,7 +19997,7 @@ $('#input-form').on('submit', function (event) {
             var msg = $('#input-text').val();
             var tab = $('ul#tabs a.active').attr('id');
             text = 't ' + tab + ' ' + msg;
-            handleChatMsg(tab, { type: MessageType.ChannelTell, channel: tab, handle: session.handle, text: msg });
+            handleChatMsg(tab, { type: message_1["default"].ChannelTell, channel: tab, handle: session.getHandle(), text: msg });
         }
         else {
             text = $('#input-text').val().substr(1);
@@ -20167,13 +20011,11 @@ $('#input-form').on('submit', function (event) {
             text = $('#input-text').val().substr(1);
         }
     }
-    session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: text }));
+    session.send({ type: message_1["default"].Control, command: 0, text: text });
     $('#input-text').val('');
 });
 $(document).ready(function () {
-    session.ws = connectToICS();
-    session.connected = false;
-    $('#chat-status').text('Connecting...');
+    session = new session_1["default"](ICSMessageHandler);
     $('#opponent-time').text('00:00');
     $('#player-time').text('00:00');
     $('.chat-text').height($('#board').height() - 40);
@@ -20220,54 +20062,65 @@ $('#fast-forward').on('click', function (event) {
     displayHistory();
 });
 $('#resign').on('click', function (event) {
-    if (game.chess !== null && session.ws !== null) {
-        session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: 'resign' }));
+    if (game.chess !== null && session) {
+        session.send({ type: message_1["default"].Control, command: 0, text: 'resign' });
     }
 });
 $('#abort').on('click', function (event) {
-    if (game.chess !== null && session.ws !== null) {
-        session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: 'abort' }));
+    if (game.chess !== null && session) {
+        session.send({ type: message_1["default"].Control, command: 0, text: 'abort' });
     }
 });
 $('#takeback').on('click', function (event) {
-    if (game.chess !== null && session.ws !== null) {
+    if (game.chess !== null && session) {
         if (game.chess.turn() === game.color) {
-            session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: 'take 2' }));
+            session.send({ type: message_1["default"].Control, command: 0, text: 'take 2' });
         }
         else {
-            session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: 'take 1' }));
+            session.send({ type: message_1["default"].Control, command: 0, text: 'take 1' });
         }
     }
 });
 $('#draw').on('click', function (event) {
-    if (game.chess !== null && session.ws !== null) {
-        session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: 'draw' }));
+    if (game.chess !== null && session) {
+        session.send({ type: message_1["default"].Control, command: 0, text: 'draw' });
     }
 });
 $('#disconnect').on('click', function (event) {
-    $('#chat-status').text('Disconnecting...');
-    session.ws.close();
+    if (session) {
+        session.disconnect();
+    }
 });
 $('#login').on('click', function (event) {
-    $('#chat-status').text('Connecting...');
     var user = $('#login-user').val();
     var pass = $('#login-pass').val();
-    session.ws = connectToICS(user, pass);
+    if (!session) {
+        session = new session_1["default"](ICSMessageHandler, user, pass);
+    }
+    else {
+        if (!session.isConnected()) {
+            session.connect(ICSMessageHandler, user, pass);
+        }
+    }
     $('#login-screen').modal('hide');
 });
 $('#connect-user').on('click', function (event) {
-    if (session.connected !== true) {
+    if (!session || (session && !session.isConnected())) {
         $('#login-screen').modal('show');
     }
 });
 $('#connect-guest').on('click', function (event) {
-    if (session.connected !== true) {
-        $('#chat-status').text('Connecting...');
-        session.ws = connectToICS();
+    if (!session) {
+        session = new session_1["default"](ICSMessageHandler);
+    }
+    else {
+        if (!session.isConnected()) {
+            session.connect(ICSMessageHandler);
+        }
     }
 });
 $(window).focus(function () {
-    if (game.chess !== null) {
+    if (game.chess) {
         board.position(game.chess.fen(), false);
     }
 });

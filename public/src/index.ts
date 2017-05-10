@@ -1,21 +1,19 @@
 // Copyright 2017 The Free Chess Club.
 
+import 'bootstrap';
 import * as $ from 'jquery';
 
-import ReconnectingWebSocket = require('reconnecting-websocket');
 import anchorme from 'anchorme';
-import 'bootstrap';
 import * as Chess from 'chess.js';
 import * as ChessBoard from 'chessboardjs';
+
 import * as clock from './clock';
 import * as highlight from './highlight';
+import MessageType from './message';
+import Session from './session';
 
-// A FICS session
-const session = {
-  connected: false,
-  handle: '',
-  ws: null,
-};
+// ICS session
+let session: Session;
 
 // List of active tabs
 let tabs;
@@ -31,17 +29,6 @@ const game = {
   wclock: null,
   wtime: 0,
 };
-
-// Type of messages we receive from the proxy
-enum MessageType {
-  Control = 0,
-  ChannelTell,
-  PrivateTell,
-  GameMove,
-  GameStart,
-  GameEnd,
-  Unknown,
-}
 
 /**
  * Show captured piece.
@@ -97,7 +84,7 @@ function movePlayer(source, target) {
     return 'snapback';
   }
 
-  session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: source + '-' + target }));
+  session.send({ type: MessageType.Control, command: 0, text: source + '-' + target });
   highlight.highlightMove(move.from, move.to);
   showCapture(move.color, move.captured);
   highlight.showCheck(move.color, move.san);
@@ -178,7 +165,7 @@ function handleChatMsg(from, data) {
   let tabheader = $('#' + $('ul#tabs a.active').attr('id'));
   if (data.hasOwnProperty('handle')) {
     let textclass = '';
-    if (session.handle === data.handle) {
+    if (session.getHandle() === data.handle) {
       textclass = ' class="mine"';
     }
     who = '<strong' + textclass + '>' + $('<span/>').text(data.handle).html() + '</strong>: ';
@@ -198,14 +185,12 @@ function handleChatMsg(from, data) {
   }
 }
 
-function handleICSMsg(message) {
+function ICSMessageHandler(message) {
   const data = JSON.parse(message.data);
   switch (data.type) {
     case MessageType.Control:
-      if (session.connected === false && data.command === 1) {
-        session.connected = true;
-        session.handle = data.text;
-        $('#chat-status').text('Connected as ' + session.handle);
+      if (!session.isConnected() && data.command === 1) {
+        session.setHandle(data.text);
       }
       break;
     case MessageType.ChannelTell:
@@ -275,30 +260,6 @@ function handleICSMsg(message) {
   }
 }
 
-function disconnectICS() {
-  $('#chat-status').text('Disconnected');
-  session.connected = false;
-  session.handle = '';
-}
-
-function connectToICS(user?: string, pass?: string) {
-  const login = (typeof user !== 'undefined' && typeof pass !== 'undefined');
-  let loginOptions = '';
-  if (login) {
-    loginOptions += '?login=1';
-  }
-  const conn = new ReconnectingWebSocket(
-    location.protocol.replace('http', 'ws') + '//' + location.host + '/ws' + loginOptions);
-  conn.onmessage = handleICSMsg;
-  conn.onclose = disconnectICS;
-  if (login) {
-    conn.onopen = () => {
-      conn.send(JSON.stringify({ type: MessageType.Control, command: 1, text: '[' + user + ',' + btoa(pass) + ']' }));
-    };
-  }
-  return conn;
-}
-
 $('#input-form').on('submit', (event) => {
   event.preventDefault();
   let text;
@@ -307,7 +268,7 @@ $('#input-form').on('submit', (event) => {
       const msg = $('#input-text').val();
       const tab = $('ul#tabs a.active').attr('id');
       text = 't ' + tab + ' ' + msg;
-      handleChatMsg(tab, { type: MessageType.ChannelTell, channel: tab, handle: session.handle, text: msg });
+      handleChatMsg(tab, { type: MessageType.ChannelTell, channel: tab, handle: session.getHandle(), text: msg });
     } else {
       text = $('#input-text').val().substr(1);
     }
@@ -318,14 +279,12 @@ $('#input-form').on('submit', (event) => {
       text = $('#input-text').val().substr(1);
     }
   }
-  session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text }));
+  session.send({ type: MessageType.Control, command: 0, text });
   $('#input-text').val('');
 });
 
 $(document).ready(() => {
-  session.ws = connectToICS();
-  session.connected = false;
-  $('#chat-status').text('Connecting...');
+  session = new Session(ICSMessageHandler);
   $('#opponent-time').text('00:00');
   $('#player-time').text('00:00');
   $('.chat-text').height($('#board').height() - 40);
@@ -382,61 +341,71 @@ $('#fast-forward').on('click', (event) => {
 });
 
 $('#resign').on('click', (event) => {
-  if (game.chess !== null && session.ws !== null) {
-    session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: 'resign' }));
+  if (game.chess !== null && session) {
+    session.send({ type: MessageType.Control, command: 0, text: 'resign' });
   }
 });
 
 $('#abort').on('click', (event) => {
-  if (game.chess !== null && session.ws !== null) {
-    session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: 'abort' }));
+  if (game.chess !== null && session) {
+    session.send({ type: MessageType.Control, command: 0, text: 'abort' });
   }
 });
 
 $('#takeback').on('click', (event) => {
-  if (game.chess !== null && session.ws !== null) {
+  if (game.chess !== null && session) {
     if (game.chess.turn() === game.color) {
-      session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: 'take 2'}));
+      session.send({ type: MessageType.Control, command: 0, text: 'take 2'});
     } else {
-      session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: 'take 1'}));
+      session.send({ type: MessageType.Control, command: 0, text: 'take 1'});
     }
   }
 });
 
 $('#draw').on('click', (event) => {
-  if (game.chess !== null && session.ws !== null) {
-    session.ws.send(JSON.stringify({ type: MessageType.Control, command: 0, text: 'draw' }));
+  if (game.chess !== null && session) {
+    session.send({ type: MessageType.Control, command: 0, text: 'draw' });
   }
 });
 
 $('#disconnect').on('click', (event) => {
-  $('#chat-status').text('Disconnecting...');
-  session.ws.close();
+  if (session) {
+    session.disconnect();
+    // session = null;
+  }
 });
 
 $('#login').on('click', (event) => {
-  $('#chat-status').text('Connecting...');
-  const user = $('#login-user').val();
-  const pass = $('#login-pass').val();
-  session.ws = connectToICS(user, pass);
+  const user: string = $('#login-user').val();
+  const pass: string = $('#login-pass').val();
+  if (!session) {
+    session = new Session(ICSMessageHandler, user, pass);
+  } else {
+    if (!session.isConnected()) {
+      session.connect(ICSMessageHandler, user, pass);
+    }
+  }
   $('#login-screen').modal('hide');
 });
 
 $('#connect-user').on('click', (event) => {
-  if (session.connected !== true) {
+  if (!session || (session && !session.isConnected())) {
     $('#login-screen').modal('show');
   }
 });
 
 $('#connect-guest').on('click', (event) => {
-  if (session.connected !== true) {
-    $('#chat-status').text('Connecting...');
-    session.ws = connectToICS();
+  if (!session) {
+    session = new Session(ICSMessageHandler);
+  } else {
+    if (!session.isConnected()) {
+      session.connect(ICSMessageHandler);
+    }
   }
 });
 
 $(window).focus(() => {
-  if (game.chess !== null) {
+  if (game.chess) {
     board.position(game.chess.fen(), false);
   }
 });
