@@ -17549,9 +17549,9 @@ module.exports = ChessBoard;
 
 exports.__esModule = true;
 function SToHHMMSS(sec) {
-    var h = Math.abs(Math.floor(sec / 3600));
-    var m = Math.abs(Math.floor(sec % 3600 / 60));
-    var s = Math.abs(Math.floor(sec % 3600 % 60));
+    var h = Math.abs(Math.floor(Math.abs(sec) / 3600));
+    var m = Math.abs(Math.floor(Math.abs(sec) % 3600 / 60));
+    var s = Math.abs(Math.floor(Math.abs(sec) % 3600 % 60));
     return ((sec < 0 ? '-' : '')
         + (h > 0 ? (h >= 0 && h < 10 ? '0' : '') + h + ':' : '')
         + (m >= 0 && m < 10 ? '0' : '') + m + ':'
@@ -19766,7 +19766,6 @@ return Tether;
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(jQuery) {
-var _this = this;
 exports.__esModule = true;
 __webpack_require__(10);
 var $ = __webpack_require__(0);
@@ -19778,7 +19777,7 @@ var highlight = __webpack_require__(14);
 var message_1 = __webpack_require__(3);
 var session_1 = __webpack_require__(15);
 var session;
-var tabs;
+var tabsList = {};
 var game = {
     chess: null,
     color: '',
@@ -19866,11 +19865,11 @@ $('#collapse-chat').on('show.bs.collapse', function () {
     $('#chat-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
 });
 jQuery(document.body).on('click', '.closeTab', function (event) {
-    var tabContentId = $(_this).parent().attr('href');
-    $(_this).parent().remove();
-    delete tabs['content-' + tabContentId.substr(1)];
+    var tabContentId = $(event.target).parent().attr('id');
+    $(event.target).parent().remove();
+    delete tabsList[tabContentId];
     $('#tabs a:last').tab('show');
-    $(tabContentId).remove();
+    $('#content-' + tabContentId).remove();
 });
 $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
     var tab = $(e.target);
@@ -19878,7 +19877,7 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
 });
 function handleChatMsg(from, data) {
     var tab;
-    if (!tabs.hasOwnProperty(from)) {
+    if (!tabsList.hasOwnProperty(from)) {
         var chName = from;
         if (from === '4') {
             chName = 'Help';
@@ -19889,10 +19888,10 @@ function handleChatMsg(from, data) {
         $('<div class="tab-pane chat-text" id="content-' + from + '" role="tabpanel"></div>').appendTo('.tab-content');
         $('.chat-text').height($('#board').height() - 40);
         tab = $('#content-' + from);
-        tabs[from] = tab;
+        tabsList[from] = tab;
     }
     else {
-        tab = tabs[from];
+        tab = tabsList[from];
     }
     var who = '';
     var tabheader = $('#' + $('ul#tabs a.active').attr('id'));
@@ -20019,7 +20018,7 @@ $(document).ready(function () {
     $('#opponent-time').text('00:00');
     $('#player-time').text('00:00');
     $('.chat-text').height($('#board').height() - 40);
-    tabs = { 53: $('#content-53') };
+    tabsList = { 53: $('#content-53') };
     board.start(false);
     game.history = { moves: [], chess: null, id: -1 };
 });
@@ -20062,17 +20061,17 @@ $('#fast-forward').on('click', function (event) {
     displayHistory();
 });
 $('#resign').on('click', function (event) {
-    if (game.chess !== null && session) {
+    if (game.chess !== null) {
         session.send({ type: message_1["default"].Control, command: 0, text: 'resign' });
     }
 });
 $('#abort').on('click', function (event) {
-    if (game.chess !== null && session) {
+    if (game.chess !== null) {
         session.send({ type: message_1["default"].Control, command: 0, text: 'abort' });
     }
 });
 $('#takeback').on('click', function (event) {
-    if (game.chess !== null && session) {
+    if (game.chess !== null) {
         if (game.chess.turn() === game.color) {
             session.send({ type: message_1["default"].Control, command: 0, text: 'take 2' });
         }
@@ -20082,14 +20081,12 @@ $('#takeback').on('click', function (event) {
     }
 });
 $('#draw').on('click', function (event) {
-    if (game.chess !== null && session) {
+    if (game.chess !== null) {
         session.send({ type: message_1["default"].Control, command: 0, text: 'draw' });
     }
 });
 $('#disconnect').on('click', function (event) {
-    if (session) {
-        session.disconnect();
-    }
+    session.disconnect();
 });
 $('#login').on('click', function (event) {
     var user = $('#login-user').val();

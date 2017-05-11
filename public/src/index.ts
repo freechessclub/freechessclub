@@ -16,7 +16,7 @@ import Session from './session';
 let session: Session;
 
 // List of active tabs
-let tabs;
+let tabsList = {};
 
 // An online chess game
 const game = {
@@ -131,11 +131,11 @@ $('#collapse-chat').on('show.bs.collapse', () => {
 });
 
 jQuery(document.body).on('click', '.closeTab', (event) => {
-  const tabContentId = $(this).parent().attr('href');
-  $(this).parent().remove();
-  delete tabs['content-' + tabContentId.substr(1)];
+  const tabContentId: string = $(event.target).parent().attr('id');
+  $(event.target).parent().remove();
+  delete tabsList[tabContentId];
   $('#tabs a:last').tab('show');
-  $(tabContentId).remove();
+  $('#content-' + tabContentId).remove();
 });
 
 $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', (e) => {
@@ -145,7 +145,7 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', (e) => {
 
 function handleChatMsg(from, data) {
   let tab;
-  if (!tabs.hasOwnProperty(from)) {
+  if (!tabsList.hasOwnProperty(from)) {
     let chName = from;
     if (from === '4') {
       chName = 'Help';
@@ -156,9 +156,9 @@ function handleChatMsg(from, data) {
     $('<div class="tab-pane chat-text" id="content-' + from + '" role="tabpanel"></div>').appendTo('.tab-content');
     $('.chat-text').height($('#board').height() - 40);
     tab = $('#content-' + from);
-    tabs[from] = tab;
+    tabsList[from] = tab;
   } else {
-    tab = tabs[from];
+    tab = tabsList[from];
   }
 
   let who = '';
@@ -288,7 +288,7 @@ $(document).ready(() => {
   $('#opponent-time').text('00:00');
   $('#player-time').text('00:00');
   $('.chat-text').height($('#board').height() - 40);
-  tabs = { 53: $('#content-53') };
+  tabsList = { 53: $('#content-53') };
   board.start(false);
   game.history = {moves: [], chess: null, id: -1};
 });
@@ -341,19 +341,19 @@ $('#fast-forward').on('click', (event) => {
 });
 
 $('#resign').on('click', (event) => {
-  if (game.chess !== null && session) {
+  if (game.chess !== null) {
     session.send({ type: MessageType.Control, command: 0, text: 'resign' });
   }
 });
 
 $('#abort').on('click', (event) => {
-  if (game.chess !== null && session) {
+  if (game.chess !== null) {
     session.send({ type: MessageType.Control, command: 0, text: 'abort' });
   }
 });
 
 $('#takeback').on('click', (event) => {
-  if (game.chess !== null && session) {
+  if (game.chess !== null) {
     if (game.chess.turn() === game.color) {
       session.send({ type: MessageType.Control, command: 0, text: 'take 2'});
     } else {
@@ -363,16 +363,13 @@ $('#takeback').on('click', (event) => {
 });
 
 $('#draw').on('click', (event) => {
-  if (game.chess !== null && session) {
+  if (game.chess !== null) {
     session.send({ type: MessageType.Control, command: 0, text: 'draw' });
   }
 });
 
 $('#disconnect').on('click', (event) => {
-  if (session) {
-    session.disconnect();
-    // session = null;
-  }
+  session.disconnect();
 });
 
 $('#login').on('click', (event) => {

@@ -4,9 +4,9 @@
  * Convert seconds to HH:MM:SS.
  */
 export function SToHHMMSS(sec: number) {
-  const h = Math.abs(Math.floor(sec / 3600));
-  const m = Math.abs(Math.floor(sec % 3600 / 60));
-  const s = Math.abs(Math.floor(sec % 3600 % 60));
+  const h = Math.abs(Math.floor(Math.abs(sec) / 3600));
+  const m = Math.abs(Math.floor(Math.abs(sec) % 3600 / 60));
+  const s = Math.abs(Math.floor(Math.abs(sec) % 3600 % 60));
   return ((sec < 0 ? '-' : '')
   + (h > 0 ? (h >= 0 && h < 10 ? '0' : '') + h + ':' : '')
   + (m >= 0 && m < 10 ? '0' : '') + m + ':'
