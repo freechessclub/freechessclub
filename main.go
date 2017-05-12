@@ -34,6 +34,9 @@ func main() {
 	}
 
 	http.HandleFunc("/ws", handleWebsocket)
+	http.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./public/assets/img/favicon.ico")
+	})
 	http.HandleFunc("/privacy", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "./public/privacy.html")
 	})
