@@ -10513,7 +10513,7 @@ exports["default"] = MessageType;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var fix_1 = __webpack_require__(18);
+var fix_1 = __webpack_require__(19);
 /**
  *
  * Split the string with word separators
@@ -10686,14 +10686,31 @@ var board_1 = __webpack_require__(15);
 var clock = __webpack_require__(16);
 var game_1 = __webpack_require__(3);
 var highlight = __webpack_require__(4);
+var history_1 = __webpack_require__(17);
 var message_1 = __webpack_require__(5);
-var session_1 = __webpack_require__(17);
+var session_1 = __webpack_require__(18);
 var session;
 var tabsList = {};
 function capturePiece(color, piece) {
     var p = highlight.swapColor(color) + piece.toUpperCase();
     var elt = (game_1["default"].color === color) ? '#player-captured' : '#opponent-captured';
     $(elt).append('<img id="' + p + '" src="assets/img/chesspieces/wikipedia-svg/' + p + '.svg"/>');
+}
+window.showMove = function (id) {
+    game_1["default"].history.display(id);
+};
+function addMoveHistory(move) {
+    var id = game_1["default"].history.length();
+    if (id % 2 === 1) {
+        $('#moveHistory').append('<tr><td><a href="javascript:void(0);" onclick="showMove(' +
+            id + ')">' + id + '. ' + move.san + '</a></td><td></td></tr>');
+        var height = 102 + (((id + 1) / 2) * 30);
+        $('#moveHistoryContainer').scrollTop(height);
+    }
+    else {
+        $('#moveHistory tr:last td').eq(1).html('<a href="javascript:void(0);" onclick="showMove(' +
+            id + ')">' + id + '. ' + move.san + '</a>');
+    }
 }
 function movePiece(source, target) {
     var chess = game_1["default"].chess;
@@ -10707,6 +10724,8 @@ function movePiece(source, target) {
         return 'snapback';
     }
     session.send({ type: message_1["default"].Control, command: 0, text: source + '-' + target });
+    game_1["default"].history.add(chess.fen());
+    addMoveHistory(move);
     highlight.highlightMove(move.from, move.to);
     if (move.captured) {
         capturePiece(move.color, move.captured);
@@ -10796,7 +10815,7 @@ function ICSMessageHandler(message) {
             if (game_1["default"].chess === null) {
                 game_1["default"].chess = Chess();
                 board_1["default"].start(false);
-                game_1["default"].history = { moves: [], chess: null, id: -1 };
+                game_1["default"].history = new history_1["default"](board_1["default"], game_1["default"].chess.fen());
                 $('#player-captured').text('');
                 $('#opponent-captured').text('');
                 if (data.role === 1) {
@@ -10825,6 +10844,8 @@ function ICSMessageHandler(message) {
                             capturePiece(move.color, move.captured);
                         }
                         highlight.showCheck(move.color, move.san);
+                        game_1["default"].history.add(game_1["default"].chess.fen());
+                        addMoveHistory(move);
                     }
                     if (game_1["default"].premove !== null) {
                         movePiece(game_1["default"].premove.source, game_1["default"].premove.target);
@@ -10839,7 +10860,6 @@ function ICSMessageHandler(message) {
         case message_1["default"].GameEnd:
             clearInterval(game_1["default"].wclock);
             clearInterval(game_1["default"].bclock);
-            displayHistory();
             delete game_1["default"].chess;
             game_1["default"].chess = null;
             break;
@@ -10879,47 +10899,21 @@ $(document).ready(function () {
     $('#opponent-time').text('00:00');
     $('#player-time').text('00:00');
     $('.chat-text').height($('#board').height() - 40);
+    $('#moveHistoryContainer').height($('#board').height() + 20);
     tabsList = { 53: $('#content-53') };
     board_1["default"].start(false);
-    game_1["default"].history = { moves: [], chess: null, id: -1 };
 });
-function displayHistory() {
-    if (game_1["default"].history.chess === null) {
-        game_1["default"].history.chess = Chess();
-    }
-    if (game_1["default"].chess !== null) {
-        var moves = game_1["default"].chess.history();
-        if (game_1["default"].history.moves.length < moves.length) {
-            for (var i = game_1["default"].history.moves.length - 1; i < moves.length; i++) {
-                game_1["default"].history.chess.move(moves[i]);
-                game_1["default"].history.moves.push(game_1["default"].history.chess.fen());
-            }
-        }
-    }
-    if (game_1["default"].history.id < 0) {
-        game_1["default"].history.id = game_1["default"].history.moves.length - 1;
-    }
-    board_1["default"].position(game_1["default"].history.moves[game_1["default"].history.id]);
-}
 $('#fast-backward').on('click', function (event) {
-    game_1["default"].history.id = 0;
-    displayHistory();
+    game_1["default"].history.beginning();
 });
 $('#backward').on('click', function (event) {
-    if (game_1["default"].history.id > 0) {
-        game_1["default"].history.id = game_1["default"].history.id - 1;
-    }
-    displayHistory();
+    game_1["default"].history.backward();
 });
 $('#forward').on('click', function (event) {
-    if (game_1["default"].history.id < game_1["default"].history.moves.length - 1) {
-        game_1["default"].history.id = game_1["default"].history.id + 1;
-    }
-    displayHistory();
+    game_1["default"].history.forward();
 });
 $('#fast-forward').on('click', function (event) {
-    game_1["default"].history.id = game_1["default"].history.moves.length - 1;
-    displayHistory();
+    game_1["default"].history.end();
 });
 $('#resign').on('click', function (event) {
     if (game_1["default"].chess !== null) {
@@ -10979,7 +10973,7 @@ $('#connect-guest').on('click', function (event) {
 });
 $(window).focus(function () {
     if (game_1["default"].chess) {
-        board_1["default"].position(game_1["default"].chess.fen(), false);
+        board_1["default"].position(game_1["default"].chess.fen());
     }
 });
 $(window).resize(function () {
@@ -11000,7 +10994,7 @@ var util_1 = __webpack_require__(2);
 var email_1 = __webpack_require__(7);
 var ip_1 = __webpack_require__(9);
 var url_1 = __webpack_require__(10);
-var transform_1 = __webpack_require__(20);
+var transform_1 = __webpack_require__(21);
 var hasprotocol_1 = __webpack_require__(8);
 var anchorme = function (str, options) {
     options = util_1.defaultOptions(options);
@@ -14563,7 +14557,7 @@ var Popover = function ($) {
 
 }();
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(22)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(23)))
 
 /***/ }),
 /* 14 */
@@ -16220,7 +16214,7 @@ if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = function () { return Chess;  }.call(
 "use strict";
 
 exports.__esModule = true;
-var ChessBoard = __webpack_require__(21);
+var ChessBoard = __webpack_require__(22);
 var game_1 = __webpack_require__(3);
 var highlight = __webpack_require__(4);
 var index_1 = __webpack_require__(11);
@@ -16324,6 +16318,55 @@ exports.startWhiteClock = startWhiteClock;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+exports.__esModule = true;
+var History = (function () {
+    function History(board, initialPosition) {
+        this.board = board;
+        this.moves = [initialPosition];
+        this.id = 0;
+    }
+    History.prototype.add = function (move) {
+        this.moves.push(move);
+        this.id = this.moves.length - 1;
+    };
+    History.prototype.length = function () {
+        return this.moves.length - 1;
+    };
+    History.prototype.display = function (id) {
+        if (id !== undefined) {
+            this.id = id;
+        }
+        if (this.id >= 0 && this.id < this.moves.length) {
+            this.board.position(this.moves[this.id]);
+        }
+    };
+    History.prototype.beginning = function () {
+        this.display(0);
+    };
+    History.prototype.backward = function () {
+        if (this.id > 0) {
+            this.display(this.id - 1);
+        }
+    };
+    History.prototype.forward = function () {
+        if (this.id < this.moves.length - 1) {
+            this.display(this.id + 1);
+        }
+    };
+    History.prototype.end = function () {
+        this.display(this.moves.length - 1);
+    };
+    return History;
+}());
+exports["default"] = History;
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 exports.__esModule = true;
 var message_1 = __webpack_require__(5);
@@ -16392,7 +16435,7 @@ exports["default"] = Session;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16459,7 +16502,7 @@ exports.default = default_1;
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16531,14 +16574,14 @@ exports.default = default_1;
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var separate_1 = __webpack_require__(6);
-var identify_1 = __webpack_require__(19);
+var identify_1 = __webpack_require__(20);
 var separate_2 = __webpack_require__(6);
 function default_1(str, options) {
     var arr = separate_2.separate(str);
@@ -16600,7 +16643,7 @@ function url2tag(fragment, options) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {/*!
@@ -17375,7 +17418,7 @@ function animateSparePieceToSquare(piece, dest, completeFn) {
 
 // execute an array of animations
 function doAnimations(a, oldPos, newPos) {
-  if (a.length === 0) {
+  if (a.length === 0 || ANIMATION_HAPPENING === true) {
     return;
   }
   ANIMATION_HAPPENING = true;
@@ -18334,7 +18377,7 @@ module.exports = ChessBoard;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.4.0 */

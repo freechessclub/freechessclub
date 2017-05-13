@@ -10,8 +10,8 @@
 }
 
 .chat-text {
-  width:100%;
-  height:auto;
+  width: 100%;
+  height: auto;
   overflow: auto;
   font-size: 14px;
   font-weight: 100;
@@ -34,7 +34,7 @@
 }
 
 .dropdown-toggle::after {
-  display: none
+  display: none;
 }
 
 .btn-toolbar .btn {
@@ -57,23 +57,36 @@
 
 .name {
   display: inline-block;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 21px;
   color: rgba(0, 0, 0, 0.4);
 }
 
 .captured img {
   display: inline-block;
-  margin: -2.5px;
-  width: 18px;
+  margin: -2.75px;
+  width: 20px;
   opacity: 0.6;
 }
 
 .clock {
   display: inline-block;
-  font-size: 26px;
+  font-size: 24px;
   line-height: 21px;
   color: rgba(0, 0, 0, 0.4);
+}
+
+.history {
+  width: 100%;
+  height: auto;
+  overflow: auto;
+  font-size: 14px;
+  font-weight: 60;
+}
+
+.history a:hover {
+  font-weight: bold;
+  text-decoration: none;
 }
 
 .nav-tabs .nav-link .closeTab {

@@ -5,7 +5,7 @@ export const game = {
   captured: {},
   chess: null,
   color: '',
-  history: {moves: [], chess: null, id: -1},
+  history: null,
   premove: null,
   bclock: null,
   btime: 0,

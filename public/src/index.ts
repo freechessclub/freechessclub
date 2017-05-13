@@ -10,6 +10,7 @@ import board from './board';
 import * as clock from './clock';
 import game from './game';
 import * as highlight from './highlight';
+import History from './history';
 import MessageType from './message';
 import Session from './session';
 
@@ -19,10 +20,27 @@ let session: Session;
 // List of active tabs
 let tabsList = {};
 
-function capturePiece(color: string, piece: string) {
+function capturePiece(color: string, piece: string): void {
   const p: string = highlight.swapColor(color) + piece.toUpperCase();
   const elt = (game.color === color) ? '#player-captured' : '#opponent-captured';
   $(elt).append('<img id="' + p + '" src="assets/img/chesspieces/wikipedia-svg/' + p + '.svg"/>');
+}
+
+(window as any).showMove = (id: number) => {
+  game.history.display(id);
+};
+
+function addMoveHistory(move: any): void {
+  const id: number = game.history.length();
+  if (id % 2 === 1) {
+    $('#moveHistory').append('<tr><td><a href="javascript:void(0);" onclick="showMove(' +
+      id + ')">' + id + '. ' + move.san + '</a></td><td></td></tr>');
+    const height: number = 102 + (((id + 1) / 2) * 30);
+    $('#moveHistoryContainer').scrollTop(height);
+  } else {
+    $('#moveHistory tr:last td').eq(1).html('<a href="javascript:void(0);" onclick="showMove(' +
+      id + ')">' + id + '. ' + move.san + '</a>');
+  }
 }
 
 export function movePiece(source, target) {
@@ -41,6 +59,8 @@ export function movePiece(source, target) {
   }
 
   session.send({ type: MessageType.Control, command: 0, text: source + '-' + target });
+  game.history.add(chess.fen());
+  addMoveHistory(move);
   highlight.highlightMove(move.from, move.to);
   if (move.captured) {
     capturePiece(move.color, move.captured);
@@ -134,14 +154,13 @@ function ICSMessageHandler(message) {
       game.btime = data.btime;
       game.wtime = data.wtime;
 
-      // role 1: I am playing and it is my move
-      // role -1: I am playing and it is my opponent's move
       if (game.chess === null) {
         game.chess = Chess();
         board.start(false);
-        game.history = {moves: [], chess: null, id: -1};
+        game.history = new History(board, game.chess.fen());
         $('#player-captured').text('');
         $('#opponent-captured').text('');
+        // role 1: I am playing and it is NOW my move
         if (data.role === 1) {
           game.color = 'w';
           board.orientation('white');
@@ -149,6 +168,7 @@ function ICSMessageHandler(message) {
           game.bclock = clock.startBlackClock(game, $('#opponent-time'));
           $('#player-name').text(data.wname);
           $('#opponent-name').text(data.bname);
+        // role -1: I am playing and it is NOW my opponent's move
         } else if (data.role === -1) {
           game.color = 'b';
           board.orientation('black');
@@ -159,6 +179,7 @@ function ICSMessageHandler(message) {
         }
       }
 
+      // role 1: I am playing and it is NOW my move
       if (data.role === 1) {
         if (data.move !== 'none') {
           const move = game.chess.move(data.move);
@@ -168,6 +189,8 @@ function ICSMessageHandler(message) {
               capturePiece(move.color, move.captured);
             }
             highlight.showCheck(move.color, move.san);
+            game.history.add(game.chess.fen());
+            addMoveHistory(move);
           }
           if (game.premove !== null) {
             movePiece(game.premove.source, game.premove.target);
@@ -182,7 +205,6 @@ function ICSMessageHandler(message) {
     case MessageType.GameEnd:
       clearInterval(game.wclock);
       clearInterval(game.bclock);
-      displayHistory();
       delete game.chess;
       game.chess = null;
       break;
@@ -221,55 +243,25 @@ $(document).ready(() => {
   $('#opponent-time').text('00:00');
   $('#player-time').text('00:00');
   $('.chat-text').height($('#board').height() - 40);
+  $('#moveHistoryContainer').height($('#board').height() + 20);
   tabsList = { 53: $('#content-53') };
   board.start(false);
 });
 
-function displayHistory() {
-  if (game.history.chess === null) {
-    game.history.chess = Chess();
-  }
-
-  // refresh history
-  if (game.chess !== null) {
-    const moves = game.chess.history();
-    if (game.history.moves.length < moves.length) {
-      for (let i = game.history.moves.length - 1; i < moves.length; i++) {
-        game.history.chess.move(moves[i]);
-        game.history.moves.push(game.history.chess.fen());
-      }
-    }
-  }
-
-  if (game.history.id < 0) {
-    game.history.id = game.history.moves.length - 1;
-  }
-
-  board.position(game.history.moves[game.history.id]);
-}
-
 $('#fast-backward').on('click', (event) => {
-  game.history.id = 0;
-  displayHistory();
+  game.history.beginning();
 });
 
 $('#backward').on('click', (event) => {
-  if (game.history.id > 0) {
-    game.history.id = game.history.id - 1;
-  }
-  displayHistory();
+  game.history.backward();
 });
 
 $('#forward').on('click', (event) => {
-  if (game.history.id < game.history.moves.length - 1) {
-    game.history.id = game.history.id + 1;
-  }
-  displayHistory();
+  game.history.forward();
 });
 
 $('#fast-forward').on('click', (event) => {
-  game.history.id = game.history.moves.length - 1;
-  displayHistory();
+  game.history.end();
 });
 
 $('#resign').on('click', (event) => {
@@ -335,7 +327,7 @@ $('#connect-guest').on('click', (event) => {
 
 $(window).focus(() => {
   if (game.chess) {
-    board.position(game.chess.fen(), false);
+    board.position(game.chess.fen());
   }
 });
 
