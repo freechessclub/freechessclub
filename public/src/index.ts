@@ -5,9 +5,10 @@ import * as $ from 'jquery';
 
 import anchorme from 'anchorme';
 import * as Chess from 'chess.js';
-import * as ChessBoard from 'chessboardjs';
 
+import board from './board';
 import * as clock from './clock';
+import game from './game';
 import * as highlight from './highlight';
 import MessageType from './message';
 import Session from './session';
@@ -18,58 +19,13 @@ let session: Session;
 // List of active tabs
 let tabsList = {};
 
-// An online chess game
-const game = {
-  chess: null,
-  color: '',
-  history: null,
-  premove: null,
-  bclock: null,
-  btime: 0,
-  wclock: null,
-  wtime: 0,
-};
-
-/**
- * Show captured piece.
- * @param color
- * @param captured
- */
-function showCapture(color, captured) {
-  if (typeof captured !== 'undefined') {
-    if (color === game.color) {
-      $('#opponent-captured').append(captured);
-    } else {
-      $('#player-captured').append(captured);
-    }
-  }
+function capturePiece(color: string, piece: string) {
+  const p: string = highlight.swapColor(color) + piece.toUpperCase();
+  const elt = (game.color === color) ? '#player-captured' : '#opponent-captured';
+  $(elt).append('<img id="' + p + '" src="assets/img/chesspieces/wikipedia-svg/' + p + '.svg"/>');
 }
 
-const onDragStart = (source, piece, position, orientation) => {
-  const chess = game.chess;
-  if (chess === null) {
-    return false;
-  }
-
-  if (chess.game_over() || (game.color !== piece.charAt(0))) {
-    return false;
-  }
-
-  if (game.premove !== null) {
-    highlight.unHighlightSquare(game.premove.source);
-    highlight.unHighlightSquare(game.premove.target);
-    game.premove = null;
-  }
-
-  // get list of possible moves for this square
-  const moves = chess.moves({square: source, verbose: true});
-  highlight.highlightSquare(source);
-  for (const move of moves) {
-    highlight.highlightSquare(move.to);
-  }
-};
-
-function movePlayer(source, target) {
+export function movePiece(source, target) {
   const chess = game.chess;
   // see if the move is legal
   const move = chess.move({
@@ -86,36 +42,11 @@ function movePlayer(source, target) {
 
   session.send({ type: MessageType.Control, command: 0, text: source + '-' + target });
   highlight.highlightMove(move.from, move.to);
-  showCapture(move.color, move.captured);
+  if (move.captured) {
+    capturePiece(move.color, move.captured);
+  }
   highlight.showCheck(move.color, move.san);
 }
-
-const onDrop = (source, target) => {
-  // premove if it is not my turn yet
-  if (game.color !== game.chess.turn()) {
-    game.premove = {source, target};
-    return highlight.highlightPreMove(source, target);
-  } else {
-    return movePlayer(source, target);
-  }
-};
-
-// update the board position after the piece snap
-// for castling, en passant, pawn promotion
-const onSnapEnd = () => {
-  board.position(game.chess.fen());
-};
-
-// Chess board
-const board: any = ChessBoard('board', {
-  position: 'start',
-  showNotation: true,
-  draggable: true,
-  onDragStart,
-  onDrop,
-  onSnapEnd,
-  pieceTheme: 'assets/img/chesspieces/wikipedia-svg/{piece}.svg',
-});
 
 // enable tooltips
 $(() => {
@@ -233,11 +164,13 @@ function ICSMessageHandler(message) {
           const move = game.chess.move(data.move);
           if (move !== null) {
             highlight.highlightMove(move.from, move.to);
-            showCapture(move.color, move.captured);
+            if (move.captured) {
+              capturePiece(move.color, move.captured);
+            }
             highlight.showCheck(move.color, move.san);
           }
           if (game.premove !== null) {
-            movePlayer(game.premove.source, game.premove.target);
+            movePiece(game.premove.source, game.premove.target);
             game.premove = null;
           }
         }
@@ -290,7 +223,6 @@ $(document).ready(() => {
   $('.chat-text').height($('#board').height() - 40);
   tabsList = { 53: $('#content-53') };
   board.start(false);
-  game.history = {moves: [], chess: null, id: -1};
 });
 
 function displayHistory() {

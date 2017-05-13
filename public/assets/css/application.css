@@ -34,7 +34,7 @@
 }
 
 .dropdown-toggle::after {
-  display:none
+  display: none
 }
 
 .btn-toolbar .btn {
@@ -51,20 +51,28 @@
 }
 
 #board {
-  borderLeftWidth: 0;
   width:100%;
   height:auto;
 }
 
 .name {
-  float: left;
+  display: inline-block;
   font-size: 22px;
+  line-height: 21px;
   color: rgba(0, 0, 0, 0.4);
 }
 
+.captured img {
+  display: inline-block;
+  margin: -2.5px;
+  width: 18px;
+  opacity: 0.6;
+}
+
 .clock {
-  float: right;
+  display: inline-block;
   font-size: 26px;
+  line-height: 21px;
   color: rgba(0, 0, 0, 0.4);
 }
 

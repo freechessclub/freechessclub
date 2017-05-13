@@ -73,5 +73,4 @@ export default class Session {
     }
     this.websocket.send(data);
   }
-
 }

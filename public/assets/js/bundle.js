@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 20);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10405,6 +10405,94 @@ exports.isPort = isPort;
 "use strict";
 
 exports.__esModule = true;
+exports.game = {
+    captured: {},
+    chess: null,
+    color: '',
+    history: null,
+    premove: null,
+    bclock: null,
+    btime: 0,
+    wclock: null,
+    wtime: 0
+};
+exports["default"] = exports.game;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+exports.__esModule = true;
+function highlightSquare(square) {
+    if (square === undefined) {
+        return;
+    }
+    var e = $('#board .square-' + square);
+    if (e.hasClass('black-3c85d')) {
+        e.css('background', '#278881');
+    }
+    else {
+        e.css('background', '#e6ffdd');
+    }
+}
+exports.highlightSquare = highlightSquare;
+function unHighlightSquare(square) {
+    if (square) {
+        $('#board .square-' + square).css('background', '');
+    }
+    else {
+        $('#board .square-55d63').css('background', '');
+    }
+}
+exports.unHighlightSquare = unHighlightSquare;
+function highlightCheck(square) {
+    if (square === undefined) {
+        return;
+    }
+    var e = $('#board .square-' + square);
+    if (e.hasClass('black-3c85d')) {
+        e.css('background', '#aa8881');
+    }
+    else {
+        e.css('background', '#ffdddd');
+    }
+}
+exports.highlightCheck = highlightCheck;
+function highlightMove(source, target) {
+    unHighlightSquare();
+    highlightSquare(source);
+    highlightSquare(target);
+}
+exports.highlightMove = highlightMove;
+function highlightPreMove(source, target) {
+    highlightCheck(source);
+    highlightCheck(target);
+}
+exports.highlightPreMove = highlightPreMove;
+function swapColor(color) {
+    return (color === 'w') ? 'b' : 'w';
+}
+exports.swapColor = swapColor;
+function showCheck(color, san) {
+    if (san.slice(-1) === '+') {
+        var square = $('div').find("[data-piece='" + swapColor(color) + "K']");
+        highlightCheck(square.parent().data('square'));
+    }
+}
+exports.showCheck = showCheck;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
 var MessageType;
 (function (MessageType) {
     MessageType[MessageType["Control"] = 0] = "Control";
@@ -10419,13 +10507,13 @@ exports["default"] = MessageType;
 
 
 /***/ }),
-/* 4 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var fix_1 = __webpack_require__(16);
+var fix_1 = __webpack_require__(18);
 /**
  *
  * Split the string with word separators
@@ -10453,7 +10541,7 @@ exports.deSeparate = deSeparate;
 
 
 /***/ }),
-/* 5 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10490,7 +10578,7 @@ exports.default = default_1;
 
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10517,7 +10605,7 @@ exports.default = default_1;
 
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10556,7 +10644,7 @@ exports.default = default_1;
 
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10584,18 +10672,336 @@ exports.default = default_1;
 
 
 /***/ }),
-/* 9 */
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(jQuery) {
+exports.__esModule = true;
+__webpack_require__(13);
+var $ = __webpack_require__(0);
+var anchorme_1 = __webpack_require__(12);
+var Chess = __webpack_require__(14);
+var board_1 = __webpack_require__(15);
+var clock = __webpack_require__(16);
+var game_1 = __webpack_require__(3);
+var highlight = __webpack_require__(4);
+var message_1 = __webpack_require__(5);
+var session_1 = __webpack_require__(17);
+var session;
+var tabsList = {};
+function capturePiece(color, piece) {
+    var p = highlight.swapColor(color) + piece.toUpperCase();
+    var elt = (game_1["default"].color === color) ? '#player-captured' : '#opponent-captured';
+    $(elt).append('<img id="' + p + '" src="assets/img/chesspieces/wikipedia-svg/' + p + '.svg"/>');
+}
+function movePiece(source, target) {
+    var chess = game_1["default"].chess;
+    var move = chess.move({
+        from: source,
+        to: target,
+        promotion: 'q'
+    });
+    if (move === null) {
+        highlight.unHighlightSquare();
+        return 'snapback';
+    }
+    session.send({ type: message_1["default"].Control, command: 0, text: source + '-' + target });
+    highlight.highlightMove(move.from, move.to);
+    if (move.captured) {
+        capturePiece(move.color, move.captured);
+    }
+    highlight.showCheck(move.color, move.san);
+}
+exports.movePiece = movePiece;
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
+$('#collapse-chat').on('hidden.bs.collapse', function () {
+    $('#chat-toggle-icon').removeClass('fa-toggle-up').addClass('fa-toggle-down');
+});
+$('#collapse-chat').on('show.bs.collapse', function () {
+    $('#chat-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
+});
+jQuery(document.body).on('click', '.closeTab', function (event) {
+    var tabContentId = $(event.target).parent().attr('id');
+    $(event.target).parent().remove();
+    delete tabsList[tabContentId];
+    $('#tabs a:last').tab('show');
+    $('#content-' + tabContentId).remove();
+});
+$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+    var tab = $(e.target);
+    tab.css('color', 'black');
+});
+function handleChatMsg(from, data) {
+    var tab;
+    if (!tabsList.hasOwnProperty(from)) {
+        var chName = from;
+        if (from === '4') {
+            chName = 'Help';
+        }
+        $('<a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" href="#content-' +
+            from + '" id="' + from + '" role="tab">' + chName +
+            '<span class="btn btn-default btn-sm closeTab">×</span></a>').appendTo('#tabs');
+        $('<div class="tab-pane chat-text" id="content-' + from + '" role="tabpanel"></div>').appendTo('.tab-content');
+        $('.chat-text').height($('#board').height() - 40);
+        tab = $('#content-' + from);
+        tabsList[from] = tab;
+    }
+    else {
+        tab = tabsList[from];
+    }
+    var who = '';
+    var tabheader = $('#' + $('ul#tabs a.active').attr('id'));
+    if (data.hasOwnProperty('handle')) {
+        var textclass = '';
+        if (session.getHandle() === data.handle) {
+            textclass = ' class="mine"';
+        }
+        who = '<strong' + textclass + '>' + $('<span/>').text(data.handle).html() + '</strong>: ';
+        if (data.type === message_1["default"].ChannelTell) {
+            tabheader = $('#' + data.channel);
+        }
+        else {
+            tabheader = $('#' + data.handle);
+        }
+    }
+    tab.append(who +
+        anchorme_1["default"]($('<span/>').text(data.text).html(), { attributes: [{ name: 'target', value: '_blank' }] }) + '</br>');
+    if (tabheader.hasClass('active')) {
+        tab.scrollTop(tab[0].scrollHeight);
+    }
+    else {
+        tabheader.css('color', 'red');
+    }
+}
+function ICSMessageHandler(message) {
+    var data = JSON.parse(message.data);
+    switch (data.type) {
+        case message_1["default"].Control:
+            if (!session.isConnected() && data.command === 1) {
+                session.setHandle(data.text);
+            }
+            break;
+        case message_1["default"].ChannelTell:
+            handleChatMsg(data.channel, data);
+            break;
+        case message_1["default"].PrivateTell:
+            handleChatMsg(data.handle, data);
+            break;
+        case message_1["default"].GameMove:
+            game_1["default"].btime = data.btime;
+            game_1["default"].wtime = data.wtime;
+            if (game_1["default"].chess === null) {
+                game_1["default"].chess = Chess();
+                board_1["default"].start(false);
+                game_1["default"].history = { moves: [], chess: null, id: -1 };
+                $('#player-captured').text('');
+                $('#opponent-captured').text('');
+                if (data.role === 1) {
+                    game_1["default"].color = 'w';
+                    board_1["default"].orientation('white');
+                    game_1["default"].wclock = clock.startWhiteClock(game_1["default"], $('#player-time'));
+                    game_1["default"].bclock = clock.startBlackClock(game_1["default"], $('#opponent-time'));
+                    $('#player-name').text(data.wname);
+                    $('#opponent-name').text(data.bname);
+                }
+                else if (data.role === -1) {
+                    game_1["default"].color = 'b';
+                    board_1["default"].orientation('black');
+                    game_1["default"].bclock = clock.startBlackClock(game_1["default"], $('#player-time'));
+                    game_1["default"].wclock = clock.startWhiteClock(game_1["default"], $('#opponent-time'));
+                    $('#player-name').text(data.bname);
+                    $('#opponent-name').text(data.wname);
+                }
+            }
+            if (data.role === 1) {
+                if (data.move !== 'none') {
+                    var move = game_1["default"].chess.move(data.move);
+                    if (move !== null) {
+                        highlight.highlightMove(move.from, move.to);
+                        if (move.captured) {
+                            capturePiece(move.color, move.captured);
+                        }
+                        highlight.showCheck(move.color, move.san);
+                    }
+                    if (game_1["default"].premove !== null) {
+                        movePiece(game_1["default"].premove.source, game_1["default"].premove.target);
+                        game_1["default"].premove = null;
+                    }
+                }
+            }
+            board_1["default"].position(data.fen);
+            break;
+        case message_1["default"].GameStart:
+            break;
+        case message_1["default"].GameEnd:
+            clearInterval(game_1["default"].wclock);
+            clearInterval(game_1["default"].bclock);
+            displayHistory();
+            delete game_1["default"].chess;
+            game_1["default"].chess = null;
+            break;
+        case message_1["default"].Unknown:
+        default:
+            handleChatMsg($('ul#tabs a.active').attr('id'), data);
+            break;
+    }
+}
+$('#input-form').on('submit', function (event) {
+    event.preventDefault();
+    var text;
+    if (!$('#input-command').is(':checked')) {
+        if ($('#input-text').val().charAt(0) !== '@') {
+            var msg = $('#input-text').val();
+            var tab = $('ul#tabs a.active').attr('id');
+            text = 't ' + tab + ' ' + msg;
+            handleChatMsg(tab, { type: message_1["default"].ChannelTell, channel: tab, handle: session.getHandle(), text: msg });
+        }
+        else {
+            text = $('#input-text').val().substr(1);
+        }
+    }
+    else {
+        if ($('#input-text').val().charAt(0) !== '@') {
+            text = $('#input-text').val();
+        }
+        else {
+            text = $('#input-text').val().substr(1);
+        }
+    }
+    session.send({ type: message_1["default"].Control, command: 0, text: text });
+    $('#input-text').val('');
+});
+$(document).ready(function () {
+    session = new session_1["default"](ICSMessageHandler);
+    $('#opponent-time').text('00:00');
+    $('#player-time').text('00:00');
+    $('.chat-text').height($('#board').height() - 40);
+    tabsList = { 53: $('#content-53') };
+    board_1["default"].start(false);
+    game_1["default"].history = { moves: [], chess: null, id: -1 };
+});
+function displayHistory() {
+    if (game_1["default"].history.chess === null) {
+        game_1["default"].history.chess = Chess();
+    }
+    if (game_1["default"].chess !== null) {
+        var moves = game_1["default"].chess.history();
+        if (game_1["default"].history.moves.length < moves.length) {
+            for (var i = game_1["default"].history.moves.length - 1; i < moves.length; i++) {
+                game_1["default"].history.chess.move(moves[i]);
+                game_1["default"].history.moves.push(game_1["default"].history.chess.fen());
+            }
+        }
+    }
+    if (game_1["default"].history.id < 0) {
+        game_1["default"].history.id = game_1["default"].history.moves.length - 1;
+    }
+    board_1["default"].position(game_1["default"].history.moves[game_1["default"].history.id]);
+}
+$('#fast-backward').on('click', function (event) {
+    game_1["default"].history.id = 0;
+    displayHistory();
+});
+$('#backward').on('click', function (event) {
+    if (game_1["default"].history.id > 0) {
+        game_1["default"].history.id = game_1["default"].history.id - 1;
+    }
+    displayHistory();
+});
+$('#forward').on('click', function (event) {
+    if (game_1["default"].history.id < game_1["default"].history.moves.length - 1) {
+        game_1["default"].history.id = game_1["default"].history.id + 1;
+    }
+    displayHistory();
+});
+$('#fast-forward').on('click', function (event) {
+    game_1["default"].history.id = game_1["default"].history.moves.length - 1;
+    displayHistory();
+});
+$('#resign').on('click', function (event) {
+    if (game_1["default"].chess !== null) {
+        session.send({ type: message_1["default"].Control, command: 0, text: 'resign' });
+    }
+});
+$('#abort').on('click', function (event) {
+    if (game_1["default"].chess !== null) {
+        session.send({ type: message_1["default"].Control, command: 0, text: 'abort' });
+    }
+});
+$('#takeback').on('click', function (event) {
+    if (game_1["default"].chess !== null) {
+        if (game_1["default"].chess.turn() === game_1["default"].color) {
+            session.send({ type: message_1["default"].Control, command: 0, text: 'take 2' });
+        }
+        else {
+            session.send({ type: message_1["default"].Control, command: 0, text: 'take 1' });
+        }
+    }
+});
+$('#draw').on('click', function (event) {
+    if (game_1["default"].chess !== null) {
+        session.send({ type: message_1["default"].Control, command: 0, text: 'draw' });
+    }
+});
+$('#disconnect').on('click', function (event) {
+    session.disconnect();
+});
+$('#login').on('click', function (event) {
+    var user = $('#login-user').val();
+    var pass = $('#login-pass').val();
+    if (!session) {
+        session = new session_1["default"](ICSMessageHandler, user, pass);
+    }
+    else {
+        if (!session.isConnected()) {
+            session.connect(ICSMessageHandler, user, pass);
+        }
+    }
+    $('#login-screen').modal('hide');
+});
+$('#connect-user').on('click', function (event) {
+    if (!session || (session && !session.isConnected())) {
+        $('#login-screen').modal('show');
+    }
+});
+$('#connect-guest').on('click', function (event) {
+    if (!session) {
+        session = new session_1["default"](ICSMessageHandler);
+    }
+    else {
+        if (!session.isConnected()) {
+            session.connect(ICSMessageHandler);
+        }
+    }
+});
+$(window).focus(function () {
+    if (game_1["default"].chess) {
+        board_1["default"].position(game_1["default"].chess.fen(), false);
+    }
+});
+$(window).resize(function () {
+    board_1["default"].resize();
+    $('.chat-text').height($('#board').height() - 40);
+});
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = __webpack_require__(2);
-var email_1 = __webpack_require__(5);
-var ip_1 = __webpack_require__(7);
-var url_1 = __webpack_require__(8);
-var transform_1 = __webpack_require__(18);
-var hasprotocol_1 = __webpack_require__(6);
+var email_1 = __webpack_require__(7);
+var ip_1 = __webpack_require__(9);
+var url_1 = __webpack_require__(10);
+var transform_1 = __webpack_require__(20);
+var hasprotocol_1 = __webpack_require__(8);
 var anchorme = function (str, options) {
     options = util_1.defaultOptions(options);
     var result = transform_1.default(str, options);
@@ -10618,7 +11024,7 @@ exports.default = anchorme;
 
 
 /***/ }),
-/* 10 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery, Tether) {/*!
@@ -14157,10 +14563,10 @@ var Popover = function ($) {
 
 }();
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(19)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(22)))
 
 /***/ }),
-/* 11 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -15808,7 +16214,393 @@ if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = function () { return Chess;  }.call(
 
 
 /***/ }),
-/* 12 */
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+var ChessBoard = __webpack_require__(21);
+var game_1 = __webpack_require__(3);
+var highlight = __webpack_require__(4);
+var index_1 = __webpack_require__(11);
+var onDragStart = function (source, piece, position, orientation) {
+    var chess = game_1["default"].chess;
+    if (chess === null) {
+        return false;
+    }
+    if (chess.game_over() || (game_1["default"].color !== piece.charAt(0))) {
+        return false;
+    }
+    if (game_1["default"].premove !== null) {
+        highlight.unHighlightSquare(game_1["default"].premove.source);
+        highlight.unHighlightSquare(game_1["default"].premove.target);
+        game_1["default"].premove = null;
+    }
+    var moves = chess.moves({ square: source, verbose: true });
+    highlight.highlightSquare(source);
+    for (var _i = 0, moves_1 = moves; _i < moves_1.length; _i++) {
+        var move = moves_1[_i];
+        highlight.highlightSquare(move.to);
+    }
+};
+var onDrop = function (source, target) {
+    if (game_1["default"].color !== game_1["default"].chess.turn()) {
+        game_1["default"].premove = { source: source, target: target };
+        return highlight.highlightPreMove(source, target);
+    }
+    else {
+        return index_1.movePiece(source, target);
+    }
+};
+var onSnapEnd = function () {
+    exports.board.position(game_1["default"].chess.fen());
+};
+exports.board = ChessBoard('board', {
+    position: 'start',
+    showNotation: true,
+    draggable: true,
+    onDragStart: onDragStart,
+    onDrop: onDrop,
+    onSnapEnd: onSnapEnd,
+    pieceTheme: 'assets/img/chesspieces/wikipedia-svg/{piece}.svg'
+});
+exports["default"] = exports.board;
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+function SToHHMMSS(sec) {
+    var h = Math.abs(Math.floor(Math.abs(sec) / 3600));
+    var m = Math.abs(Math.floor(Math.abs(sec) % 3600 / 60));
+    var s = Math.abs(Math.floor(Math.abs(sec) % 3600 % 60));
+    return ((sec < 0 ? '-' : '')
+        + (h > 0 ? (h >= 0 && h < 10 ? '0' : '') + h + ':' : '')
+        + (m >= 0 && m < 10 ? '0' : '') + m + ':'
+        + (s >= 0 && s < 10 ? '0' : '') + s);
+}
+exports.SToHHMMSS = SToHHMMSS;
+function startBlackClock(game, clock) {
+    return setInterval(function () {
+        if (game.chess.turn() === 'w') {
+            return;
+        }
+        game.btime = game.btime - 1;
+        if (game.btime < 20 && clock.css('color') !== 'red') {
+            clock.css('color', 'red');
+        }
+        if (game.btime > 20) {
+            clock.css('color', '');
+        }
+        clock.text(SToHHMMSS(game.btime));
+    }, 1000);
+}
+exports.startBlackClock = startBlackClock;
+function startWhiteClock(game, clock) {
+    return setInterval(function () {
+        if (game.chess.turn() === 'b') {
+            return;
+        }
+        game.wtime = game.wtime - 1;
+        if (game.wtime < 20 && clock.css('color') !== 'red') {
+            clock.css('color', 'red');
+        }
+        if (game.wtime > 20) {
+            clock.css('color', '');
+        }
+        clock.text(SToHHMMSS(game.wtime));
+    }, 1000);
+}
+exports.startWhiteClock = startWhiteClock;
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+exports.__esModule = true;
+var message_1 = __webpack_require__(5);
+var Session = (function () {
+    function Session(onMessage, user, pass) {
+        this.connected = false;
+        this.handle = '';
+        this.connect(onMessage, user, pass);
+    }
+    Session.prototype.getHandle = function () {
+        return this.handle;
+    };
+    Session.prototype.setHandle = function (handle) {
+        this.connected = true;
+        this.handle = handle;
+        $('#chat-status').text('Connected as ' + handle);
+    };
+    Session.prototype.isConnected = function () {
+        return this.connected;
+    };
+    Session.prototype.connect = function (onMessage, user, pass) {
+        var _this = this;
+        $('#chat-status').text('Connecting...');
+        var login = (user !== undefined && pass !== undefined);
+        var loginOptions = '';
+        if (login) {
+            loginOptions += '?login=1';
+        }
+        this.websocket = new WebSocket(location.protocol.replace('http', 'ws') + '//' + location.host + '/ws' + loginOptions);
+        this.websocket.onmessage = onMessage;
+        this.websocket.onclose = this.reset;
+        if (login) {
+            this.websocket.onopen = function () {
+                _this.websocket.send(JSON.stringify({ type: message_1["default"].Control, command: 1, text: '[' + user + ',' + btoa(pass) + ']' }));
+            };
+        }
+    };
+    Session.prototype.disconnect = function () {
+        if (this.isConnected()) {
+            $('#chat-status').text('Disconnecting...');
+            this.websocket.close();
+            this.connected = false;
+            this.handle = '';
+        }
+    };
+    Session.prototype.reset = function (evt) {
+        $('#chat-status').text('Disconnected');
+    };
+    Session.prototype.send = function (payload) {
+        if (!this.isConnected()) {
+            throw new Error('Session not connected.');
+        }
+        var data;
+        if (typeof payload === 'object') {
+            data = JSON.stringify(payload);
+        }
+        else {
+            data = payload;
+        }
+        this.websocket.send(data);
+    };
+    return Session;
+}());
+exports["default"] = Session;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ *
+ * @hack
+ *
+ * This is a dirty hack to fix URLs that have parenthesis and quotation marks in them
+ * For example take this paragraph:
+ *
+ * """"
+ * I visited this url: "http://www.wikipedia.com/some_article(with_paranthesis)"
+ * and this URL: (http://www.wikipedia.com/some_article(with_paranthesis))
+ * """"
+ *
+ * The quotation marks `'` `"` and parenthesis `(` `)` `[` `]`
+ * can be considered to be part of the URL, and as a
+ * punctuation marks surrounding the URL.
+ * While this hack works for the most part, it's quite dirty and
+ * I may replace it with something better in the future.
+ *
+ *
+ * Another fix is removing punctuation marks that may appear at the end of URL
+ * Example:
+ *
+ * """"
+ * I've visited google.com, facebook.com, and yahoo.com.
+ * """"
+ *
+ * @todo: replace the following function with something cleaner.
+ *
+ *
+**/
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function fixSeparators(arr, sep1, sep2) {
+    arr.forEach(function (bit, i) {
+        if ((bit.indexOf(".") > -1) &&
+            (!(arr[i - 1] === sep1 && arr[i + 1] === sep2)) &&
+            (arr[i + 1] === sep1 || arr[i + 1] === sep2) // the one after it, is either sep1 or sep2
+        ) {
+            arr[i] = arr[i] + arr[i + 1];
+            if (typeof arr[i + 2] === "string")
+                arr[i] = arr[i] + arr[i + 2];
+            if (typeof arr[i + 3] === "string")
+                arr[i] = arr[i] + arr[i + 3];
+            if (typeof arr[i + 4] === "string")
+                arr[i] = arr[i] + arr[i + 4];
+            arr.splice(i + 1, 4);
+            fixSeparators(arr, sep1, sep2);
+        }
+    });
+    return arr;
+}
+exports.fixSeparators = fixSeparators;
+function default_1(arr) {
+    arr = fixSeparators(arr, "(", ")");
+    arr = fixSeparators(arr, "[", "]");
+    arr = fixSeparators(arr, "\"", "\"");
+    arr = fixSeparators(arr, "'", "'");
+    return arr;
+}
+exports.default = default_1;
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var email_1 = __webpack_require__(7);
+var hasprotocol_1 = __webpack_require__(8);
+var lists_1 = __webpack_require__(1);
+var ip_1 = __webpack_require__(9);
+var url_1 = __webpack_require__(10);
+function default_1(inputArr, options) {
+    return inputArr.map(function (fragment, index) {
+        var encoded = encodeURI(fragment);
+        // quick validations
+        // 1
+        if (encoded.indexOf(".") < 1 && (!hasprotocol_1.default(encoded)))
+            return fragment;
+        var urlObj = null;
+        var protocol = hasprotocol_1.default(encoded) || "";
+        // remove the protocol before proceeding to any other test
+        if (protocol)
+            encoded = encoded.substr(protocol.length);
+        // test 1: it's a file
+        if (options.files && protocol === "file:///" && encoded.split(/\/|\\/).length - 1) {
+            urlObj = {
+                reason: "file",
+                protocol: protocol,
+                raw: fragment,
+                encoded: encoded,
+            };
+        }
+        // test 2: it's a URL
+        if ((!urlObj) && options.urls && url_1.default(encoded)) {
+            urlObj = {
+                reason: "url",
+                protocol: protocol ? protocol : typeof options.defaultProtocol === "function" ? options.defaultProtocol(fragment) : options.defaultProtocol,
+                raw: fragment,
+                encoded: encoded,
+            };
+        }
+        // test 3: it's an email
+        if ((!urlObj) && options.emails && email_1.default(encoded)) {
+            urlObj = {
+                reason: "email",
+                protocol: "mailto:",
+                raw: fragment,
+                encoded: encoded,
+            };
+        }
+        // test 4: it's an IP
+        if ((!urlObj) && options.ips && ip_1.default(encoded)) {
+            urlObj = {
+                reason: "ip",
+                protocol: protocol ? protocol : typeof options.defaultProtocol === "function" ? options.defaultProtocol(fragment) : options.defaultProtocol,
+                raw: fragment,
+                encoded: encoded,
+            };
+        }
+        if (!urlObj)
+            return fragment;
+        else {
+            if ((inputArr[index - 1] === "'" || inputArr[index - 1] === '"') && ~lists_1.htmlAttrs.indexOf(inputArr[index - 2]))
+                return fragment;
+            return urlObj;
+        }
+    });
+}
+exports.default = default_1;
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var separate_1 = __webpack_require__(6);
+var identify_1 = __webpack_require__(19);
+var separate_2 = __webpack_require__(6);
+function default_1(str, options) {
+    var arr = separate_2.separate(str);
+    var identified = identify_1.default(arr, options);
+    // custom filtering-out function
+    if (options.exclude) {
+        for (var index = 0; index < identified.length; index++) {
+            var element = identified[index];
+            if (typeof element === "object" && options.exclude(element))
+                identified[index] = element.raw;
+        }
+    }
+    // return the current list (with words being filtered out)
+    if (options.list) {
+        var listed = [];
+        for (var i = 0; i < identified.length; i++) {
+            var fragment = identified[i];
+            if (typeof fragment !== "string")
+                listed.push(fragment);
+        }
+        return listed;
+    }
+    // transform objects to HTML tags
+    identified = identified.map(function (fragment) {
+        if (typeof fragment === "string")
+            return fragment;
+        return url2tag(fragment, options);
+    });
+    // join and return
+    return separate_1.deSeparate(identified);
+}
+exports.default = default_1;
+function url2tag(fragment, options) {
+    var href = fragment.protocol + fragment.encoded;
+    var original = fragment.raw;
+    if (typeof options.truncate === "number") {
+        if (original.length > options.truncate)
+            original = original.substring(0, options.truncate) + "...";
+    }
+    if (typeof options.truncate === "object") {
+        if (original.length > (options.truncate[0] + options.truncate[1]))
+            original = original.substr(0, options.truncate[0]) + "..." + original.substr(original.length - options.truncate[1]);
+    }
+    if (options.attributes === undefined)
+        options.attributes = [];
+    return "<a href=\"" + href + "\" " + options.attributes.map(function (attribute) {
+        if (typeof attribute === 'function') {
+            var name = (attribute(fragment) || {}).name;
+            var value = (attribute(fragment) || {}).value;
+            if (name && !value)
+                return " name ";
+            if (name && value)
+                return " " + name + "=\"" + value + "\" ";
+        }
+        else
+            return " " + attribute.name + "=\"" + attribute.value + "\" ";
+    }).join("") + ">" + original + "</a>";
+}
+
+
+/***/ }),
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {/*!
@@ -17542,405 +18334,7 @@ module.exports = ChessBoard;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-exports.__esModule = true;
-function SToHHMMSS(sec) {
-    var h = Math.abs(Math.floor(Math.abs(sec) / 3600));
-    var m = Math.abs(Math.floor(Math.abs(sec) % 3600 / 60));
-    var s = Math.abs(Math.floor(Math.abs(sec) % 3600 % 60));
-    return ((sec < 0 ? '-' : '')
-        + (h > 0 ? (h >= 0 && h < 10 ? '0' : '') + h + ':' : '')
-        + (m >= 0 && m < 10 ? '0' : '') + m + ':'
-        + (s >= 0 && s < 10 ? '0' : '') + s);
-}
-exports.SToHHMMSS = SToHHMMSS;
-function startBlackClock(game, clock) {
-    return setInterval(function () {
-        if (game.chess.turn() === 'w') {
-            return;
-        }
-        game.btime = game.btime - 1;
-        if (game.btime < 20 && clock.css('color') !== 'red') {
-            clock.css('color', 'red');
-        }
-        if (game.btime > 20) {
-            clock.css('color', '');
-        }
-        clock.text(SToHHMMSS(game.btime));
-    }, 1000);
-}
-exports.startBlackClock = startBlackClock;
-function startWhiteClock(game, clock) {
-    return setInterval(function () {
-        if (game.chess.turn() === 'b') {
-            return;
-        }
-        game.wtime = game.wtime - 1;
-        if (game.wtime < 20 && clock.css('color') !== 'red') {
-            clock.css('color', 'red');
-        }
-        if (game.wtime > 20) {
-            clock.css('color', '');
-        }
-        clock.text(SToHHMMSS(game.wtime));
-    }, 1000);
-}
-exports.startWhiteClock = startWhiteClock;
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-exports.__esModule = true;
-function highlightSquare(square) {
-    if (square === undefined) {
-        return;
-    }
-    var e = $('#board .square-' + square);
-    if (e.hasClass('black-3c85d')) {
-        e.css('background', '#278881');
-    }
-    else {
-        e.css('background', '#e6ffdd');
-    }
-}
-exports.highlightSquare = highlightSquare;
-function unHighlightSquare(square) {
-    if (square) {
-        $('#board .square-' + square).css('background', '');
-    }
-    else {
-        $('#board .square-55d63').css('background', '');
-    }
-}
-exports.unHighlightSquare = unHighlightSquare;
-function highlightCheck(square) {
-    if (square === undefined) {
-        return;
-    }
-    var e = $('#board .square-' + square);
-    if (e.hasClass('black-3c85d')) {
-        e.css('background', '#aa8881');
-    }
-    else {
-        e.css('background', '#ffdddd');
-    }
-}
-exports.highlightCheck = highlightCheck;
-function highlightMove(source, target) {
-    unHighlightSquare();
-    highlightSquare(source);
-    highlightSquare(target);
-}
-exports.highlightMove = highlightMove;
-function highlightPreMove(source, target) {
-    highlightCheck(source);
-    highlightCheck(target);
-}
-exports.highlightPreMove = highlightPreMove;
-function swapColor(color) {
-    return (color === 'w') ? 'b' : 'w';
-}
-exports.swapColor = swapColor;
-function showCheck(color, san) {
-    if (san.slice(-1) === '+') {
-        var square = $('div').find("[data-piece='" + swapColor(color) + "K']");
-        highlightCheck(square.parent().data('square'));
-    }
-}
-exports.showCheck = showCheck;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-exports.__esModule = true;
-var message_1 = __webpack_require__(3);
-var Session = (function () {
-    function Session(onMessage, user, pass) {
-        this.connected = false;
-        this.handle = '';
-        this.connect(onMessage, user, pass);
-    }
-    Session.prototype.getHandle = function () {
-        return this.handle;
-    };
-    Session.prototype.setHandle = function (handle) {
-        this.connected = true;
-        this.handle = handle;
-        $('#chat-status').text('Connected as ' + handle);
-    };
-    Session.prototype.isConnected = function () {
-        return this.connected;
-    };
-    Session.prototype.connect = function (onMessage, user, pass) {
-        var _this = this;
-        $('#chat-status').text('Connecting...');
-        var login = (user !== undefined && pass !== undefined);
-        var loginOptions = '';
-        if (login) {
-            loginOptions += '?login=1';
-        }
-        this.websocket = new WebSocket(location.protocol.replace('http', 'ws') + '//' + location.host + '/ws' + loginOptions);
-        this.websocket.onmessage = onMessage;
-        this.websocket.onclose = this.reset;
-        if (login) {
-            this.websocket.onopen = function () {
-                _this.websocket.send(JSON.stringify({ type: message_1["default"].Control, command: 1, text: '[' + user + ',' + btoa(pass) + ']' }));
-            };
-        }
-    };
-    Session.prototype.disconnect = function () {
-        if (this.isConnected()) {
-            $('#chat-status').text('Disconnecting...');
-            this.websocket.close();
-            this.connected = false;
-            this.handle = '';
-        }
-    };
-    Session.prototype.reset = function (evt) {
-        $('#chat-status').text('Disconnected');
-    };
-    Session.prototype.send = function (payload) {
-        if (!this.isConnected()) {
-            throw new Error('Session not connected.');
-        }
-        var data;
-        if (typeof payload === 'object') {
-            data = JSON.stringify(payload);
-        }
-        else {
-            data = payload;
-        }
-        this.websocket.send(data);
-    };
-    return Session;
-}());
-exports["default"] = Session;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- *
- * @hack
- *
- * This is a dirty hack to fix URLs that have parenthesis and quotation marks in them
- * For example take this paragraph:
- *
- * """"
- * I visited this url: "http://www.wikipedia.com/some_article(with_paranthesis)"
- * and this URL: (http://www.wikipedia.com/some_article(with_paranthesis))
- * """"
- *
- * The quotation marks `'` `"` and parenthesis `(` `)` `[` `]`
- * can be considered to be part of the URL, and as a
- * punctuation marks surrounding the URL.
- * While this hack works for the most part, it's quite dirty and
- * I may replace it with something better in the future.
- *
- *
- * Another fix is removing punctuation marks that may appear at the end of URL
- * Example:
- *
- * """"
- * I've visited google.com, facebook.com, and yahoo.com.
- * """"
- *
- * @todo: replace the following function with something cleaner.
- *
- *
-**/
-
-Object.defineProperty(exports, "__esModule", { value: true });
-function fixSeparators(arr, sep1, sep2) {
-    arr.forEach(function (bit, i) {
-        if ((bit.indexOf(".") > -1) &&
-            (!(arr[i - 1] === sep1 && arr[i + 1] === sep2)) &&
-            (arr[i + 1] === sep1 || arr[i + 1] === sep2) // the one after it, is either sep1 or sep2
-        ) {
-            arr[i] = arr[i] + arr[i + 1];
-            if (typeof arr[i + 2] === "string")
-                arr[i] = arr[i] + arr[i + 2];
-            if (typeof arr[i + 3] === "string")
-                arr[i] = arr[i] + arr[i + 3];
-            if (typeof arr[i + 4] === "string")
-                arr[i] = arr[i] + arr[i + 4];
-            arr.splice(i + 1, 4);
-            fixSeparators(arr, sep1, sep2);
-        }
-    });
-    return arr;
-}
-exports.fixSeparators = fixSeparators;
-function default_1(arr) {
-    arr = fixSeparators(arr, "(", ")");
-    arr = fixSeparators(arr, "[", "]");
-    arr = fixSeparators(arr, "\"", "\"");
-    arr = fixSeparators(arr, "'", "'");
-    return arr;
-}
-exports.default = default_1;
-
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var email_1 = __webpack_require__(5);
-var hasprotocol_1 = __webpack_require__(6);
-var lists_1 = __webpack_require__(1);
-var ip_1 = __webpack_require__(7);
-var url_1 = __webpack_require__(8);
-function default_1(inputArr, options) {
-    return inputArr.map(function (fragment, index) {
-        var encoded = encodeURI(fragment);
-        // quick validations
-        // 1
-        if (encoded.indexOf(".") < 1 && (!hasprotocol_1.default(encoded)))
-            return fragment;
-        var urlObj = null;
-        var protocol = hasprotocol_1.default(encoded) || "";
-        // remove the protocol before proceeding to any other test
-        if (protocol)
-            encoded = encoded.substr(protocol.length);
-        // test 1: it's a file
-        if (options.files && protocol === "file:///" && encoded.split(/\/|\\/).length - 1) {
-            urlObj = {
-                reason: "file",
-                protocol: protocol,
-                raw: fragment,
-                encoded: encoded,
-            };
-        }
-        // test 2: it's a URL
-        if ((!urlObj) && options.urls && url_1.default(encoded)) {
-            urlObj = {
-                reason: "url",
-                protocol: protocol ? protocol : typeof options.defaultProtocol === "function" ? options.defaultProtocol(fragment) : options.defaultProtocol,
-                raw: fragment,
-                encoded: encoded,
-            };
-        }
-        // test 3: it's an email
-        if ((!urlObj) && options.emails && email_1.default(encoded)) {
-            urlObj = {
-                reason: "email",
-                protocol: "mailto:",
-                raw: fragment,
-                encoded: encoded,
-            };
-        }
-        // test 4: it's an IP
-        if ((!urlObj) && options.ips && ip_1.default(encoded)) {
-            urlObj = {
-                reason: "ip",
-                protocol: protocol ? protocol : typeof options.defaultProtocol === "function" ? options.defaultProtocol(fragment) : options.defaultProtocol,
-                raw: fragment,
-                encoded: encoded,
-            };
-        }
-        if (!urlObj)
-            return fragment;
-        else {
-            if ((inputArr[index - 1] === "'" || inputArr[index - 1] === '"') && ~lists_1.htmlAttrs.indexOf(inputArr[index - 2]))
-                return fragment;
-            return urlObj;
-        }
-    });
-}
-exports.default = default_1;
-
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var separate_1 = __webpack_require__(4);
-var identify_1 = __webpack_require__(17);
-var separate_2 = __webpack_require__(4);
-function default_1(str, options) {
-    var arr = separate_2.separate(str);
-    var identified = identify_1.default(arr, options);
-    // custom filtering-out function
-    if (options.exclude) {
-        for (var index = 0; index < identified.length; index++) {
-            var element = identified[index];
-            if (typeof element === "object" && options.exclude(element))
-                identified[index] = element.raw;
-        }
-    }
-    // return the current list (with words being filtered out)
-    if (options.list) {
-        var listed = [];
-        for (var i = 0; i < identified.length; i++) {
-            var fragment = identified[i];
-            if (typeof fragment !== "string")
-                listed.push(fragment);
-        }
-        return listed;
-    }
-    // transform objects to HTML tags
-    identified = identified.map(function (fragment) {
-        if (typeof fragment === "string")
-            return fragment;
-        return url2tag(fragment, options);
-    });
-    // join and return
-    return separate_1.deSeparate(identified);
-}
-exports.default = default_1;
-function url2tag(fragment, options) {
-    var href = fragment.protocol + fragment.encoded;
-    var original = fragment.raw;
-    if (typeof options.truncate === "number") {
-        if (original.length > options.truncate)
-            original = original.substring(0, options.truncate) + "...";
-    }
-    if (typeof options.truncate === "object") {
-        if (original.length > (options.truncate[0] + options.truncate[1]))
-            original = original.substr(0, options.truncate[0]) + "..." + original.substr(original.length - options.truncate[1]);
-    }
-    if (options.attributes === undefined)
-        options.attributes = [];
-    return "<a href=\"" + href + "\" " + options.attributes.map(function (attribute) {
-        if (typeof attribute === 'function') {
-            var name = (attribute(fragment) || {}).name;
-            var value = (attribute(fragment) || {}).value;
-            if (name && !value)
-                return " name ";
-            if (name && value)
-                return " " + name + "=\"" + value + "\" ";
-        }
-        else
-            return " " + attribute.name + "=\"" + attribute.value + "\" ";
-    }).join("") + ">" + original + "</a>";
-}
-
-
-/***/ }),
-/* 19 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.4.0 */
@@ -19759,374 +20153,6 @@ return Tether;
 
 }));
 
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(jQuery) {
-exports.__esModule = true;
-__webpack_require__(10);
-var $ = __webpack_require__(0);
-var anchorme_1 = __webpack_require__(9);
-var Chess = __webpack_require__(11);
-var ChessBoard = __webpack_require__(12);
-var clock = __webpack_require__(13);
-var highlight = __webpack_require__(14);
-var message_1 = __webpack_require__(3);
-var session_1 = __webpack_require__(15);
-var session;
-var tabsList = {};
-var game = {
-    chess: null,
-    color: '',
-    history: null,
-    premove: null,
-    bclock: null,
-    btime: 0,
-    wclock: null,
-    wtime: 0
-};
-function showCapture(color, captured) {
-    if (typeof captured !== 'undefined') {
-        if (color === game.color) {
-            $('#opponent-captured').append(captured);
-        }
-        else {
-            $('#player-captured').append(captured);
-        }
-    }
-}
-var onDragStart = function (source, piece, position, orientation) {
-    var chess = game.chess;
-    if (chess === null) {
-        return false;
-    }
-    if (chess.game_over() || (game.color !== piece.charAt(0))) {
-        return false;
-    }
-    if (game.premove !== null) {
-        highlight.unHighlightSquare(game.premove.source);
-        highlight.unHighlightSquare(game.premove.target);
-        game.premove = null;
-    }
-    var moves = chess.moves({ square: source, verbose: true });
-    highlight.highlightSquare(source);
-    for (var _i = 0, moves_1 = moves; _i < moves_1.length; _i++) {
-        var move = moves_1[_i];
-        highlight.highlightSquare(move.to);
-    }
-};
-function movePlayer(source, target) {
-    var chess = game.chess;
-    var move = chess.move({
-        from: source,
-        to: target,
-        promotion: 'q'
-    });
-    if (move === null) {
-        highlight.unHighlightSquare();
-        return 'snapback';
-    }
-    session.send({ type: message_1["default"].Control, command: 0, text: source + '-' + target });
-    highlight.highlightMove(move.from, move.to);
-    showCapture(move.color, move.captured);
-    highlight.showCheck(move.color, move.san);
-}
-var onDrop = function (source, target) {
-    if (game.color !== game.chess.turn()) {
-        game.premove = { source: source, target: target };
-        return highlight.highlightPreMove(source, target);
-    }
-    else {
-        return movePlayer(source, target);
-    }
-};
-var onSnapEnd = function () {
-    board.position(game.chess.fen());
-};
-var board = ChessBoard('board', {
-    position: 'start',
-    showNotation: true,
-    draggable: true,
-    onDragStart: onDragStart,
-    onDrop: onDrop,
-    onSnapEnd: onSnapEnd,
-    pieceTheme: 'assets/img/chesspieces/wikipedia-svg/{piece}.svg'
-});
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-});
-$('#collapse-chat').on('hidden.bs.collapse', function () {
-    $('#chat-toggle-icon').removeClass('fa-toggle-up').addClass('fa-toggle-down');
-});
-$('#collapse-chat').on('show.bs.collapse', function () {
-    $('#chat-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
-});
-jQuery(document.body).on('click', '.closeTab', function (event) {
-    var tabContentId = $(event.target).parent().attr('id');
-    $(event.target).parent().remove();
-    delete tabsList[tabContentId];
-    $('#tabs a:last').tab('show');
-    $('#content-' + tabContentId).remove();
-});
-$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-    var tab = $(e.target);
-    tab.css('color', 'black');
-});
-function handleChatMsg(from, data) {
-    var tab;
-    if (!tabsList.hasOwnProperty(from)) {
-        var chName = from;
-        if (from === '4') {
-            chName = 'Help';
-        }
-        $('<a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" href="#content-' +
-            from + '" id="' + from + '" role="tab">' + chName +
-            '<span class="btn btn-default btn-sm closeTab">×</span></a>').appendTo('#tabs');
-        $('<div class="tab-pane chat-text" id="content-' + from + '" role="tabpanel"></div>').appendTo('.tab-content');
-        $('.chat-text').height($('#board').height() - 40);
-        tab = $('#content-' + from);
-        tabsList[from] = tab;
-    }
-    else {
-        tab = tabsList[from];
-    }
-    var who = '';
-    var tabheader = $('#' + $('ul#tabs a.active').attr('id'));
-    if (data.hasOwnProperty('handle')) {
-        var textclass = '';
-        if (session.getHandle() === data.handle) {
-            textclass = ' class="mine"';
-        }
-        who = '<strong' + textclass + '>' + $('<span/>').text(data.handle).html() + '</strong>: ';
-        if (data.type === message_1["default"].ChannelTell) {
-            tabheader = $('#' + data.channel);
-        }
-        else {
-            tabheader = $('#' + data.handle);
-        }
-    }
-    tab.append(who +
-        anchorme_1["default"]($('<span/>').text(data.text).html(), { attributes: [{ name: 'target', value: '_blank' }] }) + '</br>');
-    if (tabheader.hasClass('active')) {
-        tab.scrollTop(tab[0].scrollHeight);
-    }
-    else {
-        tabheader.css('color', 'red');
-    }
-}
-function ICSMessageHandler(message) {
-    var data = JSON.parse(message.data);
-    switch (data.type) {
-        case message_1["default"].Control:
-            if (!session.isConnected() && data.command === 1) {
-                session.setHandle(data.text);
-            }
-            break;
-        case message_1["default"].ChannelTell:
-            handleChatMsg(data.channel, data);
-            break;
-        case message_1["default"].PrivateTell:
-            handleChatMsg(data.handle, data);
-            break;
-        case message_1["default"].GameMove:
-            game.btime = data.btime;
-            game.wtime = data.wtime;
-            if (game.chess === null) {
-                game.chess = Chess();
-                board.start(false);
-                game.history = { moves: [], chess: null, id: -1 };
-                $('#player-captured').text('');
-                $('#opponent-captured').text('');
-                if (data.role === 1) {
-                    game.color = 'w';
-                    board.orientation('white');
-                    game.wclock = clock.startWhiteClock(game, $('#player-time'));
-                    game.bclock = clock.startBlackClock(game, $('#opponent-time'));
-                    $('#player-name').text(data.wname);
-                    $('#opponent-name').text(data.bname);
-                }
-                else if (data.role === -1) {
-                    game.color = 'b';
-                    board.orientation('black');
-                    game.bclock = clock.startBlackClock(game, $('#player-time'));
-                    game.wclock = clock.startWhiteClock(game, $('#opponent-time'));
-                    $('#player-name').text(data.bname);
-                    $('#opponent-name').text(data.wname);
-                }
-            }
-            if (data.role === 1) {
-                if (data.move !== 'none') {
-                    var move = game.chess.move(data.move);
-                    if (move !== null) {
-                        highlight.highlightMove(move.from, move.to);
-                        showCapture(move.color, move.captured);
-                        highlight.showCheck(move.color, move.san);
-                    }
-                    if (game.premove !== null) {
-                        movePlayer(game.premove.source, game.premove.target);
-                        game.premove = null;
-                    }
-                }
-            }
-            board.position(data.fen);
-            break;
-        case message_1["default"].GameStart:
-            break;
-        case message_1["default"].GameEnd:
-            clearInterval(game.wclock);
-            clearInterval(game.bclock);
-            displayHistory();
-            delete game.chess;
-            game.chess = null;
-            break;
-        case message_1["default"].Unknown:
-        default:
-            handleChatMsg($('ul#tabs a.active').attr('id'), data);
-            break;
-    }
-}
-$('#input-form').on('submit', function (event) {
-    event.preventDefault();
-    var text;
-    if (!$('#input-command').is(':checked')) {
-        if ($('#input-text').val().charAt(0) !== '@') {
-            var msg = $('#input-text').val();
-            var tab = $('ul#tabs a.active').attr('id');
-            text = 't ' + tab + ' ' + msg;
-            handleChatMsg(tab, { type: message_1["default"].ChannelTell, channel: tab, handle: session.getHandle(), text: msg });
-        }
-        else {
-            text = $('#input-text').val().substr(1);
-        }
-    }
-    else {
-        if ($('#input-text').val().charAt(0) !== '@') {
-            text = $('#input-text').val();
-        }
-        else {
-            text = $('#input-text').val().substr(1);
-        }
-    }
-    session.send({ type: message_1["default"].Control, command: 0, text: text });
-    $('#input-text').val('');
-});
-$(document).ready(function () {
-    session = new session_1["default"](ICSMessageHandler);
-    $('#opponent-time').text('00:00');
-    $('#player-time').text('00:00');
-    $('.chat-text').height($('#board').height() - 40);
-    tabsList = { 53: $('#content-53') };
-    board.start(false);
-    game.history = { moves: [], chess: null, id: -1 };
-});
-function displayHistory() {
-    if (game.history.chess === null) {
-        game.history.chess = Chess();
-    }
-    if (game.chess !== null) {
-        var moves = game.chess.history();
-        if (game.history.moves.length < moves.length) {
-            for (var i = game.history.moves.length - 1; i < moves.length; i++) {
-                game.history.chess.move(moves[i]);
-                game.history.moves.push(game.history.chess.fen());
-            }
-        }
-    }
-    if (game.history.id < 0) {
-        game.history.id = game.history.moves.length - 1;
-    }
-    board.position(game.history.moves[game.history.id]);
-}
-$('#fast-backward').on('click', function (event) {
-    game.history.id = 0;
-    displayHistory();
-});
-$('#backward').on('click', function (event) {
-    if (game.history.id > 0) {
-        game.history.id = game.history.id - 1;
-    }
-    displayHistory();
-});
-$('#forward').on('click', function (event) {
-    if (game.history.id < game.history.moves.length - 1) {
-        game.history.id = game.history.id + 1;
-    }
-    displayHistory();
-});
-$('#fast-forward').on('click', function (event) {
-    game.history.id = game.history.moves.length - 1;
-    displayHistory();
-});
-$('#resign').on('click', function (event) {
-    if (game.chess !== null) {
-        session.send({ type: message_1["default"].Control, command: 0, text: 'resign' });
-    }
-});
-$('#abort').on('click', function (event) {
-    if (game.chess !== null) {
-        session.send({ type: message_1["default"].Control, command: 0, text: 'abort' });
-    }
-});
-$('#takeback').on('click', function (event) {
-    if (game.chess !== null) {
-        if (game.chess.turn() === game.color) {
-            session.send({ type: message_1["default"].Control, command: 0, text: 'take 2' });
-        }
-        else {
-            session.send({ type: message_1["default"].Control, command: 0, text: 'take 1' });
-        }
-    }
-});
-$('#draw').on('click', function (event) {
-    if (game.chess !== null) {
-        session.send({ type: message_1["default"].Control, command: 0, text: 'draw' });
-    }
-});
-$('#disconnect').on('click', function (event) {
-    session.disconnect();
-});
-$('#login').on('click', function (event) {
-    var user = $('#login-user').val();
-    var pass = $('#login-pass').val();
-    if (!session) {
-        session = new session_1["default"](ICSMessageHandler, user, pass);
-    }
-    else {
-        if (!session.isConnected()) {
-            session.connect(ICSMessageHandler, user, pass);
-        }
-    }
-    $('#login-screen').modal('hide');
-});
-$('#connect-user').on('click', function (event) {
-    if (!session || (session && !session.isConnected())) {
-        $('#login-screen').modal('show');
-    }
-});
-$('#connect-guest').on('click', function (event) {
-    if (!session) {
-        session = new session_1["default"](ICSMessageHandler);
-    }
-    else {
-        if (!session.isConnected()) {
-            session.connect(ICSMessageHandler);
-        }
-    }
-});
-$(window).focus(function () {
-    if (game.chess) {
-        board.position(game.chess.fen(), false);
-    }
-});
-$(window).resize(function () {
-    board.resize();
-    $('.chat-text').height($('#board').height() - 40);
-});
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ })
 /******/ ]);
