@@ -34,7 +34,7 @@ function addMoveHistory(move: any): void {
   const id: number = game.history.length();
   if (id % 2 === 1) {
     $('#moveHistory').append('<tr><td><a href="javascript:void(0);" onclick="showMove(' +
-      id + ')">' + id + '. ' + move.san + '</a></td><td></td></tr>');
+      id + ')">' + id + '. ' + move.san + '</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>');
     const height: number = 102 + (((id + 1) / 2) * 30);
     $('#moveHistoryContainer').scrollTop(height);
   } else {
@@ -243,7 +243,7 @@ $(document).ready(() => {
   $('#opponent-time').text('00:00');
   $('#player-time').text('00:00');
   $('.chat-text').height($('#board').height() - 40);
-  $('#moveHistoryContainer').height($('#board').height() + 20);
+  $('#moveHistoryContainer').height($('#board').height() - 30);
   tabsList = { 53: $('#content-53') };
   board.start(false);
 });
@@ -289,6 +289,55 @@ $('#takeback').on('click', (event) => {
 $('#draw').on('click', (event) => {
   if (game.chess !== null) {
     session.send({ type: MessageType.Control, command: 0, text: 'draw' });
+  }
+});
+
+function getGame(opponent: string, min: string, sec: string) {
+  if (game.chess === null) {
+    const cmd: string = (opponent !== '') ? 'match ' + opponent : 'seek';
+    session.send({ type: MessageType.Control, command: 0, text: cmd + ' ' + min + ' ' + sec });
+  }
+}
+
+$('#newGame').on('click', (event) => {
+  if (game.chess === null) {
+    session.send({ type: MessageType.Control, command: 0, text: 'getgame' });
+  }
+});
+
+$('#onezero').on('click', (event) => {
+  getGame($('#opponentName').val(), '1', '0');
+});
+
+$('#threezero').on('click', (event) => {
+  getGame($('#opponentName').val(), '3', '0');
+});
+
+$('#threetwo').on('click', (event) => {
+  getGame($('#opponentName').val(), '3', '2');
+});
+
+$('#fivezero').on('click', (event) => {
+  getGame($('#opponentName').val(), '5', '0');
+});
+
+$('#fivefive').on('click', (event) => {
+  getGame($('#opponentName').val(), '5', '5');
+});
+
+$('#tenfive').on('click', (event) => {
+  getGame($('#opponentName').val(), '10', '5');
+});
+
+$('#fifteenzero').on('click', (event) => {
+  getGame($('#opponentName').val(), '15', '0');
+});
+
+$('#customControl').on('click', (event) => {
+  if (game.chess === null) {
+    const min: string = $('#customControlMin').val();
+    const sec: string = $('#customControlSec').val();
+    getGame($('#opponentName').val(), min, sec);
   }
 });
 

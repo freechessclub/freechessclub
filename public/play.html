@@ -44,8 +44,46 @@
                 </button>
               </div>
             </div>
+            <div class="card-header">
+              <div class="btn-group center">
+                <button type="button" class="btn btn-secondary btn-block btn-sm" aria-haspopup="true" aria-expanded="false" id="newGame">
+                  Start a new game
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm" data-toggle="collapse" data-target="#newGameMenu"  aria-haspopup="true" aria-expanded="false" aria-controls="newGameMenu">
+                  <span class="fa fa-toggle-down"></span>
+                </button>
+              </div>
+            </div>
+            <div class="card-block collapse" id="newGameMenu">
+              <div class="btn-group-vertical btn-block" role="group" aria-label="New Game Menu">
+                <div class="input-group input-group-sm">
+                  <span class="input-group-addon" id="opponentPlayer">Play against</span>
+                  <input type="text" class="form-control" id="opponentName" placeholder="Random Player" aria-describedby="opponentPlayer">
+                </div>
+                <a href="#" class="btn btn-primary btn-sm disabled" role="button" aria-disabled="true">Lightning</a>
+                <button type="button" class="btn btn-secondary btn-block btn-sm" id="onezero">1 + 0</button>
+                <a href="#" class="btn btn-success btn-sm disabled" role="button" aria-disabled="true">Blitz</a>
+                <button type="button" class="btn btn-secondary btn-block btn-sm" id="threezero">3 + 0</button>
+                <button type="button" class="btn btn-secondary btn-block btn-sm" id="threetwo">3 + 2</button>
+                <button type="button" class="btn btn-secondary btn-block btn-sm" id="fivezero">5 + 0</button>
+                <button type="button" class="btn btn-secondary btn-block btn-sm" id="fivefive">5 + 5</button>
+                <a href="#" class="btn btn-warning btn-sm disabled" role="button" aria-disabled="true">Standard</a>
+                <button type="button" class="btn btn-secondary btn-block btn-sm" id="tenfive">10 + 5</button>
+                <button type="button" class="btn btn-secondary btn-block btn-sm" id="fifteenzero">15 + 0</button>
+                <a href="#" class="btn btn-danger btn-sm disabled" role="button" aria-disabled="true">Custom</a>
+                <div class="input-group input-group-sm">
+                  <input type="text" class="form-control text-center" placeholder="5" id="customControlMin">
+                  <span class="input-group-addon"> min </span>
+                  <input type="text" class="form-control text-center" placeholder="10" id="customControlSec">
+                  <span class="input-group-addon"> sec </span>
+                  <span class="input-group-btn">
+                    <button class="btn btn-secondary btn-sm" type="button" id="customControl">Go</button>
+                  </span>
+                </div>
+              </div>
+            </div>
             <div class="card-block">
-              <div class="history noselect" id="moveHistoryContainer">
+              <div class="history noselect text-center" id="moveHistoryContainer">
                 <table class="table table-sm table-striped table-hover">
                   <tbody id="moveHistory"></tbody>
                 </table>

@@ -10703,7 +10703,7 @@ function addMoveHistory(move) {
     var id = game_1["default"].history.length();
     if (id % 2 === 1) {
         $('#moveHistory').append('<tr><td><a href="javascript:void(0);" onclick="showMove(' +
-            id + ')">' + id + '. ' + move.san + '</a></td><td></td></tr>');
+            id + ')">' + id + '. ' + move.san + '</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>');
         var height = 102 + (((id + 1) / 2) * 30);
         $('#moveHistoryContainer').scrollTop(height);
     }
@@ -10899,7 +10899,7 @@ $(document).ready(function () {
     $('#opponent-time').text('00:00');
     $('#player-time').text('00:00');
     $('.chat-text').height($('#board').height() - 40);
-    $('#moveHistoryContainer').height($('#board').height() + 20);
+    $('#moveHistoryContainer').height($('#board').height() - 30);
     tabsList = { 53: $('#content-53') };
     board_1["default"].start(false);
 });
@@ -10938,6 +10938,45 @@ $('#takeback').on('click', function (event) {
 $('#draw').on('click', function (event) {
     if (game_1["default"].chess !== null) {
         session.send({ type: message_1["default"].Control, command: 0, text: 'draw' });
+    }
+});
+function getGame(opponent, min, sec) {
+    if (game_1["default"].chess === null) {
+        var cmd = (opponent !== '') ? 'match ' + opponent : 'seek';
+        session.send({ type: message_1["default"].Control, command: 0, text: cmd + ' ' + min + ' ' + sec });
+    }
+}
+$('#newGame').on('click', function (event) {
+    if (game_1["default"].chess === null) {
+        session.send({ type: message_1["default"].Control, command: 0, text: 'getgame' });
+    }
+});
+$('#onezero').on('click', function (event) {
+    getGame($('#opponentName').val(), '1', '0');
+});
+$('#threezero').on('click', function (event) {
+    getGame($('#opponentName').val(), '3', '0');
+});
+$('#threetwo').on('click', function (event) {
+    getGame($('#opponentName').val(), '3', '2');
+});
+$('#fivezero').on('click', function (event) {
+    getGame($('#opponentName').val(), '5', '0');
+});
+$('#fivefive').on('click', function (event) {
+    getGame($('#opponentName').val(), '5', '5');
+});
+$('#tenfive').on('click', function (event) {
+    getGame($('#opponentName').val(), '10', '5');
+});
+$('#fifteenzero').on('click', function (event) {
+    getGame($('#opponentName').val(), '15', '0');
+});
+$('#customControl').on('click', function (event) {
+    if (game_1["default"].chess === null) {
+        var min = $('#customControlMin').val();
+        var sec = $('#customControlSec').val();
+        getGame($('#opponentName').val(), min, sec);
     }
 });
 $('#disconnect').on('click', function (event) {
@@ -17418,7 +17457,7 @@ function animateSparePieceToSquare(piece, dest, completeFn) {
 
 // execute an array of animations
 function doAnimations(a, oldPos, newPos) {
-  if (a.length === 0 || ANIMATION_HAPPENING === true) {
+  if (a.length === 0) {
     return;
   }
   ANIMATION_HAPPENING = true;
