@@ -77,8 +77,16 @@ $(() => {
 $('#collapse-chat').on('hidden.bs.collapse', () => {
   $('#chat-toggle-icon').removeClass('fa-toggle-up').addClass('fa-toggle-down');
 });
-$('#collapse-chat').on('show.bs.collapse', () => {
+$('#collapse-chat').on('shown.bs.collapse', () => {
   $('#chat-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
+});
+
+$('#newGameMenu').on('show.bs.collapse', () => {
+  $('#moveHistoryContainer').hide();
+});
+
+$('#newGameMenu').on('hidden.bs.collapse', () => {
+  $('#moveHistoryContainer').show();
 });
 
 jQuery(document.body).on('click', '.closeTab', (event) => {
@@ -160,6 +168,7 @@ function ICSMessageHandler(message) {
         game.history = new History(board, game.chess.fen());
         $('#player-captured').text('');
         $('#opponent-captured').text('');
+        $('#newGameMenu').collapse('hide');
         // role 1: I am playing and it is NOW my move
         if (data.role === 1) {
           game.color = 'w';

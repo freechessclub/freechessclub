@@ -10739,8 +10739,14 @@ $(function () {
 $('#collapse-chat').on('hidden.bs.collapse', function () {
     $('#chat-toggle-icon').removeClass('fa-toggle-up').addClass('fa-toggle-down');
 });
-$('#collapse-chat').on('show.bs.collapse', function () {
+$('#collapse-chat').on('shown.bs.collapse', function () {
     $('#chat-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
+});
+$('#newGameMenu').on('show.bs.collapse', function () {
+    $('#moveHistoryContainer').hide();
+});
+$('#newGameMenu').on('hidden.bs.collapse', function () {
+    $('#moveHistoryContainer').show();
 });
 jQuery(document.body).on('click', '.closeTab', function (event) {
     var tabContentId = $(event.target).parent().attr('id');
@@ -10818,6 +10824,7 @@ function ICSMessageHandler(message) {
                 game_1["default"].history = new history_1["default"](board_1["default"], game_1["default"].chess.fen());
                 $('#player-captured').text('');
                 $('#opponent-captured').text('');
+                $('#newGameMenu').collapse('hide');
                 if (data.role === 1) {
                     game_1["default"].color = 'w';
                     board_1["default"].orientation('white');
