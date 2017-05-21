@@ -24,6 +24,7 @@
     "tslint": "^5.2.0"
   },
   "devDependencies": {
+    "@types/bootstrap": "^3.3.33",
     "@types/jquery": "^2.0.42",
     "@types/websocket": "^0.0.33",
     "css-loader": "^0.28.0",
