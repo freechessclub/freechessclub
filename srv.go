@@ -333,7 +333,7 @@ func newSession(user, pass string, ws *websocket.Conn) (*Session, error) {
 		return nil, err
 	}
 
-	_, err = sendAndReadUntil(conn, "set interface fcc", ficsPrompt)
+	_, err = sendAndReadUntil(conn, "set interface www.freechess.club", ficsPrompt)
 	if err != nil {
 		return nil, err
 	}
