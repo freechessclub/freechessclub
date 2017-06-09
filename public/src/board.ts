@@ -32,6 +32,9 @@ const onDragStart = (source, piece, position, orientation) => {
 };
 
 const onDrop = (source, target) => {
+  if (game.chess === null) {
+    return;
+  }
   // premove if it is not my turn yet
   if (game.color !== game.chess.turn()) {
     game.premove = {source, target};
