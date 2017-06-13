@@ -69,10 +69,10 @@ const (
 	Resign = iota
 	Disconnect
 	Checkmate
+	TimeForfeit
 	Draw
 	Adjourn
 	Abort
-	TimeForfeit
 	unknownReason
 )
 
@@ -127,6 +127,7 @@ type gameEndMsg struct {
 	Winner string      `json:"winner"`
 	Loser  string      `json:"loser"`
 	Reason int         `json:"reason"`
+	Message string     `json:"message"`
 }
 
 type gameMoveMsg struct {
