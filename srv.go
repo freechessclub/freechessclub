@@ -149,7 +149,7 @@ func init() {
 	// {Game 117 (GuestMDPS vs. guestl) Creating unrated blitz match.}
 	gameStartRE = regexp.MustCompile(`.*\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\sCreating.*\}`)
 
-	gameEndRE = regexp.MustCompile(`\s*(?:Game\s[0-9]+:.*)?\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\s([a-zA-Z]+)\s([a-zA-Z ]+)\}.*`)
+	gameEndRE = regexp.MustCompile(`\s*(?:Game\s[0-9]+:.*)?\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\s([a-zA-Z]+)\s([a-zA-Z0-9\s]+)\}.*`)
 
 	// channel tell
 	chTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:\([A-Z\*]+\))*\(([0-9]+)\):\s+(.*)`)
@@ -243,6 +243,7 @@ func (s *Session) decodeMessage(msg []byte) ([]byte, error) {
 			Winner: winner,
 			Loser:  loser,
 			Reason: reason,
+			Message: string(msg),
 		}
 		return json.Marshal(m)
 	}
