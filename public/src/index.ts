@@ -36,7 +36,7 @@ function addMoveHistory(move: any): void {
     $('#moveHistory').append('<tr><td><a href="javascript:void(0);" onclick="showMove(' +
       id + ')">' + id + '. ' + move.san + '</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>');
     const height: number = 102 + (((id + 1) / 2) * 30);
-    $('#moveHistoryContainer').scrollTop(height);
+    $('#leftPanel').scrollTop(height);
   } else {
     $('#moveHistory tr:last td').eq(1).html('<a href="javascript:void(0);" onclick="showMove(' +
       id + ')">' + id + '. ' + move.san + '</a>');
@@ -82,11 +82,11 @@ $('#collapse-chat').on('shown.bs.collapse', () => {
 });
 
 $('#newGameMenu').on('show.bs.collapse', () => {
-  $('#moveHistoryContainer').hide();
+  $('#leftPanel').hide();
 });
 
 $('#newGameMenu').on('hidden.bs.collapse', () => {
-  $('#moveHistoryContainer').show();
+  $('#leftPanel').show();
 });
 
 jQuery(document.body).on('click', '.closeTab', (event) => {
@@ -101,6 +101,10 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', (e) => {
   const tab = $(e.target);
   tab.css('color', 'black');
 });
+
+function showStatusMsg(msg: string) {
+  $('#game-status').html(msg + '<br/>');
+}
 
 function handleChatMsg(from, data) {
   let tab;
@@ -168,6 +172,10 @@ function ICSMessageHandler(message) {
         game.history = new History(board, game.chess.fen());
         $('#player-captured').text('');
         $('#opponent-captured').text('');
+        showStatusMsg('');
+        $('#moveHistory').empty();
+        $('#player-status').css('background-color', '');
+        $('#opponent-status').css('background-color', '');
         $('#newGameMenu').collapse('hide');
         // role 1: I am playing and it is NOW my move
         if (data.role === 1) {
@@ -212,6 +220,21 @@ function ICSMessageHandler(message) {
     case MessageType.GameStart:
       break;
     case MessageType.GameEnd:
+      if (data.reason < 4 && session.getHandle() === data.winner) {
+        // player won
+        $('#player-status').css('background-color', '#d4f9d9');
+        $('#opponent-status').css('background-color', '#f9d4d4');
+      } else if (data.reason < 4 && session.getHandle() === data.loser) {
+        // opponent won
+        $('#player-status').css('background-color', '#f9d4d4');
+        $('#opponent-status').css('background-color', '#d4f9d9');
+      } else {
+        // tie
+        $('#player-status').css('background-color', '#fcddae');
+        $('#opponent-status').css('background-color', '#fcddae');
+      }
+
+      showStatusMsg(data.message);
       clearInterval(game.wclock);
       clearInterval(game.bclock);
       delete game.chess;
@@ -252,7 +275,7 @@ $(document).ready(() => {
   $('#opponent-time').text('00:00');
   $('#player-time').text('00:00');
   $('.chat-text').height($('#board').height() - 40);
-  $('#moveHistoryContainer').height($('#board').height() - 30);
+  $('#leftPanel').height($('#board').height() - 30);
   tabsList = { 53: $('#content-53') };
   board.start(false);
 });
@@ -276,12 +299,16 @@ $('#fast-forward').on('click', (event) => {
 $('#resign').on('click', (event) => {
   if (game.chess !== null) {
     session.send({ type: MessageType.Control, command: 0, text: 'resign' });
+  } else {
+    showStatusMsg('You are not playing a game');
   }
 });
 
 $('#abort').on('click', (event) => {
   if (game.chess !== null) {
     session.send({ type: MessageType.Control, command: 0, text: 'abort' });
+  } else {
+    showStatusMsg('You are not playing a game');
   }
 });
 
@@ -292,12 +319,16 @@ $('#takeback').on('click', (event) => {
     } else {
       session.send({ type: MessageType.Control, command: 0, text: 'take 1'});
     }
+  } else {
+    showStatusMsg('You are not playing a game');
   }
 });
 
 $('#draw').on('click', (event) => {
   if (game.chess !== null) {
     session.send({ type: MessageType.Control, command: 0, text: 'draw' });
+  } else {
+    showStatusMsg('You are not playing a game');
   }
 });
 

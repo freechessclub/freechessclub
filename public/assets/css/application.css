@@ -24,6 +24,12 @@
   color: rgba(80, 80, 120, 0.5);
 }
 
+#game-status {
+  display: inline;
+  font-weight: bold;
+  color: rgba(80, 80, 120, 0.5);
+}
+
 .chat-text strong.mine {
   font-weight: bold;
   color: rgba(30, 60, 180, 0.8);

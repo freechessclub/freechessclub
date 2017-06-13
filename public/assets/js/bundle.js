@@ -10705,7 +10705,7 @@ function addMoveHistory(move) {
         $('#moveHistory').append('<tr><td><a href="javascript:void(0);" onclick="showMove(' +
             id + ')">' + id + '. ' + move.san + '</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>');
         var height = 102 + (((id + 1) / 2) * 30);
-        $('#moveHistoryContainer').scrollTop(height);
+        $('#leftPanel').scrollTop(height);
     }
     else {
         $('#moveHistory tr:last td').eq(1).html('<a href="javascript:void(0);" onclick="showMove(' +
@@ -10743,10 +10743,10 @@ $('#collapse-chat').on('shown.bs.collapse', function () {
     $('#chat-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
 });
 $('#newGameMenu').on('show.bs.collapse', function () {
-    $('#moveHistoryContainer').hide();
+    $('#leftPanel').hide();
 });
 $('#newGameMenu').on('hidden.bs.collapse', function () {
-    $('#moveHistoryContainer').show();
+    $('#leftPanel').show();
 });
 jQuery(document.body).on('click', '.closeTab', function (event) {
     var tabContentId = $(event.target).parent().attr('id');
@@ -10759,6 +10759,9 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
     var tab = $(e.target);
     tab.css('color', 'black');
 });
+function showStatusMsg(msg) {
+    $('#game-status').html(msg + '<br/>');
+}
 function handleChatMsg(from, data) {
     var tab;
     if (!tabsList.hasOwnProperty(from)) {
@@ -10824,6 +10827,10 @@ function ICSMessageHandler(message) {
                 game_1["default"].history = new history_1["default"](board_1["default"], game_1["default"].chess.fen());
                 $('#player-captured').text('');
                 $('#opponent-captured').text('');
+                showStatusMsg('');
+                $('#moveHistory').empty();
+                $('#player-status').css('background-color', '');
+                $('#opponent-status').css('background-color', '');
                 $('#newGameMenu').collapse('hide');
                 if (data.role === 1) {
                     game_1["default"].color = 'w';
@@ -10865,6 +10872,19 @@ function ICSMessageHandler(message) {
         case message_1["default"].GameStart:
             break;
         case message_1["default"].GameEnd:
+            if (data.reason < 4 && session.getHandle() === data.winner) {
+                $('#player-status').css('background-color', '#d4f9d9');
+                $('#opponent-status').css('background-color', '#f9d4d4');
+            }
+            else if (data.reason < 4 && session.getHandle() === data.loser) {
+                $('#player-status').css('background-color', '#f9d4d4');
+                $('#opponent-status').css('background-color', '#d4f9d9');
+            }
+            else {
+                $('#player-status').css('background-color', '#fcddae');
+                $('#opponent-status').css('background-color', '#fcddae');
+            }
+            showStatusMsg(data.message);
             clearInterval(game_1["default"].wclock);
             clearInterval(game_1["default"].bclock);
             delete game_1["default"].chess;
@@ -10906,7 +10926,7 @@ $(document).ready(function () {
     $('#opponent-time').text('00:00');
     $('#player-time').text('00:00');
     $('.chat-text').height($('#board').height() - 40);
-    $('#moveHistoryContainer').height($('#board').height() - 30);
+    $('#leftPanel').height($('#board').height() - 30);
     tabsList = { 53: $('#content-53') };
     board_1["default"].start(false);
 });
@@ -10926,10 +10946,16 @@ $('#resign').on('click', function (event) {
     if (game_1["default"].chess !== null) {
         session.send({ type: message_1["default"].Control, command: 0, text: 'resign' });
     }
+    else {
+        showStatusMsg('You are not playing a game');
+    }
 });
 $('#abort').on('click', function (event) {
     if (game_1["default"].chess !== null) {
         session.send({ type: message_1["default"].Control, command: 0, text: 'abort' });
+    }
+    else {
+        showStatusMsg('You are not playing a game');
     }
 });
 $('#takeback').on('click', function (event) {
@@ -10941,10 +10967,16 @@ $('#takeback').on('click', function (event) {
             session.send({ type: message_1["default"].Control, command: 0, text: 'take 1' });
         }
     }
+    else {
+        showStatusMsg('You are not playing a game');
+    }
 });
 $('#draw').on('click', function (event) {
     if (game_1["default"].chess !== null) {
         session.send({ type: message_1["default"].Control, command: 0, text: 'draw' });
+    }
+    else {
+        showStatusMsg('You are not playing a game');
     }
 });
 function getGame(opponent, min, sec) {
@@ -16285,6 +16317,9 @@ var onDragStart = function (source, piece, position, orientation) {
     }
 };
 var onDrop = function (source, target) {
+    if (game_1["default"].chess === null) {
+        return;
+    }
     if (game_1["default"].color !== game_1["default"].chess.turn()) {
         game_1["default"].premove = { source: source, target: target };
         return highlight.highlightPreMove(source, target);

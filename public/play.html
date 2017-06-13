@@ -82,10 +82,11 @@
                 </div>
               </div>
             </div>
-            <div class="card-block history noselect text-center" id="moveHistoryContainer">
+            <div class="card-block history noselect text-center" id="leftPanel">
               <table class="table table-sm table-striped table-hover">
                 <tbody id="moveHistory"></tbody>
               </table>
+              <div id="game-status"></div>
             </div>
             <div class="card-footer center">
               <div class="btn-toolbar">
@@ -107,7 +108,7 @@
         </div>
         <div class="col-sm-5">
           <div class="card">
-            <div class="d-flex justify-content-between align-items-center card-header status">
+            <div class="d-flex justify-content-between align-items-center card-header status" id="opponent-status">
               <div class="mr-auto p-2 name noselect" id="opponent-name"></div>
               <div class="p-2 captured noselect" id="opponent-captured"></div>
               <div class="p-2 clock noselect" id="opponent-time"></div>
@@ -115,7 +116,7 @@
             <div class="card-block" id="board-card">
               <div id="board"></div>
             </div>
-            <div class="d-flex justify-content-between align-items-center card-footer status">
+            <div class="d-flex justify-content-between align-items-center card-footer status" id="player-status">
               <div class="mr-auto p-2 name noselect" id="player-name"></div>
               <div class="p-2 captured noselect" id="player-captured"></div>
               <div class="p-2 clock noselect" id="player-time"></div>
