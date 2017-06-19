@@ -10742,12 +10742,6 @@ $('#collapse-chat').on('hidden.bs.collapse', function () {
 $('#collapse-chat').on('shown.bs.collapse', function () {
     $('#chat-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
 });
-$('#newGameMenu').on('show.bs.collapse', function () {
-    $('#leftPanel').hide();
-});
-$('#newGameMenu').on('hidden.bs.collapse', function () {
-    $('#leftPanel').show();
-});
 jQuery(document.body).on('click', '.closeTab', function (event) {
     var tabContentId = $(event.target).parent().attr('id');
     $(event.target).parent().remove();
@@ -10831,7 +10825,6 @@ function ICSMessageHandler(message) {
                 $('#moveHistory').empty();
                 $('#player-status').css('background-color', '');
                 $('#opponent-status').css('background-color', '');
-                $('#newGameMenu').collapse('hide');
                 if (data.role === 1) {
                     game_1["default"].color = 'w';
                     board_1["default"].orientation('white');

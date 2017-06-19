@@ -81,14 +81,6 @@ $('#collapse-chat').on('shown.bs.collapse', () => {
   $('#chat-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
 });
 
-$('#newGameMenu').on('show.bs.collapse', () => {
-  $('#leftPanel').hide();
-});
-
-$('#newGameMenu').on('hidden.bs.collapse', () => {
-  $('#leftPanel').show();
-});
-
 jQuery(document.body).on('click', '.closeTab', (event) => {
   const tabContentId: string = $(event.target).parent().attr('id');
   $(event.target).parent().remove();
@@ -176,7 +168,6 @@ function ICSMessageHandler(message) {
         $('#moveHistory').empty();
         $('#player-status').css('background-color', '');
         $('#opponent-status').css('background-color', '');
-        $('#newGameMenu').collapse('hide');
         // role 1: I am playing and it is NOW my move
         if (data.role === 1) {
           game.color = 'w';
