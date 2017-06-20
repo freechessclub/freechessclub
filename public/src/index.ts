@@ -20,10 +20,37 @@ let session: Session;
 // List of active tabs
 let tabsList = {};
 
-function capturePiece(color: string, piece: string): void {
+function showCapturePiece(color: string, piece: string): void {
   const p: string = highlight.swapColor(color) + piece.toUpperCase();
-  const elt = (game.color === color) ? '#player-captured' : '#opponent-captured';
-  $(elt).append('<img id="' + p + '" src="assets/img/chesspieces/wikipedia-svg/' + p + '.svg"/>');
+  if (game.color === color) {
+    if (game.playerCaptured[p] === undefined) {
+      game.playerCaptured[p] = 0;
+    }
+    game.playerCaptured[p]++;
+  } else {
+    if (game.oppCaptured[p] === undefined) {
+      game.oppCaptured[p] = 0;
+    }
+    game.oppCaptured[p]++;
+  }
+
+  $('#player-captured').empty();
+  $('#opponent-captured').empty();
+  for (const key in game.playerCaptured) {
+    if (game.playerCaptured.hasOwnProperty(key)) {
+      $('#player-captured').append(
+        '<img id="' + key + '" src="assets/img/chesspieces/wikipedia-svg/' +
+          key + '.svg"/><small>' + game.playerCaptured[key] + '</small>');
+    }
+  }
+
+  for (const key in game.oppCaptured) {
+    if (game.oppCaptured.hasOwnProperty(key)) {
+      $('#opponent-captured').append(
+        '<img id="' + key + '" src="assets/img/chesspieces/wikipedia-svg/' +
+          key + '.svg"/><small>' + game.oppCaptured[key] + '</small>');
+    }
+  }
 }
 
 (window as any).showMove = (id: number) => {
@@ -63,7 +90,7 @@ export function movePiece(source, target) {
   addMoveHistory(move);
   highlight.highlightMove(move.from, move.to);
   if (move.captured) {
-    capturePiece(move.color, move.captured);
+    showCapturePiece(move.color, move.captured);
   }
   highlight.showCheck(move.color, move.san);
 }
@@ -194,7 +221,7 @@ function ICSMessageHandler(message) {
           if (move !== null) {
             highlight.highlightMove(move.from, move.to);
             if (move.captured) {
-              capturePiece(move.color, move.captured);
+              showCapturePiece(move.color, move.captured);
             }
             highlight.showCheck(move.color, move.san);
             game.history.add(game.chess.fen());

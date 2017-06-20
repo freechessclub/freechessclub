@@ -2,7 +2,8 @@
 
 // An online chess game
 export const game = {
-  captured: {},
+  playerCaptured: {},
+  oppCaptured: {},
   chess: null,
   color: '',
   history: null,

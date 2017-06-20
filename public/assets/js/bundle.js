@@ -10406,7 +10406,8 @@ exports.isPort = isPort;
 
 exports.__esModule = true;
 exports.game = {
-    captured: {},
+    playerCaptured: {},
+    oppCaptured: {},
     chess: null,
     color: '',
     history: null,
@@ -10691,10 +10692,34 @@ var message_1 = __webpack_require__(5);
 var session_1 = __webpack_require__(18);
 var session;
 var tabsList = {};
-function capturePiece(color, piece) {
+function showCapturePiece(color, piece) {
     var p = highlight.swapColor(color) + piece.toUpperCase();
-    var elt = (game_1["default"].color === color) ? '#player-captured' : '#opponent-captured';
-    $(elt).append('<img id="' + p + '" src="assets/img/chesspieces/wikipedia-svg/' + p + '.svg"/>');
+    if (game_1["default"].color === color) {
+        if (game_1["default"].playerCaptured[p] === undefined) {
+            game_1["default"].playerCaptured[p] = 0;
+        }
+        game_1["default"].playerCaptured[p]++;
+    }
+    else {
+        if (game_1["default"].oppCaptured[p] === undefined) {
+            game_1["default"].oppCaptured[p] = 0;
+        }
+        game_1["default"].oppCaptured[p]++;
+    }
+    $('#player-captured').empty();
+    $('#opponent-captured').empty();
+    for (var key in game_1["default"].playerCaptured) {
+        if (game_1["default"].playerCaptured.hasOwnProperty(key)) {
+            $('#player-captured').append('<img id="' + key + '" src="assets/img/chesspieces/wikipedia-svg/' +
+                key + '.svg"/><small>' + game_1["default"].playerCaptured[key] + '</small>');
+        }
+    }
+    for (var key in game_1["default"].oppCaptured) {
+        if (game_1["default"].oppCaptured.hasOwnProperty(key)) {
+            $('#opponent-captured').append('<img id="' + key + '" src="assets/img/chesspieces/wikipedia-svg/' +
+                key + '.svg"/><small>' + game_1["default"].oppCaptured[key] + '</small>');
+        }
+    }
 }
 window.showMove = function (id) {
     game_1["default"].history.display(id);
@@ -10728,7 +10753,7 @@ function movePiece(source, target) {
     addMoveHistory(move);
     highlight.highlightMove(move.from, move.to);
     if (move.captured) {
-        capturePiece(move.color, move.captured);
+        showCapturePiece(move.color, move.captured);
     }
     highlight.showCheck(move.color, move.san);
 }
@@ -10848,7 +10873,7 @@ function ICSMessageHandler(message) {
                     if (move !== null) {
                         highlight.highlightMove(move.from, move.to);
                         if (move.captured) {
-                            capturePiece(move.color, move.captured);
+                            showCapturePiece(move.color, move.captured);
                         }
                         highlight.showCheck(move.color, move.san);
                         game_1["default"].history.add(game_1["default"].chess.fen());

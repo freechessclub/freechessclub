@@ -70,8 +70,15 @@
 
 .captured img {
   display: inline-block;
-  margin: -2.75px;
-  width: 20px;
+  margin: -15px 0 -4px -4px;
+  width: 23px;
+  opacity: 0.6;
+}
+
+.captured small {
+  position: relative;
+  left: -15px;
+  top: 12px;
   opacity: 0.6;
 }
 
