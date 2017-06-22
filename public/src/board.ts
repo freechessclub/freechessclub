@@ -12,8 +12,8 @@ const onDragStart = (source, piece, position, orientation) => {
     return false;
   }
 
-  // stop dragging if the game is over or if it's opponents piece
-  if (chess.game_over() || (game.color !== piece.charAt(0))) {
+  // stop dragging if the game is over or if it's opponents piece or if we are observing
+  if (chess.game_over() || (game.color !== piece.charAt(0)) || game.obs) {
     return false;
   }
 

@@ -12,6 +12,7 @@ export const game = {
   btime: 0,
   wclock: null,
   wtime: 0,
+  obs: false,
 };
 
 export default game;

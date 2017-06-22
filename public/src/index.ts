@@ -195,14 +195,19 @@ function ICSMessageHandler(message) {
         $('#moveHistory').empty();
         $('#player-status').css('background-color', '');
         $('#opponent-status').css('background-color', '');
+
+        // role 0: I am observing
         // role 1: I am playing and it is NOW my move
-        if (data.role === 1) {
+        if (data.role >= 0) {
           game.color = 'w';
           board.orientation('white');
           game.wclock = clock.startWhiteClock(game, $('#player-time'));
           game.bclock = clock.startBlackClock(game, $('#opponent-time'));
           $('#player-name').text(data.wname);
           $('#opponent-name').text(data.bname);
+          if (data.role === 0) {
+            game.obs = true;
+          }
         // role -1: I am playing and it is NOW my opponent's move
         } else if (data.role === -1) {
           game.color = 'b';
@@ -214,8 +219,7 @@ function ICSMessageHandler(message) {
         }
       }
 
-      // role 1: I am playing and it is NOW my move
-      if (data.role === 1) {
+      if (data.role >= 0) {
         if (data.move !== 'none') {
           const move = game.chess.move(data.move);
           if (move !== null) {
@@ -227,6 +231,7 @@ function ICSMessageHandler(message) {
             game.history.add(game.chess.fen());
             addMoveHistory(move);
           }
+
           if (game.premove !== null) {
             movePiece(game.premove.source, game.premove.target);
             game.premove = null;

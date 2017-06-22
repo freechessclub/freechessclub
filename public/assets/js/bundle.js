@@ -10415,7 +10415,8 @@ exports.game = {
     bclock: null,
     btime: 0,
     wclock: null,
-    wtime: 0
+    wtime: 0,
+    obs: false
 };
 exports["default"] = exports.game;
 
@@ -10850,13 +10851,16 @@ function ICSMessageHandler(message) {
                 $('#moveHistory').empty();
                 $('#player-status').css('background-color', '');
                 $('#opponent-status').css('background-color', '');
-                if (data.role === 1) {
+                if (data.role >= 0) {
                     game_1["default"].color = 'w';
                     board_1["default"].orientation('white');
                     game_1["default"].wclock = clock.startWhiteClock(game_1["default"], $('#player-time'));
                     game_1["default"].bclock = clock.startBlackClock(game_1["default"], $('#opponent-time'));
                     $('#player-name').text(data.wname);
                     $('#opponent-name').text(data.bname);
+                    if (data.role === 0) {
+                        game_1["default"].obs = true;
+                    }
                 }
                 else if (data.role === -1) {
                     game_1["default"].color = 'b';
@@ -10867,7 +10871,7 @@ function ICSMessageHandler(message) {
                     $('#opponent-name').text(data.wname);
                 }
             }
-            if (data.role === 1) {
+            if (data.role >= 0) {
                 if (data.move !== 'none') {
                     var move = game_1["default"].chess.move(data.move);
                     if (move !== null) {
@@ -16319,7 +16323,7 @@ var onDragStart = function (source, piece, position, orientation) {
     if (chess === null) {
         return false;
     }
-    if (chess.game_over() || (game_1["default"].color !== piece.charAt(0))) {
+    if (chess.game_over() || (game_1["default"].color !== piece.charAt(0)) || game_1["default"].obs) {
         return false;
     }
     if (game_1["default"].premove !== null) {
