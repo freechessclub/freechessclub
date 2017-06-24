@@ -36,7 +36,7 @@ const onDrop = (source, target) => {
     return;
   }
   // premove if it is not my turn yet
-  if (game.color !== game.chess.turn()) {
+  if (game.color !== game.chess.turn() && source !== target) {
     game.premove = {source, target};
     return highlight.highlightPreMove(source, target);
   } else {

@@ -16342,7 +16342,7 @@ var onDrop = function (source, target) {
     if (game_1["default"].chess === null) {
         return;
     }
-    if (game_1["default"].color !== game_1["default"].chess.turn()) {
+    if (game_1["default"].color !== game_1["default"].chess.turn() && source !== target) {
         game_1["default"].premove = { source: source, target: target };
         return highlight.highlightPreMove(source, target);
     }
