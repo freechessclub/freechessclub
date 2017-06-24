@@ -43,7 +43,6 @@ function showCapturePiece(color: string, piece: string): void {
           key + '.svg"/><small>' + game.playerCaptured[key] + '</small>');
     }
   }
-
   for (const key in game.oppCaptured) {
     if (game.oppCaptured.hasOwnProperty(key)) {
       $('#opponent-captured').append(
