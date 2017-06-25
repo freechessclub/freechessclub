@@ -10845,6 +10845,8 @@ function ICSMessageHandler(message) {
                 game_1["default"].chess = Chess();
                 board_1["default"].start(false);
                 game_1["default"].history = new history_1["default"](board_1["default"], game_1["default"].chess.fen());
+                game_1["default"].playerCaptured = {};
+                game_1["default"].oppCaptured = {};
                 $('#player-captured').text('');
                 $('#opponent-captured').text('');
                 showStatusMsg('');

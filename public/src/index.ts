@@ -188,6 +188,8 @@ function ICSMessageHandler(message) {
         game.chess = Chess();
         board.start(false);
         game.history = new History(board, game.chess.fen());
+        game.playerCaptured = {};
+        game.oppCaptured = {};
         $('#player-captured').text('');
         $('#opponent-captured').text('');
         showStatusMsg('');
