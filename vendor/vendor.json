@@ -3,22 +3,22 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "XFl7nlkh1EUa3RvYEsT8Q4O1Mvc=",
+			"checksumSHA1": "Liv7AJyNinmP3pvwohcXp4R6xY4=",
 			"path": "github.com/Sirupsen/logrus",
-			"revision": "7f4b1adc791766938c29457bed0703fb9134421a",
-			"revisionTime": "2017-02-15T16:43:24Z"
+			"revision": "202f25545ea4cf9b191ff7f846df5d87c9382c2b",
+			"revisionTime": "2017-06-08T21:02:02Z"
 		},
 		{
-			"checksumSHA1": "+/oy2SsS8YvHVvQGcWUDbaajeXQ=",
+			"checksumSHA1": "/lWfaq/Ok+El1amGaf3wPY5JpUc=",
 			"path": "github.com/gorilla/handlers",
-			"revision": "13d73096a474cac93275c679c7b8a2dc17ddba82",
-			"revisionTime": "2017-02-24T19:39:55Z"
+			"revision": "a4d79d4487c2430a17d9dc8a1f74d1a6ed6908ca",
+			"revisionTime": "2017-06-02T15:16:48Z"
 		},
 		{
-			"checksumSHA1": "EMr5ZpqWL2bUYtJDbKwmcJe8G9c=",
+			"checksumSHA1": "hEnH6sgR83Qfx7UNnphNNlelmj0=",
 			"path": "github.com/gorilla/websocket",
-			"revision": "9acaa683f0aa83bd1b9dbec8d43b7d07a16216fa",
-			"revisionTime": "2017-02-16T21:52:12Z"
+			"revision": "ea4d1f681babbce9545c9c5f3d5194a789c89f5b",
+			"revisionTime": "2017-06-20T19:01:03Z"
 		},
 		{
 			"checksumSHA1": "ynJSWoF6v+3zMnh9R0QmmG6iGV8=",
@@ -27,34 +27,34 @@
 			"revisionTime": "2016-10-29T09:36:37Z"
 		},
 		{
-			"checksumSHA1": "2maWQ1yZbk4iipKQmxpb447hxSA=",
+			"checksumSHA1": "UZgBHnCIxP3ERblorzXZlU43SRs=",
 			"path": "github.com/sendgrid/rest",
-			"revision": "3ec51b4f1754e13e92409355851a0a82e9a06461",
-			"revisionTime": "2016-10-14T18:48:02Z"
+			"revision": "14de1ac72d9ae5c3c0d7c02164c52ebd3b951a4e",
+			"revisionTime": "2017-04-11T01:08:25Z"
 		},
 		{
-			"checksumSHA1": "028WGCCcsm0bEq6NhpF/bf37Ro0=",
+			"checksumSHA1": "BMpCNln/oN7/pWivoX4zsR/5CZI=",
 			"path": "github.com/sendgrid/sendgrid-go",
-			"revision": "d087004b4d47c2a378ade9eb3957571114b91493",
-			"revisionTime": "2016-11-08T23:34:08Z"
+			"revision": "818273b257d08e5a9401d64f52556cd7bb4e22ad",
+			"revisionTime": "2017-06-15T03:30:23Z"
 		},
 		{
-			"checksumSHA1": "69178/wsna2SAuhDRhY6NIIfJg0=",
+			"checksumSHA1": "I78wwd+VuK+bXJ0S27VFVfwVeuM=",
 			"path": "github.com/sendgrid/sendgrid-go/helpers/mail",
-			"revision": "d087004b4d47c2a378ade9eb3957571114b91493",
-			"revisionTime": "2016-11-08T23:34:08Z"
+			"revision": "818273b257d08e5a9401d64f52556cd7bb4e22ad",
+			"revisionTime": "2017-06-15T03:30:23Z"
 		},
 		{
-			"checksumSHA1": "HSzEA32rVv/GeWvRLRQXXGXTPTA=",
+			"checksumSHA1": "7CBQeA7qsf6bSvWxOe0Hs9PmC5s=",
 			"path": "github.com/ziutek/telnet",
-			"revision": "49d9be70897fe0a7400a152121453075b2835866",
-			"revisionTime": "2015-04-27T11:54:47Z"
+			"revision": "951c9d62e7953aca3e17ab188c0b563e4494d7ed",
+			"revisionTime": "2017-04-04T13:02:58Z"
 		},
 		{
-			"checksumSHA1": "ruEvGIBt119UK7KTkoNaYnYhZuI=",
+			"checksumSHA1": "2L67OZQlNdATOW57chc6+Hc8SO0=",
 			"path": "golang.org/x/sys/unix",
-			"revision": "075e574b89e4c2d22f2286a7e2b919519c6f3547",
-			"revisionTime": "2017-02-16T21:06:26Z"
+			"revision": "c23410a886927bab8ca5e80b08af6a56faeb330d",
+			"revisionTime": "2017-06-23T11:49:42Z"
 		}
 	],
 	"rootPath": "github.com/freechessclub/go-freechessclub"
