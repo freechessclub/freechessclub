@@ -122,6 +122,7 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', (e) => {
 
 function showStatusMsg(msg: string) {
   $('#game-status').html(msg + '<br/>');
+  $('#leftPanel').scrollTop($('#leftPanel').height());
 }
 
 function handleChatMsg(from, data) {

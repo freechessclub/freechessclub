@@ -10781,6 +10781,7 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
 });
 function showStatusMsg(msg) {
     $('#game-status').html(msg + '<br/>');
+    $('#leftPanel').scrollTop($('#leftPanel').height());
 }
 function handleChatMsg(from, data) {
     var tab;
