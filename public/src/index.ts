@@ -272,23 +272,28 @@ function ICSMessageHandler(message) {
   }
 }
 
+function getValue(elt: string): string {
+  return $(elt).val() as string;
+}
+
 $('#input-form').on('submit', (event) => {
   event.preventDefault();
   let text;
+  const val: string = getValue('#input-text');
   if (!$('#input-command').is(':checked')) {
-    if ($('#input-text').val().charAt(0) !== '@') {
+    if (val.charAt(0) !== '@') {
       const msg = $('#input-text').val();
       const tab = $('ul#tabs a.active').attr('id');
       text = 't ' + tab + ' ' + msg;
       handleChatMsg(tab, { type: MessageType.ChannelTell, channel: tab, handle: session.getHandle(), text: msg });
     } else {
-      text = $('#input-text').val().substr(1);
+      text = val.substr(1);
     }
   } else {
-    if ($('#input-text').val().charAt(0) !== '@') {
-      text = $('#input-text').val();
+    if (val.charAt(0) !== '@') {
+      text = val;
     } else {
-      text = $('#input-text').val().substr(1);
+      text = val.substr(1);
     }
   }
   session.send({ type: MessageType.Control, command: 0, text });
@@ -371,38 +376,38 @@ $('#newGame').on('click', (event) => {
 });
 
 $('#onezero').on('click', (event) => {
-  getGame($('#opponentName').val(), '1', '0');
+  getGame(getValue('#opponentName'), '1', '0');
 });
 
 $('#threezero').on('click', (event) => {
-  getGame($('#opponentName').val(), '3', '0');
+  getGame(getValue('#opponentName'), '3', '0');
 });
 
 $('#threetwo').on('click', (event) => {
-  getGame($('#opponentName').val(), '3', '2');
+  getGame(getValue('#opponentName'), '3', '2');
 });
 
 $('#fivezero').on('click', (event) => {
-  getGame($('#opponentName').val(), '5', '0');
+  getGame(getValue('#opponentName'), '5', '0');
 });
 
 $('#fivefive').on('click', (event) => {
-  getGame($('#opponentName').val(), '5', '5');
+  getGame(getValue('#opponentName'), '5', '5');
 });
 
 $('#tenfive').on('click', (event) => {
-  getGame($('#opponentName').val(), '10', '5');
+  getGame(getValue('#opponentName'), '10', '5');
 });
 
 $('#fifteenzero').on('click', (event) => {
-  getGame($('#opponentName').val(), '15', '0');
+  getGame(getValue('#opponentName'), '15', '0');
 });
 
 $('#customControl').on('click', (event) => {
   if (game.chess === null) {
-    const min: string = $('#customControlMin').val();
-    const sec: string = $('#customControlSec').val();
-    getGame($('#opponentName').val(), min, sec);
+    const min: string = getValue('#customControlMin');
+    const sec: string = getValue('#customControlSec');
+    getGame(getValue('#opponentName'), min, sec);
   }
 });
 
@@ -411,8 +416,8 @@ $('#disconnect').on('click', (event) => {
 });
 
 $('#login').on('click', (event) => {
-  const user: string = $('#login-user').val();
-  const pass: string = $('#login-pass').val();
+  const user: string = getValue('#login-user');
+  const pass: string = getValue('#login-pass');
   if (!session) {
     session = new Session(ICSMessageHandler, user, pass);
   } else {

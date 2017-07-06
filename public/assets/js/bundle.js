@@ -33,9 +33,6 @@
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
-/******/ 	// identity function for calling harmony imports with the correct context
-/******/ 	__webpack_require__.i = function(value) { return value; };
-/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -63,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10333,17 +10330,6 @@ return jQuery;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.tlds = ["com", "org", "net", "uk", "gov", "edu", "io", "cc", "co", "aaa", "aarp", "abarth", "abb", "abbott", "abbvie", "abc", "able", "abogado", "abudhabi", "ac", "academy", "accenture", "accountant", "accountants", "aco", "active", "actor", "ad", "adac", "ads", "adult", "ae", "aeg", "aero", "aetna", "af", "afamilycompany", "afl", "africa", "ag", "agakhan", "agency", "ai", "aig", "aigo", "airbus", "airforce", "airtel", "akdn", "al", "alfaromeo", "alibaba", "alipay", "allfinanz", "allstate", "ally", "alsace", "alstom", "am", "americanexpress", "americanfamily", "amex", "amfam", "amica", "amsterdam", "analytics", "android", "anquan", "anz", "ao", "aol", "apartments", "app", "apple", "aq", "aquarelle", "ar", "aramco", "archi", "army", "arpa", "art", "arte", "as", "asda", "asia", "associates", "at", "athleta", "attorney", "au", "auction", "audi", "audible", "audio", "auspost", "author", "auto", "autos", "avianca", "aw", "aws", "ax", "axa", "az", "azure", "ba", "baby", "baidu", "banamex", "bananarepublic", "band", "bank", "bar", "barcelona", "barclaycard", "barclays", "barefoot", "bargains", "baseball", "basketball", "bauhaus", "bayern", "bb", "bbc", "bbt", "bbva", "bcg", "bcn", "bd", "be", "beats", "beauty", "beer", "bentley", "berlin", "best", "bestbuy", "bet", "bf", "bg", "bh", "bharti", "bi", "bible", "bid", "bike", "bing", "bingo", "bio", "biz", "bj", "black", "blackfriday", "blanco", "blockbuster", "blog", "bloomberg", "blue", "bm", "bms", "bmw", "bn", "bnl", "bnpparibas", "bo", "boats", "boehringer", "bofa", "bom", "bond", "boo", "book", "booking", "boots", "bosch", "bostik", "boston", "bot", "boutique", "box", "br", "bradesco", "bridgestone", "broadway", "broker", "brother", "brussels", "bs", "bt", "budapest", "bugatti", "build", "builders", "business", "buy", "buzz", "bv", "bw", "by", "bz", "bzh", "ca", "cab", "cafe", "cal", "call", "calvinklein", "cam", "camera", "camp", "cancerresearch", "canon", "capetown", "capital", "capitalone", "car", "caravan", "cards", "care", "career", "careers", "cars", "cartier", "casa", "case", "caseih", "cash", "casino", "cat", "catering", "catholic", "cba", "cbn", "cbre", "cbs", "cd", "ceb", "center", "ceo", "cern", "cf", "cfa", "cfd", "cg", "ch", "chanel", "channel", "chase", "chat", "cheap", "chintai", "chloe", "christmas", "chrome", "chrysler", "church", "ci", "cipriani", "circle", "cisco", "citadel", "citi", "citic", "city", "cityeats", "ck", "cl", "claims", "cleaning", "click", "clinic", "clinique", "clothing", "cloud", "club", "clubmed", "cm", "cn", "coach", "codes", "coffee", "college", "cologne", "comcast", "commbank", "community", "company", "compare", "computer", "comsec", "condos", "construction", "consulting", "contact", "contractors", "cooking", "cookingchannel", "cool", "coop", "corsica", "country", "coupon", "coupons", "courses", "cr", "credit", "creditcard", "creditunion", "cricket", "crown", "crs", "cruise", "cruises", "csc", "cu", "cuisinella", "cv", "cw", "cx", "cy", "cymru", "cyou", "cz", "dabur", "dad", "dance", "data", "date", "dating", "datsun", "day", "dclk", "dds", "de", "deal", "dealer", "deals", "degree", "delivery", "dell", "deloitte", "delta", "democrat", "dental", "dentist", "desi", "design", "dev", "dhl", "diamonds", "diet", "digital", "direct", "directory", "discount", "discover", "dish", "diy", "dj", "dk", "dm", "dnp", "do", "docs", "doctor", "dodge", "dog", "doha", "domains", "dot", "download", "drive", "dtv", "dubai", "duck", "dunlop", "duns", "dupont", "durban", "dvag", "dvr", "dz", "earth", "eat", "ec", "eco", "edeka", "education", "ee", "eg", "email", "emerck", "energy", "engineer", "engineering", "enterprises", "epost", "epson", "equipment", "er", "ericsson", "erni", "es", "esq", "estate", "esurance", "et", "eu", "eurovision", "eus", "events", "everbank", "exchange", "expert", "exposed", "express", "extraspace", "fage", "fail", "fairwinds", "faith", "family", "fan", "fans", "farm", "farmers", "fashion", "fast", "fedex", "feedback", "ferrari", "ferrero", "fi", "fiat", "fidelity", "fido", "film", "final", "finance", "financial", "fire", "firestone", "firmdale", "fish", "fishing", "fit", "fitness", "fj", "fk", "flickr", "flights", "flir", "florist", "flowers", "fly", "fm", "fo", "foo", "food", "foodnetwork", "football", "ford", "forex", "forsale", "forum", "foundation", "fox", "fr", "free", "fresenius", "frl", "frogans", "frontdoor", "frontier", "ftr", "fujitsu", "fujixerox", "fun", "fund", "furniture", "futbol", "fyi", "ga", "gal", "gallery", "gallo", "gallup", "game", "games", "gap", "garden", "gb", "gbiz", "gd", "gdn", "ge", "gea", "gent", "genting", "george", "gf", "gg", "ggee", "gh", "gi", "gift", "gifts", "gives", "giving", "gl", "glade", "glass", "gle", "global", "globo", "gm", "gmail", "gmbh", "gmo", "gmx", "gn", "godaddy", "gold", "goldpoint", "golf", "goo", "goodhands", "goodyear", "goog", "google", "gop", "got", "gp", "gq", "gr", "grainger", "graphics", "gratis", "green", "gripe", "group", "gs", "gt", "gu", "guardian", "gucci", "guge", "guide", "guitars", "guru", "gw", "gy", "hair", "hamburg", "hangout", "haus", "hbo", "hdfc", "hdfcbank", "health", "healthcare", "help", "helsinki", "here", "hermes", "hgtv", "hiphop", "hisamitsu", "hitachi", "hiv", "hk", "hkt", "hm", "hn", "hockey", "holdings", "holiday", "homedepot", "homegoods", "homes", "homesense", "honda", "honeywell", "horse", "hospital", "host", "hosting", "hot", "hoteles", "hotmail", "house", "how", "hr", "hsbc", "ht", "htc", "hu", "hughes", "hyatt", "hyundai", "ibm", "icbc", "ice", "icu", "id", "ie", "ieee", "ifm", "ikano", "il", "im", "imamat", "imdb", "immo", "immobilien", "in", "industries", "infiniti", "info", "ing", "ink", "institute", "insurance", "insure", "int", "intel", "international", "intuit", "investments", "ipiranga", "iq", "ir", "irish", "is", "iselect", "ismaili", "ist", "istanbul", "it", "itau", "itv", "iveco", "iwc", "jaguar", "java", "jcb", "jcp", "je", "jeep", "jetzt", "jewelry", "jio", "jlc", "jll", "jm", "jmp", "jnj", "jo", "jobs", "joburg", "jot", "joy", "jp", "jpmorgan", "jprs", "juegos", "juniper", "kaufen", "kddi", "ke", "kerryhotels", "kerrylogistics", "kerryproperties", "kfh", "kg", "kh", "ki", "kia", "kim", "kinder", "kindle", "kitchen", "kiwi", "km", "kn", "koeln", "komatsu", "kosher", "kp", "kpmg", "kpn", "kr", "krd", "kred", "kuokgroup", "kw", "ky", "kyoto", "kz", "la", "lacaixa", "ladbrokes", "lamborghini", "lamer", "lancaster", "lancia", "lancome", "land", "landrover", "lanxess", "lasalle", "lat", "latino", "latrobe", "law", "lawyer", "lb", "lc", "lds", "lease", "leclerc", "lefrak", "legal", "lego", "lexus", "lgbt", "li", "liaison", "lidl", "life", "lifeinsurance", "lifestyle", "lighting", "like", "lilly", "limited", "limo", "lincoln", "linde", "link", "lipsy", "live", "living", "lixil", "lk", "loan", "loans", "locker", "locus", "loft", "lol", "london", "lotte", "lotto", "love", "lpl", "lplfinancial", "lr", "ls", "lt", "ltd", "ltda", "lu", "lundbeck", "lupin", "luxe", "luxury", "lv", "ly", "ma", "macys", "madrid", "maif", "maison", "makeup", "man", "management", "mango", "market", "marketing", "markets", "marriott", "marshalls", "maserati", "mattel", "mba", "mc", "mcd", "mcdonalds", "mckinsey", "md", "me", "med", "media", "meet", "melbourne", "meme", "memorial", "men", "menu", "meo", "metlife", "mg", "mh", "miami", "microsoft", "mil", "mini", "mint", "mit", "mitsubishi", "mk", "ml", "mlb", "mls", "mm", "mma", "mn", "mo", "mobi", "mobile", "mobily", "moda", "moe", "moi", "mom", "monash", "money", "monster", "montblanc", "mopar", "mormon", "mortgage", "moscow", "moto", "motorcycles", "mov", "movie", "movistar", "mp", "mq", "mr", "ms", "msd", "mt", "mtn", "mtpc", "mtr", "mu", "museum", "mutual", "mv", "mw", "mx", "my", "mz", "na", "nab", "nadex", "nagoya", "name", "nationwide", "natura", "navy", "nba", "nc", "ne", "nec", "netbank", "netflix", "network", "neustar", "new", "newholland", "news", "next", "nextdirect", "nexus", "nf", "nfl", "ng", "ngo", "nhk", "ni", "nico", "nike", "nikon", "ninja", "nissan", "nissay", "nl", "no", "nokia", "northwesternmutual", "norton", "now", "nowruz", "nowtv", "np", "nr", "nra", "nrw", "ntt", "nu", "nyc", "nz", "obi", "observer", "off", "office", "okinawa", "olayan", "olayangroup", "oldnavy", "ollo", "om", "omega", "one", "ong", "onl", "online", "onyourside", "ooo", "open", "oracle", "orange", "organic", "orientexpress", "origins", "osaka", "otsuka", "ott", "ovh", "pa", "page", "pamperedchef", "panasonic", "panerai", "paris", "pars", "partners", "parts", "party", "passagens", "pay", "pccw", "pe", "pet", "pf", "pfizer", "pg", "ph", "pharmacy", "philips", "phone", "photo", "photography", "photos", "physio", "piaget", "pics", "pictet", "pictures", "pid", "pin", "ping", "pink", "pioneer", "pizza", "pk", "pl", "place", "play", "playstation", "plumbing", "plus", "pm", "pn", "pnc", "pohl", "poker", "politie", "porn", "post", "pr", "pramerica", "praxi", "press", "prime", "pro", "prod", "productions", "prof", "progressive", "promo", "properties", "property", "protection", "pru", "prudential", "ps", "pt", "pub", "pw", "pwc", "py", "qa", "qpon", "quebec", "quest", "qvc", "racing", "radio", "raid", "re", "read", "realestate", "realtor", "realty", "recipes", "red", "redstone", "redumbrella", "rehab", "reise", "reisen", "reit", "reliance", "ren", "rent", "rentals", "repair", "report", "republican", "rest", "restaurant", "review", "reviews", "rexroth", "rich", "richardli", "ricoh", "rightathome", "ril", "rio", "rip", "rmit", "ro", "rocher", "rocks", "rodeo", "rogers", "room", "rs", "rsvp", "ru", "ruhr", "run", "rw", "rwe", "ryukyu", "sa", "saarland", "safe", "safety", "sakura", "sale", "salon", "samsclub", "samsung", "sandvik", "sandvikcoromant", "sanofi", "sap", "sapo", "sarl", "sas", "save", "saxo", "sb", "sbi", "sbs", "sc", "sca", "scb", "schaeffler", "schmidt", "scholarships", "school", "schule", "schwarz", "science", "scjohnson", "scor", "scot", "sd", "se", "seat", "secure", "security", "seek", "select", "sener", "services", "ses", "seven", "sew", "sex", "sexy", "sfr", "sg", "sh", "shangrila", "sharp", "shaw", "shell", "shia", "shiksha", "shoes", "shop", "shopping", "shouji", "show", "showtime", "shriram", "si", "silk", "sina", "singles", "site", "sj", "sk", "ski", "skin", "sky", "skype", "sl", "sling", "sm", "smart", "smile", "sn", "sncf", "so", "soccer", "social", "softbank", "software", "sohu", "solar", "solutions", "song", "sony", "soy", "space", "spiegel", "spot", "spreadbetting", "sr", "srl", "srt", "st", "stada", "staples", "star", "starhub", "statebank", "statefarm", "statoil", "stc", "stcgroup", "stockholm", "storage", "store", "stream", "studio", "study", "style", "su", "sucks", "supplies", "supply", "support", "surf", "surgery", "suzuki", "sv", "swatch", "swiftcover", "swiss", "sx", "sy", "sydney", "symantec", "systems", "sz", "tab", "taipei", "talk", "taobao", "target", "tatamotors", "tatar", "tattoo", "tax", "taxi", "tc", "tci", "td", "tdk", "team", "tech", "technology", "tel", "telecity", "telefonica", "temasek", "tennis", "teva", "tf", "tg", "th", "thd", "theater", "theatre", "tiaa", "tickets", "tienda", "tiffany", "tips", "tires", "tirol", "tj", "tjmaxx", "tjx", "tk", "tkmaxx", "tl", "tm", "tmall", "tn", "to", "today", "tokyo", "tools", "top", "toray", "toshiba", "total", "tours", "town", "toyota", "toys", "tr", "trade", "trading", "training", "travel", "travelchannel", "travelers", "travelersinsurance", "trust", "trv", "tt", "tube", "tui", "tunes", "tushu", "tv", "tvs", "tw", "tz", "ua", "ubank", "ubs", "uconnect", "ug", "unicom", "university", "uno", "uol", "ups", "us", "uy", "uz", "va", "vacations", "vana", "vanguard", "vc", "ve", "vegas", "ventures", "verisign", "versicherung", "vet", "vg", "vi", "viajes", "video", "vig", "viking", "villas", "vin", "vip", "virgin", "visa", "vision", "vista", "vistaprint", "viva", "vivo", "vlaanderen", "vn", "vodka", "volkswagen", "volvo", "vote", "voting", "voto", "voyage", "vu", "vuelos", "wales", "walmart", "walter", "wang", "wanggou", "warman", "watch", "watches", "weather", "weatherchannel", "webcam", "weber", "website", "wed", "wedding", "weibo", "weir", "wf", "whoswho", "wien", "wiki", "williamhill", "win", "windows", "wine", "winners", "wme", "wolterskluwer", "woodside", "work", "works", "world", "wow", "ws", "wtc", "wtf", "xbox", "xerox", "xfinity", "xihuan", "xin", "xn--11b4c3d", "xn--1ck2e1b", "xn--1qqw23a", "xn--30rr7y", "xn--3bst00m", "xn--3ds443g", "xn--3e0b707e", "xn--3oq18vl8pn36a", "xn--3pxu8k", "xn--42c2d9a", "xn--45brj9c", "xn--45q11c", "xn--4gbrim", "xn--54b7fta0cc", "xn--55qw42g", "xn--55qx5d", "xn--5su34j936bgsg", "xn--5tzm5g", "xn--6frz82g", "xn--6qq986b3xl", "xn--80adxhks", "xn--80ao21a", "xn--80aqecdr1a", "xn--80asehdb", "xn--80aswg", "xn--8y0a063a", "xn--90a3ac", "xn--90ae", "xn--90ais", "xn--9dbq2a", "xn--9et52u", "xn--9krt00a", "xn--b4w605ferd", "xn--bck1b9a5dre4c", "xn--c1avg", "xn--c2br7g", "xn--cck2b3b", "xn--cg4bki", "xn--clchc0ea0b2g2a9gcd", "xn--czr694b", "xn--czrs0t", "xn--czru2d", "xn--d1acj3b", "xn--d1alf", "xn--e1a4c", "xn--eckvdtc9d", "xn--efvy88h", "xn--estv75g", "xn--fct429k", "xn--fhbei", "xn--fiq228c5hs", "xn--fiq64b", "xn--fiqs8s", "xn--fiqz9s", "xn--fjq720a", "xn--flw351e", "xn--fpcrj9c3d", "xn--fzc2c9e2c", "xn--fzys8d69uvgm", "xn--g2xx48c", "xn--gckr3f0f", "xn--gecrj9c", "xn--gk3at1e", "xn--h2brj9c", "xn--hxt814e", "xn--i1b6b1a6a2e", "xn--imr513n", "xn--io0a7i", "xn--j1aef", "xn--j1amh", "xn--j6w193g", "xn--jlq61u9w7b", "xn--jvr189m", "xn--kcrx77d1x4a", "xn--kprw13d", "xn--kpry57d", "xn--kpu716f", "xn--kput3i", "xn--l1acc", "xn--lgbbat1ad8j", "xn--mgb9awbf", "xn--mgba3a3ejt", "xn--mgba3a4f16a", "xn--mgba7c0bbn0a", "xn--mgbaam7a8h", "xn--mgbab2bd", "xn--mgbai9azgqp6j", "xn--mgbayh7gpa", "xn--mgbb9fbpob", "xn--mgbbh1a71e", "xn--mgbc0a9azcg", "xn--mgbca7dzdo", "xn--mgberp4a5d4ar", "xn--mgbi4ecexp", "xn--mgbpl2fh", "xn--mgbt3dhd", "xn--mgbtx2b", "xn--mgbx4cd0ab", "xn--mix891f", "xn--mk1bu44c", "xn--mxtq1m", "xn--ngbc5azd", "xn--ngbe9e0a", "xn--node", "xn--nqv7f", "xn--nqv7fs00ema", "xn--nyqy26a", "xn--o3cw4h", "xn--ogbpf8fl", "xn--p1acf", "xn--p1ai", "xn--pbt977c", "xn--pgbs0dh", "xn--pssy2u", "xn--q9jyb4c", "xn--qcka1pmc", "xn--qxam", "xn--rhqv96g", "xn--rovu88b", "xn--s9brj9c", "xn--ses554g", "xn--t60b56a", "xn--tckwe", "xn--tiq49xqyj", "xn--unup4y", "xn--vermgensberater-ctb", "xn--vermgensberatung-pwb", "xn--vhquv", "xn--vuq861b", "xn--w4r85el8fhu5dnra", "xn--w4rs40l", "xn--wgbh1c", "xn--wgbl6a", "xn--xhq521b", "xn--xkc2al3hye2a", "xn--xkc2dl3a5ee0h", "xn--y9a3aq", "xn--yfro4i67o", "xn--ygbi2ammx", "xn--zfr164b", "xperia", "xxx", "xyz", "yachts", "yahoo", "yamaxun", "yandex", "ye", "yodobashi", "yoga", "yokohama", "you", "youtube", "yt", "yun", "za", "zappos", "zara", "zero", "zip", "zippo", "zm", "zone", "zuerich", "zw"];
-exports.htmlAttrs = ["src=", "data=", "href=", "cite=", "formaction=", "icon=", "manifest=", "poster=", "codebase=", "background=", "profile=", "usemap="];
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
 /**
  *
  * Options defaulting function
@@ -10399,298 +10385,34 @@ exports.isPort = isPort;
 
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.tlds = ["com", "org", "net", "uk", "gov", "edu", "io", "cc", "co", "aaa", "aarp", "abarth", "abb", "abbott", "abbvie", "abc", "able", "abogado", "abudhabi", "ac", "academy", "accenture", "accountant", "accountants", "aco", "active", "actor", "ad", "adac", "ads", "adult", "ae", "aeg", "aero", "aetna", "af", "afamilycompany", "afl", "africa", "ag", "agakhan", "agency", "ai", "aig", "aigo", "airbus", "airforce", "airtel", "akdn", "al", "alfaromeo", "alibaba", "alipay", "allfinanz", "allstate", "ally", "alsace", "alstom", "am", "americanexpress", "americanfamily", "amex", "amfam", "amica", "amsterdam", "analytics", "android", "anquan", "anz", "ao", "aol", "apartments", "app", "apple", "aq", "aquarelle", "ar", "aramco", "archi", "army", "arpa", "art", "arte", "as", "asda", "asia", "associates", "at", "athleta", "attorney", "au", "auction", "audi", "audible", "audio", "auspost", "author", "auto", "autos", "avianca", "aw", "aws", "ax", "axa", "az", "azure", "ba", "baby", "baidu", "banamex", "bananarepublic", "band", "bank", "bar", "barcelona", "barclaycard", "barclays", "barefoot", "bargains", "baseball", "basketball", "bauhaus", "bayern", "bb", "bbc", "bbt", "bbva", "bcg", "bcn", "bd", "be", "beats", "beauty", "beer", "bentley", "berlin", "best", "bestbuy", "bet", "bf", "bg", "bh", "bharti", "bi", "bible", "bid", "bike", "bing", "bingo", "bio", "biz", "bj", "black", "blackfriday", "blanco", "blockbuster", "blog", "bloomberg", "blue", "bm", "bms", "bmw", "bn", "bnl", "bnpparibas", "bo", "boats", "boehringer", "bofa", "bom", "bond", "boo", "book", "booking", "boots", "bosch", "bostik", "boston", "bot", "boutique", "box", "br", "bradesco", "bridgestone", "broadway", "broker", "brother", "brussels", "bs", "bt", "budapest", "bugatti", "build", "builders", "business", "buy", "buzz", "bv", "bw", "by", "bz", "bzh", "ca", "cab", "cafe", "cal", "call", "calvinklein", "cam", "camera", "camp", "cancerresearch", "canon", "capetown", "capital", "capitalone", "car", "caravan", "cards", "care", "career", "careers", "cars", "cartier", "casa", "case", "caseih", "cash", "casino", "cat", "catering", "catholic", "cba", "cbn", "cbre", "cbs", "cd", "ceb", "center", "ceo", "cern", "cf", "cfa", "cfd", "cg", "ch", "chanel", "channel", "chase", "chat", "cheap", "chintai", "chloe", "christmas", "chrome", "chrysler", "church", "ci", "cipriani", "circle", "cisco", "citadel", "citi", "citic", "city", "cityeats", "ck", "cl", "claims", "cleaning", "click", "clinic", "clinique", "clothing", "cloud", "club", "clubmed", "cm", "cn", "coach", "codes", "coffee", "college", "cologne", "comcast", "commbank", "community", "company", "compare", "computer", "comsec", "condos", "construction", "consulting", "contact", "contractors", "cooking", "cookingchannel", "cool", "coop", "corsica", "country", "coupon", "coupons", "courses", "cr", "credit", "creditcard", "creditunion", "cricket", "crown", "crs", "cruise", "cruises", "csc", "cu", "cuisinella", "cv", "cw", "cx", "cy", "cymru", "cyou", "cz", "dabur", "dad", "dance", "data", "date", "dating", "datsun", "day", "dclk", "dds", "de", "deal", "dealer", "deals", "degree", "delivery", "dell", "deloitte", "delta", "democrat", "dental", "dentist", "desi", "design", "dev", "dhl", "diamonds", "diet", "digital", "direct", "directory", "discount", "discover", "dish", "diy", "dj", "dk", "dm", "dnp", "do", "docs", "doctor", "dodge", "dog", "doha", "domains", "dot", "download", "drive", "dtv", "dubai", "duck", "dunlop", "duns", "dupont", "durban", "dvag", "dvr", "dz", "earth", "eat", "ec", "eco", "edeka", "education", "ee", "eg", "email", "emerck", "energy", "engineer", "engineering", "enterprises", "epost", "epson", "equipment", "er", "ericsson", "erni", "es", "esq", "estate", "esurance", "et", "eu", "eurovision", "eus", "events", "everbank", "exchange", "expert", "exposed", "express", "extraspace", "fage", "fail", "fairwinds", "faith", "family", "fan", "fans", "farm", "farmers", "fashion", "fast", "fedex", "feedback", "ferrari", "ferrero", "fi", "fiat", "fidelity", "fido", "film", "final", "finance", "financial", "fire", "firestone", "firmdale", "fish", "fishing", "fit", "fitness", "fj", "fk", "flickr", "flights", "flir", "florist", "flowers", "fly", "fm", "fo", "foo", "food", "foodnetwork", "football", "ford", "forex", "forsale", "forum", "foundation", "fox", "fr", "free", "fresenius", "frl", "frogans", "frontdoor", "frontier", "ftr", "fujitsu", "fujixerox", "fun", "fund", "furniture", "futbol", "fyi", "ga", "gal", "gallery", "gallo", "gallup", "game", "games", "gap", "garden", "gb", "gbiz", "gd", "gdn", "ge", "gea", "gent", "genting", "george", "gf", "gg", "ggee", "gh", "gi", "gift", "gifts", "gives", "giving", "gl", "glade", "glass", "gle", "global", "globo", "gm", "gmail", "gmbh", "gmo", "gmx", "gn", "godaddy", "gold", "goldpoint", "golf", "goo", "goodhands", "goodyear", "goog", "google", "gop", "got", "gp", "gq", "gr", "grainger", "graphics", "gratis", "green", "gripe", "group", "gs", "gt", "gu", "guardian", "gucci", "guge", "guide", "guitars", "guru", "gw", "gy", "hair", "hamburg", "hangout", "haus", "hbo", "hdfc", "hdfcbank", "health", "healthcare", "help", "helsinki", "here", "hermes", "hgtv", "hiphop", "hisamitsu", "hitachi", "hiv", "hk", "hkt", "hm", "hn", "hockey", "holdings", "holiday", "homedepot", "homegoods", "homes", "homesense", "honda", "honeywell", "horse", "hospital", "host", "hosting", "hot", "hoteles", "hotmail", "house", "how", "hr", "hsbc", "ht", "htc", "hu", "hughes", "hyatt", "hyundai", "ibm", "icbc", "ice", "icu", "id", "ie", "ieee", "ifm", "ikano", "il", "im", "imamat", "imdb", "immo", "immobilien", "in", "industries", "infiniti", "info", "ing", "ink", "institute", "insurance", "insure", "int", "intel", "international", "intuit", "investments", "ipiranga", "iq", "ir", "irish", "is", "iselect", "ismaili", "ist", "istanbul", "it", "itau", "itv", "iveco", "iwc", "jaguar", "java", "jcb", "jcp", "je", "jeep", "jetzt", "jewelry", "jio", "jlc", "jll", "jm", "jmp", "jnj", "jo", "jobs", "joburg", "jot", "joy", "jp", "jpmorgan", "jprs", "juegos", "juniper", "kaufen", "kddi", "ke", "kerryhotels", "kerrylogistics", "kerryproperties", "kfh", "kg", "kh", "ki", "kia", "kim", "kinder", "kindle", "kitchen", "kiwi", "km", "kn", "koeln", "komatsu", "kosher", "kp", "kpmg", "kpn", "kr", "krd", "kred", "kuokgroup", "kw", "ky", "kyoto", "kz", "la", "lacaixa", "ladbrokes", "lamborghini", "lamer", "lancaster", "lancia", "lancome", "land", "landrover", "lanxess", "lasalle", "lat", "latino", "latrobe", "law", "lawyer", "lb", "lc", "lds", "lease", "leclerc", "lefrak", "legal", "lego", "lexus", "lgbt", "li", "liaison", "lidl", "life", "lifeinsurance", "lifestyle", "lighting", "like", "lilly", "limited", "limo", "lincoln", "linde", "link", "lipsy", "live", "living", "lixil", "lk", "loan", "loans", "locker", "locus", "loft", "lol", "london", "lotte", "lotto", "love", "lpl", "lplfinancial", "lr", "ls", "lt", "ltd", "ltda", "lu", "lundbeck", "lupin", "luxe", "luxury", "lv", "ly", "ma", "macys", "madrid", "maif", "maison", "makeup", "man", "management", "mango", "market", "marketing", "markets", "marriott", "marshalls", "maserati", "mattel", "mba", "mc", "mcd", "mcdonalds", "mckinsey", "md", "me", "med", "media", "meet", "melbourne", "meme", "memorial", "men", "menu", "meo", "metlife", "mg", "mh", "miami", "microsoft", "mil", "mini", "mint", "mit", "mitsubishi", "mk", "ml", "mlb", "mls", "mm", "mma", "mn", "mo", "mobi", "mobile", "mobily", "moda", "moe", "moi", "mom", "monash", "money", "monster", "montblanc", "mopar", "mormon", "mortgage", "moscow", "moto", "motorcycles", "mov", "movie", "movistar", "mp", "mq", "mr", "ms", "msd", "mt", "mtn", "mtpc", "mtr", "mu", "museum", "mutual", "mv", "mw", "mx", "my", "mz", "na", "nab", "nadex", "nagoya", "name", "nationwide", "natura", "navy", "nba", "nc", "ne", "nec", "netbank", "netflix", "network", "neustar", "new", "newholland", "news", "next", "nextdirect", "nexus", "nf", "nfl", "ng", "ngo", "nhk", "ni", "nico", "nike", "nikon", "ninja", "nissan", "nissay", "nl", "no", "nokia", "northwesternmutual", "norton", "now", "nowruz", "nowtv", "np", "nr", "nra", "nrw", "ntt", "nu", "nyc", "nz", "obi", "observer", "off", "office", "okinawa", "olayan", "olayangroup", "oldnavy", "ollo", "om", "omega", "one", "ong", "onl", "online", "onyourside", "ooo", "open", "oracle", "orange", "organic", "orientexpress", "origins", "osaka", "otsuka", "ott", "ovh", "pa", "page", "pamperedchef", "panasonic", "panerai", "paris", "pars", "partners", "parts", "party", "passagens", "pay", "pccw", "pe", "pet", "pf", "pfizer", "pg", "ph", "pharmacy", "philips", "phone", "photo", "photography", "photos", "physio", "piaget", "pics", "pictet", "pictures", "pid", "pin", "ping", "pink", "pioneer", "pizza", "pk", "pl", "place", "play", "playstation", "plumbing", "plus", "pm", "pn", "pnc", "pohl", "poker", "politie", "porn", "post", "pr", "pramerica", "praxi", "press", "prime", "pro", "prod", "productions", "prof", "progressive", "promo", "properties", "property", "protection", "pru", "prudential", "ps", "pt", "pub", "pw", "pwc", "py", "qa", "qpon", "quebec", "quest", "qvc", "racing", "radio", "raid", "re", "read", "realestate", "realtor", "realty", "recipes", "red", "redstone", "redumbrella", "rehab", "reise", "reisen", "reit", "reliance", "ren", "rent", "rentals", "repair", "report", "republican", "rest", "restaurant", "review", "reviews", "rexroth", "rich", "richardli", "ricoh", "rightathome", "ril", "rio", "rip", "rmit", "ro", "rocher", "rocks", "rodeo", "rogers", "room", "rs", "rsvp", "ru", "ruhr", "run", "rw", "rwe", "ryukyu", "sa", "saarland", "safe", "safety", "sakura", "sale", "salon", "samsclub", "samsung", "sandvik", "sandvikcoromant", "sanofi", "sap", "sapo", "sarl", "sas", "save", "saxo", "sb", "sbi", "sbs", "sc", "sca", "scb", "schaeffler", "schmidt", "scholarships", "school", "schule", "schwarz", "science", "scjohnson", "scor", "scot", "sd", "se", "seat", "secure", "security", "seek", "select", "sener", "services", "ses", "seven", "sew", "sex", "sexy", "sfr", "sg", "sh", "shangrila", "sharp", "shaw", "shell", "shia", "shiksha", "shoes", "shop", "shopping", "shouji", "show", "showtime", "shriram", "si", "silk", "sina", "singles", "site", "sj", "sk", "ski", "skin", "sky", "skype", "sl", "sling", "sm", "smart", "smile", "sn", "sncf", "so", "soccer", "social", "softbank", "software", "sohu", "solar", "solutions", "song", "sony", "soy", "space", "spiegel", "spot", "spreadbetting", "sr", "srl", "srt", "st", "stada", "staples", "star", "starhub", "statebank", "statefarm", "statoil", "stc", "stcgroup", "stockholm", "storage", "store", "stream", "studio", "study", "style", "su", "sucks", "supplies", "supply", "support", "surf", "surgery", "suzuki", "sv", "swatch", "swiftcover", "swiss", "sx", "sy", "sydney", "symantec", "systems", "sz", "tab", "taipei", "talk", "taobao", "target", "tatamotors", "tatar", "tattoo", "tax", "taxi", "tc", "tci", "td", "tdk", "team", "tech", "technology", "tel", "telecity", "telefonica", "temasek", "tennis", "teva", "tf", "tg", "th", "thd", "theater", "theatre", "tiaa", "tickets", "tienda", "tiffany", "tips", "tires", "tirol", "tj", "tjmaxx", "tjx", "tk", "tkmaxx", "tl", "tm", "tmall", "tn", "to", "today", "tokyo", "tools", "top", "toray", "toshiba", "total", "tours", "town", "toyota", "toys", "tr", "trade", "trading", "training", "travel", "travelchannel", "travelers", "travelersinsurance", "trust", "trv", "tt", "tube", "tui", "tunes", "tushu", "tv", "tvs", "tw", "tz", "ua", "ubank", "ubs", "uconnect", "ug", "unicom", "university", "uno", "uol", "ups", "us", "uy", "uz", "va", "vacations", "vana", "vanguard", "vc", "ve", "vegas", "ventures", "verisign", "versicherung", "vet", "vg", "vi", "viajes", "video", "vig", "viking", "villas", "vin", "vip", "virgin", "visa", "vision", "vista", "vistaprint", "viva", "vivo", "vlaanderen", "vn", "vodka", "volkswagen", "volvo", "vote", "voting", "voto", "voyage", "vu", "vuelos", "wales", "walmart", "walter", "wang", "wanggou", "warman", "watch", "watches", "weather", "weatherchannel", "webcam", "weber", "website", "wed", "wedding", "weibo", "weir", "wf", "whoswho", "wien", "wiki", "williamhill", "win", "windows", "wine", "winners", "wme", "wolterskluwer", "woodside", "work", "works", "world", "wow", "ws", "wtc", "wtf", "xbox", "xerox", "xfinity", "xihuan", "xin", "xn--11b4c3d", "xn--1ck2e1b", "xn--1qqw23a", "xn--30rr7y", "xn--3bst00m", "xn--3ds443g", "xn--3e0b707e", "xn--3oq18vl8pn36a", "xn--3pxu8k", "xn--42c2d9a", "xn--45brj9c", "xn--45q11c", "xn--4gbrim", "xn--54b7fta0cc", "xn--55qw42g", "xn--55qx5d", "xn--5su34j936bgsg", "xn--5tzm5g", "xn--6frz82g", "xn--6qq986b3xl", "xn--80adxhks", "xn--80ao21a", "xn--80aqecdr1a", "xn--80asehdb", "xn--80aswg", "xn--8y0a063a", "xn--90a3ac", "xn--90ae", "xn--90ais", "xn--9dbq2a", "xn--9et52u", "xn--9krt00a", "xn--b4w605ferd", "xn--bck1b9a5dre4c", "xn--c1avg", "xn--c2br7g", "xn--cck2b3b", "xn--cg4bki", "xn--clchc0ea0b2g2a9gcd", "xn--czr694b", "xn--czrs0t", "xn--czru2d", "xn--d1acj3b", "xn--d1alf", "xn--e1a4c", "xn--eckvdtc9d", "xn--efvy88h", "xn--estv75g", "xn--fct429k", "xn--fhbei", "xn--fiq228c5hs", "xn--fiq64b", "xn--fiqs8s", "xn--fiqz9s", "xn--fjq720a", "xn--flw351e", "xn--fpcrj9c3d", "xn--fzc2c9e2c", "xn--fzys8d69uvgm", "xn--g2xx48c", "xn--gckr3f0f", "xn--gecrj9c", "xn--gk3at1e", "xn--h2brj9c", "xn--hxt814e", "xn--i1b6b1a6a2e", "xn--imr513n", "xn--io0a7i", "xn--j1aef", "xn--j1amh", "xn--j6w193g", "xn--jlq61u9w7b", "xn--jvr189m", "xn--kcrx77d1x4a", "xn--kprw13d", "xn--kpry57d", "xn--kpu716f", "xn--kput3i", "xn--l1acc", "xn--lgbbat1ad8j", "xn--mgb9awbf", "xn--mgba3a3ejt", "xn--mgba3a4f16a", "xn--mgba7c0bbn0a", "xn--mgbaam7a8h", "xn--mgbab2bd", "xn--mgbai9azgqp6j", "xn--mgbayh7gpa", "xn--mgbb9fbpob", "xn--mgbbh1a71e", "xn--mgbc0a9azcg", "xn--mgbca7dzdo", "xn--mgberp4a5d4ar", "xn--mgbi4ecexp", "xn--mgbpl2fh", "xn--mgbt3dhd", "xn--mgbtx2b", "xn--mgbx4cd0ab", "xn--mix891f", "xn--mk1bu44c", "xn--mxtq1m", "xn--ngbc5azd", "xn--ngbe9e0a", "xn--node", "xn--nqv7f", "xn--nqv7fs00ema", "xn--nyqy26a", "xn--o3cw4h", "xn--ogbpf8fl", "xn--p1acf", "xn--p1ai", "xn--pbt977c", "xn--pgbs0dh", "xn--pssy2u", "xn--q9jyb4c", "xn--qcka1pmc", "xn--qxam", "xn--rhqv96g", "xn--rovu88b", "xn--s9brj9c", "xn--ses554g", "xn--t60b56a", "xn--tckwe", "xn--tiq49xqyj", "xn--unup4y", "xn--vermgensberater-ctb", "xn--vermgensberatung-pwb", "xn--vhquv", "xn--vuq861b", "xn--w4r85el8fhu5dnra", "xn--w4rs40l", "xn--wgbh1c", "xn--wgbl6a", "xn--xhq521b", "xn--xkc2al3hye2a", "xn--xkc2dl3a5ee0h", "xn--y9a3aq", "xn--yfro4i67o", "xn--ygbi2ammx", "xn--zfr164b", "xperia", "xxx", "xyz", "yachts", "yahoo", "yamaxun", "yandex", "ye", "yodobashi", "yoga", "yokohama", "you", "youtube", "yt", "yun", "za", "zappos", "zara", "zero", "zip", "zippo", "zm", "zone", "zuerich", "zw"];
+exports.htmlAttrs = ["src=", "data=", "href=", "cite=", "formaction=", "icon=", "manifest=", "poster=", "codebase=", "background=", "profile=", "usemap="];
+
+
+/***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-exports.__esModule = true;
-exports.game = {
-    playerCaptured: {},
-    oppCaptured: {},
-    chess: null,
-    color: '',
-    history: null,
-    premove: null,
-    bclock: null,
-    btime: 0,
-    wclock: null,
-    wtime: 0,
-    obs: false
-};
-exports["default"] = exports.game;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-exports.__esModule = true;
-function highlightSquare(square) {
-    if (square === undefined) {
-        return;
-    }
-    var e = $('#board .square-' + square);
-    if (e.hasClass('black-3c85d')) {
-        e.css('background', '#278881');
-    }
-    else {
-        e.css('background', '#e6ffdd');
-    }
-}
-exports.highlightSquare = highlightSquare;
-function unHighlightSquare(square) {
-    if (square) {
-        $('#board .square-' + square).css('background', '');
-    }
-    else {
-        $('#board .square-55d63').css('background', '');
-    }
-}
-exports.unHighlightSquare = unHighlightSquare;
-function highlightCheck(square) {
-    if (square === undefined) {
-        return;
-    }
-    var e = $('#board .square-' + square);
-    if (e.hasClass('black-3c85d')) {
-        e.css('background', '#aa8881');
-    }
-    else {
-        e.css('background', '#ffdddd');
-    }
-}
-exports.highlightCheck = highlightCheck;
-function highlightMove(source, target) {
-    unHighlightSquare();
-    highlightSquare(source);
-    highlightSquare(target);
-}
-exports.highlightMove = highlightMove;
-function highlightPreMove(source, target) {
-    highlightCheck(source);
-    highlightCheck(target);
-}
-exports.highlightPreMove = highlightPreMove;
-function swapColor(color) {
-    return (color === 'w') ? 'b' : 'w';
-}
-exports.swapColor = swapColor;
-function showCheck(color, san) {
-    if (san.slice(-1) === '+') {
-        var square = $('div').find("[data-piece='" + swapColor(color) + "K']");
-        highlightCheck(square.parent().data('square'));
-    }
-}
-exports.showCheck = showCheck;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-exports.__esModule = true;
-var MessageType;
-(function (MessageType) {
-    MessageType[MessageType["Control"] = 0] = "Control";
-    MessageType[MessageType["ChannelTell"] = 1] = "ChannelTell";
-    MessageType[MessageType["PrivateTell"] = 2] = "PrivateTell";
-    MessageType[MessageType["GameMove"] = 3] = "GameMove";
-    MessageType[MessageType["GameStart"] = 4] = "GameStart";
-    MessageType[MessageType["GameEnd"] = 5] = "GameEnd";
-    MessageType[MessageType["Unknown"] = 6] = "Unknown";
-})(MessageType = exports.MessageType || (exports.MessageType = {}));
-exports["default"] = MessageType;
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var fix_1 = __webpack_require__(19);
-/**
- *
- * Split the string with word separators
- * such as punctuation marks and spaces
- *
-**/
-function separate(input) {
-    var splitted = input
-        .replace(/([\s\(\)\[\]<>"'])/g, "\0$1\0")
-        .replace(/([?;:,.!]+)(?=(\0|$|\s))/g, "\0$1\0")
-        .split("\0");
-    var fixed = fix_1.default(splitted);
-    return fixed;
-}
-exports.separate = separate;
-/**
- *
- * Join the resulting array into a string
- *
-**/
-function deSeparate(input) {
-    return input.join("");
-}
-exports.deSeparate = deSeparate;
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var lists_1 = __webpack_require__(1);
-// pattern that an emails MUST have
-var pattern = /^[a-z0-9!#$%&'*+\-/=?^_`{|}~.]+@([a-z0-9%\-]+\.){1,}([a-z0-9\-]+)?$/i;
-// patterns that an email can not have
-var negativePatterns = [
-    /^[!#$%&'*+\-/=?^_`{|}~.]/,
-    /[.]{2,}[a-z0-9!#$%&'*+\-/=?^_`{|}~.]+@/i,
-    /\.@/
-];
-function default_1(str) {
-    // general pattern recognition
-    var match = str.match(pattern);
-    if (match === null)
-        return false;
-    // doesn't have a negative pattern
-    for (var i = negativePatterns.length - 1; i >= 0; i--) {
-        if (negativePatterns[i].test(str))
-            return false;
-    }
-    // valid TLD
-    var tld = match[2];
-    if (!tld)
-        return false;
-    if (lists_1.tlds.indexOf(tld) === -1)
-        return false;
-    return true;
-}
-exports.default = default_1;
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-function default_1(str) {
-    str = str.toLowerCase();
-    if (str.indexOf("http://") === 0)
-        return "http://";
-    else if (str.indexOf("https://") === 0)
-        return "https://";
-    else if (str.indexOf("ftp://") === 0)
-        return "ftp://";
-    else if (str.indexOf("ftps://") === 0)
-        return "ftps://";
-    else if (str.indexOf("file:///") === 0)
-        return "file:///";
-    else if (str.indexOf("mailto:") === 0)
-        return "mailto:";
-    else
-        return false;
-}
-exports.default = default_1;
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var util_1 = __webpack_require__(2);
-// general IP pattern https://regex101.com/r/rzUcJ4/1
-var pattern = /^(\d{1,3}\.){3}\d{1,3}(:\d{1,5})?(\/([a-z0-9\-._~:\/\?#\[\]@!$&'\(\)\*\+,;=%]+)?)?$/i;
-function default_1(str) {
-    if (!pattern.test(str))
-        return false;
-    var IPArray = str.split(".");
-    // validate oc1
-    var oc1 = Number(IPArray[0]);
-    if ((isNaN(oc1)) || oc1 > 255 || oc1 < 0)
-        return false;
-    // validate oc2
-    var oc2 = Number(IPArray[1]);
-    if ((isNaN(oc2)) || oc2 > 255 || oc2 < 0)
-        return false;
-    // validate oc3
-    var oc3 = Number(IPArray[2]);
-    if ((isNaN(oc3)) || oc3 > 255 || oc3 < 0)
-        return false;
-    // validate oc4
-    var oc4 = Number((IPArray[3].match(/^\d+/) || [])[0]);
-    if ((isNaN(oc4)) || oc4 > 255 || oc4 < 0)
-        return false;
-    // validate port
-    var port = (IPArray[3].match(/(^\d+)(:)(\d+)/) || [])[3];
-    if (port && (!util_1.isPort(port)))
-        return false;
-    return true;
-}
-exports.default = default_1;
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var util_1 = __webpack_require__(2);
-var lists_1 = __webpack_require__(1);
-var pattern = /^(https?:\/\/|ftps?:\/\/)?([a-z0-9%\-]+\.){1,}([a-z0-9\-]+)?(:(\d{1,5}))?(\/([a-z0-9\-._~:\/\?#\[\]@!$&'\(\)\*\+,;=%]+)?)?$/i;
-function default_1(str) {
-    // general pattern recognition https://regex101.com/r/RgKTA4/2
-    var match = str.match(pattern);
-    if (match === null)
-        return false;
-    // validate TLD
-    if (typeof match[3] !== "string")
-        return false;
-    if (lists_1.tlds.indexOf(match[3].toLowerCase()) === -1)
-        return false;
-    // validate port
-    if (match[5] && (!util_1.isPort(match[5])))
-        return false;
-    return true;
-}
-exports.default = default_1;
-
-
-/***/ }),
-/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(jQuery) {
 exports.__esModule = true;
-__webpack_require__(13);
+__webpack_require__(12);
 var $ = __webpack_require__(0);
-var anchorme_1 = __webpack_require__(12);
-var Chess = __webpack_require__(14);
-var board_1 = __webpack_require__(15);
-var clock = __webpack_require__(16);
-var game_1 = __webpack_require__(3);
-var highlight = __webpack_require__(4);
-var history_1 = __webpack_require__(17);
-var message_1 = __webpack_require__(5);
-var session_1 = __webpack_require__(18);
+var anchorme_1 = __webpack_require__(14);
+var Chess = __webpack_require__(18);
+var board_1 = __webpack_require__(19);
+var clock = __webpack_require__(21);
+var game_1 = __webpack_require__(9);
+var highlight = __webpack_require__(10);
+var history_1 = __webpack_require__(22);
+var message_1 = __webpack_require__(11);
+var session_1 = __webpack_require__(23);
 var session;
 var tabsList = {};
 function showCapturePiece(color, piece) {
@@ -10921,26 +10643,30 @@ function ICSMessageHandler(message) {
             break;
     }
 }
+function getValue(elt) {
+    return $(elt).val();
+}
 $('#input-form').on('submit', function (event) {
     event.preventDefault();
     var text;
+    var val = getValue('#input-text');
     if (!$('#input-command').is(':checked')) {
-        if ($('#input-text').val().charAt(0) !== '@') {
+        if (val.charAt(0) !== '@') {
             var msg = $('#input-text').val();
             var tab = $('ul#tabs a.active').attr('id');
             text = 't ' + tab + ' ' + msg;
             handleChatMsg(tab, { type: message_1["default"].ChannelTell, channel: tab, handle: session.getHandle(), text: msg });
         }
         else {
-            text = $('#input-text').val().substr(1);
+            text = val.substr(1);
         }
     }
     else {
-        if ($('#input-text').val().charAt(0) !== '@') {
-            text = $('#input-text').val();
+        if (val.charAt(0) !== '@') {
+            text = val;
         }
         else {
-            text = $('#input-text').val().substr(1);
+            text = val.substr(1);
         }
     }
     session.send({ type: message_1["default"].Control, command: 0, text: text });
@@ -11016,39 +10742,39 @@ $('#newGame').on('click', function (event) {
     }
 });
 $('#onezero').on('click', function (event) {
-    getGame($('#opponentName').val(), '1', '0');
+    getGame(getValue('#opponentName'), '1', '0');
 });
 $('#threezero').on('click', function (event) {
-    getGame($('#opponentName').val(), '3', '0');
+    getGame(getValue('#opponentName'), '3', '0');
 });
 $('#threetwo').on('click', function (event) {
-    getGame($('#opponentName').val(), '3', '2');
+    getGame(getValue('#opponentName'), '3', '2');
 });
 $('#fivezero').on('click', function (event) {
-    getGame($('#opponentName').val(), '5', '0');
+    getGame(getValue('#opponentName'), '5', '0');
 });
 $('#fivefive').on('click', function (event) {
-    getGame($('#opponentName').val(), '5', '5');
+    getGame(getValue('#opponentName'), '5', '5');
 });
 $('#tenfive').on('click', function (event) {
-    getGame($('#opponentName').val(), '10', '5');
+    getGame(getValue('#opponentName'), '10', '5');
 });
 $('#fifteenzero').on('click', function (event) {
-    getGame($('#opponentName').val(), '15', '0');
+    getGame(getValue('#opponentName'), '15', '0');
 });
 $('#customControl').on('click', function (event) {
     if (game_1["default"].chess === null) {
-        var min = $('#customControlMin').val();
-        var sec = $('#customControlSec').val();
-        getGame($('#opponentName').val(), min, sec);
+        var min = getValue('#customControlMin');
+        var sec = getValue('#customControlSec');
+        getGame(getValue('#opponentName'), min, sec);
     }
 });
 $('#disconnect').on('click', function (event) {
     session.disconnect();
 });
 $('#login').on('click', function (event) {
-    var user = $('#login-user').val();
-    var pass = $('#login-pass').val();
+    var user = getValue('#login-user');
+    var pass = getValue('#login-pass');
     if (!session) {
         session = new session_1["default"](ICSMessageHandler, user, pass);
     }
@@ -11087,41 +10813,282 @@ $(window).resize(function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 12 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var util_1 = __webpack_require__(2);
-var email_1 = __webpack_require__(7);
-var ip_1 = __webpack_require__(9);
-var url_1 = __webpack_require__(10);
-var transform_1 = __webpack_require__(21);
-var hasprotocol_1 = __webpack_require__(8);
-var anchorme = function (str, options) {
-    options = util_1.defaultOptions(options);
-    var result = transform_1.default(str, options);
-    return result;
-};
-// exposing few functions for extra uses
-anchorme.validate = {
-    ip: ip_1.default,
-    url: function (input) {
-        // simple wrapper that does what "identify.ts" does initially
-        // remove the protocal
-        var protocol = hasprotocol_1.default(input) || "";
-        input = input.substr(protocol.length);
-        input = encodeURI(input);
-        return url_1.default(input);
-    },
-    email: email_1.default
-};
-exports.default = anchorme;
+var lists_1 = __webpack_require__(2);
+// pattern that an emails MUST have
+var pattern = /^[a-z0-9!#$%&'*+\-/=?^_`{|}~.]+@([a-z0-9%\-]+\.){1,}([a-z0-9\-]+)?$/i;
+// patterns that an email can not have
+var negativePatterns = [
+    /^[!#$%&'*+\-/=?^_`{|}~.]/,
+    /[.]{2,}[a-z0-9!#$%&'*+\-/=?^_`{|}~.]+@/i,
+    /\.@/
+];
+function default_1(str) {
+    // general pattern recognition
+    var match = str.match(pattern);
+    if (match === null)
+        return false;
+    // doesn't have a negative pattern
+    for (var i = negativePatterns.length - 1; i >= 0; i--) {
+        if (negativePatterns[i].test(str))
+            return false;
+    }
+    // valid TLD
+    var tld = match[2];
+    if (!tld)
+        return false;
+    if (lists_1.tlds.indexOf(tld) === -1)
+        return false;
+    return true;
+}
+exports.default = default_1;
 
 
 /***/ }),
-/* 13 */
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var util_1 = __webpack_require__(1);
+// general IP pattern https://regex101.com/r/rzUcJ4/1
+var pattern = /^(\d{1,3}\.){3}\d{1,3}(:\d{1,5})?(\/([a-z0-9\-._~:\/\?#\[\]@!$&'\(\)\*\+,;=%]+)?)?$/i;
+function default_1(str) {
+    if (!pattern.test(str))
+        return false;
+    var IPArray = str.split(".");
+    // validate oc1
+    var oc1 = Number(IPArray[0]);
+    if ((isNaN(oc1)) || oc1 > 255 || oc1 < 0)
+        return false;
+    // validate oc2
+    var oc2 = Number(IPArray[1]);
+    if ((isNaN(oc2)) || oc2 > 255 || oc2 < 0)
+        return false;
+    // validate oc3
+    var oc3 = Number(IPArray[2]);
+    if ((isNaN(oc3)) || oc3 > 255 || oc3 < 0)
+        return false;
+    // validate oc4
+    var oc4 = Number((IPArray[3].match(/^\d+/) || [])[0]);
+    if ((isNaN(oc4)) || oc4 > 255 || oc4 < 0)
+        return false;
+    // validate port
+    var port = (IPArray[3].match(/(^\d+)(:)(\d+)/) || [])[3];
+    if (port && (!util_1.isPort(port)))
+        return false;
+    return true;
+}
+exports.default = default_1;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var util_1 = __webpack_require__(1);
+var lists_1 = __webpack_require__(2);
+var pattern = /^(https?:\/\/|ftps?:\/\/)?([a-z0-9%\-]+\.){1,}([a-z0-9\-]+)?(:(\d{1,5}))?(\/([a-z0-9\-._~:\/\?#\[\]@!$&'\(\)\*\+,;=%]+)?)?$/i;
+function default_1(str) {
+    // general pattern recognition https://regex101.com/r/RgKTA4/2
+    var match = str.match(pattern);
+    if (match === null)
+        return false;
+    // validate TLD
+    if (typeof match[3] !== "string")
+        return false;
+    if (lists_1.tlds.indexOf(match[3].toLowerCase()) === -1)
+        return false;
+    // validate port
+    if (match[5] && (!util_1.isPort(match[5])))
+        return false;
+    return true;
+}
+exports.default = default_1;
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var fix_1 = __webpack_require__(16);
+/**
+ *
+ * Split the string with word separators
+ * such as punctuation marks and spaces
+ *
+**/
+function separate(input) {
+    var splitted = input
+        .replace(/([\s\(\)\[\]<>"'])/g, "\0$1\0")
+        .replace(/([?;:,.!]+)(?=(\0|$|\s))/g, "\0$1\0")
+        .split("\0");
+    var fixed = fix_1.default(splitted);
+    return fixed;
+}
+exports.separate = separate;
+/**
+ *
+ * Join the resulting array into a string
+ *
+**/
+function deSeparate(input) {
+    return input.join("");
+}
+exports.deSeparate = deSeparate;
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function default_1(str) {
+    str = str.toLowerCase();
+    if (str.indexOf("http://") === 0)
+        return "http://";
+    else if (str.indexOf("https://") === 0)
+        return "https://";
+    else if (str.indexOf("ftp://") === 0)
+        return "ftp://";
+    else if (str.indexOf("ftps://") === 0)
+        return "ftps://";
+    else if (str.indexOf("file:///") === 0)
+        return "file:///";
+    else if (str.indexOf("mailto:") === 0)
+        return "mailto:";
+    else
+        return false;
+}
+exports.default = default_1;
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+exports.game = {
+    playerCaptured: {},
+    oppCaptured: {},
+    chess: null,
+    color: '',
+    history: null,
+    premove: null,
+    bclock: null,
+    btime: 0,
+    wclock: null,
+    wtime: 0,
+    obs: false
+};
+exports["default"] = exports.game;
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+exports.__esModule = true;
+function highlightSquare(square) {
+    if (square === undefined) {
+        return;
+    }
+    var e = $('#board .square-' + square);
+    if (e.hasClass('black-3c85d')) {
+        e.css('background', '#278881');
+    }
+    else {
+        e.css('background', '#e6ffdd');
+    }
+}
+exports.highlightSquare = highlightSquare;
+function unHighlightSquare(square) {
+    if (square) {
+        $('#board .square-' + square).css('background', '');
+    }
+    else {
+        $('#board .square-55d63').css('background', '');
+    }
+}
+exports.unHighlightSquare = unHighlightSquare;
+function highlightCheck(square) {
+    if (square === undefined) {
+        return;
+    }
+    var e = $('#board .square-' + square);
+    if (e.hasClass('black-3c85d')) {
+        e.css('background', '#aa8881');
+    }
+    else {
+        e.css('background', '#ffdddd');
+    }
+}
+exports.highlightCheck = highlightCheck;
+function highlightMove(source, target) {
+    unHighlightSquare();
+    highlightSquare(source);
+    highlightSquare(target);
+}
+exports.highlightMove = highlightMove;
+function highlightPreMove(source, target) {
+    highlightCheck(source);
+    highlightCheck(target);
+}
+exports.highlightPreMove = highlightPreMove;
+function swapColor(color) {
+    return (color === 'w') ? 'b' : 'w';
+}
+exports.swapColor = swapColor;
+function showCheck(color, san) {
+    if (san.slice(-1) === '+') {
+        var square = $('div').find("[data-piece='" + swapColor(color) + "K']");
+        highlightCheck(square.parent().data('square'));
+    }
+}
+exports.showCheck = showCheck;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+var MessageType;
+(function (MessageType) {
+    MessageType[MessageType["Control"] = 0] = "Control";
+    MessageType[MessageType["ChannelTell"] = 1] = "ChannelTell";
+    MessageType[MessageType["PrivateTell"] = 2] = "PrivateTell";
+    MessageType[MessageType["GameMove"] = 3] = "GameMove";
+    MessageType[MessageType["GameStart"] = 4] = "GameStart";
+    MessageType[MessageType["GameEnd"] = 5] = "GameEnd";
+    MessageType[MessageType["Unknown"] = 6] = "Unknown";
+})(MessageType = exports.MessageType || (exports.MessageType = {}));
+exports["default"] = MessageType;
+
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery, Tether) {/*!
@@ -14660,3830 +14627,10 @@ var Popover = function ($) {
 
 }();
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(23)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(13)))
 
 /***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;/*
- * Copyright (c) 2016, Jeff Hlywa (jhlywa@gmail.com)
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- *----------------------------------------------------------------------------*/
-
-/* minified license below  */
-
-/* @license
- * Copyright (c) 2016, Jeff Hlywa (jhlywa@gmail.com)
- * Released under the BSD license
- * https://github.com/jhlywa/chess.js/blob/master/LICENSE
- */
-
-var Chess = function(fen) {
-
-  /* jshint indent: false */
-
-  var BLACK = 'b';
-  var WHITE = 'w';
-
-  var EMPTY = -1;
-
-  var PAWN = 'p';
-  var KNIGHT = 'n';
-  var BISHOP = 'b';
-  var ROOK = 'r';
-  var QUEEN = 'q';
-  var KING = 'k';
-
-  var SYMBOLS = 'pnbrqkPNBRQK';
-
-  var DEFAULT_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
-
-  var POSSIBLE_RESULTS = ['1-0', '0-1', '1/2-1/2', '*'];
-
-  var PAWN_OFFSETS = {
-    b: [16, 32, 17, 15],
-    w: [-16, -32, -17, -15]
-  };
-
-  var PIECE_OFFSETS = {
-    n: [-18, -33, -31, -14,  18, 33, 31,  14],
-    b: [-17, -15,  17,  15],
-    r: [-16,   1,  16,  -1],
-    q: [-17, -16, -15,   1,  17, 16, 15,  -1],
-    k: [-17, -16, -15,   1,  17, 16, 15,  -1]
-  };
-
-  var ATTACKS = [
-    20, 0, 0, 0, 0, 0, 0, 24,  0, 0, 0, 0, 0, 0,20, 0,
-     0,20, 0, 0, 0, 0, 0, 24,  0, 0, 0, 0, 0,20, 0, 0,
-     0, 0,20, 0, 0, 0, 0, 24,  0, 0, 0, 0,20, 0, 0, 0,
-     0, 0, 0,20, 0, 0, 0, 24,  0, 0, 0,20, 0, 0, 0, 0,
-     0, 0, 0, 0,20, 0, 0, 24,  0, 0,20, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0,20, 2, 24,  2,20, 0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0, 2,53, 56, 53, 2, 0, 0, 0, 0, 0, 0,
-    24,24,24,24,24,24,56,  0, 56,24,24,24,24,24,24, 0,
-     0, 0, 0, 0, 0, 2,53, 56, 53, 2, 0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0, 0,20, 2, 24,  2,20, 0, 0, 0, 0, 0, 0,
-     0, 0, 0, 0,20, 0, 0, 24,  0, 0,20, 0, 0, 0, 0, 0,
-     0, 0, 0,20, 0, 0, 0, 24,  0, 0, 0,20, 0, 0, 0, 0,
-     0, 0,20, 0, 0, 0, 0, 24,  0, 0, 0, 0,20, 0, 0, 0,
-     0,20, 0, 0, 0, 0, 0, 24,  0, 0, 0, 0, 0,20, 0, 0,
-    20, 0, 0, 0, 0, 0, 0, 24,  0, 0, 0, 0, 0, 0,20
-  ];
-
-  var RAYS = [
-     17,  0,  0,  0,  0,  0,  0, 16,  0,  0,  0,  0,  0,  0, 15, 0,
-      0, 17,  0,  0,  0,  0,  0, 16,  0,  0,  0,  0,  0, 15,  0, 0,
-      0,  0, 17,  0,  0,  0,  0, 16,  0,  0,  0,  0, 15,  0,  0, 0,
-      0,  0,  0, 17,  0,  0,  0, 16,  0,  0,  0, 15,  0,  0,  0, 0,
-      0,  0,  0,  0, 17,  0,  0, 16,  0,  0, 15,  0,  0,  0,  0, 0,
-      0,  0,  0,  0,  0, 17,  0, 16,  0, 15,  0,  0,  0,  0,  0, 0,
-      0,  0,  0,  0,  0,  0, 17, 16, 15,  0,  0,  0,  0,  0,  0, 0,
-      1,  1,  1,  1,  1,  1,  1,  0, -1, -1,  -1,-1, -1, -1, -1, 0,
-      0,  0,  0,  0,  0,  0,-15,-16,-17,  0,  0,  0,  0,  0,  0, 0,
-      0,  0,  0,  0,  0,-15,  0,-16,  0,-17,  0,  0,  0,  0,  0, 0,
-      0,  0,  0,  0,-15,  0,  0,-16,  0,  0,-17,  0,  0,  0,  0, 0,
-      0,  0,  0,-15,  0,  0,  0,-16,  0,  0,  0,-17,  0,  0,  0, 0,
-      0,  0,-15,  0,  0,  0,  0,-16,  0,  0,  0,  0,-17,  0,  0, 0,
-      0,-15,  0,  0,  0,  0,  0,-16,  0,  0,  0,  0,  0,-17,  0, 0,
-    -15,  0,  0,  0,  0,  0,  0,-16,  0,  0,  0,  0,  0,  0,-17
-  ];
-
-  var SHIFTS = { p: 0, n: 1, b: 2, r: 3, q: 4, k: 5 };
-
-  var FLAGS = {
-    NORMAL: 'n',
-    CAPTURE: 'c',
-    BIG_PAWN: 'b',
-    EP_CAPTURE: 'e',
-    PROMOTION: 'p',
-    KSIDE_CASTLE: 'k',
-    QSIDE_CASTLE: 'q'
-  };
-
-  var BITS = {
-    NORMAL: 1,
-    CAPTURE: 2,
-    BIG_PAWN: 4,
-    EP_CAPTURE: 8,
-    PROMOTION: 16,
-    KSIDE_CASTLE: 32,
-    QSIDE_CASTLE: 64
-  };
-
-  var RANK_1 = 7;
-  var RANK_2 = 6;
-  var RANK_3 = 5;
-  var RANK_4 = 4;
-  var RANK_5 = 3;
-  var RANK_6 = 2;
-  var RANK_7 = 1;
-  var RANK_8 = 0;
-
-  var SQUARES = {
-    a8:   0, b8:   1, c8:   2, d8:   3, e8:   4, f8:   5, g8:   6, h8:   7,
-    a7:  16, b7:  17, c7:  18, d7:  19, e7:  20, f7:  21, g7:  22, h7:  23,
-    a6:  32, b6:  33, c6:  34, d6:  35, e6:  36, f6:  37, g6:  38, h6:  39,
-    a5:  48, b5:  49, c5:  50, d5:  51, e5:  52, f5:  53, g5:  54, h5:  55,
-    a4:  64, b4:  65, c4:  66, d4:  67, e4:  68, f4:  69, g4:  70, h4:  71,
-    a3:  80, b3:  81, c3:  82, d3:  83, e3:  84, f3:  85, g3:  86, h3:  87,
-    a2:  96, b2:  97, c2:  98, d2:  99, e2: 100, f2: 101, g2: 102, h2: 103,
-    a1: 112, b1: 113, c1: 114, d1: 115, e1: 116, f1: 117, g1: 118, h1: 119
-  };
-
-  var ROOKS = {
-    w: [{square: SQUARES.a1, flag: BITS.QSIDE_CASTLE},
-        {square: SQUARES.h1, flag: BITS.KSIDE_CASTLE}],
-    b: [{square: SQUARES.a8, flag: BITS.QSIDE_CASTLE},
-        {square: SQUARES.h8, flag: BITS.KSIDE_CASTLE}]
-  };
-
-  var board = new Array(128);
-  var kings = {w: EMPTY, b: EMPTY};
-  var turn = WHITE;
-  var castling = {w: 0, b: 0};
-  var ep_square = EMPTY;
-  var half_moves = 0;
-  var move_number = 1;
-  var history = [];
-  var header = {};
-
-  /* if the user passes in a fen string, load it, else default to
-   * starting position
-   */
-  if (typeof fen === 'undefined') {
-    load(DEFAULT_POSITION);
-  } else {
-    load(fen);
-  }
-
-  function clear() {
-    board = new Array(128);
-    kings = {w: EMPTY, b: EMPTY};
-    turn = WHITE;
-    castling = {w: 0, b: 0};
-    ep_square = EMPTY;
-    half_moves = 0;
-    move_number = 1;
-    history = [];
-    header = {};
-    update_setup(generate_fen());
-  }
-
-  function reset() {
-    load(DEFAULT_POSITION);
-  }
-
-  function load(fen) {
-    var tokens = fen.split(/\s+/);
-    var position = tokens[0];
-    var square = 0;
-
-    if (!validate_fen(fen).valid) {
-      return false;
-    }
-
-    clear();
-
-    for (var i = 0; i < position.length; i++) {
-      var piece = position.charAt(i);
-
-      if (piece === '/') {
-        square += 8;
-      } else if (is_digit(piece)) {
-        square += parseInt(piece, 10);
-      } else {
-        var color = (piece < 'a') ? WHITE : BLACK;
-        put({type: piece.toLowerCase(), color: color}, algebraic(square));
-        square++;
-      }
-    }
-
-    turn = tokens[1];
-
-    if (tokens[2].indexOf('K') > -1) {
-      castling.w |= BITS.KSIDE_CASTLE;
-    }
-    if (tokens[2].indexOf('Q') > -1) {
-      castling.w |= BITS.QSIDE_CASTLE;
-    }
-    if (tokens[2].indexOf('k') > -1) {
-      castling.b |= BITS.KSIDE_CASTLE;
-    }
-    if (tokens[2].indexOf('q') > -1) {
-      castling.b |= BITS.QSIDE_CASTLE;
-    }
-
-    ep_square = (tokens[3] === '-') ? EMPTY : SQUARES[tokens[3]];
-    half_moves = parseInt(tokens[4], 10);
-    move_number = parseInt(tokens[5], 10);
-
-    update_setup(generate_fen());
-
-    return true;
-  }
-
-  /* TODO: this function is pretty much crap - it validates structure but
-   * completely ignores content (e.g. doesn't verify that each side has a king)
-   * ... we should rewrite this, and ditch the silly error_number field while
-   * we're at it
-   */
-  function validate_fen(fen) {
-    var errors = {
-       0: 'No errors.',
-       1: 'FEN string must contain six space-delimited fields.',
-       2: '6th field (move number) must be a positive integer.',
-       3: '5th field (half move counter) must be a non-negative integer.',
-       4: '4th field (en-passant square) is invalid.',
-       5: '3rd field (castling availability) is invalid.',
-       6: '2nd field (side to move) is invalid.',
-       7: '1st field (piece positions) does not contain 8 \'/\'-delimited rows.',
-       8: '1st field (piece positions) is invalid [consecutive numbers].',
-       9: '1st field (piece positions) is invalid [invalid piece].',
-      10: '1st field (piece positions) is invalid [row too large].',
-      11: 'Illegal en-passant square',
-    };
-
-    /* 1st criterion: 6 space-seperated fields? */
-    var tokens = fen.split(/\s+/);
-    if (tokens.length !== 6) {
-      return {valid: false, error_number: 1, error: errors[1]};
-    }
-
-    /* 2nd criterion: move number field is a integer value > 0? */
-    if (isNaN(tokens[5]) || (parseInt(tokens[5], 10) <= 0)) {
-      return {valid: false, error_number: 2, error: errors[2]};
-    }
-
-    /* 3rd criterion: half move counter is an integer >= 0? */
-    if (isNaN(tokens[4]) || (parseInt(tokens[4], 10) < 0)) {
-      return {valid: false, error_number: 3, error: errors[3]};
-    }
-
-    /* 4th criterion: 4th field is a valid e.p.-string? */
-    if (!/^(-|[abcdefgh][36])$/.test(tokens[3])) {
-      return {valid: false, error_number: 4, error: errors[4]};
-    }
-
-    /* 5th criterion: 3th field is a valid castle-string? */
-    if( !/^(KQ?k?q?|Qk?q?|kq?|q|-)$/.test(tokens[2])) {
-      return {valid: false, error_number: 5, error: errors[5]};
-    }
-
-    /* 6th criterion: 2nd field is "w" (white) or "b" (black)? */
-    if (!/^(w|b)$/.test(tokens[1])) {
-      return {valid: false, error_number: 6, error: errors[6]};
-    }
-
-    /* 7th criterion: 1st field contains 8 rows? */
-    var rows = tokens[0].split('/');
-    if (rows.length !== 8) {
-      return {valid: false, error_number: 7, error: errors[7]};
-    }
-
-    /* 8th criterion: every row is valid? */
-    for (var i = 0; i < rows.length; i++) {
-      /* check for right sum of fields AND not two numbers in succession */
-      var sum_fields = 0;
-      var previous_was_number = false;
-
-      for (var k = 0; k < rows[i].length; k++) {
-        if (!isNaN(rows[i][k])) {
-          if (previous_was_number) {
-            return {valid: false, error_number: 8, error: errors[8]};
-          }
-          sum_fields += parseInt(rows[i][k], 10);
-          previous_was_number = true;
-        } else {
-          if (!/^[prnbqkPRNBQK]$/.test(rows[i][k])) {
-            return {valid: false, error_number: 9, error: errors[9]};
-          }
-          sum_fields += 1;
-          previous_was_number = false;
-        }
-      }
-      if (sum_fields !== 8) {
-        return {valid: false, error_number: 10, error: errors[10]};
-      }
-    }
-
-    if ((tokens[3][1] == '3' && tokens[1] == 'w') ||
-        (tokens[3][1] == '6' && tokens[1] == 'b')) {
-          return {valid: false, error_number: 11, error: errors[11]};
-    }
-
-    /* everything's okay! */
-    return {valid: true, error_number: 0, error: errors[0]};
-  }
-
-  function generate_fen() {
-    var empty = 0;
-    var fen = '';
-
-    for (var i = SQUARES.a8; i <= SQUARES.h1; i++) {
-      if (board[i] == null) {
-        empty++;
-      } else {
-        if (empty > 0) {
-          fen += empty;
-          empty = 0;
-        }
-        var color = board[i].color;
-        var piece = board[i].type;
-
-        fen += (color === WHITE) ?
-                 piece.toUpperCase() : piece.toLowerCase();
-      }
-
-      if ((i + 1) & 0x88) {
-        if (empty > 0) {
-          fen += empty;
-        }
-
-        if (i !== SQUARES.h1) {
-          fen += '/';
-        }
-
-        empty = 0;
-        i += 8;
-      }
-    }
-
-    var cflags = '';
-    if (castling[WHITE] & BITS.KSIDE_CASTLE) { cflags += 'K'; }
-    if (castling[WHITE] & BITS.QSIDE_CASTLE) { cflags += 'Q'; }
-    if (castling[BLACK] & BITS.KSIDE_CASTLE) { cflags += 'k'; }
-    if (castling[BLACK] & BITS.QSIDE_CASTLE) { cflags += 'q'; }
-
-    /* do we have an empty castling flag? */
-    cflags = cflags || '-';
-    var epflags = (ep_square === EMPTY) ? '-' : algebraic(ep_square);
-
-    return [fen, turn, cflags, epflags, half_moves, move_number].join(' ');
-  }
-
-  function set_header(args) {
-    for (var i = 0; i < args.length; i += 2) {
-      if (typeof args[i] === 'string' &&
-          typeof args[i + 1] === 'string') {
-        header[args[i]] = args[i + 1];
-      }
-    }
-    return header;
-  }
-
-  /* called when the initial board setup is changed with put() or remove().
-   * modifies the SetUp and FEN properties of the header object.  if the FEN is
-   * equal to the default position, the SetUp and FEN are deleted
-   * the setup is only updated if history.length is zero, ie moves haven't been
-   * made.
-   */
-  function update_setup(fen) {
-    if (history.length > 0) return;
-
-    if (fen !== DEFAULT_POSITION) {
-      header['SetUp'] = '1';
-      header['FEN'] = fen;
-    } else {
-      delete header['SetUp'];
-      delete header['FEN'];
-    }
-  }
-
-  function get(square) {
-    var piece = board[SQUARES[square]];
-    return (piece) ? {type: piece.type, color: piece.color} : null;
-  }
-
-  function put(piece, square) {
-    /* check for valid piece object */
-    if (!('type' in piece && 'color' in piece)) {
-      return false;
-    }
-
-    /* check for piece */
-    if (SYMBOLS.indexOf(piece.type.toLowerCase()) === -1) {
-      return false;
-    }
-
-    /* check for valid square */
-    if (!(square in SQUARES)) {
-      return false;
-    }
-
-    var sq = SQUARES[square];
-
-    /* don't let the user place more than one king */
-    if (piece.type == KING &&
-        !(kings[piece.color] == EMPTY || kings[piece.color] == sq)) {
-      return false;
-    }
-
-    board[sq] = {type: piece.type, color: piece.color};
-    if (piece.type === KING) {
-      kings[piece.color] = sq;
-    }
-
-    update_setup(generate_fen());
-
-    return true;
-  }
-
-  function remove(square) {
-    var piece = get(square);
-    board[SQUARES[square]] = null;
-    if (piece && piece.type === KING) {
-      kings[piece.color] = EMPTY;
-    }
-
-    update_setup(generate_fen());
-
-    return piece;
-  }
-
-  function build_move(board, from, to, flags, promotion) {
-    var move = {
-      color: turn,
-      from: from,
-      to: to,
-      flags: flags,
-      piece: board[from].type
-    };
-
-    if (promotion) {
-      move.flags |= BITS.PROMOTION;
-      move.promotion = promotion;
-    }
-
-    if (board[to]) {
-      move.captured = board[to].type;
-    } else if (flags & BITS.EP_CAPTURE) {
-        move.captured = PAWN;
-    }
-    return move;
-  }
-
-  function generate_moves(options) {
-    function add_move(board, moves, from, to, flags) {
-      /* if pawn promotion */
-      if (board[from].type === PAWN &&
-         (rank(to) === RANK_8 || rank(to) === RANK_1)) {
-          var pieces = [QUEEN, ROOK, BISHOP, KNIGHT];
-          for (var i = 0, len = pieces.length; i < len; i++) {
-            moves.push(build_move(board, from, to, flags, pieces[i]));
-          }
-      } else {
-       moves.push(build_move(board, from, to, flags));
-      }
-    }
-
-    var moves = [];
-    var us = turn;
-    var them = swap_color(us);
-    var second_rank = {b: RANK_7, w: RANK_2};
-
-    var first_sq = SQUARES.a8;
-    var last_sq = SQUARES.h1;
-    var single_square = false;
-
-    /* do we want legal moves? */
-    var legal = (typeof options !== 'undefined' && 'legal' in options) ?
-                options.legal : true;
-
-    /* are we generating moves for a single square? */
-    if (typeof options !== 'undefined' && 'square' in options) {
-      if (options.square in SQUARES) {
-        first_sq = last_sq = SQUARES[options.square];
-        single_square = true;
-      } else {
-        /* invalid square */
-        return [];
-      }
-    }
-
-    for (var i = first_sq; i <= last_sq; i++) {
-      /* did we run off the end of the board */
-      if (i & 0x88) { i += 7; continue; }
-
-      var piece = board[i];
-      if (piece == null || piece.color !== us) {
-        continue;
-      }
-
-      if (piece.type === PAWN) {
-        /* single square, non-capturing */
-        var square = i + PAWN_OFFSETS[us][0];
-        if (board[square] == null) {
-            add_move(board, moves, i, square, BITS.NORMAL);
-
-          /* double square */
-          var square = i + PAWN_OFFSETS[us][1];
-          if (second_rank[us] === rank(i) && board[square] == null) {
-            add_move(board, moves, i, square, BITS.BIG_PAWN);
-          }
-        }
-
-        /* pawn captures */
-        for (j = 2; j < 4; j++) {
-          var square = i + PAWN_OFFSETS[us][j];
-          if (square & 0x88) continue;
-
-          if (board[square] != null &&
-              board[square].color === them) {
-              add_move(board, moves, i, square, BITS.CAPTURE);
-          } else if (square === ep_square) {
-              add_move(board, moves, i, ep_square, BITS.EP_CAPTURE);
-          }
-        }
-      } else {
-        for (var j = 0, len = PIECE_OFFSETS[piece.type].length; j < len; j++) {
-          var offset = PIECE_OFFSETS[piece.type][j];
-          var square = i;
-
-          while (true) {
-            square += offset;
-            if (square & 0x88) break;
-
-            if (board[square] == null) {
-              add_move(board, moves, i, square, BITS.NORMAL);
-            } else {
-              if (board[square].color === us) break;
-              add_move(board, moves, i, square, BITS.CAPTURE);
-              break;
-            }
-
-            /* break, if knight or king */
-            if (piece.type === 'n' || piece.type === 'k') break;
-          }
-        }
-      }
-    }
-
-    /* check for castling if: a) we're generating all moves, or b) we're doing
-     * single square move generation on the king's square
-     */
-    if ((!single_square) || last_sq === kings[us]) {
-      /* king-side castling */
-      if (castling[us] & BITS.KSIDE_CASTLE) {
-        var castling_from = kings[us];
-        var castling_to = castling_from + 2;
-
-        if (board[castling_from + 1] == null &&
-            board[castling_to]       == null &&
-            !attacked(them, kings[us]) &&
-            !attacked(them, castling_from + 1) &&
-            !attacked(them, castling_to)) {
-          add_move(board, moves, kings[us] , castling_to,
-                   BITS.KSIDE_CASTLE);
-        }
-      }
-
-      /* queen-side castling */
-      if (castling[us] & BITS.QSIDE_CASTLE) {
-        var castling_from = kings[us];
-        var castling_to = castling_from - 2;
-
-        if (board[castling_from - 1] == null &&
-            board[castling_from - 2] == null &&
-            board[castling_from - 3] == null &&
-            !attacked(them, kings[us]) &&
-            !attacked(them, castling_from - 1) &&
-            !attacked(them, castling_to)) {
-          add_move(board, moves, kings[us], castling_to,
-                   BITS.QSIDE_CASTLE);
-        }
-      }
-    }
-
-    /* return all pseudo-legal moves (this includes moves that allow the king
-     * to be captured)
-     */
-    if (!legal) {
-      return moves;
-    }
-
-    /* filter out illegal moves */
-    var legal_moves = [];
-    for (var i = 0, len = moves.length; i < len; i++) {
-      make_move(moves[i]);
-      if (!king_attacked(us)) {
-        legal_moves.push(moves[i]);
-      }
-      undo_move();
-    }
-
-    return legal_moves;
-  }
-
-  /* convert a move from 0x88 coordinates to Standard Algebraic Notation
-   * (SAN)
-   *
-   * @param {boolean} sloppy Use the sloppy SAN generator to work around over
-   * disambiguation bugs in Fritz and Chessbase.  See below:
-   *
-   * r1bqkbnr/ppp2ppp/2n5/1B1pP3/4P3/8/PPPP2PP/RNBQK1NR b KQkq - 2 4
-   * 4. ... Nge7 is overly disambiguated because the knight on c6 is pinned
-   * 4. ... Ne7 is technically the valid SAN
-   */
-  function move_to_san(move, sloppy) {
-
-    var output = '';
-
-    if (move.flags & BITS.KSIDE_CASTLE) {
-      output = 'O-O';
-    } else if (move.flags & BITS.QSIDE_CASTLE) {
-      output = 'O-O-O';
-    } else {
-      var disambiguator = get_disambiguator(move, sloppy);
-
-      if (move.piece !== PAWN) {
-        output += move.piece.toUpperCase() + disambiguator;
-      }
-
-      if (move.flags & (BITS.CAPTURE | BITS.EP_CAPTURE)) {
-        if (move.piece === PAWN) {
-          output += algebraic(move.from)[0];
-        }
-        output += 'x';
-      }
-
-      output += algebraic(move.to);
-
-      if (move.flags & BITS.PROMOTION) {
-        output += '=' + move.promotion.toUpperCase();
-      }
-    }
-
-    make_move(move);
-    if (in_check()) {
-      if (in_checkmate()) {
-        output += '#';
-      } else {
-        output += '+';
-      }
-    }
-    undo_move();
-
-    return output;
-  }
-
-  // parses all of the decorators out of a SAN string
-  function stripped_san(move) {
-    return move.replace(/=/,'').replace(/[+#]?[?!]*$/,'');
-  }
-
-  function attacked(color, square) {
-    for (var i = SQUARES.a8; i <= SQUARES.h1; i++) {
-      /* did we run off the end of the board */
-      if (i & 0x88) { i += 7; continue; }
-
-      /* if empty square or wrong color */
-      if (board[i] == null || board[i].color !== color) continue;
-
-      var piece = board[i];
-      var difference = i - square;
-      var index = difference + 119;
-
-      if (ATTACKS[index] & (1 << SHIFTS[piece.type])) {
-        if (piece.type === PAWN) {
-          if (difference > 0) {
-            if (piece.color === WHITE) return true;
-          } else {
-            if (piece.color === BLACK) return true;
-          }
-          continue;
-        }
-
-        /* if the piece is a knight or a king */
-        if (piece.type === 'n' || piece.type === 'k') return true;
-
-        var offset = RAYS[index];
-        var j = i + offset;
-
-        var blocked = false;
-        while (j !== square) {
-          if (board[j] != null) { blocked = true; break; }
-          j += offset;
-        }
-
-        if (!blocked) return true;
-      }
-    }
-
-    return false;
-  }
-
-  function king_attacked(color) {
-    return attacked(swap_color(color), kings[color]);
-  }
-
-  function in_check() {
-    return king_attacked(turn);
-  }
-
-  function in_checkmate() {
-    return in_check() && generate_moves().length === 0;
-  }
-
-  function in_stalemate() {
-    return !in_check() && generate_moves().length === 0;
-  }
-
-  function insufficient_material() {
-    var pieces = {};
-    var bishops = [];
-    var num_pieces = 0;
-    var sq_color = 0;
-
-    for (var i = SQUARES.a8; i<= SQUARES.h1; i++) {
-      sq_color = (sq_color + 1) % 2;
-      if (i & 0x88) { i += 7; continue; }
-
-      var piece = board[i];
-      if (piece) {
-        pieces[piece.type] = (piece.type in pieces) ?
-                              pieces[piece.type] + 1 : 1;
-        if (piece.type === BISHOP) {
-          bishops.push(sq_color);
-        }
-        num_pieces++;
-      }
-    }
-
-    /* k vs. k */
-    if (num_pieces === 2) { return true; }
-
-    /* k vs. kn .... or .... k vs. kb */
-    else if (num_pieces === 3 && (pieces[BISHOP] === 1 ||
-                                 pieces[KNIGHT] === 1)) { return true; }
-
-    /* kb vs. kb where any number of bishops are all on the same color */
-    else if (num_pieces === pieces[BISHOP] + 2) {
-      var sum = 0;
-      var len = bishops.length;
-      for (var i = 0; i < len; i++) {
-        sum += bishops[i];
-      }
-      if (sum === 0 || sum === len) { return true; }
-    }
-
-    return false;
-  }
-
-  function in_threefold_repetition() {
-    /* TODO: while this function is fine for casual use, a better
-     * implementation would use a Zobrist key (instead of FEN). the
-     * Zobrist key would be maintained in the make_move/undo_move functions,
-     * avoiding the costly that we do below.
-     */
-    var moves = [];
-    var positions = {};
-    var repetition = false;
-
-    while (true) {
-      var move = undo_move();
-      if (!move) break;
-      moves.push(move);
-    }
-
-    while (true) {
-      /* remove the last two fields in the FEN string, they're not needed
-       * when checking for draw by rep */
-      var fen = generate_fen().split(' ').slice(0,4).join(' ');
-
-      /* has the position occurred three or move times */
-      positions[fen] = (fen in positions) ? positions[fen] + 1 : 1;
-      if (positions[fen] >= 3) {
-        repetition = true;
-      }
-
-      if (!moves.length) {
-        break;
-      }
-      make_move(moves.pop());
-    }
-
-    return repetition;
-  }
-
-  function push(move) {
-    history.push({
-      move: move,
-      kings: {b: kings.b, w: kings.w},
-      turn: turn,
-      castling: {b: castling.b, w: castling.w},
-      ep_square: ep_square,
-      half_moves: half_moves,
-      move_number: move_number
-    });
-  }
-
-  function make_move(move) {
-    var us = turn;
-    var them = swap_color(us);
-    push(move);
-
-    board[move.to] = board[move.from];
-    board[move.from] = null;
-
-    /* if ep capture, remove the captured pawn */
-    if (move.flags & BITS.EP_CAPTURE) {
-      if (turn === BLACK) {
-        board[move.to - 16] = null;
-      } else {
-        board[move.to + 16] = null;
-      }
-    }
-
-    /* if pawn promotion, replace with new piece */
-    if (move.flags & BITS.PROMOTION) {
-      board[move.to] = {type: move.promotion, color: us};
-    }
-
-    /* if we moved the king */
-    if (board[move.to].type === KING) {
-      kings[board[move.to].color] = move.to;
-
-      /* if we castled, move the rook next to the king */
-      if (move.flags & BITS.KSIDE_CASTLE) {
-        var castling_to = move.to - 1;
-        var castling_from = move.to + 1;
-        board[castling_to] = board[castling_from];
-        board[castling_from] = null;
-      } else if (move.flags & BITS.QSIDE_CASTLE) {
-        var castling_to = move.to + 1;
-        var castling_from = move.to - 2;
-        board[castling_to] = board[castling_from];
-        board[castling_from] = null;
-      }
-
-      /* turn off castling */
-      castling[us] = '';
-    }
-
-    /* turn off castling if we move a rook */
-    if (castling[us]) {
-      for (var i = 0, len = ROOKS[us].length; i < len; i++) {
-        if (move.from === ROOKS[us][i].square &&
-            castling[us] & ROOKS[us][i].flag) {
-          castling[us] ^= ROOKS[us][i].flag;
-          break;
-        }
-      }
-    }
-
-    /* turn off castling if we capture a rook */
-    if (castling[them]) {
-      for (var i = 0, len = ROOKS[them].length; i < len; i++) {
-        if (move.to === ROOKS[them][i].square &&
-            castling[them] & ROOKS[them][i].flag) {
-          castling[them] ^= ROOKS[them][i].flag;
-          break;
-        }
-      }
-    }
-
-    /* if big pawn move, update the en passant square */
-    if (move.flags & BITS.BIG_PAWN) {
-      if (turn === 'b') {
-        ep_square = move.to - 16;
-      } else {
-        ep_square = move.to + 16;
-      }
-    } else {
-      ep_square = EMPTY;
-    }
-
-    /* reset the 50 move counter if a pawn is moved or a piece is captured */
-    if (move.piece === PAWN) {
-      half_moves = 0;
-    } else if (move.flags & (BITS.CAPTURE | BITS.EP_CAPTURE)) {
-      half_moves = 0;
-    } else {
-      half_moves++;
-    }
-
-    if (turn === BLACK) {
-      move_number++;
-    }
-    turn = swap_color(turn);
-  }
-
-  function undo_move() {
-    var old = history.pop();
-    if (old == null) { return null; }
-
-    var move = old.move;
-    kings = old.kings;
-    turn = old.turn;
-    castling = old.castling;
-    ep_square = old.ep_square;
-    half_moves = old.half_moves;
-    move_number = old.move_number;
-
-    var us = turn;
-    var them = swap_color(turn);
-
-    board[move.from] = board[move.to];
-    board[move.from].type = move.piece;  // to undo any promotions
-    board[move.to] = null;
-
-    if (move.flags & BITS.CAPTURE) {
-      board[move.to] = {type: move.captured, color: them};
-    } else if (move.flags & BITS.EP_CAPTURE) {
-      var index;
-      if (us === BLACK) {
-        index = move.to - 16;
-      } else {
-        index = move.to + 16;
-      }
-      board[index] = {type: PAWN, color: them};
-    }
-
-
-    if (move.flags & (BITS.KSIDE_CASTLE | BITS.QSIDE_CASTLE)) {
-      var castling_to, castling_from;
-      if (move.flags & BITS.KSIDE_CASTLE) {
-        castling_to = move.to + 1;
-        castling_from = move.to - 1;
-      } else if (move.flags & BITS.QSIDE_CASTLE) {
-        castling_to = move.to - 2;
-        castling_from = move.to + 1;
-      }
-
-      board[castling_to] = board[castling_from];
-      board[castling_from] = null;
-    }
-
-    return move;
-  }
-
-  /* this function is used to uniquely identify ambiguous moves */
-  function get_disambiguator(move, sloppy) {
-    var moves = generate_moves({legal: !sloppy});
-
-    var from = move.from;
-    var to = move.to;
-    var piece = move.piece;
-
-    var ambiguities = 0;
-    var same_rank = 0;
-    var same_file = 0;
-
-    for (var i = 0, len = moves.length; i < len; i++) {
-      var ambig_from = moves[i].from;
-      var ambig_to = moves[i].to;
-      var ambig_piece = moves[i].piece;
-
-      /* if a move of the same piece type ends on the same to square, we'll
-       * need to add a disambiguator to the algebraic notation
-       */
-      if (piece === ambig_piece && from !== ambig_from && to === ambig_to) {
-        ambiguities++;
-
-        if (rank(from) === rank(ambig_from)) {
-          same_rank++;
-        }
-
-        if (file(from) === file(ambig_from)) {
-          same_file++;
-        }
-      }
-    }
-
-    if (ambiguities > 0) {
-      /* if there exists a similar moving piece on the same rank and file as
-       * the move in question, use the square as the disambiguator
-       */
-      if (same_rank > 0 && same_file > 0) {
-        return algebraic(from);
-      }
-      /* if the moving piece rests on the same file, use the rank symbol as the
-       * disambiguator
-       */
-      else if (same_file > 0) {
-        return algebraic(from).charAt(1);
-      }
-      /* else use the file symbol */
-      else {
-        return algebraic(from).charAt(0);
-      }
-    }
-
-    return '';
-  }
-
-  function ascii() {
-    var s = '   +------------------------+\n';
-    for (var i = SQUARES.a8; i <= SQUARES.h1; i++) {
-      /* display the rank */
-      if (file(i) === 0) {
-        s += ' ' + '87654321'[rank(i)] + ' |';
-      }
-
-      /* empty piece */
-      if (board[i] == null) {
-        s += ' . ';
-      } else {
-        var piece = board[i].type;
-        var color = board[i].color;
-        var symbol = (color === WHITE) ?
-                     piece.toUpperCase() : piece.toLowerCase();
-        s += ' ' + symbol + ' ';
-      }
-
-      if ((i + 1) & 0x88) {
-        s += '|\n';
-        i += 8;
-      }
-    }
-    s += '   +------------------------+\n';
-    s += '     a  b  c  d  e  f  g  h\n';
-
-    return s;
-  }
-
-  // convert a move from Standard Algebraic Notation (SAN) to 0x88 coordinates
-  function move_from_san(move, sloppy) {
-    // strip off any move decorations: e.g Nf3+?!
-    var clean_move = stripped_san(move);
-
-    // if we're using the sloppy parser run a regex to grab piece, to, and from
-    // this should parse invalid SAN like: Pe2-e4, Rc1c4, Qf3xf7
-    if (sloppy) {
-      var matches = clean_move.match(/([pnbrqkPNBRQK])?([a-h][1-8])x?-?([a-h][1-8])([qrbnQRBN])?/);
-      if (matches) {
-        var piece = matches[1];
-        var from = matches[2];
-        var to = matches[3];
-        var promotion = matches[4];
-      }
-    }
-
-    var moves = generate_moves();
-    for (var i = 0, len = moves.length; i < len; i++) {
-      // try the strict parser first, then the sloppy parser if requested
-      // by the user
-      if ((clean_move === stripped_san(move_to_san(moves[i]))) ||
-          (sloppy && clean_move === stripped_san(move_to_san(moves[i], true)))) {
-        return moves[i];
-      } else {
-        if (matches &&
-            (!piece || piece.toLowerCase() == moves[i].piece) &&
-            SQUARES[from] == moves[i].from &&
-            SQUARES[to] == moves[i].to &&
-            (!promotion || promotion.toLowerCase() == moves[i].promotion)) {
-          return moves[i];
-        }
-      }
-    }
-
-    return null;
-  }
-
-
-  /*****************************************************************************
-   * UTILITY FUNCTIONS
-   ****************************************************************************/
-  function rank(i) {
-    return i >> 4;
-  }
-
-  function file(i) {
-    return i & 15;
-  }
-
-  function algebraic(i){
-    var f = file(i), r = rank(i);
-    return 'abcdefgh'.substring(f,f+1) + '87654321'.substring(r,r+1);
-  }
-
-  function swap_color(c) {
-    return c === WHITE ? BLACK : WHITE;
-  }
-
-  function is_digit(c) {
-    return '0123456789'.indexOf(c) !== -1;
-  }
-
-  /* pretty = external move object */
-  function make_pretty(ugly_move) {
-    var move = clone(ugly_move);
-    move.san = move_to_san(move, false);
-    move.to = algebraic(move.to);
-    move.from = algebraic(move.from);
-
-    var flags = '';
-
-    for (var flag in BITS) {
-      if (BITS[flag] & move.flags) {
-        flags += FLAGS[flag];
-      }
-    }
-    move.flags = flags;
-
-    return move;
-  }
-
-  function clone(obj) {
-    var dupe = (obj instanceof Array) ? [] : {};
-
-    for (var property in obj) {
-      if (typeof property === 'object') {
-        dupe[property] = clone(obj[property]);
-      } else {
-        dupe[property] = obj[property];
-      }
-    }
-
-    return dupe;
-  }
-
-  function trim(str) {
-    return str.replace(/^\s+|\s+$/g, '');
-  }
-
-  /*****************************************************************************
-   * DEBUGGING UTILITIES
-   ****************************************************************************/
-  function perft(depth) {
-    var moves = generate_moves({legal: false});
-    var nodes = 0;
-    var color = turn;
-
-    for (var i = 0, len = moves.length; i < len; i++) {
-      make_move(moves[i]);
-      if (!king_attacked(color)) {
-        if (depth - 1 > 0) {
-          var child_nodes = perft(depth - 1);
-          nodes += child_nodes;
-        } else {
-          nodes++;
-        }
-      }
-      undo_move();
-    }
-
-    return nodes;
-  }
-
-  return {
-    /***************************************************************************
-     * PUBLIC CONSTANTS (is there a better way to do this?)
-     **************************************************************************/
-    WHITE: WHITE,
-    BLACK: BLACK,
-    PAWN: PAWN,
-    KNIGHT: KNIGHT,
-    BISHOP: BISHOP,
-    ROOK: ROOK,
-    QUEEN: QUEEN,
-    KING: KING,
-    SQUARES: (function() {
-                /* from the ECMA-262 spec (section 12.6.4):
-                 * "The mechanics of enumerating the properties ... is
-                 * implementation dependent"
-                 * so: for (var sq in SQUARES) { keys.push(sq); } might not be
-                 * ordered correctly
-                 */
-                var keys = [];
-                for (var i = SQUARES.a8; i <= SQUARES.h1; i++) {
-                  if (i & 0x88) { i += 7; continue; }
-                  keys.push(algebraic(i));
-                }
-                return keys;
-              })(),
-    FLAGS: FLAGS,
-
-    /***************************************************************************
-     * PUBLIC API
-     **************************************************************************/
-    load: function(fen) {
-      return load(fen);
-    },
-
-    reset: function() {
-      return reset();
-    },
-
-    moves: function(options) {
-      /* The internal representation of a chess move is in 0x88 format, and
-       * not meant to be human-readable.  The code below converts the 0x88
-       * square coordinates to algebraic coordinates.  It also prunes an
-       * unnecessary move keys resulting from a verbose call.
-       */
-
-      var ugly_moves = generate_moves(options);
-      var moves = [];
-
-      for (var i = 0, len = ugly_moves.length; i < len; i++) {
-
-        /* does the user want a full move object (most likely not), or just
-         * SAN
-         */
-        if (typeof options !== 'undefined' && 'verbose' in options &&
-            options.verbose) {
-          moves.push(make_pretty(ugly_moves[i]));
-        } else {
-          moves.push(move_to_san(ugly_moves[i], false));
-        }
-      }
-
-      return moves;
-    },
-
-    in_check: function() {
-      return in_check();
-    },
-
-    in_checkmate: function() {
-      return in_checkmate();
-    },
-
-    in_stalemate: function() {
-      return in_stalemate();
-    },
-
-    in_draw: function() {
-      return half_moves >= 100 ||
-             in_stalemate() ||
-             insufficient_material() ||
-             in_threefold_repetition();
-    },
-
-    insufficient_material: function() {
-      return insufficient_material();
-    },
-
-    in_threefold_repetition: function() {
-      return in_threefold_repetition();
-    },
-
-    game_over: function() {
-      return half_moves >= 100 ||
-             in_checkmate() ||
-             in_stalemate() ||
-             insufficient_material() ||
-             in_threefold_repetition();
-    },
-
-    validate_fen: function(fen) {
-      return validate_fen(fen);
-    },
-
-    fen: function() {
-      return generate_fen();
-    },
-
-    pgn: function(options) {
-      /* using the specification from http://www.chessclub.com/help/PGN-spec
-       * example for html usage: .pgn({ max_width: 72, newline_char: "<br />" })
-       */
-      var newline = (typeof options === 'object' &&
-                     typeof options.newline_char === 'string') ?
-                     options.newline_char : '\n';
-      var max_width = (typeof options === 'object' &&
-                       typeof options.max_width === 'number') ?
-                       options.max_width : 0;
-      var result = [];
-      var header_exists = false;
-
-      /* add the PGN header headerrmation */
-      for (var i in header) {
-        /* TODO: order of enumerated properties in header object is not
-         * guaranteed, see ECMA-262 spec (section 12.6.4)
-         */
-        result.push('[' + i + ' \"' + header[i] + '\"]' + newline);
-        header_exists = true;
-      }
-
-      if (header_exists && history.length) {
-        result.push(newline);
-      }
-
-      /* pop all of history onto reversed_history */
-      var reversed_history = [];
-      while (history.length > 0) {
-        reversed_history.push(undo_move());
-      }
-
-      var moves = [];
-      var move_string = '';
-
-      /* build the list of moves.  a move_string looks like: "3. e3 e6" */
-      while (reversed_history.length > 0) {
-        var move = reversed_history.pop();
-
-        /* if the position started with black to move, start PGN with 1. ... */
-        if (!history.length && move.color === 'b') {
-          move_string = move_number + '. ...';
-        } else if (move.color === 'w') {
-          /* store the previous generated move_string if we have one */
-          if (move_string.length) {
-            moves.push(move_string);
-          }
-          move_string = move_number + '.';
-        }
-
-        move_string = move_string + ' ' + move_to_san(move, false);
-        make_move(move);
-      }
-
-      /* are there any other leftover moves? */
-      if (move_string.length) {
-        moves.push(move_string);
-      }
-
-      /* is there a result? */
-      if (typeof header.Result !== 'undefined') {
-        moves.push(header.Result);
-      }
-
-      /* history should be back to what is was before we started generating PGN,
-       * so join together moves
-       */
-      if (max_width === 0) {
-        return result.join('') + moves.join(' ');
-      }
-
-      /* wrap the PGN output at max_width */
-      var current_width = 0;
-      for (var i = 0; i < moves.length; i++) {
-        /* if the current move will push past max_width */
-        if (current_width + moves[i].length > max_width && i !== 0) {
-
-          /* don't end the line with whitespace */
-          if (result[result.length - 1] === ' ') {
-            result.pop();
-          }
-
-          result.push(newline);
-          current_width = 0;
-        } else if (i !== 0) {
-          result.push(' ');
-          current_width++;
-        }
-        result.push(moves[i]);
-        current_width += moves[i].length;
-      }
-
-      return result.join('');
-    },
-
-    load_pgn: function(pgn, options) {
-      // allow the user to specify the sloppy move parser to work around over
-      // disambiguation bugs in Fritz and Chessbase
-      var sloppy = (typeof options !== 'undefined' && 'sloppy' in options) ?
-                    options.sloppy : false;
-
-      function mask(str) {
-        return str.replace(/\\/g, '\\');
-      }
-
-      function has_keys(object) {
-        for (var key in object) {
-          return true;
-        }
-        return false;
-      }
-
-      function parse_pgn_header(header, options) {
-        var newline_char = (typeof options === 'object' &&
-                            typeof options.newline_char === 'string') ?
-                            options.newline_char : '\r?\n';
-        var header_obj = {};
-        var headers = header.split(new RegExp(mask(newline_char)));
-        var key = '';
-        var value = '';
-
-        for (var i = 0; i < headers.length; i++) {
-          key = headers[i].replace(/^\[([A-Z][A-Za-z]*)\s.*\]$/, '$1');
-          value = headers[i].replace(/^\[[A-Za-z]+\s"(.*)"\]$/, '$1');
-          if (trim(key).length > 0) {
-            header_obj[key] = value;
-          }
-        }
-
-        return header_obj;
-      }
-
-      var newline_char = (typeof options === 'object' &&
-                          typeof options.newline_char === 'string') ?
-                          options.newline_char : '\r?\n';
-      var regex = new RegExp('^(\\[(.|' + mask(newline_char) + ')*\\])' +
-                             '(' + mask(newline_char) + ')*' +
-                             '1.(' + mask(newline_char) + '|.)*$', 'g');
-
-      /* get header part of the PGN file */
-      var header_string = pgn.replace(regex, '$1');
-
-      /* no info part given, begins with moves */
-      if (header_string[0] !== '[') {
-        header_string = '';
-      }
-
-      reset();
-
-      /* parse PGN header */
-      var headers = parse_pgn_header(header_string, options);
-      for (var key in headers) {
-        set_header([key, headers[key]]);
-      }
-
-      /* load the starting position indicated by [Setup '1'] and
-      * [FEN position] */
-      if (headers['SetUp'] === '1') {
-          if (!(('FEN' in headers) && load(headers['FEN']))) {
-            return false;
-          }
-      }
-
-      /* delete header to get the moves */
-      var ms = pgn.replace(header_string, '').replace(new RegExp(mask(newline_char), 'g'), ' ');
-
-      /* delete comments */
-      ms = ms.replace(/(\{[^}]+\})+?/g, '');
-
-      /* delete recursive annotation variations */
-      var rav_regex = /(\([^\(\)]+\))+?/g
-      while (rav_regex.test(ms)) {
-        ms = ms.replace(rav_regex, '');
-      }
-
-      /* delete move numbers */
-      ms = ms.replace(/\d+\.(\.\.)?/g, '');
-
-      /* delete ... indicating black to move */
-      ms = ms.replace(/\.\.\./g, '');
-
-      /* delete numeric annotation glyphs */
-      ms = ms.replace(/\$\d+/g, '');
-
-      /* trim and get array of moves */
-      var moves = trim(ms).split(new RegExp(/\s+/));
-
-      /* delete empty entries */
-      moves = moves.join(',').replace(/,,+/g, ',').split(',');
-      var move = '';
-
-      for (var half_move = 0; half_move < moves.length - 1; half_move++) {
-        move = move_from_san(moves[half_move], sloppy);
-
-        /* move not possible! (don't clear the board to examine to show the
-         * latest valid position)
-         */
-        if (move == null) {
-          return false;
-        } else {
-          make_move(move);
-        }
-      }
-
-      /* examine last move */
-      move = moves[moves.length - 1];
-      if (POSSIBLE_RESULTS.indexOf(move) > -1) {
-        if (has_keys(header) && typeof header.Result === 'undefined') {
-          set_header(['Result', move]);
-        }
-      }
-      else {
-        move = move_from_san(move, sloppy);
-        if (move == null) {
-          return false;
-        } else {
-          make_move(move);
-        }
-      }
-      return true;
-    },
-
-    header: function() {
-      return set_header(arguments);
-    },
-
-    ascii: function() {
-      return ascii();
-    },
-
-    turn: function() {
-      return turn;
-    },
-
-    move: function(move, options) {
-      /* The move function can be called with in the following parameters:
-       *
-       * .move('Nxb7')      <- where 'move' is a case-sensitive SAN string
-       *
-       * .move({ from: 'h7', <- where the 'move' is a move object (additional
-       *         to :'h8',      fields are ignored)
-       *         promotion: 'q',
-       *      })
-       */
-
-      // allow the user to specify the sloppy move parser to work around over
-      // disambiguation bugs in Fritz and Chessbase
-      var sloppy = (typeof options !== 'undefined' && 'sloppy' in options) ?
-                    options.sloppy : false;
-
-      var move_obj = null;
-
-      if (typeof move === 'string') {
-        move_obj = move_from_san(move, sloppy);
-      } else if (typeof move === 'object') {
-        var moves = generate_moves();
-
-        /* convert the pretty move object to an ugly move object */
-        for (var i = 0, len = moves.length; i < len; i++) {
-          if (move.from === algebraic(moves[i].from) &&
-              move.to === algebraic(moves[i].to) &&
-              (!('promotion' in moves[i]) ||
-              move.promotion === moves[i].promotion)) {
-            move_obj = moves[i];
-            break;
-          }
-        }
-      }
-
-      /* failed to find move */
-      if (!move_obj) {
-        return null;
-      }
-
-      /* need to make a copy of move because we can't generate SAN after the
-       * move is made
-       */
-      var pretty_move = make_pretty(move_obj);
-
-      make_move(move_obj);
-
-      return pretty_move;
-    },
-
-    undo: function() {
-      var move = undo_move();
-      return (move) ? make_pretty(move) : null;
-    },
-
-    clear: function() {
-      return clear();
-    },
-
-    put: function(piece, square) {
-      return put(piece, square);
-    },
-
-    get: function(square) {
-      return get(square);
-    },
-
-    remove: function(square) {
-      return remove(square);
-    },
-
-    perft: function(depth) {
-      return perft(depth);
-    },
-
-    square_color: function(square) {
-      if (square in SQUARES) {
-        var sq_0x88 = SQUARES[square];
-        return ((rank(sq_0x88) + file(sq_0x88)) % 2 === 0) ? 'light' : 'dark';
-      }
-
-      return null;
-    },
-
-    history: function(options) {
-      var reversed_history = [];
-      var move_history = [];
-      var verbose = (typeof options !== 'undefined' && 'verbose' in options &&
-                     options.verbose);
-
-      while (history.length > 0) {
-        reversed_history.push(undo_move());
-      }
-
-      while (reversed_history.length > 0) {
-        var move = reversed_history.pop();
-        if (verbose) {
-          move_history.push(make_pretty(move));
-        } else {
-          move_history.push(move_to_san(move));
-        }
-        make_move(move);
-      }
-
-      return move_history;
-    }
-
-  };
-};
-
-/* export Chess object if using node or any other CommonJS compatible
- * environment */
-if (true) exports.Chess = Chess;
-/* export Chess object for any RequireJS compatible environment */
-if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = function () { return Chess;  }.call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-exports.__esModule = true;
-var ChessBoard = __webpack_require__(22);
-var game_1 = __webpack_require__(3);
-var highlight = __webpack_require__(4);
-var index_1 = __webpack_require__(11);
-var onDragStart = function (source, piece, position, orientation) {
-    var chess = game_1["default"].chess;
-    if (chess === null) {
-        return false;
-    }
-    if (chess.game_over() || (game_1["default"].color !== piece.charAt(0)) || game_1["default"].obs) {
-        return false;
-    }
-    if (game_1["default"].premove !== null) {
-        highlight.unHighlightSquare(game_1["default"].premove.source);
-        highlight.unHighlightSquare(game_1["default"].premove.target);
-        game_1["default"].premove = null;
-    }
-    var moves = chess.moves({ square: source, verbose: true });
-    highlight.highlightSquare(source);
-    for (var _i = 0, moves_1 = moves; _i < moves_1.length; _i++) {
-        var move = moves_1[_i];
-        highlight.highlightSquare(move.to);
-    }
-};
-var onDrop = function (source, target) {
-    if (game_1["default"].chess === null) {
-        return;
-    }
-    if (game_1["default"].color !== game_1["default"].chess.turn() && source !== target) {
-        game_1["default"].premove = { source: source, target: target };
-        return highlight.highlightPreMove(source, target);
-    }
-    else {
-        return index_1.movePiece(source, target);
-    }
-};
-var onSnapEnd = function () {
-    exports.board.position(game_1["default"].chess.fen());
-};
-exports.board = ChessBoard('board', {
-    position: 'start',
-    showNotation: true,
-    draggable: true,
-    onDragStart: onDragStart,
-    onDrop: onDrop,
-    onSnapEnd: onSnapEnd,
-    pieceTheme: 'assets/img/chesspieces/wikipedia-svg/{piece}.svg'
-});
-exports["default"] = exports.board;
-
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-exports.__esModule = true;
-function SToHHMMSS(sec) {
-    var h = Math.abs(Math.floor(Math.abs(sec) / 3600));
-    var m = Math.abs(Math.floor(Math.abs(sec) % 3600 / 60));
-    var s = Math.abs(Math.floor(Math.abs(sec) % 3600 % 60));
-    return ((sec < 0 ? '-' : '')
-        + (h > 0 ? (h >= 0 && h < 10 ? '0' : '') + h + ':' : '')
-        + (m >= 0 && m < 10 ? '0' : '') + m + ':'
-        + (s >= 0 && s < 10 ? '0' : '') + s);
-}
-exports.SToHHMMSS = SToHHMMSS;
-function startBlackClock(game, clock) {
-    return setInterval(function () {
-        if (game.chess.turn() === 'w') {
-            return;
-        }
-        game.btime = game.btime - 1;
-        if (game.btime < 20 && clock.css('color') !== 'red') {
-            clock.css('color', 'red');
-        }
-        if (game.btime > 20) {
-            clock.css('color', '');
-        }
-        clock.text(SToHHMMSS(game.btime));
-    }, 1000);
-}
-exports.startBlackClock = startBlackClock;
-function startWhiteClock(game, clock) {
-    return setInterval(function () {
-        if (game.chess.turn() === 'b') {
-            return;
-        }
-        game.wtime = game.wtime - 1;
-        if (game.wtime < 20 && clock.css('color') !== 'red') {
-            clock.css('color', 'red');
-        }
-        if (game.wtime > 20) {
-            clock.css('color', '');
-        }
-        clock.text(SToHHMMSS(game.wtime));
-    }, 1000);
-}
-exports.startWhiteClock = startWhiteClock;
-
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-exports.__esModule = true;
-var History = (function () {
-    function History(board, initialPosition) {
-        this.board = board;
-        this.moves = [initialPosition];
-        this.id = 0;
-    }
-    History.prototype.add = function (move) {
-        this.moves.push(move);
-        this.id = this.moves.length - 1;
-    };
-    History.prototype.length = function () {
-        return this.moves.length - 1;
-    };
-    History.prototype.display = function (id) {
-        if (id !== undefined) {
-            this.id = id;
-        }
-        if (this.id >= 0 && this.id < this.moves.length) {
-            this.board.position(this.moves[this.id]);
-        }
-    };
-    History.prototype.beginning = function () {
-        this.display(0);
-    };
-    History.prototype.backward = function () {
-        if (this.id > 0) {
-            this.display(this.id - 1);
-        }
-    };
-    History.prototype.forward = function () {
-        if (this.id < this.moves.length - 1) {
-            this.display(this.id + 1);
-        }
-    };
-    History.prototype.end = function () {
-        this.display(this.moves.length - 1);
-    };
-    return History;
-}());
-exports["default"] = History;
-
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-exports.__esModule = true;
-var message_1 = __webpack_require__(5);
-var Session = (function () {
-    function Session(onMessage, user, pass) {
-        this.connected = false;
-        this.handle = '';
-        this.connect(onMessage, user, pass);
-    }
-    Session.prototype.getHandle = function () {
-        return this.handle;
-    };
-    Session.prototype.setHandle = function (handle) {
-        this.connected = true;
-        this.handle = handle;
-        $('#chat-status').text('Connected as ' + handle);
-    };
-    Session.prototype.isConnected = function () {
-        return this.connected;
-    };
-    Session.prototype.connect = function (onMessage, user, pass) {
-        var _this = this;
-        $('#chat-status').text('Connecting...');
-        var login = (user !== undefined && pass !== undefined);
-        var loginOptions = '';
-        if (login) {
-            loginOptions += '?login=1';
-        }
-        this.websocket = new WebSocket(location.protocol.replace('http', 'ws') + '//' + location.host + '/ws' + loginOptions);
-        this.websocket.onmessage = onMessage;
-        this.websocket.onclose = this.reset;
-        if (login) {
-            this.websocket.onopen = function () {
-                _this.websocket.send(JSON.stringify({ type: message_1["default"].Control, command: 1, text: '[' + user + ',' + btoa(pass) + ']' }));
-            };
-        }
-    };
-    Session.prototype.disconnect = function () {
-        if (this.isConnected()) {
-            $('#chat-status').text('Disconnecting...');
-            this.websocket.close();
-            this.connected = false;
-            this.handle = '';
-        }
-    };
-    Session.prototype.reset = function (evt) {
-        $('#chat-status').text('Disconnected');
-    };
-    Session.prototype.send = function (payload) {
-        if (!this.isConnected()) {
-            throw new Error('Session not connected.');
-        }
-        var data;
-        if (typeof payload === 'object') {
-            data = JSON.stringify(payload);
-        }
-        else {
-            data = payload;
-        }
-        this.websocket.send(data);
-    };
-    return Session;
-}());
-exports["default"] = Session;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- *
- * @hack
- *
- * This is a dirty hack to fix URLs that have parenthesis and quotation marks in them
- * For example take this paragraph:
- *
- * """"
- * I visited this url: "http://www.wikipedia.com/some_article(with_paranthesis)"
- * and this URL: (http://www.wikipedia.com/some_article(with_paranthesis))
- * """"
- *
- * The quotation marks `'` `"` and parenthesis `(` `)` `[` `]`
- * can be considered to be part of the URL, and as a
- * punctuation marks surrounding the URL.
- * While this hack works for the most part, it's quite dirty and
- * I may replace it with something better in the future.
- *
- *
- * Another fix is removing punctuation marks that may appear at the end of URL
- * Example:
- *
- * """"
- * I've visited google.com, facebook.com, and yahoo.com.
- * """"
- *
- * @todo: replace the following function with something cleaner.
- *
- *
-**/
-
-Object.defineProperty(exports, "__esModule", { value: true });
-function fixSeparators(arr, sep1, sep2) {
-    arr.forEach(function (bit, i) {
-        if ((bit.indexOf(".") > -1) &&
-            (!(arr[i - 1] === sep1 && arr[i + 1] === sep2)) &&
-            (arr[i + 1] === sep1 || arr[i + 1] === sep2) // the one after it, is either sep1 or sep2
-        ) {
-            arr[i] = arr[i] + arr[i + 1];
-            if (typeof arr[i + 2] === "string")
-                arr[i] = arr[i] + arr[i + 2];
-            if (typeof arr[i + 3] === "string")
-                arr[i] = arr[i] + arr[i + 3];
-            if (typeof arr[i + 4] === "string")
-                arr[i] = arr[i] + arr[i + 4];
-            arr.splice(i + 1, 4);
-            fixSeparators(arr, sep1, sep2);
-        }
-    });
-    return arr;
-}
-exports.fixSeparators = fixSeparators;
-function default_1(arr) {
-    arr = fixSeparators(arr, "(", ")");
-    arr = fixSeparators(arr, "[", "]");
-    arr = fixSeparators(arr, "\"", "\"");
-    arr = fixSeparators(arr, "'", "'");
-    return arr;
-}
-exports.default = default_1;
-
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var email_1 = __webpack_require__(7);
-var hasprotocol_1 = __webpack_require__(8);
-var lists_1 = __webpack_require__(1);
-var ip_1 = __webpack_require__(9);
-var url_1 = __webpack_require__(10);
-function default_1(inputArr, options) {
-    return inputArr.map(function (fragment, index) {
-        var encoded = encodeURI(fragment);
-        // quick validations
-        // 1
-        if (encoded.indexOf(".") < 1 && (!hasprotocol_1.default(encoded)))
-            return fragment;
-        var urlObj = null;
-        var protocol = hasprotocol_1.default(encoded) || "";
-        // remove the protocol before proceeding to any other test
-        if (protocol)
-            encoded = encoded.substr(protocol.length);
-        // test 1: it's a file
-        if (options.files && protocol === "file:///" && encoded.split(/\/|\\/).length - 1) {
-            urlObj = {
-                reason: "file",
-                protocol: protocol,
-                raw: fragment,
-                encoded: encoded,
-            };
-        }
-        // test 2: it's a URL
-        if ((!urlObj) && options.urls && url_1.default(encoded)) {
-            urlObj = {
-                reason: "url",
-                protocol: protocol ? protocol : typeof options.defaultProtocol === "function" ? options.defaultProtocol(fragment) : options.defaultProtocol,
-                raw: fragment,
-                encoded: encoded,
-            };
-        }
-        // test 3: it's an email
-        if ((!urlObj) && options.emails && email_1.default(encoded)) {
-            urlObj = {
-                reason: "email",
-                protocol: "mailto:",
-                raw: fragment,
-                encoded: encoded,
-            };
-        }
-        // test 4: it's an IP
-        if ((!urlObj) && options.ips && ip_1.default(encoded)) {
-            urlObj = {
-                reason: "ip",
-                protocol: protocol ? protocol : typeof options.defaultProtocol === "function" ? options.defaultProtocol(fragment) : options.defaultProtocol,
-                raw: fragment,
-                encoded: encoded,
-            };
-        }
-        if (!urlObj)
-            return fragment;
-        else {
-            if ((inputArr[index - 1] === "'" || inputArr[index - 1] === '"') && ~lists_1.htmlAttrs.indexOf(inputArr[index - 2]))
-                return fragment;
-            return urlObj;
-        }
-    });
-}
-exports.default = default_1;
-
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var separate_1 = __webpack_require__(6);
-var identify_1 = __webpack_require__(20);
-var separate_2 = __webpack_require__(6);
-function default_1(str, options) {
-    var arr = separate_2.separate(str);
-    var identified = identify_1.default(arr, options);
-    // custom filtering-out function
-    if (options.exclude) {
-        for (var index = 0; index < identified.length; index++) {
-            var element = identified[index];
-            if (typeof element === "object" && options.exclude(element))
-                identified[index] = element.raw;
-        }
-    }
-    // return the current list (with words being filtered out)
-    if (options.list) {
-        var listed = [];
-        for (var i = 0; i < identified.length; i++) {
-            var fragment = identified[i];
-            if (typeof fragment !== "string")
-                listed.push(fragment);
-        }
-        return listed;
-    }
-    // transform objects to HTML tags
-    identified = identified.map(function (fragment) {
-        if (typeof fragment === "string")
-            return fragment;
-        return url2tag(fragment, options);
-    });
-    // join and return
-    return separate_1.deSeparate(identified);
-}
-exports.default = default_1;
-function url2tag(fragment, options) {
-    var href = fragment.protocol + fragment.encoded;
-    var original = fragment.raw;
-    if (typeof options.truncate === "number") {
-        if (original.length > options.truncate)
-            original = original.substring(0, options.truncate) + "...";
-    }
-    if (typeof options.truncate === "object") {
-        if (original.length > (options.truncate[0] + options.truncate[1]))
-            original = original.substr(0, options.truncate[0]) + "..." + original.substr(original.length - options.truncate[1]);
-    }
-    if (options.attributes === undefined)
-        options.attributes = [];
-    return "<a href=\"" + href + "\" " + options.attributes.map(function (attribute) {
-        if (typeof attribute === 'function') {
-            var name = (attribute(fragment) || {}).name;
-            var value = (attribute(fragment) || {}).value;
-            if (name && !value)
-                return " name ";
-            if (name && value)
-                return " " + name + "=\"" + value + "\" ";
-        }
-        else
-            return " " + attribute.name + "=\"" + attribute.value + "\" ";
-    }).join("") + ">" + original + "</a>";
-}
-
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function($) {/*!
- * chessboard.js $version$
- *
- * Copyright 2013 Chris Oakman
- * Released under the MIT license
- * https://github.com/oakmac/chessboardjs/blob/master/LICENSE
- *
- * Date: $date$
- */
-
-//------------------------------------------------------------------------------
-// Chess Util Functions
-//------------------------------------------------------------------------------
-var COLUMNS = 'abcdefgh'.split('');
-
-function validMove(move) {
-  // move should be a string
-  if (typeof move !== 'string') return false;
-
-  // move should be in the form of "e2-e4", "f6-d5"
-  var tmp = move.split('-');
-  if (tmp.length !== 2) return false;
-
-  return (validSquare(tmp[0]) === true && validSquare(tmp[1]) === true);
-}
-
-function validSquare(square) {
-  if (typeof square !== 'string') return false;
-  return (square.search(/^[a-h][1-8]$/) !== -1);
-}
-
-function validPieceCode(code) {
-  if (typeof code !== 'string') return false;
-  return (code.search(/^[bw][KQRNBP]$/) !== -1);
-}
-
-// TODO: this whole function could probably be replaced with a single regex
-function validFen(fen) {
-  if (typeof fen !== 'string') return false;
-
-  // cut off any move, castling, etc info from the end
-  // we're only interested in position information
-  fen = fen.replace(/ .+$/, '');
-
-  // FEN should be 8 sections separated by slashes
-  var chunks = fen.split('/');
-  if (chunks.length !== 8) return false;
-
-  // check the piece sections
-  for (var i = 0; i < 8; i++) {
-    if (chunks[i] === '' ||
-        chunks[i].length > 8 ||
-        chunks[i].search(/[^kqrbnpKQRNBP1-8]/) !== -1) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function validPositionObject(pos) {
-  if (typeof pos !== 'object') return false;
-
-  for (var i in pos) {
-    if (pos.hasOwnProperty(i) !== true) continue;
-
-    if (validSquare(i) !== true || validPieceCode(pos[i]) !== true) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-// convert FEN piece code to bP, wK, etc
-function fenToPieceCode(piece) {
-  // black piece
-  if (piece.toLowerCase() === piece) {
-    return 'b' + piece.toUpperCase();
-  }
-
-  // white piece
-  return 'w' + piece.toUpperCase();
-}
-
-// convert bP, wK, etc code to FEN structure
-function pieceCodeToFen(piece) {
-  var tmp = piece.split('');
-
-  // white piece
-  if (tmp[0] === 'w') {
-    return tmp[1].toUpperCase();
-  }
-
-  // black piece
-  return tmp[1].toLowerCase();
-}
-
-// convert FEN string to position object
-// returns false if the FEN string is invalid
-function fenToObj(fen) {
-  if (validFen(fen) !== true) {
-    return false;
-  }
-
-  // cut off any move, castling, etc info from the end
-  // we're only interested in position information
-  fen = fen.replace(/ .+$/, '');
-
-  var rows = fen.split('/');
-  var position = {};
-
-  var currentRow = 8;
-  for (var i = 0; i < 8; i++) {
-    var row = rows[i].split('');
-    var colIndex = 0;
-
-    // loop through each character in the FEN section
-    for (var j = 0; j < row.length; j++) {
-      // number / empty squares
-      if (row[j].search(/[1-8]/) !== -1) {
-        var emptySquares = parseInt(row[j], 10);
-        colIndex += emptySquares;
-      }
-      // piece
-      else {
-        var square = COLUMNS[colIndex] + currentRow;
-        position[square] = fenToPieceCode(row[j]);
-        colIndex++;
-      }
-    }
-
-    currentRow--;
-  }
-
-  return position;
-}
-
-// position object to FEN string
-// returns false if the obj is not a valid position object
-function objToFen(obj) {
-  if (validPositionObject(obj) !== true) {
-    return false;
-  }
-
-  var fen = '';
-
-  var currentRow = 8;
-  for (var i = 0; i < 8; i++) {
-    for (var j = 0; j < 8; j++) {
-      var square = COLUMNS[j] + currentRow;
-
-      // piece exists
-      if (obj.hasOwnProperty(square) === true) {
-        fen += pieceCodeToFen(obj[square]);
-      }
-
-      // empty space
-      else {
-        fen += '1';
-      }
-    }
-
-    if (i !== 7) {
-      fen += '/';
-    }
-
-    currentRow--;
-  }
-
-  // squeeze the numbers together
-  // haha, I love this solution...
-  fen = fen.replace(/11111111/g, '8');
-  fen = fen.replace(/1111111/g, '7');
-  fen = fen.replace(/111111/g, '6');
-  fen = fen.replace(/11111/g, '5');
-  fen = fen.replace(/1111/g, '4');
-  fen = fen.replace(/111/g, '3');
-  fen = fen.replace(/11/g, '2');
-
-  return fen;
-}
-
-var ChessBoard = function(containerElOrId, cfg) {
-'use strict';
-
-cfg = cfg || {};
-
-//------------------------------------------------------------------------------
-// Constants
-//------------------------------------------------------------------------------
-
-var MINIMUM_JQUERY_VERSION = '1.7.0',
-  START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR',
-  START_POSITION = fenToObj(START_FEN);
-
-// use unique class names to prevent clashing with anything else on the page
-// and simplify selectors
-// NOTE: these should never change
-var CSS = {
-  alpha: 'alpha-d2270',
-  black: 'black-3c85d',
-  board: 'board-b72b1',
-  chessboard: 'chessboard-63f37',
-  clearfix: 'clearfix-7da63',
-  highlight1: 'highlight1-32417',
-  highlight2: 'highlight2-9c5d2',
-  notation: 'notation-322f9',
-  numeric: 'numeric-fc462',
-  piece: 'piece-417db',
-  row: 'row-5277c',
-  sparePieces: 'spare-pieces-7492f',
-  sparePiecesBottom: 'spare-pieces-bottom-ae20f',
-  sparePiecesTop: 'spare-pieces-top-4028b',
-  square: 'square-55d63',
-  white: 'white-1e1d7'
-};
-
-//------------------------------------------------------------------------------
-// Module Scope Variables
-//------------------------------------------------------------------------------
-
-// DOM elements
-var containerEl,
-  boardEl,
-  draggedPieceEl,
-  sparePiecesTopEl,
-  sparePiecesBottomEl;
-
-// constructor return object
-var widget = {};
-
-//------------------------------------------------------------------------------
-// Stateful
-//------------------------------------------------------------------------------
-
-var ANIMATION_HAPPENING = false,
-  BOARD_BORDER_SIZE = 2,
-  CURRENT_ORIENTATION = 'white',
-  CURRENT_POSITION = {},
-  SQUARE_SIZE,
-  DRAGGED_PIECE,
-  DRAGGED_PIECE_LOCATION,
-  DRAGGED_PIECE_SOURCE,
-  CLICK_MOVE = false,
-  DRAGGING_A_PIECE = false,
-  SPARE_PIECE_ELS_IDS = {},
-  SQUARE_ELS_IDS = {},
-  SQUARE_ELS_OFFSETS;
-
-//------------------------------------------------------------------------------
-// JS Util Functions
-//------------------------------------------------------------------------------
-
-// http://tinyurl.com/3ttloxj
-function uuid() {
-  return 'xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-xxxx'.replace(/x/g, function(c) {
-    var r = Math.random() * 16 | 0;
-    return r.toString(16);
-  });
-}
-
-function deepCopy(thing) {
-  return JSON.parse(JSON.stringify(thing));
-}
-
-function parseSemVer(version) {
-  var tmp = version.split('.');
-  return {
-    major: parseInt(tmp[0], 10),
-    minor: parseInt(tmp[1], 10),
-    patch: parseInt(tmp[2], 10)
-  };
-}
-
-// returns true if version is >= minimum
-function compareSemVer(version, minimum) {
-  version = parseSemVer(version);
-  minimum = parseSemVer(minimum);
-
-  var versionNum = (version.major * 10000 * 10000) +
-    (version.minor * 10000) + version.patch;
-  var minimumNum = (minimum.major * 10000 * 10000) +
-    (minimum.minor * 10000) + minimum.patch;
-
-  return (versionNum >= minimumNum);
-}
-
-//------------------------------------------------------------------------------
-// Validation / Errors
-//------------------------------------------------------------------------------
-
-function error(code, msg, obj) {
-  // do nothing if showErrors is not set
-  if (cfg.hasOwnProperty('showErrors') !== true ||
-      cfg.showErrors === false) {
-    return;
-  }
-
-  var errorText = 'ChessBoard Error ' + code + ': ' + msg;
-
-  // print to console
-  if (cfg.showErrors === 'console' &&
-      typeof console === 'object' &&
-      typeof console.log === 'function') {
-    console.log(errorText);
-    if (arguments.length >= 2) {
-      console.log(obj);
-    }
-    return;
-  }
-
-  // alert errors
-  if (cfg.showErrors === 'alert') {
-    if (obj) {
-      errorText += '\n\n' + JSON.stringify(obj);
-    }
-    window.alert(errorText);
-    return;
-  }
-
-  // custom function
-  if (typeof cfg.showErrors === 'function') {
-    cfg.showErrors(code, msg, obj);
-  }
-}
-
-// check dependencies
-function checkDeps() {
-  // if containerId is a string, it must be the ID of a DOM node
-  if (typeof containerElOrId === 'string') {
-    // cannot be empty
-    if (containerElOrId === '') {
-      window.alert('ChessBoard Error 1001: ' +
-        'The first argument to ChessBoard() cannot be an empty string.' +
-        '\n\nExiting...');
-      return false;
-    }
-
-    // make sure the container element exists in the DOM
-    var el = document.getElementById(containerElOrId);
-    if (! el) {
-      window.alert('ChessBoard Error 1002: Element with id "' +
-        containerElOrId + '" does not exist in the DOM.' +
-        '\n\nExiting...');
-      return false;
-    }
-
-    // set the containerEl
-    containerEl = $(el);
-  }
-
-  // else it must be something that becomes a jQuery collection
-  // with size 1
-  // ie: a single DOM node or jQuery object
-  else {
-    containerEl = $(containerElOrId);
-
-    if (containerEl.length !== 1) {
-      window.alert('ChessBoard Error 1003: The first argument to ' +
-        'ChessBoard() must be an ID or a single DOM node.' +
-        '\n\nExiting...');
-      return false;
-    }
-  }
-
-  // JSON must exist
-  if (! window.JSON ||
-      typeof JSON.stringify !== 'function' ||
-      typeof JSON.parse !== 'function') {
-    window.alert('ChessBoard Error 1004: JSON does not exist. ' +
-      'Please include a JSON polyfill.\n\nExiting...');
-    return false;
-  }
-
-  // check for a compatible version of jQuery
-  if (! (typeof window.$ && $.fn && $.fn.jquery &&
-      compareSemVer($.fn.jquery, MINIMUM_JQUERY_VERSION) === true)) {
-    window.alert('ChessBoard Error 1005: Unable to find a valid version ' +
-      'of jQuery. Please include jQuery ' + MINIMUM_JQUERY_VERSION + ' or ' +
-      'higher on the page.\n\nExiting...');
-    return false;
-  }
-
-  return true;
-}
-
-function validAnimationSpeed(speed) {
-  if (speed === 'fast' || speed === 'slow') {
-    return true;
-  }
-
-  if ((parseInt(speed, 10) + '') !== (speed + '')) {
-    return false;
-  }
-
-  return (speed >= 0);
-}
-
-// validate config / set default options
-function expandConfig() {
-  if (typeof cfg === 'string' || validPositionObject(cfg) === true) {
-    cfg = {
-      position: cfg
-    };
-  }
-
-  // default for orientation is white
-  if (cfg.orientation !== 'black') {
-    cfg.orientation = 'white';
-  }
-  CURRENT_ORIENTATION = cfg.orientation;
-
-  // default for showNotation is true
-  if (cfg.showNotation !== false) {
-    cfg.showNotation = true;
-  }
-
-  // default for draggable is false
-  if (cfg.draggable !== true) {
-    cfg.draggable = false;
-  }
-
-  // default for dropOffBoard is 'snapback'
-  if (cfg.dropOffBoard !== 'trash') {
-    cfg.dropOffBoard = 'snapback';
-  }
-
-  // default for sparePieces is false
-  if (cfg.sparePieces !== true) {
-    cfg.sparePieces = false;
-  }
-
-  // draggable must be true if sparePieces is enabled
-  if (cfg.sparePieces === true) {
-    cfg.draggable = true;
-  }
-
-  // default piece theme is wikipedia
-  if (cfg.hasOwnProperty('pieceTheme') !== true ||
-      (typeof cfg.pieceTheme !== 'string' &&
-       typeof cfg.pieceTheme !== 'function')) {
-    cfg.pieceTheme = 'img/chesspieces/wikipedia/{piece}.png';
-  }
-
-  // animation speeds
-  if (cfg.hasOwnProperty('appearSpeed') !== true ||
-      validAnimationSpeed(cfg.appearSpeed) !== true) {
-    cfg.appearSpeed = 200;
-  }
-  if (cfg.hasOwnProperty('moveSpeed') !== true ||
-      validAnimationSpeed(cfg.moveSpeed) !== true) {
-    cfg.moveSpeed = 200;
-  }
-  if (cfg.hasOwnProperty('snapbackSpeed') !== true ||
-      validAnimationSpeed(cfg.snapbackSpeed) !== true) {
-    cfg.snapbackSpeed = 50;
-  }
-  if (cfg.hasOwnProperty('snapSpeed') !== true ||
-      validAnimationSpeed(cfg.snapSpeed) !== true) {
-    cfg.snapSpeed = 25;
-  }
-  if (cfg.hasOwnProperty('trashSpeed') !== true ||
-      validAnimationSpeed(cfg.trashSpeed) !== true) {
-    cfg.trashSpeed = 100;
-  }
-
-  // make sure position is valid
-  if (cfg.hasOwnProperty('position') === true) {
-    if (cfg.position === 'start') {
-      CURRENT_POSITION = deepCopy(START_POSITION);
-    }
-
-    else if (validFen(cfg.position) === true) {
-      CURRENT_POSITION = fenToObj(cfg.position);
-    }
-
-    else if (validPositionObject(cfg.position) === true) {
-      CURRENT_POSITION = deepCopy(cfg.position);
-    }
-
-    else {
-      error(7263, 'Invalid value passed to config.position.', cfg.position);
-    }
-  }
-
-  return true;
-}
-
-//------------------------------------------------------------------------------
-// DOM Misc
-//------------------------------------------------------------------------------
-
-// calculates square size based on the width of the container
-// got a little CSS black magic here, so let me explain:
-// get the width of the container element (could be anything), reduce by border
-// size, and then keep reducing until we find an exact mod 8 for our square
-// size
-function calculateSquareSize() {
-  var containerWidth = parseInt(containerEl.width(), 10);
-
-  // defensive, prevent infinite loop
-  if (! containerWidth || containerWidth <= 0) {
-    return 0;
-  }
-
-  // pad one pixel
-  var boardWidth = containerWidth - BOARD_BORDER_SIZE * 2;
-
-  while (boardWidth % 8 !== 0 && boardWidth > 0) {
-    boardWidth--;
-  }
-
-  return (boardWidth / 8);
-}
-
-// create random IDs for elements
-function createElIds() {
-  // squares on the board
-  for (var i = 0; i < COLUMNS.length; i++) {
-    for (var j = 1; j <= 8; j++) {
-      var square = COLUMNS[i] + j;
-      SQUARE_ELS_IDS[square] = square + '-' + uuid();
-    }
-  }
-
-  // spare pieces
-  var pieces = 'KQRBNP'.split('');
-  for (var i = 0; i < pieces.length; i++) {
-    var whitePiece = 'w' + pieces[i];
-    var blackPiece = 'b' + pieces[i];
-    SPARE_PIECE_ELS_IDS[whitePiece] = whitePiece + '-' + uuid();
-    SPARE_PIECE_ELS_IDS[blackPiece] = blackPiece + '-' + uuid();
-  }
-}
-
-//------------------------------------------------------------------------------
-// Markup Building
-//------------------------------------------------------------------------------
-
-function buildBoardContainer() {
-  var html = '<div class="' + CSS.chessboard + '">';
-
-  if (cfg.sparePieces === true) {
-    html += '<div class="' + CSS.sparePieces + ' ' +
-      CSS.sparePiecesTop + '"></div>';
-  }
-
-  html += '<div class="' + CSS.board + '"></div>';
-
-  if (cfg.sparePieces === true) {
-    html += '<div class="' + CSS.sparePieces + ' ' +
-      CSS.sparePiecesBottom + '"></div>';
-  }
-
-  html += '</div>';
-
-  return html;
-}
-
-/*
-var buildSquare = function(color, size, id) {
-  var html = '<div class="' + CSS.square + ' ' + CSS[color] + '" ' +
-  'style="width: ' + size + 'px; height: ' + size + 'px" ' +
-  'id="' + id + '">';
-
-  if (cfg.showNotation === true) {
-
-  }
-
-  html += '</div>';
-
-  return html;
-};
-*/
-
-function buildBoard(orientation) {
-  if (orientation !== 'black') {
-    orientation = 'white';
-  }
-
-  var html = '';
-
-  // algebraic notation / orientation
-  var alpha = deepCopy(COLUMNS);
-  var row = 8;
-  if (orientation === 'black') {
-    alpha.reverse();
-    row = 1;
-  }
-
-  var squareColor = 'white';
-  for (var i = 0; i < 8; i++) {
-    html += '<div class="' + CSS.row + '">';
-    for (var j = 0; j < 8; j++) {
-      var square = alpha[j] + row;
-
-      html += '<div class="' + CSS.square + ' ' + CSS[squareColor] + ' ' +
-        'square-' + square + '" ' +
-        'style="width: ' + SQUARE_SIZE + 'px; height: ' + SQUARE_SIZE + 'px" ' +
-        'id="' + SQUARE_ELS_IDS[square] + '" ' +
-        'data-square="' + square + '">';
-
-      if (cfg.showNotation === true) {
-        // alpha notation
-        if ((orientation === 'white' && row === 1) ||
-            (orientation === 'black' && row === 8)) {
-          html += '<div class="' + CSS.notation + ' ' + CSS.alpha + '">' +
-            alpha[j] + '</div>';
-        }
-
-        // numeric notation
-        if (j === 0) {
-          html += '<div class="' + CSS.notation + ' ' + CSS.numeric + '">' +
-            row + '</div>';
-        }
-      }
-
-      html += '</div>'; // end .square
-
-      squareColor = (squareColor === 'white' ? 'black' : 'white');
-    }
-    html += '<div class="' + CSS.clearfix + '"></div></div>';
-
-    squareColor = (squareColor === 'white' ? 'black' : 'white');
-
-    if (orientation === 'white') {
-      row--;
-    }
-    else {
-      row++;
-    }
-  }
-
-  return html;
-}
-
-function buildPieceImgSrc(piece) {
-  if (typeof cfg.pieceTheme === 'function') {
-    return cfg.pieceTheme(piece);
-  }
-
-  if (typeof cfg.pieceTheme === 'string') {
-    return cfg.pieceTheme.replace(/{piece}/g, piece);
-  }
-
-  // NOTE: this should never happen
-  error(8272, 'Unable to build image source for cfg.pieceTheme.');
-  return '';
-}
-
-function buildPiece(piece, hidden, id) {
-  var html = '<img src="' + buildPieceImgSrc(piece) + '" ';
-  if (id && typeof id === 'string') {
-    html += 'id="' + id + '" ';
-  }
-  html += 'alt="" ' +
-  'class="' + CSS.piece + '" ' +
-  'data-piece="' + piece + '" ' +
-  'style="width: ' + SQUARE_SIZE + 'px;' +
-  'height: ' + SQUARE_SIZE + 'px;';
-  if (hidden === true) {
-    html += 'display:none;';
-  }
-  html += '" />';
-
-  return html;
-}
-
-function buildSparePieces(color) {
-  var pieces = ['wK', 'wQ', 'wR', 'wB', 'wN', 'wP'];
-  if (color === 'black') {
-    pieces = ['bK', 'bQ', 'bR', 'bB', 'bN', 'bP'];
-  }
-
-  var html = '';
-  for (var i = 0; i < pieces.length; i++) {
-    html += buildPiece(pieces[i], false, SPARE_PIECE_ELS_IDS[pieces[i]]);
-  }
-
-  return html;
-}
-
-//------------------------------------------------------------------------------
-// Animations
-//------------------------------------------------------------------------------
-
-function animateSquareToSquare(src, dest, piece, completeFn) {
-  // get information about the source and destination squares
-  var srcSquareEl = $('#' + SQUARE_ELS_IDS[src]);
-  var srcSquarePosition = srcSquareEl.offset();
-  var destSquareEl = $('#' + SQUARE_ELS_IDS[dest]);
-  var destSquarePosition = destSquareEl.offset();
-
-  // create the animated piece and absolutely position it
-  // over the source square
-  var animatedPieceId = uuid();
-  $('body').append(buildPiece(piece, true, animatedPieceId));
-  var animatedPieceEl = $('#' + animatedPieceId);
-  animatedPieceEl.css({
-    display: '',
-    position: 'absolute',
-    top: srcSquarePosition.top,
-    left: srcSquarePosition.left
-  });
-
-  // remove original piece from source square
-  srcSquareEl.find('.' + CSS.piece).remove();
-
-  // on complete
-  var complete = function() {
-    // add the "real" piece to the destination square
-    destSquareEl.append(buildPiece(piece));
-
-    // remove the animated piece
-    animatedPieceEl.remove();
-
-    // run complete function
-    if (typeof completeFn === 'function') {
-      completeFn();
-    }
-  };
-
-  // animate the piece to the destination square
-  var opts = {
-    duration: cfg.moveSpeed,
-    complete: complete
-  };
-  animatedPieceEl.animate(destSquarePosition, opts);
-}
-
-function animateSparePieceToSquare(piece, dest, completeFn) {
-  var srcOffset = $('#' + SPARE_PIECE_ELS_IDS[piece]).offset();
-  var destSquareEl = $('#' + SQUARE_ELS_IDS[dest]);
-  var destOffset = destSquareEl.offset();
-
-  // create the animate piece
-  var pieceId = uuid();
-  $('body').append(buildPiece(piece, true, pieceId));
-  var animatedPieceEl = $('#' + pieceId);
-  animatedPieceEl.css({
-    display: '',
-    position: 'absolute',
-    left: srcOffset.left,
-    top: srcOffset.top
-  });
-
-  // on complete
-  var complete = function() {
-    // add the "real" piece to the destination square
-    destSquareEl.find('.' + CSS.piece).remove();
-    destSquareEl.append(buildPiece(piece));
-
-    // remove the animated piece
-    animatedPieceEl.remove();
-
-    // run complete function
-    if (typeof completeFn === 'function') {
-      completeFn();
-    }
-  };
-
-  // animate the piece to the destination square
-  var opts = {
-    duration: cfg.moveSpeed,
-    complete: complete
-  };
-  animatedPieceEl.animate(destOffset, opts);
-}
-
-// execute an array of animations
-function doAnimations(a, oldPos, newPos) {
-  if (a.length === 0) {
-    return;
-  }
-  ANIMATION_HAPPENING = true;
-
-  var numFinished = 0;
-  function onFinish() {
-    numFinished++;
-
-    // exit if all the animations aren't finished
-    if (numFinished !== a.length) return;
-
-    drawPositionInstant();
-    ANIMATION_HAPPENING = false;
-
-    // run their onMoveEnd function
-    if (cfg.hasOwnProperty('onMoveEnd') === true &&
-      typeof cfg.onMoveEnd === 'function') {
-      cfg.onMoveEnd(deepCopy(oldPos), deepCopy(newPos));
-    }
-  }
-
-  for (var i = 0; i < a.length; i++) {
-    // clear a piece
-    if (a[i].type === 'clear') {
-      $('#' + SQUARE_ELS_IDS[a[i].square] + ' .' + CSS.piece)
-        .fadeOut(cfg.trashSpeed, onFinish);
-    }
-
-    // add a piece (no spare pieces)
-    if (a[i].type === 'add' && cfg.sparePieces !== true) {
-      $('#' + SQUARE_ELS_IDS[a[i].square])
-        .append(buildPiece(a[i].piece, true))
-        .find('.' + CSS.piece)
-        .fadeIn(cfg.appearSpeed, onFinish);
-    }
-
-    // add a piece from a spare piece
-    if (a[i].type === 'add' && cfg.sparePieces === true) {
-      animateSparePieceToSquare(a[i].piece, a[i].square, onFinish);
-    }
-
-    // move a piece
-    if (a[i].type === 'move') {
-      animateSquareToSquare(a[i].source, a[i].destination, a[i].piece,
-        onFinish);
-    }
-  }
-}
-
-// returns the distance between two squares
-function squareDistance(s1, s2) {
-  s1 = s1.split('');
-  var s1x = COLUMNS.indexOf(s1[0]) + 1;
-  var s1y = parseInt(s1[1], 10);
-
-  s2 = s2.split('');
-  var s2x = COLUMNS.indexOf(s2[0]) + 1;
-  var s2y = parseInt(s2[1], 10);
-
-  var xDelta = Math.abs(s1x - s2x);
-  var yDelta = Math.abs(s1y - s2y);
-
-  if (xDelta >= yDelta) return xDelta;
-  return yDelta;
-}
-
-// returns an array of closest squares from square
-function createRadius(square) {
-  var squares = [];
-
-  // calculate distance of all squares
-  for (var i = 0; i < 8; i++) {
-    for (var j = 0; j < 8; j++) {
-      var s = COLUMNS[i] + (j + 1);
-
-      // skip the square we're starting from
-      if (square === s) continue;
-
-      squares.push({
-        square: s,
-        distance: squareDistance(square, s)
-      });
-    }
-  }
-
-  // sort by distance
-  squares.sort(function(a, b) {
-    return a.distance - b.distance;
-  });
-
-  // just return the square code
-  var squares2 = [];
-  for (var i = 0; i < squares.length; i++) {
-    squares2.push(squares[i].square);
-  }
-
-  return squares2;
-}
-
-// returns the square of the closest instance of piece
-// returns false if no instance of piece is found in position
-function findClosestPiece(position, piece, square) {
-  // create array of closest squares from square
-  var closestSquares = createRadius(square);
-
-  // search through the position in order of distance for the piece
-  for (var i = 0; i < closestSquares.length; i++) {
-    var s = closestSquares[i];
-
-    if (position.hasOwnProperty(s) === true && position[s] === piece) {
-      return s;
-    }
-  }
-
-  return false;
-}
-
-// calculate an array of animations that need to happen in order to get
-// from pos1 to pos2
-function calculateAnimations(pos1, pos2) {
-  // make copies of both
-  pos1 = deepCopy(pos1);
-  pos2 = deepCopy(pos2);
-
-  var animations = [];
-  var squaresMovedTo = {};
-
-  // remove pieces that are the same in both positions
-  for (var i in pos2) {
-    if (pos2.hasOwnProperty(i) !== true) continue;
-
-    if (pos1.hasOwnProperty(i) === true && pos1[i] === pos2[i]) {
-      delete pos1[i];
-      delete pos2[i];
-    }
-  }
-
-  // find all the "move" animations
-  for (var i in pos2) {
-    if (pos2.hasOwnProperty(i) !== true) continue;
-
-    var closestPiece = findClosestPiece(pos1, pos2[i], i);
-    if (closestPiece !== false) {
-      animations.push({
-        type: 'move',
-        source: closestPiece,
-        destination: i,
-        piece: pos2[i]
-      });
-
-      delete pos1[closestPiece];
-      delete pos2[i];
-      squaresMovedTo[i] = true;
-    }
-  }
-
-  // add pieces to pos2
-  for (var i in pos2) {
-    if (pos2.hasOwnProperty(i) !== true) continue;
-
-    animations.push({
-      type: 'add',
-      square: i,
-      piece: pos2[i]
-    })
-
-    delete pos2[i];
-  }
-
-  // clear pieces from pos1
-  for (var i in pos1) {
-    if (pos1.hasOwnProperty(i) !== true) continue;
-
-    // do not clear a piece if it is on a square that is the result
-    // of a "move", ie: a piece capture
-    if (squaresMovedTo.hasOwnProperty(i) === true) continue;
-
-    animations.push({
-      type: 'clear',
-      square: i,
-      piece: pos1[i]
-    });
-
-    delete pos1[i];
-  }
-
-  return animations;
-}
-
-//------------------------------------------------------------------------------
-// Control Flow
-//------------------------------------------------------------------------------
-
-function drawPositionInstant() {
-  // clear the board
-  boardEl.find('.' + CSS.piece).remove();
-
-  // add the pieces
-  for (var i in CURRENT_POSITION) {
-    if (CURRENT_POSITION.hasOwnProperty(i) !== true) continue;
-      if (DRAGGING_A_PIECE && DRAGGED_PIECE_SOURCE == i) continue;
-    $('#' + SQUARE_ELS_IDS[i]).append(buildPiece(CURRENT_POSITION[i]));
-  }
-}
-
-function drawBoard() {
-  boardEl.html(buildBoard(CURRENT_ORIENTATION));
-  drawPositionInstant();
-
-  if (cfg.sparePieces === true) {
-    if (CURRENT_ORIENTATION === 'white') {
-      sparePiecesTopEl.html(buildSparePieces('black'));
-      sparePiecesBottomEl.html(buildSparePieces('white'));
-    }
-    else {
-      sparePiecesTopEl.html(buildSparePieces('white'));
-      sparePiecesBottomEl.html(buildSparePieces('black'));
-    }
-  }
-}
-
-// given a position and a set of moves, return a new position
-// with the moves executed
-function calculatePositionFromMoves(position, moves) {
-  position = deepCopy(position);
-
-  for (var i in moves) {
-    if (moves.hasOwnProperty(i) !== true) continue;
-
-    // skip the move if the position doesn't have a piece on the source square
-    if (position.hasOwnProperty(i) !== true) continue;
-
-    var piece = position[i];
-    delete position[i];
-    position[moves[i]] = piece;
-  }
-
-  return position;
-}
-
-function setCurrentPosition(position) {
-  var oldPos = deepCopy(CURRENT_POSITION);
-  var newPos = deepCopy(position);
-  var oldFen = objToFen(oldPos);
-  var newFen = objToFen(newPos);
-
-  // do nothing if no change in position
-  if (oldFen === newFen) return;
-
-  // run their onChange function
-  if (cfg.hasOwnProperty('onChange') === true &&
-    typeof cfg.onChange === 'function') {
-    cfg.onChange(oldPos, newPos);
-  }
-
-  // update state
-  CURRENT_POSITION = position;
-}
-
-function isXYOnSquare(x, y) {
-  for (var i in SQUARE_ELS_OFFSETS) {
-    if (SQUARE_ELS_OFFSETS.hasOwnProperty(i) !== true) continue;
-
-    var s = SQUARE_ELS_OFFSETS[i];
-    if (x >= s.left && x < s.left + SQUARE_SIZE &&
-        y >= s.top && y < s.top + SQUARE_SIZE) {
-      return i;
-    }
-  }
-
-  return 'offboard';
-}
-
-// records the XY coords of every square into memory
-function captureSquareOffsets() {
-  SQUARE_ELS_OFFSETS = {};
-
-  for (var i in SQUARE_ELS_IDS) {
-    if (SQUARE_ELS_IDS.hasOwnProperty(i) !== true) continue;
-
-    SQUARE_ELS_OFFSETS[i] = $('#' + SQUARE_ELS_IDS[i]).offset();
-  }
-}
-
-function removeSquareHighlights() {
-  boardEl.find('.' + CSS.square)
-    .removeClass(CSS.highlight1 + ' ' + CSS.highlight2);
-}
-
-function snapbackDraggedPiece() {
-  // there is no "snapback" for spare pieces
-  if (DRAGGED_PIECE_SOURCE === 'spare') {
-    trashDraggedPiece();
-    return;
-  }
-
-  removeSquareHighlights();
-
-  // animation complete
-  function complete() {
-    drawPositionInstant();
-    draggedPieceEl.css('display', 'none');
-
-    // run their onSnapbackEnd function
-    if (cfg.hasOwnProperty('onSnapbackEnd') === true &&
-      typeof cfg.onSnapbackEnd === 'function') {
-      cfg.onSnapbackEnd(DRAGGED_PIECE, DRAGGED_PIECE_SOURCE,
-        deepCopy(CURRENT_POSITION), CURRENT_ORIENTATION);
-    }
-  }
-
-  // get source square position
-  var sourceSquarePosition =
-    $('#' + SQUARE_ELS_IDS[DRAGGED_PIECE_SOURCE]).offset();
-
-  // animate the piece to the target square
-  var opts = {
-    duration: cfg.snapbackSpeed,
-    complete: complete
-  };
-  draggedPieceEl.animate(sourceSquarePosition, opts);
-
-  // set state
-  DRAGGING_A_PIECE = false;
-}
-
-function trashDraggedPiece() {
-  removeSquareHighlights();
-
-  // remove the source piece
-  var newPosition = deepCopy(CURRENT_POSITION);
-  delete newPosition[DRAGGED_PIECE_SOURCE];
-  setCurrentPosition(newPosition);
-
-  // redraw the position
-  drawPositionInstant();
-
-  // hide the dragged piece
-  draggedPieceEl.fadeOut(cfg.trashSpeed);
-
-  // set state
-  DRAGGING_A_PIECE = false;
-}
-
-function dropDraggedPieceOnSquare(square) {
-
-  // if destination is same as source, piece stays picked up and is dropped at the next clicked square.
-  if (CLICK_MOVE == false) {
-    if (square === DRAGGED_PIECE_SOURCE) {
-      CLICK_MOVE = true;
-      return;
-    }
-  }
-
-  CLICK_MOVE = false;
-
-  removeSquareHighlights();
-
-  // update position
-  var newPosition = deepCopy(CURRENT_POSITION);
-  delete newPosition[DRAGGED_PIECE_SOURCE];
-  newPosition[square] = DRAGGED_PIECE;
-  setCurrentPosition(newPosition);
-
-  // get target square information
-  var targetSquarePosition = $('#' + SQUARE_ELS_IDS[square]).offset();
-
-  // animation complete
-  var complete = function() {
-    drawPositionInstant();
-    draggedPieceEl.css('display', 'none');
-
-    // execute their onSnapEnd function
-    if (cfg.hasOwnProperty('onSnapEnd') === true &&
-      typeof cfg.onSnapEnd === 'function') {
-      cfg.onSnapEnd(DRAGGED_PIECE_SOURCE, square, DRAGGED_PIECE);
-    }
-  };
-
-  // snap the piece to the target square
-  var opts = {
-    duration: cfg.snapSpeed,
-    complete: complete
-  };
-  draggedPieceEl.animate(targetSquarePosition, opts);
-
-  // set state
-  DRAGGING_A_PIECE = false;
-}
-
-function beginDraggingPiece(source, piece, x, y) {
-  // run their custom onDragStart function
-  // their custom onDragStart function can cancel drag start
-  if (typeof cfg.onDragStart === 'function' &&
-      cfg.onDragStart(source, piece,
-        deepCopy(CURRENT_POSITION), CURRENT_ORIENTATION) === false) {
-    return;
-  }
-
-  // set state
-  DRAGGING_A_PIECE = true;
-  DRAGGED_PIECE = piece;
-  DRAGGED_PIECE_SOURCE = source;
-
-  // if the piece came from spare pieces, location is offboard
-  if (source === 'spare') {
-    DRAGGED_PIECE_LOCATION = 'offboard';
-  }
-  else {
-    DRAGGED_PIECE_LOCATION = source;
-  }
-
-  // capture the x, y coords of all squares in memory
-  captureSquareOffsets();
-
-  // create the dragged piece
-  draggedPieceEl.attr('src', buildPieceImgSrc(piece))
-    .css({
-      display: '',
-      position: 'absolute',
-      left: x - (SQUARE_SIZE / 2),
-      top: y - (SQUARE_SIZE / 2)
-    });
-
-  if (source !== 'spare') {
-    // highlight the source square and hide the piece
-    $('#' + SQUARE_ELS_IDS[source]).addClass(CSS.highlight1)
-      .find('.' + CSS.piece).css('display', 'none');
-  }
-}
-
-function updateDraggedPiece(x, y) {
-  // put the dragged piece over the mouse cursor
-  draggedPieceEl.css({
-    left: x - (SQUARE_SIZE / 2),
-    top: y - (SQUARE_SIZE / 2)
-  });
-
-  // get location
-  var location = isXYOnSquare(x, y);
-
-  // do nothing if the location has not changed
-  if (location === DRAGGED_PIECE_LOCATION) return;
-
-  // remove highlight from previous square
-  if (validSquare(DRAGGED_PIECE_LOCATION) === true) {
-    $('#' + SQUARE_ELS_IDS[DRAGGED_PIECE_LOCATION])
-      .removeClass(CSS.highlight2);
-  }
-
-  // add highlight to new square
-  if (validSquare(location) === true) {
-    $('#' + SQUARE_ELS_IDS[location]).addClass(CSS.highlight2);
-  }
-
-  // run onDragMove
-  if (typeof cfg.onDragMove === 'function') {
-    cfg.onDragMove(location, DRAGGED_PIECE_LOCATION,
-      DRAGGED_PIECE_SOURCE, DRAGGED_PIECE,
-      deepCopy(CURRENT_POSITION), CURRENT_ORIENTATION);
-  }
-
-  // update state
-  DRAGGED_PIECE_LOCATION = location;
-}
-
-function stopDraggedPiece(location) {
-  // determine what the action should be
-  var action = 'drop';
-  if (location === 'offboard' && cfg.dropOffBoard === 'snapback') {
-    action = 'snapback';
-  }
-  if (location === 'offboard' && cfg.dropOffBoard === 'trash') {
-    action = 'trash';
-  }
-
-  // run their onDrop function, which can potentially change the drop action
-  if (cfg.hasOwnProperty('onDrop') === true &&
-    typeof cfg.onDrop === 'function') {
-    var newPosition = deepCopy(CURRENT_POSITION);
-
-    // source piece is a spare piece and position is on the board
-    if (DRAGGED_PIECE_SOURCE === 'spare' && validSquare(location) === true) {
-      // add the piece to the board
-      newPosition[location] = DRAGGED_PIECE;
-    }
-
-    // source piece was on the board and position is off the board
-    if (validSquare(DRAGGED_PIECE_SOURCE) === true && location === 'offboard') {
-      // remove the piece from the board
-      delete newPosition[DRAGGED_PIECE_SOURCE];
-    }
-
-    // source piece was on the board and position is on the board
-    if (validSquare(DRAGGED_PIECE_SOURCE) === true &&
-      validSquare(location) === true) {
-      if (DRAGGED_PIECE_SOURCE === location) {
-        if (CLICK_MOVE == false) {
-          // pick up spare piece and put it down on next clicked square
-          CLICK_MOVE = true;
-          return;
-        } else {
-          CLICK_MOVE = false;
-        }
-      }
-
-      // move the piece
-      delete newPosition[DRAGGED_PIECE_SOURCE];
-      newPosition[location] = DRAGGED_PIECE;
-    }
-
-    var oldPosition = deepCopy(CURRENT_POSITION);
-
-    var result = cfg.onDrop(DRAGGED_PIECE_SOURCE, location, DRAGGED_PIECE,
-      newPosition, oldPosition, CURRENT_ORIENTATION);
-    if (result === 'snapback' || result === 'trash') {
-      action = result;
-    }
-  }
-
-  // do it!
-  if (action === 'snapback') {
-    snapbackDraggedPiece();
-  }
-  else if (action === 'trash') {
-    trashDraggedPiece();
-  }
-  else if (action === 'drop') {
-    dropDraggedPieceOnSquare(location);
-  }
-}
-
-//------------------------------------------------------------------------------
-// Public Methods
-//------------------------------------------------------------------------------
-
-// clear the board
-widget.clear = function(useAnimation) {
-  widget.position({}, useAnimation);
-};
-
-// remove the widget from the page
-widget.destroy = function() {
-  // remove markup
-  containerEl.html('');
-  draggedPieceEl.remove();
-
-  // remove event handlers
-  containerEl.unbind();
-};
-
-// shorthand method to get the current FEN
-widget.fen = function() {
-  return widget.position('fen');
-};
-
-// flip orientation
-widget.flip = function() {
-  return widget.orientation('flip');
-};
-
-/*
-// TODO: write this, GitHub Issue #5
-widget.highlight = function() {
-
-};
-*/
-// move pieces
-widget.move = function() {
-  // no need to throw an error here; just do nothing
-  if (arguments.length === 0) return;
-
-  var useAnimation = true;
-
-  // collect the moves into an object
-  var moves = {};
-  for (var i = 0; i < arguments.length; i++) {
-    // any "false" to this function means no animations
-    if (arguments[i] === false) {
-      useAnimation = false;
-      continue;
-    }
-
-    // skip invalid arguments
-    if (validMove(arguments[i]) !== true) {
-      error(2826, 'Invalid move passed to the move method.', arguments[i]);
-      continue;
-    }
-
-    var tmp = arguments[i].split('-');
-    moves[tmp[0]] = tmp[1];
-  }
-
-  // calculate position from moves
-  var newPos = calculatePositionFromMoves(CURRENT_POSITION, moves);
-
-  // update the board
-  widget.position(newPos, useAnimation);
-
-  // return the new position object
-  return newPos;
-};
-
-widget.orientation = function(arg) {
-  // no arguments, return the current orientation
-  if (arguments.length === 0) {
-    return CURRENT_ORIENTATION;
-  }
-
-  // set to white or black
-  if (arg === 'white' || arg === 'black') {
-    CURRENT_ORIENTATION = arg;
-    drawBoard();
-    return CURRENT_ORIENTATION;
-  }
-
-  // flip orientation
-  if (arg === 'flip') {
-    CURRENT_ORIENTATION = (CURRENT_ORIENTATION === 'white') ? 'black' : 'white';
-    drawBoard();
-    return CURRENT_ORIENTATION;
-  }
-
-  error(5482, 'Invalid value passed to the orientation method.', arg);
-};
-
-widget.position = function(position, useAnimation) {
-  // no arguments, return the current position
-  if (arguments.length === 0) {
-    return deepCopy(CURRENT_POSITION);
-  }
-
-  // get position as FEN
-  if (typeof position === 'string' && position.toLowerCase() === 'fen') {
-    return objToFen(CURRENT_POSITION);
-  }
-
-  // default for useAnimations is true
-  if (useAnimation !== false) {
-    useAnimation = true;
-  }
-
-  // start position
-  if (typeof position === 'string' && position.toLowerCase() === 'start') {
-    position = deepCopy(START_POSITION);
-  }
-
-  // convert FEN to position object
-  if (validFen(position) === true) {
-    position = fenToObj(position);
-  }
-
-  // validate position object
-  if (validPositionObject(position) !== true) {
-    error(6482, 'Invalid value passed to the position method.', position);
-    return;
-  }
-
-  if (useAnimation === true) {
-    // start the animations
-    doAnimations(calculateAnimations(CURRENT_POSITION, position),
-      CURRENT_POSITION, position);
-
-    // set the new position
-    setCurrentPosition(position);
-  }
-  // instant update
-  else {
-    setCurrentPosition(position);
-    drawPositionInstant();
-  }
-};
-
-widget.resize = function() {
-  // calulate the new square size
-  SQUARE_SIZE = calculateSquareSize();
-
-  // set board width
-  boardEl.css('width', (SQUARE_SIZE * 8) + 'px');
-
-  // set drag piece size
-  draggedPieceEl.css({
-    height: SQUARE_SIZE,
-    width: SQUARE_SIZE
-  });
-
-  // spare pieces
-  if (cfg.sparePieces === true) {
-    containerEl.find('.' + CSS.sparePieces)
-      .css('paddingLeft', (SQUARE_SIZE + BOARD_BORDER_SIZE) + 'px');
-  }
-
-  // redraw the board
-  drawBoard();
-};
-
-// set the starting position
-widget.start = function(useAnimation) {
-  widget.position('start', useAnimation);
-};
-
-// turn notation on or off
-widget.showNotation = function(show) {
-  cfg.showNotation = show;
-  drawBoard();
-}
-
-//------------------------------------------------------------------------------
-// Browser Events
-//------------------------------------------------------------------------------
-
-function isTouchDevice() {
-  return ('ontouchstart' in document.documentElement);
-}
-
-// reference: http://www.quirksmode.org/js/detect.html
-function isMSIE() {
-  return (navigator && navigator.userAgent &&
-      navigator.userAgent.search(/MSIE/) !== -1);
-}
-
-function stopDefault(e) {
-  e.preventDefault();
-}
-
-function mousedownSquare(e) {
-  // do nothing if we're not draggable
-  if (cfg.draggable !== true) return;
-
-  var square = $(this).attr('data-square');
-
-  // no piece on this square
-  if (validSquare(square) !== true ||
-      CURRENT_POSITION.hasOwnProperty(square) !== true) {
-    return;
-  }
-
-  beginDraggingPiece(square, CURRENT_POSITION[square], e.pageX, e.pageY);
-}
-
-function touchstartSquare(e) {
-  // do nothing if we're not draggable
-  if (cfg.draggable !== true) return;
-
-  var square = $(this).attr('data-square');
-
-  // no piece on this square
-  if (validSquare(square) !== true ||
-      CURRENT_POSITION.hasOwnProperty(square) !== true) {
-    return;
-  }
-
-  e = e.originalEvent;
-  beginDraggingPiece(square, CURRENT_POSITION[square],
-    e.changedTouches[0].pageX, e.changedTouches[0].pageY);
-}
-
-function mousedownSparePiece(e) {
-  // do nothing if sparePieces is not enabled
-  if (cfg.sparePieces !== true) return;
-
-  var piece = $(this).attr('data-piece');
-
-  beginDraggingPiece('spare', piece, e.pageX, e.pageY);
-}
-
-function touchstartSparePiece(e) {
-  // do nothing if sparePieces is not enabled
-  if (cfg.sparePieces !== true) return;
-
-  var piece = $(this).attr('data-piece');
-
-  e = e.originalEvent;
-  beginDraggingPiece('spare', piece,
-    e.changedTouches[0].pageX, e.changedTouches[0].pageY);
-}
-
-function mousemoveWindow(e) {
-  // do nothing if we are not dragging a piece
-  if (DRAGGING_A_PIECE !== true) return;
-
-  updateDraggedPiece(e.pageX, e.pageY);
-}
-
-function touchmoveWindow(e) {
-  // do nothing if we are not dragging a piece
-  if (DRAGGING_A_PIECE !== true) return;
-
-  // prevent screen from scrolling
-  e.preventDefault();
-
-  updateDraggedPiece(e.originalEvent.changedTouches[0].pageX,
-    e.originalEvent.changedTouches[0].pageY);
-}
-
-function mouseupWindow(e) {
-  // do nothing if we are not dragging a piece
-  if (DRAGGING_A_PIECE !== true) return;
-
-  // get the location
-  var location = isXYOnSquare(e.pageX, e.pageY);
-
-  stopDraggedPiece(location);
-}
-
-function touchendWindow(e) {
-  // do nothing if we are not dragging a piece
-  if (DRAGGING_A_PIECE !== true) return;
-
-  // get the location
-  var location = isXYOnSquare(e.originalEvent.changedTouches[0].pageX,
-    e.originalEvent.changedTouches[0].pageY);
-
-  stopDraggedPiece(location);
-}
-
-function mouseenterSquare(e) {
-  // do not fire this event if we are dragging a piece
-  // NOTE: this should never happen, but it's a safeguard
-  if (DRAGGING_A_PIECE !== false) return;
-
-  if (cfg.hasOwnProperty('onMouseoverSquare') !== true ||
-    typeof cfg.onMouseoverSquare !== 'function') return;
-
-  // get the square
-  var square = $(e.currentTarget).attr('data-square');
-
-  // NOTE: this should never happen; defensive
-  if (validSquare(square) !== true) return;
-
-  // get the piece on this square
-  var piece = false;
-  if (CURRENT_POSITION.hasOwnProperty(square) === true) {
-    piece = CURRENT_POSITION[square];
-  }
-
-  // execute their function
-  cfg.onMouseoverSquare(square, piece, deepCopy(CURRENT_POSITION),
-    CURRENT_ORIENTATION);
-}
-
-function mouseleaveSquare(e) {
-  // do not fire this event if we are dragging a piece
-  // NOTE: this should never happen, but it's a safeguard
-  if (DRAGGING_A_PIECE !== false) return;
-
-  if (cfg.hasOwnProperty('onMouseoutSquare') !== true ||
-    typeof cfg.onMouseoutSquare !== 'function') return;
-
-  // get the square
-  var square = $(e.currentTarget).attr('data-square');
-
-  // NOTE: this should never happen; defensive
-  if (validSquare(square) !== true) return;
-
-  // get the piece on this square
-  var piece = false;
-  if (CURRENT_POSITION.hasOwnProperty(square) === true) {
-    piece = CURRENT_POSITION[square];
-  }
-
-  // execute their function
-  cfg.onMouseoutSquare(square, piece, deepCopy(CURRENT_POSITION),
-    CURRENT_ORIENTATION);
-}
-
-//------------------------------------------------------------------------------
-// Initialization
-//------------------------------------------------------------------------------
-
-function addEvents() {
-  // prevent browser "image drag"
-  $('body').on('mousedown mousemove', '.' + CSS.piece, stopDefault);
-
-  // mouse drag pieces
-  boardEl.on('mousedown', '.' + CSS.square, mousedownSquare);
-  containerEl.on('mousedown', '.' + CSS.sparePieces + ' .' + CSS.piece,
-    mousedownSparePiece);
-
-  // mouse enter / leave square
-  boardEl.on('mouseenter', '.' + CSS.square, mouseenterSquare)
-    .on('mouseleave', '.' + CSS.square, mouseleaveSquare);
-
-  // IE doesn't like the events on the window object, but other browsers
-  // perform better that way
-  if (isMSIE() === true) {
-    // IE-specific prevent browser "image drag"
-    document.ondragstart = function() { return false; };
-
-    $('body').on('mousemove', mousemoveWindow)
-      .on('mouseup', mouseupWindow);
-  }
-  else {
-    $(window).on('mousemove', mousemoveWindow)
-      .on('mouseup', mouseupWindow);
-  }
-
-  // touch drag pieces
-  if (isTouchDevice() === true) {
-    boardEl.on('touchstart', '.' + CSS.square, touchstartSquare);
-    containerEl.on('touchstart', '.' + CSS.sparePieces + ' .' + CSS.piece,
-      touchstartSparePiece);
-    $(window).on('touchmove', touchmoveWindow)
-      .on('touchend', touchendWindow);
-  }
-}
-
-function initDom() {
-  // create unique IDs for all the elements we will create
-  createElIds();
-
-  // build board and save it in memory
-  containerEl.html(buildBoardContainer());
-  boardEl = containerEl.find('.' + CSS.board);
-
-  if (cfg.sparePieces === true) {
-    sparePiecesTopEl = containerEl.find('.' + CSS.sparePiecesTop);
-    sparePiecesBottomEl = containerEl.find('.' + CSS.sparePiecesBottom);
-  }
-
-  // create the drag piece
-  var draggedPieceId = uuid();
-  $('body').append(buildPiece('wP', true, draggedPieceId));
-  draggedPieceEl = $('#' + draggedPieceId);
-
-  // get the border size
-  BOARD_BORDER_SIZE = parseInt(boardEl.css('borderLeftWidth'), 10);
-
-  // set the size and draw the board
-  widget.resize();
-}
-
-function init() {
-  if (checkDeps() !== true ||
-      expandConfig() !== true) return;
-
-  initDom();
-  addEvents();
-}
-
-// go time
-init();
-
-// return the widget object
-return widget;
-
-}; // end ChessBoard
-
-// expose util functions
-ChessBoard.fenToObj = fenToObj;
-ChessBoard.objToFen = objToFen;
-
-module.exports = ChessBoard;
-
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 23 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.4.0 */
@@ -20302,6 +16449,3860 @@ return Tether;
 
 }));
 
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var util_1 = __webpack_require__(1);
+var email_1 = __webpack_require__(4);
+var ip_1 = __webpack_require__(5);
+var url_1 = __webpack_require__(6);
+var transform_1 = __webpack_require__(15);
+var hasprotocol_1 = __webpack_require__(8);
+var anchorme = function (str, options) {
+    options = util_1.defaultOptions(options);
+    var result = transform_1.default(str, options);
+    return result;
+};
+// exposing few functions for extra uses
+anchorme.validate = {
+    ip: ip_1.default,
+    url: function (input) {
+        // simple wrapper that does what "identify.ts" does initially
+        // remove the protocal
+        var protocol = hasprotocol_1.default(input) || "";
+        input = input.substr(protocol.length);
+        input = encodeURI(input);
+        return url_1.default(input);
+    },
+    email: email_1.default
+};
+exports.default = anchorme;
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var separate_1 = __webpack_require__(7);
+var identify_1 = __webpack_require__(17);
+var separate_2 = __webpack_require__(7);
+function default_1(str, options) {
+    var arr = separate_2.separate(str);
+    var identified = identify_1.default(arr, options);
+    // custom filtering-out function
+    if (options.exclude) {
+        for (var index = 0; index < identified.length; index++) {
+            var element = identified[index];
+            if (typeof element === "object" && options.exclude(element))
+                identified[index] = element.raw;
+        }
+    }
+    // return the current list (with words being filtered out)
+    if (options.list) {
+        var listed = [];
+        for (var i = 0; i < identified.length; i++) {
+            var fragment = identified[i];
+            if (typeof fragment !== "string")
+                listed.push(fragment);
+        }
+        return listed;
+    }
+    // transform objects to HTML tags
+    identified = identified.map(function (fragment) {
+        if (typeof fragment === "string")
+            return fragment;
+        return url2tag(fragment, options);
+    });
+    // join and return
+    return separate_1.deSeparate(identified);
+}
+exports.default = default_1;
+function url2tag(fragment, options) {
+    var href = fragment.protocol + fragment.encoded;
+    var original = fragment.raw;
+    if (typeof options.truncate === "number") {
+        if (original.length > options.truncate)
+            original = original.substring(0, options.truncate) + "...";
+    }
+    if (typeof options.truncate === "object") {
+        if (original.length > (options.truncate[0] + options.truncate[1]))
+            original = original.substr(0, options.truncate[0]) + "..." + original.substr(original.length - options.truncate[1]);
+    }
+    if (options.attributes === undefined)
+        options.attributes = [];
+    return "<a href=\"" + href + "\" " + options.attributes.map(function (attribute) {
+        if (typeof attribute === 'function') {
+            var name = (attribute(fragment) || {}).name;
+            var value = (attribute(fragment) || {}).value;
+            if (name && !value)
+                return " name ";
+            if (name && value)
+                return " " + name + "=\"" + value + "\" ";
+        }
+        else
+            return " " + attribute.name + "=\"" + attribute.value + "\" ";
+    }).join("") + ">" + original + "</a>";
+}
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ *
+ * @hack
+ *
+ * This is a dirty hack to fix URLs that have parenthesis and quotation marks in them
+ * For example take this paragraph:
+ *
+ * """"
+ * I visited this url: "http://www.wikipedia.com/some_article(with_paranthesis)"
+ * and this URL: (http://www.wikipedia.com/some_article(with_paranthesis))
+ * """"
+ *
+ * The quotation marks `'` `"` and parenthesis `(` `)` `[` `]`
+ * can be considered to be part of the URL, and as a
+ * punctuation marks surrounding the URL.
+ * While this hack works for the most part, it's quite dirty and
+ * I may replace it with something better in the future.
+ *
+ *
+ * Another fix is removing punctuation marks that may appear at the end of URL
+ * Example:
+ *
+ * """"
+ * I've visited google.com, facebook.com, and yahoo.com.
+ * """"
+ *
+ * @todo: replace the following function with something cleaner.
+ *
+ *
+**/
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function fixSeparators(arr, sep1, sep2) {
+    arr.forEach(function (bit, i) {
+        if ((bit.indexOf(".") > -1) &&
+            (!(arr[i - 1] === sep1 && arr[i + 1] === sep2)) &&
+            (arr[i + 1] === sep1 || arr[i + 1] === sep2) // the one after it, is either sep1 or sep2
+        ) {
+            arr[i] = arr[i] + arr[i + 1];
+            if (typeof arr[i + 2] === "string")
+                arr[i] = arr[i] + arr[i + 2];
+            if (typeof arr[i + 3] === "string")
+                arr[i] = arr[i] + arr[i + 3];
+            if (typeof arr[i + 4] === "string")
+                arr[i] = arr[i] + arr[i + 4];
+            arr.splice(i + 1, 4);
+            fixSeparators(arr, sep1, sep2);
+        }
+    });
+    return arr;
+}
+exports.fixSeparators = fixSeparators;
+function default_1(arr) {
+    arr = fixSeparators(arr, "(", ")");
+    arr = fixSeparators(arr, "[", "]");
+    arr = fixSeparators(arr, "\"", "\"");
+    arr = fixSeparators(arr, "'", "'");
+    return arr;
+}
+exports.default = default_1;
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var email_1 = __webpack_require__(4);
+var hasprotocol_1 = __webpack_require__(8);
+var lists_1 = __webpack_require__(2);
+var ip_1 = __webpack_require__(5);
+var url_1 = __webpack_require__(6);
+function default_1(inputArr, options) {
+    return inputArr.map(function (fragment, index) {
+        var encoded = encodeURI(fragment);
+        // quick validations
+        // 1
+        if (encoded.indexOf(".") < 1 && (!hasprotocol_1.default(encoded)))
+            return fragment;
+        var urlObj = null;
+        var protocol = hasprotocol_1.default(encoded) || "";
+        // remove the protocol before proceeding to any other test
+        if (protocol)
+            encoded = encoded.substr(protocol.length);
+        // test 1: it's a file
+        if (options.files && protocol === "file:///" && encoded.split(/\/|\\/).length - 1) {
+            urlObj = {
+                reason: "file",
+                protocol: protocol,
+                raw: fragment,
+                encoded: encoded,
+            };
+        }
+        // test 2: it's a URL
+        if ((!urlObj) && options.urls && url_1.default(encoded)) {
+            urlObj = {
+                reason: "url",
+                protocol: protocol ? protocol : typeof options.defaultProtocol === "function" ? options.defaultProtocol(fragment) : options.defaultProtocol,
+                raw: fragment,
+                encoded: encoded,
+            };
+        }
+        // test 3: it's an email
+        if ((!urlObj) && options.emails && email_1.default(encoded)) {
+            urlObj = {
+                reason: "email",
+                protocol: "mailto:",
+                raw: fragment,
+                encoded: encoded,
+            };
+        }
+        // test 4: it's an IP
+        if ((!urlObj) && options.ips && ip_1.default(encoded)) {
+            urlObj = {
+                reason: "ip",
+                protocol: protocol ? protocol : typeof options.defaultProtocol === "function" ? options.defaultProtocol(fragment) : options.defaultProtocol,
+                raw: fragment,
+                encoded: encoded,
+            };
+        }
+        if (!urlObj)
+            return fragment;
+        else {
+            if ((inputArr[index - 1] === "'" || inputArr[index - 1] === '"') && ~lists_1.htmlAttrs.indexOf(inputArr[index - 2]))
+                return fragment;
+            return urlObj;
+        }
+    });
+}
+exports.default = default_1;
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_RESULT__;/*
+ * Copyright (c) 2016, Jeff Hlywa (jhlywa@gmail.com)
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ *----------------------------------------------------------------------------*/
+
+/* minified license below  */
+
+/* @license
+ * Copyright (c) 2016, Jeff Hlywa (jhlywa@gmail.com)
+ * Released under the BSD license
+ * https://github.com/jhlywa/chess.js/blob/master/LICENSE
+ */
+
+var Chess = function(fen) {
+
+  /* jshint indent: false */
+
+  var BLACK = 'b';
+  var WHITE = 'w';
+
+  var EMPTY = -1;
+
+  var PAWN = 'p';
+  var KNIGHT = 'n';
+  var BISHOP = 'b';
+  var ROOK = 'r';
+  var QUEEN = 'q';
+  var KING = 'k';
+
+  var SYMBOLS = 'pnbrqkPNBRQK';
+
+  var DEFAULT_POSITION = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+
+  var POSSIBLE_RESULTS = ['1-0', '0-1', '1/2-1/2', '*'];
+
+  var PAWN_OFFSETS = {
+    b: [16, 32, 17, 15],
+    w: [-16, -32, -17, -15]
+  };
+
+  var PIECE_OFFSETS = {
+    n: [-18, -33, -31, -14,  18, 33, 31,  14],
+    b: [-17, -15,  17,  15],
+    r: [-16,   1,  16,  -1],
+    q: [-17, -16, -15,   1,  17, 16, 15,  -1],
+    k: [-17, -16, -15,   1,  17, 16, 15,  -1]
+  };
+
+  var ATTACKS = [
+    20, 0, 0, 0, 0, 0, 0, 24,  0, 0, 0, 0, 0, 0,20, 0,
+     0,20, 0, 0, 0, 0, 0, 24,  0, 0, 0, 0, 0,20, 0, 0,
+     0, 0,20, 0, 0, 0, 0, 24,  0, 0, 0, 0,20, 0, 0, 0,
+     0, 0, 0,20, 0, 0, 0, 24,  0, 0, 0,20, 0, 0, 0, 0,
+     0, 0, 0, 0,20, 0, 0, 24,  0, 0,20, 0, 0, 0, 0, 0,
+     0, 0, 0, 0, 0,20, 2, 24,  2,20, 0, 0, 0, 0, 0, 0,
+     0, 0, 0, 0, 0, 2,53, 56, 53, 2, 0, 0, 0, 0, 0, 0,
+    24,24,24,24,24,24,56,  0, 56,24,24,24,24,24,24, 0,
+     0, 0, 0, 0, 0, 2,53, 56, 53, 2, 0, 0, 0, 0, 0, 0,
+     0, 0, 0, 0, 0,20, 2, 24,  2,20, 0, 0, 0, 0, 0, 0,
+     0, 0, 0, 0,20, 0, 0, 24,  0, 0,20, 0, 0, 0, 0, 0,
+     0, 0, 0,20, 0, 0, 0, 24,  0, 0, 0,20, 0, 0, 0, 0,
+     0, 0,20, 0, 0, 0, 0, 24,  0, 0, 0, 0,20, 0, 0, 0,
+     0,20, 0, 0, 0, 0, 0, 24,  0, 0, 0, 0, 0,20, 0, 0,
+    20, 0, 0, 0, 0, 0, 0, 24,  0, 0, 0, 0, 0, 0,20
+  ];
+
+  var RAYS = [
+     17,  0,  0,  0,  0,  0,  0, 16,  0,  0,  0,  0,  0,  0, 15, 0,
+      0, 17,  0,  0,  0,  0,  0, 16,  0,  0,  0,  0,  0, 15,  0, 0,
+      0,  0, 17,  0,  0,  0,  0, 16,  0,  0,  0,  0, 15,  0,  0, 0,
+      0,  0,  0, 17,  0,  0,  0, 16,  0,  0,  0, 15,  0,  0,  0, 0,
+      0,  0,  0,  0, 17,  0,  0, 16,  0,  0, 15,  0,  0,  0,  0, 0,
+      0,  0,  0,  0,  0, 17,  0, 16,  0, 15,  0,  0,  0,  0,  0, 0,
+      0,  0,  0,  0,  0,  0, 17, 16, 15,  0,  0,  0,  0,  0,  0, 0,
+      1,  1,  1,  1,  1,  1,  1,  0, -1, -1,  -1,-1, -1, -1, -1, 0,
+      0,  0,  0,  0,  0,  0,-15,-16,-17,  0,  0,  0,  0,  0,  0, 0,
+      0,  0,  0,  0,  0,-15,  0,-16,  0,-17,  0,  0,  0,  0,  0, 0,
+      0,  0,  0,  0,-15,  0,  0,-16,  0,  0,-17,  0,  0,  0,  0, 0,
+      0,  0,  0,-15,  0,  0,  0,-16,  0,  0,  0,-17,  0,  0,  0, 0,
+      0,  0,-15,  0,  0,  0,  0,-16,  0,  0,  0,  0,-17,  0,  0, 0,
+      0,-15,  0,  0,  0,  0,  0,-16,  0,  0,  0,  0,  0,-17,  0, 0,
+    -15,  0,  0,  0,  0,  0,  0,-16,  0,  0,  0,  0,  0,  0,-17
+  ];
+
+  var SHIFTS = { p: 0, n: 1, b: 2, r: 3, q: 4, k: 5 };
+
+  var FLAGS = {
+    NORMAL: 'n',
+    CAPTURE: 'c',
+    BIG_PAWN: 'b',
+    EP_CAPTURE: 'e',
+    PROMOTION: 'p',
+    KSIDE_CASTLE: 'k',
+    QSIDE_CASTLE: 'q'
+  };
+
+  var BITS = {
+    NORMAL: 1,
+    CAPTURE: 2,
+    BIG_PAWN: 4,
+    EP_CAPTURE: 8,
+    PROMOTION: 16,
+    KSIDE_CASTLE: 32,
+    QSIDE_CASTLE: 64
+  };
+
+  var RANK_1 = 7;
+  var RANK_2 = 6;
+  var RANK_3 = 5;
+  var RANK_4 = 4;
+  var RANK_5 = 3;
+  var RANK_6 = 2;
+  var RANK_7 = 1;
+  var RANK_8 = 0;
+
+  var SQUARES = {
+    a8:   0, b8:   1, c8:   2, d8:   3, e8:   4, f8:   5, g8:   6, h8:   7,
+    a7:  16, b7:  17, c7:  18, d7:  19, e7:  20, f7:  21, g7:  22, h7:  23,
+    a6:  32, b6:  33, c6:  34, d6:  35, e6:  36, f6:  37, g6:  38, h6:  39,
+    a5:  48, b5:  49, c5:  50, d5:  51, e5:  52, f5:  53, g5:  54, h5:  55,
+    a4:  64, b4:  65, c4:  66, d4:  67, e4:  68, f4:  69, g4:  70, h4:  71,
+    a3:  80, b3:  81, c3:  82, d3:  83, e3:  84, f3:  85, g3:  86, h3:  87,
+    a2:  96, b2:  97, c2:  98, d2:  99, e2: 100, f2: 101, g2: 102, h2: 103,
+    a1: 112, b1: 113, c1: 114, d1: 115, e1: 116, f1: 117, g1: 118, h1: 119
+  };
+
+  var ROOKS = {
+    w: [{square: SQUARES.a1, flag: BITS.QSIDE_CASTLE},
+        {square: SQUARES.h1, flag: BITS.KSIDE_CASTLE}],
+    b: [{square: SQUARES.a8, flag: BITS.QSIDE_CASTLE},
+        {square: SQUARES.h8, flag: BITS.KSIDE_CASTLE}]
+  };
+
+  var board = new Array(128);
+  var kings = {w: EMPTY, b: EMPTY};
+  var turn = WHITE;
+  var castling = {w: 0, b: 0};
+  var ep_square = EMPTY;
+  var half_moves = 0;
+  var move_number = 1;
+  var history = [];
+  var header = {};
+
+  /* if the user passes in a fen string, load it, else default to
+   * starting position
+   */
+  if (typeof fen === 'undefined') {
+    load(DEFAULT_POSITION);
+  } else {
+    load(fen);
+  }
+
+  function clear() {
+    board = new Array(128);
+    kings = {w: EMPTY, b: EMPTY};
+    turn = WHITE;
+    castling = {w: 0, b: 0};
+    ep_square = EMPTY;
+    half_moves = 0;
+    move_number = 1;
+    history = [];
+    header = {};
+    update_setup(generate_fen());
+  }
+
+  function reset() {
+    load(DEFAULT_POSITION);
+  }
+
+  function load(fen) {
+    var tokens = fen.split(/\s+/);
+    var position = tokens[0];
+    var square = 0;
+
+    if (!validate_fen(fen).valid) {
+      return false;
+    }
+
+    clear();
+
+    for (var i = 0; i < position.length; i++) {
+      var piece = position.charAt(i);
+
+      if (piece === '/') {
+        square += 8;
+      } else if (is_digit(piece)) {
+        square += parseInt(piece, 10);
+      } else {
+        var color = (piece < 'a') ? WHITE : BLACK;
+        put({type: piece.toLowerCase(), color: color}, algebraic(square));
+        square++;
+      }
+    }
+
+    turn = tokens[1];
+
+    if (tokens[2].indexOf('K') > -1) {
+      castling.w |= BITS.KSIDE_CASTLE;
+    }
+    if (tokens[2].indexOf('Q') > -1) {
+      castling.w |= BITS.QSIDE_CASTLE;
+    }
+    if (tokens[2].indexOf('k') > -1) {
+      castling.b |= BITS.KSIDE_CASTLE;
+    }
+    if (tokens[2].indexOf('q') > -1) {
+      castling.b |= BITS.QSIDE_CASTLE;
+    }
+
+    ep_square = (tokens[3] === '-') ? EMPTY : SQUARES[tokens[3]];
+    half_moves = parseInt(tokens[4], 10);
+    move_number = parseInt(tokens[5], 10);
+
+    update_setup(generate_fen());
+
+    return true;
+  }
+
+  /* TODO: this function is pretty much crap - it validates structure but
+   * completely ignores content (e.g. doesn't verify that each side has a king)
+   * ... we should rewrite this, and ditch the silly error_number field while
+   * we're at it
+   */
+  function validate_fen(fen) {
+    var errors = {
+       0: 'No errors.',
+       1: 'FEN string must contain six space-delimited fields.',
+       2: '6th field (move number) must be a positive integer.',
+       3: '5th field (half move counter) must be a non-negative integer.',
+       4: '4th field (en-passant square) is invalid.',
+       5: '3rd field (castling availability) is invalid.',
+       6: '2nd field (side to move) is invalid.',
+       7: '1st field (piece positions) does not contain 8 \'/\'-delimited rows.',
+       8: '1st field (piece positions) is invalid [consecutive numbers].',
+       9: '1st field (piece positions) is invalid [invalid piece].',
+      10: '1st field (piece positions) is invalid [row too large].',
+      11: 'Illegal en-passant square',
+    };
+
+    /* 1st criterion: 6 space-seperated fields? */
+    var tokens = fen.split(/\s+/);
+    if (tokens.length !== 6) {
+      return {valid: false, error_number: 1, error: errors[1]};
+    }
+
+    /* 2nd criterion: move number field is a integer value > 0? */
+    if (isNaN(tokens[5]) || (parseInt(tokens[5], 10) <= 0)) {
+      return {valid: false, error_number: 2, error: errors[2]};
+    }
+
+    /* 3rd criterion: half move counter is an integer >= 0? */
+    if (isNaN(tokens[4]) || (parseInt(tokens[4], 10) < 0)) {
+      return {valid: false, error_number: 3, error: errors[3]};
+    }
+
+    /* 4th criterion: 4th field is a valid e.p.-string? */
+    if (!/^(-|[abcdefgh][36])$/.test(tokens[3])) {
+      return {valid: false, error_number: 4, error: errors[4]};
+    }
+
+    /* 5th criterion: 3th field is a valid castle-string? */
+    if( !/^(KQ?k?q?|Qk?q?|kq?|q|-)$/.test(tokens[2])) {
+      return {valid: false, error_number: 5, error: errors[5]};
+    }
+
+    /* 6th criterion: 2nd field is "w" (white) or "b" (black)? */
+    if (!/^(w|b)$/.test(tokens[1])) {
+      return {valid: false, error_number: 6, error: errors[6]};
+    }
+
+    /* 7th criterion: 1st field contains 8 rows? */
+    var rows = tokens[0].split('/');
+    if (rows.length !== 8) {
+      return {valid: false, error_number: 7, error: errors[7]};
+    }
+
+    /* 8th criterion: every row is valid? */
+    for (var i = 0; i < rows.length; i++) {
+      /* check for right sum of fields AND not two numbers in succession */
+      var sum_fields = 0;
+      var previous_was_number = false;
+
+      for (var k = 0; k < rows[i].length; k++) {
+        if (!isNaN(rows[i][k])) {
+          if (previous_was_number) {
+            return {valid: false, error_number: 8, error: errors[8]};
+          }
+          sum_fields += parseInt(rows[i][k], 10);
+          previous_was_number = true;
+        } else {
+          if (!/^[prnbqkPRNBQK]$/.test(rows[i][k])) {
+            return {valid: false, error_number: 9, error: errors[9]};
+          }
+          sum_fields += 1;
+          previous_was_number = false;
+        }
+      }
+      if (sum_fields !== 8) {
+        return {valid: false, error_number: 10, error: errors[10]};
+      }
+    }
+
+    if ((tokens[3][1] == '3' && tokens[1] == 'w') ||
+        (tokens[3][1] == '6' && tokens[1] == 'b')) {
+          return {valid: false, error_number: 11, error: errors[11]};
+    }
+
+    /* everything's okay! */
+    return {valid: true, error_number: 0, error: errors[0]};
+  }
+
+  function generate_fen() {
+    var empty = 0;
+    var fen = '';
+
+    for (var i = SQUARES.a8; i <= SQUARES.h1; i++) {
+      if (board[i] == null) {
+        empty++;
+      } else {
+        if (empty > 0) {
+          fen += empty;
+          empty = 0;
+        }
+        var color = board[i].color;
+        var piece = board[i].type;
+
+        fen += (color === WHITE) ?
+                 piece.toUpperCase() : piece.toLowerCase();
+      }
+
+      if ((i + 1) & 0x88) {
+        if (empty > 0) {
+          fen += empty;
+        }
+
+        if (i !== SQUARES.h1) {
+          fen += '/';
+        }
+
+        empty = 0;
+        i += 8;
+      }
+    }
+
+    var cflags = '';
+    if (castling[WHITE] & BITS.KSIDE_CASTLE) { cflags += 'K'; }
+    if (castling[WHITE] & BITS.QSIDE_CASTLE) { cflags += 'Q'; }
+    if (castling[BLACK] & BITS.KSIDE_CASTLE) { cflags += 'k'; }
+    if (castling[BLACK] & BITS.QSIDE_CASTLE) { cflags += 'q'; }
+
+    /* do we have an empty castling flag? */
+    cflags = cflags || '-';
+    var epflags = (ep_square === EMPTY) ? '-' : algebraic(ep_square);
+
+    return [fen, turn, cflags, epflags, half_moves, move_number].join(' ');
+  }
+
+  function set_header(args) {
+    for (var i = 0; i < args.length; i += 2) {
+      if (typeof args[i] === 'string' &&
+          typeof args[i + 1] === 'string') {
+        header[args[i]] = args[i + 1];
+      }
+    }
+    return header;
+  }
+
+  /* called when the initial board setup is changed with put() or remove().
+   * modifies the SetUp and FEN properties of the header object.  if the FEN is
+   * equal to the default position, the SetUp and FEN are deleted
+   * the setup is only updated if history.length is zero, ie moves haven't been
+   * made.
+   */
+  function update_setup(fen) {
+    if (history.length > 0) return;
+
+    if (fen !== DEFAULT_POSITION) {
+      header['SetUp'] = '1';
+      header['FEN'] = fen;
+    } else {
+      delete header['SetUp'];
+      delete header['FEN'];
+    }
+  }
+
+  function get(square) {
+    var piece = board[SQUARES[square]];
+    return (piece) ? {type: piece.type, color: piece.color} : null;
+  }
+
+  function put(piece, square) {
+    /* check for valid piece object */
+    if (!('type' in piece && 'color' in piece)) {
+      return false;
+    }
+
+    /* check for piece */
+    if (SYMBOLS.indexOf(piece.type.toLowerCase()) === -1) {
+      return false;
+    }
+
+    /* check for valid square */
+    if (!(square in SQUARES)) {
+      return false;
+    }
+
+    var sq = SQUARES[square];
+
+    /* don't let the user place more than one king */
+    if (piece.type == KING &&
+        !(kings[piece.color] == EMPTY || kings[piece.color] == sq)) {
+      return false;
+    }
+
+    board[sq] = {type: piece.type, color: piece.color};
+    if (piece.type === KING) {
+      kings[piece.color] = sq;
+    }
+
+    update_setup(generate_fen());
+
+    return true;
+  }
+
+  function remove(square) {
+    var piece = get(square);
+    board[SQUARES[square]] = null;
+    if (piece && piece.type === KING) {
+      kings[piece.color] = EMPTY;
+    }
+
+    update_setup(generate_fen());
+
+    return piece;
+  }
+
+  function build_move(board, from, to, flags, promotion) {
+    var move = {
+      color: turn,
+      from: from,
+      to: to,
+      flags: flags,
+      piece: board[from].type
+    };
+
+    if (promotion) {
+      move.flags |= BITS.PROMOTION;
+      move.promotion = promotion;
+    }
+
+    if (board[to]) {
+      move.captured = board[to].type;
+    } else if (flags & BITS.EP_CAPTURE) {
+        move.captured = PAWN;
+    }
+    return move;
+  }
+
+  function generate_moves(options) {
+    function add_move(board, moves, from, to, flags) {
+      /* if pawn promotion */
+      if (board[from].type === PAWN &&
+         (rank(to) === RANK_8 || rank(to) === RANK_1)) {
+          var pieces = [QUEEN, ROOK, BISHOP, KNIGHT];
+          for (var i = 0, len = pieces.length; i < len; i++) {
+            moves.push(build_move(board, from, to, flags, pieces[i]));
+          }
+      } else {
+       moves.push(build_move(board, from, to, flags));
+      }
+    }
+
+    var moves = [];
+    var us = turn;
+    var them = swap_color(us);
+    var second_rank = {b: RANK_7, w: RANK_2};
+
+    var first_sq = SQUARES.a8;
+    var last_sq = SQUARES.h1;
+    var single_square = false;
+
+    /* do we want legal moves? */
+    var legal = (typeof options !== 'undefined' && 'legal' in options) ?
+                options.legal : true;
+
+    /* are we generating moves for a single square? */
+    if (typeof options !== 'undefined' && 'square' in options) {
+      if (options.square in SQUARES) {
+        first_sq = last_sq = SQUARES[options.square];
+        single_square = true;
+      } else {
+        /* invalid square */
+        return [];
+      }
+    }
+
+    for (var i = first_sq; i <= last_sq; i++) {
+      /* did we run off the end of the board */
+      if (i & 0x88) { i += 7; continue; }
+
+      var piece = board[i];
+      if (piece == null || piece.color !== us) {
+        continue;
+      }
+
+      if (piece.type === PAWN) {
+        /* single square, non-capturing */
+        var square = i + PAWN_OFFSETS[us][0];
+        if (board[square] == null) {
+            add_move(board, moves, i, square, BITS.NORMAL);
+
+          /* double square */
+          var square = i + PAWN_OFFSETS[us][1];
+          if (second_rank[us] === rank(i) && board[square] == null) {
+            add_move(board, moves, i, square, BITS.BIG_PAWN);
+          }
+        }
+
+        /* pawn captures */
+        for (j = 2; j < 4; j++) {
+          var square = i + PAWN_OFFSETS[us][j];
+          if (square & 0x88) continue;
+
+          if (board[square] != null &&
+              board[square].color === them) {
+              add_move(board, moves, i, square, BITS.CAPTURE);
+          } else if (square === ep_square) {
+              add_move(board, moves, i, ep_square, BITS.EP_CAPTURE);
+          }
+        }
+      } else {
+        for (var j = 0, len = PIECE_OFFSETS[piece.type].length; j < len; j++) {
+          var offset = PIECE_OFFSETS[piece.type][j];
+          var square = i;
+
+          while (true) {
+            square += offset;
+            if (square & 0x88) break;
+
+            if (board[square] == null) {
+              add_move(board, moves, i, square, BITS.NORMAL);
+            } else {
+              if (board[square].color === us) break;
+              add_move(board, moves, i, square, BITS.CAPTURE);
+              break;
+            }
+
+            /* break, if knight or king */
+            if (piece.type === 'n' || piece.type === 'k') break;
+          }
+        }
+      }
+    }
+
+    /* check for castling if: a) we're generating all moves, or b) we're doing
+     * single square move generation on the king's square
+     */
+    if ((!single_square) || last_sq === kings[us]) {
+      /* king-side castling */
+      if (castling[us] & BITS.KSIDE_CASTLE) {
+        var castling_from = kings[us];
+        var castling_to = castling_from + 2;
+
+        if (board[castling_from + 1] == null &&
+            board[castling_to]       == null &&
+            !attacked(them, kings[us]) &&
+            !attacked(them, castling_from + 1) &&
+            !attacked(them, castling_to)) {
+          add_move(board, moves, kings[us] , castling_to,
+                   BITS.KSIDE_CASTLE);
+        }
+      }
+
+      /* queen-side castling */
+      if (castling[us] & BITS.QSIDE_CASTLE) {
+        var castling_from = kings[us];
+        var castling_to = castling_from - 2;
+
+        if (board[castling_from - 1] == null &&
+            board[castling_from - 2] == null &&
+            board[castling_from - 3] == null &&
+            !attacked(them, kings[us]) &&
+            !attacked(them, castling_from - 1) &&
+            !attacked(them, castling_to)) {
+          add_move(board, moves, kings[us], castling_to,
+                   BITS.QSIDE_CASTLE);
+        }
+      }
+    }
+
+    /* return all pseudo-legal moves (this includes moves that allow the king
+     * to be captured)
+     */
+    if (!legal) {
+      return moves;
+    }
+
+    /* filter out illegal moves */
+    var legal_moves = [];
+    for (var i = 0, len = moves.length; i < len; i++) {
+      make_move(moves[i]);
+      if (!king_attacked(us)) {
+        legal_moves.push(moves[i]);
+      }
+      undo_move();
+    }
+
+    return legal_moves;
+  }
+
+  /* convert a move from 0x88 coordinates to Standard Algebraic Notation
+   * (SAN)
+   *
+   * @param {boolean} sloppy Use the sloppy SAN generator to work around over
+   * disambiguation bugs in Fritz and Chessbase.  See below:
+   *
+   * r1bqkbnr/ppp2ppp/2n5/1B1pP3/4P3/8/PPPP2PP/RNBQK1NR b KQkq - 2 4
+   * 4. ... Nge7 is overly disambiguated because the knight on c6 is pinned
+   * 4. ... Ne7 is technically the valid SAN
+   */
+  function move_to_san(move, sloppy) {
+
+    var output = '';
+
+    if (move.flags & BITS.KSIDE_CASTLE) {
+      output = 'O-O';
+    } else if (move.flags & BITS.QSIDE_CASTLE) {
+      output = 'O-O-O';
+    } else {
+      var disambiguator = get_disambiguator(move, sloppy);
+
+      if (move.piece !== PAWN) {
+        output += move.piece.toUpperCase() + disambiguator;
+      }
+
+      if (move.flags & (BITS.CAPTURE | BITS.EP_CAPTURE)) {
+        if (move.piece === PAWN) {
+          output += algebraic(move.from)[0];
+        }
+        output += 'x';
+      }
+
+      output += algebraic(move.to);
+
+      if (move.flags & BITS.PROMOTION) {
+        output += '=' + move.promotion.toUpperCase();
+      }
+    }
+
+    make_move(move);
+    if (in_check()) {
+      if (in_checkmate()) {
+        output += '#';
+      } else {
+        output += '+';
+      }
+    }
+    undo_move();
+
+    return output;
+  }
+
+  // parses all of the decorators out of a SAN string
+  function stripped_san(move) {
+    return move.replace(/=/,'').replace(/[+#]?[?!]*$/,'');
+  }
+
+  function attacked(color, square) {
+    for (var i = SQUARES.a8; i <= SQUARES.h1; i++) {
+      /* did we run off the end of the board */
+      if (i & 0x88) { i += 7; continue; }
+
+      /* if empty square or wrong color */
+      if (board[i] == null || board[i].color !== color) continue;
+
+      var piece = board[i];
+      var difference = i - square;
+      var index = difference + 119;
+
+      if (ATTACKS[index] & (1 << SHIFTS[piece.type])) {
+        if (piece.type === PAWN) {
+          if (difference > 0) {
+            if (piece.color === WHITE) return true;
+          } else {
+            if (piece.color === BLACK) return true;
+          }
+          continue;
+        }
+
+        /* if the piece is a knight or a king */
+        if (piece.type === 'n' || piece.type === 'k') return true;
+
+        var offset = RAYS[index];
+        var j = i + offset;
+
+        var blocked = false;
+        while (j !== square) {
+          if (board[j] != null) { blocked = true; break; }
+          j += offset;
+        }
+
+        if (!blocked) return true;
+      }
+    }
+
+    return false;
+  }
+
+  function king_attacked(color) {
+    return attacked(swap_color(color), kings[color]);
+  }
+
+  function in_check() {
+    return king_attacked(turn);
+  }
+
+  function in_checkmate() {
+    return in_check() && generate_moves().length === 0;
+  }
+
+  function in_stalemate() {
+    return !in_check() && generate_moves().length === 0;
+  }
+
+  function insufficient_material() {
+    var pieces = {};
+    var bishops = [];
+    var num_pieces = 0;
+    var sq_color = 0;
+
+    for (var i = SQUARES.a8; i<= SQUARES.h1; i++) {
+      sq_color = (sq_color + 1) % 2;
+      if (i & 0x88) { i += 7; continue; }
+
+      var piece = board[i];
+      if (piece) {
+        pieces[piece.type] = (piece.type in pieces) ?
+                              pieces[piece.type] + 1 : 1;
+        if (piece.type === BISHOP) {
+          bishops.push(sq_color);
+        }
+        num_pieces++;
+      }
+    }
+
+    /* k vs. k */
+    if (num_pieces === 2) { return true; }
+
+    /* k vs. kn .... or .... k vs. kb */
+    else if (num_pieces === 3 && (pieces[BISHOP] === 1 ||
+                                 pieces[KNIGHT] === 1)) { return true; }
+
+    /* kb vs. kb where any number of bishops are all on the same color */
+    else if (num_pieces === pieces[BISHOP] + 2) {
+      var sum = 0;
+      var len = bishops.length;
+      for (var i = 0; i < len; i++) {
+        sum += bishops[i];
+      }
+      if (sum === 0 || sum === len) { return true; }
+    }
+
+    return false;
+  }
+
+  function in_threefold_repetition() {
+    /* TODO: while this function is fine for casual use, a better
+     * implementation would use a Zobrist key (instead of FEN). the
+     * Zobrist key would be maintained in the make_move/undo_move functions,
+     * avoiding the costly that we do below.
+     */
+    var moves = [];
+    var positions = {};
+    var repetition = false;
+
+    while (true) {
+      var move = undo_move();
+      if (!move) break;
+      moves.push(move);
+    }
+
+    while (true) {
+      /* remove the last two fields in the FEN string, they're not needed
+       * when checking for draw by rep */
+      var fen = generate_fen().split(' ').slice(0,4).join(' ');
+
+      /* has the position occurred three or move times */
+      positions[fen] = (fen in positions) ? positions[fen] + 1 : 1;
+      if (positions[fen] >= 3) {
+        repetition = true;
+      }
+
+      if (!moves.length) {
+        break;
+      }
+      make_move(moves.pop());
+    }
+
+    return repetition;
+  }
+
+  function push(move) {
+    history.push({
+      move: move,
+      kings: {b: kings.b, w: kings.w},
+      turn: turn,
+      castling: {b: castling.b, w: castling.w},
+      ep_square: ep_square,
+      half_moves: half_moves,
+      move_number: move_number
+    });
+  }
+
+  function make_move(move) {
+    var us = turn;
+    var them = swap_color(us);
+    push(move);
+
+    board[move.to] = board[move.from];
+    board[move.from] = null;
+
+    /* if ep capture, remove the captured pawn */
+    if (move.flags & BITS.EP_CAPTURE) {
+      if (turn === BLACK) {
+        board[move.to - 16] = null;
+      } else {
+        board[move.to + 16] = null;
+      }
+    }
+
+    /* if pawn promotion, replace with new piece */
+    if (move.flags & BITS.PROMOTION) {
+      board[move.to] = {type: move.promotion, color: us};
+    }
+
+    /* if we moved the king */
+    if (board[move.to].type === KING) {
+      kings[board[move.to].color] = move.to;
+
+      /* if we castled, move the rook next to the king */
+      if (move.flags & BITS.KSIDE_CASTLE) {
+        var castling_to = move.to - 1;
+        var castling_from = move.to + 1;
+        board[castling_to] = board[castling_from];
+        board[castling_from] = null;
+      } else if (move.flags & BITS.QSIDE_CASTLE) {
+        var castling_to = move.to + 1;
+        var castling_from = move.to - 2;
+        board[castling_to] = board[castling_from];
+        board[castling_from] = null;
+      }
+
+      /* turn off castling */
+      castling[us] = '';
+    }
+
+    /* turn off castling if we move a rook */
+    if (castling[us]) {
+      for (var i = 0, len = ROOKS[us].length; i < len; i++) {
+        if (move.from === ROOKS[us][i].square &&
+            castling[us] & ROOKS[us][i].flag) {
+          castling[us] ^= ROOKS[us][i].flag;
+          break;
+        }
+      }
+    }
+
+    /* turn off castling if we capture a rook */
+    if (castling[them]) {
+      for (var i = 0, len = ROOKS[them].length; i < len; i++) {
+        if (move.to === ROOKS[them][i].square &&
+            castling[them] & ROOKS[them][i].flag) {
+          castling[them] ^= ROOKS[them][i].flag;
+          break;
+        }
+      }
+    }
+
+    /* if big pawn move, update the en passant square */
+    if (move.flags & BITS.BIG_PAWN) {
+      if (turn === 'b') {
+        ep_square = move.to - 16;
+      } else {
+        ep_square = move.to + 16;
+      }
+    } else {
+      ep_square = EMPTY;
+    }
+
+    /* reset the 50 move counter if a pawn is moved or a piece is captured */
+    if (move.piece === PAWN) {
+      half_moves = 0;
+    } else if (move.flags & (BITS.CAPTURE | BITS.EP_CAPTURE)) {
+      half_moves = 0;
+    } else {
+      half_moves++;
+    }
+
+    if (turn === BLACK) {
+      move_number++;
+    }
+    turn = swap_color(turn);
+  }
+
+  function undo_move() {
+    var old = history.pop();
+    if (old == null) { return null; }
+
+    var move = old.move;
+    kings = old.kings;
+    turn = old.turn;
+    castling = old.castling;
+    ep_square = old.ep_square;
+    half_moves = old.half_moves;
+    move_number = old.move_number;
+
+    var us = turn;
+    var them = swap_color(turn);
+
+    board[move.from] = board[move.to];
+    board[move.from].type = move.piece;  // to undo any promotions
+    board[move.to] = null;
+
+    if (move.flags & BITS.CAPTURE) {
+      board[move.to] = {type: move.captured, color: them};
+    } else if (move.flags & BITS.EP_CAPTURE) {
+      var index;
+      if (us === BLACK) {
+        index = move.to - 16;
+      } else {
+        index = move.to + 16;
+      }
+      board[index] = {type: PAWN, color: them};
+    }
+
+
+    if (move.flags & (BITS.KSIDE_CASTLE | BITS.QSIDE_CASTLE)) {
+      var castling_to, castling_from;
+      if (move.flags & BITS.KSIDE_CASTLE) {
+        castling_to = move.to + 1;
+        castling_from = move.to - 1;
+      } else if (move.flags & BITS.QSIDE_CASTLE) {
+        castling_to = move.to - 2;
+        castling_from = move.to + 1;
+      }
+
+      board[castling_to] = board[castling_from];
+      board[castling_from] = null;
+    }
+
+    return move;
+  }
+
+  /* this function is used to uniquely identify ambiguous moves */
+  function get_disambiguator(move, sloppy) {
+    var moves = generate_moves({legal: !sloppy});
+
+    var from = move.from;
+    var to = move.to;
+    var piece = move.piece;
+
+    var ambiguities = 0;
+    var same_rank = 0;
+    var same_file = 0;
+
+    for (var i = 0, len = moves.length; i < len; i++) {
+      var ambig_from = moves[i].from;
+      var ambig_to = moves[i].to;
+      var ambig_piece = moves[i].piece;
+
+      /* if a move of the same piece type ends on the same to square, we'll
+       * need to add a disambiguator to the algebraic notation
+       */
+      if (piece === ambig_piece && from !== ambig_from && to === ambig_to) {
+        ambiguities++;
+
+        if (rank(from) === rank(ambig_from)) {
+          same_rank++;
+        }
+
+        if (file(from) === file(ambig_from)) {
+          same_file++;
+        }
+      }
+    }
+
+    if (ambiguities > 0) {
+      /* if there exists a similar moving piece on the same rank and file as
+       * the move in question, use the square as the disambiguator
+       */
+      if (same_rank > 0 && same_file > 0) {
+        return algebraic(from);
+      }
+      /* if the moving piece rests on the same file, use the rank symbol as the
+       * disambiguator
+       */
+      else if (same_file > 0) {
+        return algebraic(from).charAt(1);
+      }
+      /* else use the file symbol */
+      else {
+        return algebraic(from).charAt(0);
+      }
+    }
+
+    return '';
+  }
+
+  function ascii() {
+    var s = '   +------------------------+\n';
+    for (var i = SQUARES.a8; i <= SQUARES.h1; i++) {
+      /* display the rank */
+      if (file(i) === 0) {
+        s += ' ' + '87654321'[rank(i)] + ' |';
+      }
+
+      /* empty piece */
+      if (board[i] == null) {
+        s += ' . ';
+      } else {
+        var piece = board[i].type;
+        var color = board[i].color;
+        var symbol = (color === WHITE) ?
+                     piece.toUpperCase() : piece.toLowerCase();
+        s += ' ' + symbol + ' ';
+      }
+
+      if ((i + 1) & 0x88) {
+        s += '|\n';
+        i += 8;
+      }
+    }
+    s += '   +------------------------+\n';
+    s += '     a  b  c  d  e  f  g  h\n';
+
+    return s;
+  }
+
+  // convert a move from Standard Algebraic Notation (SAN) to 0x88 coordinates
+  function move_from_san(move, sloppy) {
+    // strip off any move decorations: e.g Nf3+?!
+    var clean_move = stripped_san(move);
+
+    // if we're using the sloppy parser run a regex to grab piece, to, and from
+    // this should parse invalid SAN like: Pe2-e4, Rc1c4, Qf3xf7
+    if (sloppy) {
+      var matches = clean_move.match(/([pnbrqkPNBRQK])?([a-h][1-8])x?-?([a-h][1-8])([qrbnQRBN])?/);
+      if (matches) {
+        var piece = matches[1];
+        var from = matches[2];
+        var to = matches[3];
+        var promotion = matches[4];
+      }
+    }
+
+    var moves = generate_moves();
+    for (var i = 0, len = moves.length; i < len; i++) {
+      // try the strict parser first, then the sloppy parser if requested
+      // by the user
+      if ((clean_move === stripped_san(move_to_san(moves[i]))) ||
+          (sloppy && clean_move === stripped_san(move_to_san(moves[i], true)))) {
+        return moves[i];
+      } else {
+        if (matches &&
+            (!piece || piece.toLowerCase() == moves[i].piece) &&
+            SQUARES[from] == moves[i].from &&
+            SQUARES[to] == moves[i].to &&
+            (!promotion || promotion.toLowerCase() == moves[i].promotion)) {
+          return moves[i];
+        }
+      }
+    }
+
+    return null;
+  }
+
+
+  /*****************************************************************************
+   * UTILITY FUNCTIONS
+   ****************************************************************************/
+  function rank(i) {
+    return i >> 4;
+  }
+
+  function file(i) {
+    return i & 15;
+  }
+
+  function algebraic(i){
+    var f = file(i), r = rank(i);
+    return 'abcdefgh'.substring(f,f+1) + '87654321'.substring(r,r+1);
+  }
+
+  function swap_color(c) {
+    return c === WHITE ? BLACK : WHITE;
+  }
+
+  function is_digit(c) {
+    return '0123456789'.indexOf(c) !== -1;
+  }
+
+  /* pretty = external move object */
+  function make_pretty(ugly_move) {
+    var move = clone(ugly_move);
+    move.san = move_to_san(move, false);
+    move.to = algebraic(move.to);
+    move.from = algebraic(move.from);
+
+    var flags = '';
+
+    for (var flag in BITS) {
+      if (BITS[flag] & move.flags) {
+        flags += FLAGS[flag];
+      }
+    }
+    move.flags = flags;
+
+    return move;
+  }
+
+  function clone(obj) {
+    var dupe = (obj instanceof Array) ? [] : {};
+
+    for (var property in obj) {
+      if (typeof property === 'object') {
+        dupe[property] = clone(obj[property]);
+      } else {
+        dupe[property] = obj[property];
+      }
+    }
+
+    return dupe;
+  }
+
+  function trim(str) {
+    return str.replace(/^\s+|\s+$/g, '');
+  }
+
+  /*****************************************************************************
+   * DEBUGGING UTILITIES
+   ****************************************************************************/
+  function perft(depth) {
+    var moves = generate_moves({legal: false});
+    var nodes = 0;
+    var color = turn;
+
+    for (var i = 0, len = moves.length; i < len; i++) {
+      make_move(moves[i]);
+      if (!king_attacked(color)) {
+        if (depth - 1 > 0) {
+          var child_nodes = perft(depth - 1);
+          nodes += child_nodes;
+        } else {
+          nodes++;
+        }
+      }
+      undo_move();
+    }
+
+    return nodes;
+  }
+
+  return {
+    /***************************************************************************
+     * PUBLIC CONSTANTS (is there a better way to do this?)
+     **************************************************************************/
+    WHITE: WHITE,
+    BLACK: BLACK,
+    PAWN: PAWN,
+    KNIGHT: KNIGHT,
+    BISHOP: BISHOP,
+    ROOK: ROOK,
+    QUEEN: QUEEN,
+    KING: KING,
+    SQUARES: (function() {
+                /* from the ECMA-262 spec (section 12.6.4):
+                 * "The mechanics of enumerating the properties ... is
+                 * implementation dependent"
+                 * so: for (var sq in SQUARES) { keys.push(sq); } might not be
+                 * ordered correctly
+                 */
+                var keys = [];
+                for (var i = SQUARES.a8; i <= SQUARES.h1; i++) {
+                  if (i & 0x88) { i += 7; continue; }
+                  keys.push(algebraic(i));
+                }
+                return keys;
+              })(),
+    FLAGS: FLAGS,
+
+    /***************************************************************************
+     * PUBLIC API
+     **************************************************************************/
+    load: function(fen) {
+      return load(fen);
+    },
+
+    reset: function() {
+      return reset();
+    },
+
+    moves: function(options) {
+      /* The internal representation of a chess move is in 0x88 format, and
+       * not meant to be human-readable.  The code below converts the 0x88
+       * square coordinates to algebraic coordinates.  It also prunes an
+       * unnecessary move keys resulting from a verbose call.
+       */
+
+      var ugly_moves = generate_moves(options);
+      var moves = [];
+
+      for (var i = 0, len = ugly_moves.length; i < len; i++) {
+
+        /* does the user want a full move object (most likely not), or just
+         * SAN
+         */
+        if (typeof options !== 'undefined' && 'verbose' in options &&
+            options.verbose) {
+          moves.push(make_pretty(ugly_moves[i]));
+        } else {
+          moves.push(move_to_san(ugly_moves[i], false));
+        }
+      }
+
+      return moves;
+    },
+
+    in_check: function() {
+      return in_check();
+    },
+
+    in_checkmate: function() {
+      return in_checkmate();
+    },
+
+    in_stalemate: function() {
+      return in_stalemate();
+    },
+
+    in_draw: function() {
+      return half_moves >= 100 ||
+             in_stalemate() ||
+             insufficient_material() ||
+             in_threefold_repetition();
+    },
+
+    insufficient_material: function() {
+      return insufficient_material();
+    },
+
+    in_threefold_repetition: function() {
+      return in_threefold_repetition();
+    },
+
+    game_over: function() {
+      return half_moves >= 100 ||
+             in_checkmate() ||
+             in_stalemate() ||
+             insufficient_material() ||
+             in_threefold_repetition();
+    },
+
+    validate_fen: function(fen) {
+      return validate_fen(fen);
+    },
+
+    fen: function() {
+      return generate_fen();
+    },
+
+    pgn: function(options) {
+      /* using the specification from http://www.chessclub.com/help/PGN-spec
+       * example for html usage: .pgn({ max_width: 72, newline_char: "<br />" })
+       */
+      var newline = (typeof options === 'object' &&
+                     typeof options.newline_char === 'string') ?
+                     options.newline_char : '\n';
+      var max_width = (typeof options === 'object' &&
+                       typeof options.max_width === 'number') ?
+                       options.max_width : 0;
+      var result = [];
+      var header_exists = false;
+
+      /* add the PGN header headerrmation */
+      for (var i in header) {
+        /* TODO: order of enumerated properties in header object is not
+         * guaranteed, see ECMA-262 spec (section 12.6.4)
+         */
+        result.push('[' + i + ' \"' + header[i] + '\"]' + newline);
+        header_exists = true;
+      }
+
+      if (header_exists && history.length) {
+        result.push(newline);
+      }
+
+      /* pop all of history onto reversed_history */
+      var reversed_history = [];
+      while (history.length > 0) {
+        reversed_history.push(undo_move());
+      }
+
+      var moves = [];
+      var move_string = '';
+
+      /* build the list of moves.  a move_string looks like: "3. e3 e6" */
+      while (reversed_history.length > 0) {
+        var move = reversed_history.pop();
+
+        /* if the position started with black to move, start PGN with 1. ... */
+        if (!history.length && move.color === 'b') {
+          move_string = move_number + '. ...';
+        } else if (move.color === 'w') {
+          /* store the previous generated move_string if we have one */
+          if (move_string.length) {
+            moves.push(move_string);
+          }
+          move_string = move_number + '.';
+        }
+
+        move_string = move_string + ' ' + move_to_san(move, false);
+        make_move(move);
+      }
+
+      /* are there any other leftover moves? */
+      if (move_string.length) {
+        moves.push(move_string);
+      }
+
+      /* is there a result? */
+      if (typeof header.Result !== 'undefined') {
+        moves.push(header.Result);
+      }
+
+      /* history should be back to what is was before we started generating PGN,
+       * so join together moves
+       */
+      if (max_width === 0) {
+        return result.join('') + moves.join(' ');
+      }
+
+      /* wrap the PGN output at max_width */
+      var current_width = 0;
+      for (var i = 0; i < moves.length; i++) {
+        /* if the current move will push past max_width */
+        if (current_width + moves[i].length > max_width && i !== 0) {
+
+          /* don't end the line with whitespace */
+          if (result[result.length - 1] === ' ') {
+            result.pop();
+          }
+
+          result.push(newline);
+          current_width = 0;
+        } else if (i !== 0) {
+          result.push(' ');
+          current_width++;
+        }
+        result.push(moves[i]);
+        current_width += moves[i].length;
+      }
+
+      return result.join('');
+    },
+
+    load_pgn: function(pgn, options) {
+      // allow the user to specify the sloppy move parser to work around over
+      // disambiguation bugs in Fritz and Chessbase
+      var sloppy = (typeof options !== 'undefined' && 'sloppy' in options) ?
+                    options.sloppy : false;
+
+      function mask(str) {
+        return str.replace(/\\/g, '\\');
+      }
+
+      function has_keys(object) {
+        for (var key in object) {
+          return true;
+        }
+        return false;
+      }
+
+      function parse_pgn_header(header, options) {
+        var newline_char = (typeof options === 'object' &&
+                            typeof options.newline_char === 'string') ?
+                            options.newline_char : '\r?\n';
+        var header_obj = {};
+        var headers = header.split(new RegExp(mask(newline_char)));
+        var key = '';
+        var value = '';
+
+        for (var i = 0; i < headers.length; i++) {
+          key = headers[i].replace(/^\[([A-Z][A-Za-z]*)\s.*\]$/, '$1');
+          value = headers[i].replace(/^\[[A-Za-z]+\s"(.*)"\]$/, '$1');
+          if (trim(key).length > 0) {
+            header_obj[key] = value;
+          }
+        }
+
+        return header_obj;
+      }
+
+      var newline_char = (typeof options === 'object' &&
+                          typeof options.newline_char === 'string') ?
+                          options.newline_char : '\r?\n';
+      var regex = new RegExp('^(\\[(.|' + mask(newline_char) + ')*\\])' +
+                             '(' + mask(newline_char) + ')*' +
+                             '1.(' + mask(newline_char) + '|.)*$', 'g');
+
+      /* get header part of the PGN file */
+      var header_string = pgn.replace(regex, '$1');
+
+      /* no info part given, begins with moves */
+      if (header_string[0] !== '[') {
+        header_string = '';
+      }
+
+      reset();
+
+      /* parse PGN header */
+      var headers = parse_pgn_header(header_string, options);
+      for (var key in headers) {
+        set_header([key, headers[key]]);
+      }
+
+      /* load the starting position indicated by [Setup '1'] and
+      * [FEN position] */
+      if (headers['SetUp'] === '1') {
+          if (!(('FEN' in headers) && load(headers['FEN']))) {
+            return false;
+          }
+      }
+
+      /* delete header to get the moves */
+      var ms = pgn.replace(header_string, '').replace(new RegExp(mask(newline_char), 'g'), ' ');
+
+      /* delete comments */
+      ms = ms.replace(/(\{[^}]+\})+?/g, '');
+
+      /* delete recursive annotation variations */
+      var rav_regex = /(\([^\(\)]+\))+?/g
+      while (rav_regex.test(ms)) {
+        ms = ms.replace(rav_regex, '');
+      }
+
+      /* delete move numbers */
+      ms = ms.replace(/\d+\.(\.\.)?/g, '');
+
+      /* delete ... indicating black to move */
+      ms = ms.replace(/\.\.\./g, '');
+
+      /* delete numeric annotation glyphs */
+      ms = ms.replace(/\$\d+/g, '');
+
+      /* trim and get array of moves */
+      var moves = trim(ms).split(new RegExp(/\s+/));
+
+      /* delete empty entries */
+      moves = moves.join(',').replace(/,,+/g, ',').split(',');
+      var move = '';
+
+      for (var half_move = 0; half_move < moves.length - 1; half_move++) {
+        move = move_from_san(moves[half_move], sloppy);
+
+        /* move not possible! (don't clear the board to examine to show the
+         * latest valid position)
+         */
+        if (move == null) {
+          return false;
+        } else {
+          make_move(move);
+        }
+      }
+
+      /* examine last move */
+      move = moves[moves.length - 1];
+      if (POSSIBLE_RESULTS.indexOf(move) > -1) {
+        if (has_keys(header) && typeof header.Result === 'undefined') {
+          set_header(['Result', move]);
+        }
+      }
+      else {
+        move = move_from_san(move, sloppy);
+        if (move == null) {
+          return false;
+        } else {
+          make_move(move);
+        }
+      }
+      return true;
+    },
+
+    header: function() {
+      return set_header(arguments);
+    },
+
+    ascii: function() {
+      return ascii();
+    },
+
+    turn: function() {
+      return turn;
+    },
+
+    move: function(move, options) {
+      /* The move function can be called with in the following parameters:
+       *
+       * .move('Nxb7')      <- where 'move' is a case-sensitive SAN string
+       *
+       * .move({ from: 'h7', <- where the 'move' is a move object (additional
+       *         to :'h8',      fields are ignored)
+       *         promotion: 'q',
+       *      })
+       */
+
+      // allow the user to specify the sloppy move parser to work around over
+      // disambiguation bugs in Fritz and Chessbase
+      var sloppy = (typeof options !== 'undefined' && 'sloppy' in options) ?
+                    options.sloppy : false;
+
+      var move_obj = null;
+
+      if (typeof move === 'string') {
+        move_obj = move_from_san(move, sloppy);
+      } else if (typeof move === 'object') {
+        var moves = generate_moves();
+
+        /* convert the pretty move object to an ugly move object */
+        for (var i = 0, len = moves.length; i < len; i++) {
+          if (move.from === algebraic(moves[i].from) &&
+              move.to === algebraic(moves[i].to) &&
+              (!('promotion' in moves[i]) ||
+              move.promotion === moves[i].promotion)) {
+            move_obj = moves[i];
+            break;
+          }
+        }
+      }
+
+      /* failed to find move */
+      if (!move_obj) {
+        return null;
+      }
+
+      /* need to make a copy of move because we can't generate SAN after the
+       * move is made
+       */
+      var pretty_move = make_pretty(move_obj);
+
+      make_move(move_obj);
+
+      return pretty_move;
+    },
+
+    undo: function() {
+      var move = undo_move();
+      return (move) ? make_pretty(move) : null;
+    },
+
+    clear: function() {
+      return clear();
+    },
+
+    put: function(piece, square) {
+      return put(piece, square);
+    },
+
+    get: function(square) {
+      return get(square);
+    },
+
+    remove: function(square) {
+      return remove(square);
+    },
+
+    perft: function(depth) {
+      return perft(depth);
+    },
+
+    square_color: function(square) {
+      if (square in SQUARES) {
+        var sq_0x88 = SQUARES[square];
+        return ((rank(sq_0x88) + file(sq_0x88)) % 2 === 0) ? 'light' : 'dark';
+      }
+
+      return null;
+    },
+
+    history: function(options) {
+      var reversed_history = [];
+      var move_history = [];
+      var verbose = (typeof options !== 'undefined' && 'verbose' in options &&
+                     options.verbose);
+
+      while (history.length > 0) {
+        reversed_history.push(undo_move());
+      }
+
+      while (reversed_history.length > 0) {
+        var move = reversed_history.pop();
+        if (verbose) {
+          move_history.push(make_pretty(move));
+        } else {
+          move_history.push(move_to_san(move));
+        }
+        make_move(move);
+      }
+
+      return move_history;
+    }
+
+  };
+};
+
+/* export Chess object if using node or any other CommonJS compatible
+ * environment */
+if (true) exports.Chess = Chess;
+/* export Chess object for any RequireJS compatible environment */
+if (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = function () { return Chess;  }.call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+var ChessBoard = __webpack_require__(20);
+var game_1 = __webpack_require__(9);
+var highlight = __webpack_require__(10);
+var index_1 = __webpack_require__(3);
+var onDragStart = function (source, piece, position, orientation) {
+    var chess = game_1["default"].chess;
+    if (chess === null) {
+        return false;
+    }
+    if (chess.game_over() || (game_1["default"].color !== piece.charAt(0)) || game_1["default"].obs) {
+        return false;
+    }
+    if (game_1["default"].premove !== null) {
+        highlight.unHighlightSquare(game_1["default"].premove.source);
+        highlight.unHighlightSquare(game_1["default"].premove.target);
+        game_1["default"].premove = null;
+    }
+    var moves = chess.moves({ square: source, verbose: true });
+    highlight.highlightSquare(source);
+    for (var _i = 0, moves_1 = moves; _i < moves_1.length; _i++) {
+        var move = moves_1[_i];
+        highlight.highlightSquare(move.to);
+    }
+};
+var onDrop = function (source, target) {
+    if (game_1["default"].chess === null) {
+        return;
+    }
+    if (game_1["default"].color !== game_1["default"].chess.turn() && source !== target) {
+        game_1["default"].premove = { source: source, target: target };
+        return highlight.highlightPreMove(source, target);
+    }
+    else {
+        return index_1.movePiece(source, target);
+    }
+};
+var onSnapEnd = function () {
+    exports.board.position(game_1["default"].chess.fen());
+};
+exports.board = ChessBoard('board', {
+    position: 'start',
+    showNotation: true,
+    draggable: true,
+    onDragStart: onDragStart,
+    onDrop: onDrop,
+    onSnapEnd: onSnapEnd,
+    pieceTheme: 'assets/img/chesspieces/wikipedia-svg/{piece}.svg'
+});
+exports["default"] = exports.board;
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {/*!
+ * chessboard.js $version$
+ *
+ * Copyright 2013 Chris Oakman
+ * Released under the MIT license
+ * https://github.com/oakmac/chessboardjs/blob/master/LICENSE
+ *
+ * Date: $date$
+ */
+
+//------------------------------------------------------------------------------
+// Chess Util Functions
+//------------------------------------------------------------------------------
+var COLUMNS = 'abcdefgh'.split('');
+
+function validMove(move) {
+  // move should be a string
+  if (typeof move !== 'string') return false;
+
+  // move should be in the form of "e2-e4", "f6-d5"
+  var tmp = move.split('-');
+  if (tmp.length !== 2) return false;
+
+  return (validSquare(tmp[0]) === true && validSquare(tmp[1]) === true);
+}
+
+function validSquare(square) {
+  if (typeof square !== 'string') return false;
+  return (square.search(/^[a-h][1-8]$/) !== -1);
+}
+
+function validPieceCode(code) {
+  if (typeof code !== 'string') return false;
+  return (code.search(/^[bw][KQRNBP]$/) !== -1);
+}
+
+// TODO: this whole function could probably be replaced with a single regex
+function validFen(fen) {
+  if (typeof fen !== 'string') return false;
+
+  // cut off any move, castling, etc info from the end
+  // we're only interested in position information
+  fen = fen.replace(/ .+$/, '');
+
+  // FEN should be 8 sections separated by slashes
+  var chunks = fen.split('/');
+  if (chunks.length !== 8) return false;
+
+  // check the piece sections
+  for (var i = 0; i < 8; i++) {
+    if (chunks[i] === '' ||
+        chunks[i].length > 8 ||
+        chunks[i].search(/[^kqrbnpKQRNBP1-8]/) !== -1) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function validPositionObject(pos) {
+  if (typeof pos !== 'object') return false;
+
+  for (var i in pos) {
+    if (pos.hasOwnProperty(i) !== true) continue;
+
+    if (validSquare(i) !== true || validPieceCode(pos[i]) !== true) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+// convert FEN piece code to bP, wK, etc
+function fenToPieceCode(piece) {
+  // black piece
+  if (piece.toLowerCase() === piece) {
+    return 'b' + piece.toUpperCase();
+  }
+
+  // white piece
+  return 'w' + piece.toUpperCase();
+}
+
+// convert bP, wK, etc code to FEN structure
+function pieceCodeToFen(piece) {
+  var tmp = piece.split('');
+
+  // white piece
+  if (tmp[0] === 'w') {
+    return tmp[1].toUpperCase();
+  }
+
+  // black piece
+  return tmp[1].toLowerCase();
+}
+
+// convert FEN string to position object
+// returns false if the FEN string is invalid
+function fenToObj(fen) {
+  if (validFen(fen) !== true) {
+    return false;
+  }
+
+  // cut off any move, castling, etc info from the end
+  // we're only interested in position information
+  fen = fen.replace(/ .+$/, '');
+
+  var rows = fen.split('/');
+  var position = {};
+
+  var currentRow = 8;
+  for (var i = 0; i < 8; i++) {
+    var row = rows[i].split('');
+    var colIndex = 0;
+
+    // loop through each character in the FEN section
+    for (var j = 0; j < row.length; j++) {
+      // number / empty squares
+      if (row[j].search(/[1-8]/) !== -1) {
+        var emptySquares = parseInt(row[j], 10);
+        colIndex += emptySquares;
+      }
+      // piece
+      else {
+        var square = COLUMNS[colIndex] + currentRow;
+        position[square] = fenToPieceCode(row[j]);
+        colIndex++;
+      }
+    }
+
+    currentRow--;
+  }
+
+  return position;
+}
+
+// position object to FEN string
+// returns false if the obj is not a valid position object
+function objToFen(obj) {
+  if (validPositionObject(obj) !== true) {
+    return false;
+  }
+
+  var fen = '';
+
+  var currentRow = 8;
+  for (var i = 0; i < 8; i++) {
+    for (var j = 0; j < 8; j++) {
+      var square = COLUMNS[j] + currentRow;
+
+      // piece exists
+      if (obj.hasOwnProperty(square) === true) {
+        fen += pieceCodeToFen(obj[square]);
+      }
+
+      // empty space
+      else {
+        fen += '1';
+      }
+    }
+
+    if (i !== 7) {
+      fen += '/';
+    }
+
+    currentRow--;
+  }
+
+  // squeeze the numbers together
+  // haha, I love this solution...
+  fen = fen.replace(/11111111/g, '8');
+  fen = fen.replace(/1111111/g, '7');
+  fen = fen.replace(/111111/g, '6');
+  fen = fen.replace(/11111/g, '5');
+  fen = fen.replace(/1111/g, '4');
+  fen = fen.replace(/111/g, '3');
+  fen = fen.replace(/11/g, '2');
+
+  return fen;
+}
+
+var ChessBoard = function(containerElOrId, cfg) {
+'use strict';
+
+cfg = cfg || {};
+
+//------------------------------------------------------------------------------
+// Constants
+//------------------------------------------------------------------------------
+
+var MINIMUM_JQUERY_VERSION = '1.7.0',
+  START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR',
+  START_POSITION = fenToObj(START_FEN);
+
+// use unique class names to prevent clashing with anything else on the page
+// and simplify selectors
+// NOTE: these should never change
+var CSS = {
+  alpha: 'alpha-d2270',
+  black: 'black-3c85d',
+  board: 'board-b72b1',
+  chessboard: 'chessboard-63f37',
+  clearfix: 'clearfix-7da63',
+  highlight1: 'highlight1-32417',
+  highlight2: 'highlight2-9c5d2',
+  notation: 'notation-322f9',
+  numeric: 'numeric-fc462',
+  piece: 'piece-417db',
+  row: 'row-5277c',
+  sparePieces: 'spare-pieces-7492f',
+  sparePiecesBottom: 'spare-pieces-bottom-ae20f',
+  sparePiecesTop: 'spare-pieces-top-4028b',
+  square: 'square-55d63',
+  white: 'white-1e1d7'
+};
+
+//------------------------------------------------------------------------------
+// Module Scope Variables
+//------------------------------------------------------------------------------
+
+// DOM elements
+var containerEl,
+  boardEl,
+  draggedPieceEl,
+  sparePiecesTopEl,
+  sparePiecesBottomEl;
+
+// constructor return object
+var widget = {};
+
+//------------------------------------------------------------------------------
+// Stateful
+//------------------------------------------------------------------------------
+
+var ANIMATION_HAPPENING = false,
+  BOARD_BORDER_SIZE = 2,
+  CURRENT_ORIENTATION = 'white',
+  CURRENT_POSITION = {},
+  SQUARE_SIZE,
+  DRAGGED_PIECE,
+  DRAGGED_PIECE_LOCATION,
+  DRAGGED_PIECE_SOURCE,
+  CLICK_MOVE = false,
+  DRAGGING_A_PIECE = false,
+  SPARE_PIECE_ELS_IDS = {},
+  SQUARE_ELS_IDS = {},
+  SQUARE_ELS_OFFSETS;
+
+//------------------------------------------------------------------------------
+// JS Util Functions
+//------------------------------------------------------------------------------
+
+// http://tinyurl.com/3ttloxj
+function uuid() {
+  return 'xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-xxxx-xxxx'.replace(/x/g, function(c) {
+    var r = Math.random() * 16 | 0;
+    return r.toString(16);
+  });
+}
+
+function deepCopy(thing) {
+  return JSON.parse(JSON.stringify(thing));
+}
+
+function parseSemVer(version) {
+  var tmp = version.split('.');
+  return {
+    major: parseInt(tmp[0], 10),
+    minor: parseInt(tmp[1], 10),
+    patch: parseInt(tmp[2], 10)
+  };
+}
+
+// returns true if version is >= minimum
+function compareSemVer(version, minimum) {
+  version = parseSemVer(version);
+  minimum = parseSemVer(minimum);
+
+  var versionNum = (version.major * 10000 * 10000) +
+    (version.minor * 10000) + version.patch;
+  var minimumNum = (minimum.major * 10000 * 10000) +
+    (minimum.minor * 10000) + minimum.patch;
+
+  return (versionNum >= minimumNum);
+}
+
+//------------------------------------------------------------------------------
+// Validation / Errors
+//------------------------------------------------------------------------------
+
+function error(code, msg, obj) {
+  // do nothing if showErrors is not set
+  if (cfg.hasOwnProperty('showErrors') !== true ||
+      cfg.showErrors === false) {
+    return;
+  }
+
+  var errorText = 'ChessBoard Error ' + code + ': ' + msg;
+
+  // print to console
+  if (cfg.showErrors === 'console' &&
+      typeof console === 'object' &&
+      typeof console.log === 'function') {
+    console.log(errorText);
+    if (arguments.length >= 2) {
+      console.log(obj);
+    }
+    return;
+  }
+
+  // alert errors
+  if (cfg.showErrors === 'alert') {
+    if (obj) {
+      errorText += '\n\n' + JSON.stringify(obj);
+    }
+    window.alert(errorText);
+    return;
+  }
+
+  // custom function
+  if (typeof cfg.showErrors === 'function') {
+    cfg.showErrors(code, msg, obj);
+  }
+}
+
+// check dependencies
+function checkDeps() {
+  // if containerId is a string, it must be the ID of a DOM node
+  if (typeof containerElOrId === 'string') {
+    // cannot be empty
+    if (containerElOrId === '') {
+      window.alert('ChessBoard Error 1001: ' +
+        'The first argument to ChessBoard() cannot be an empty string.' +
+        '\n\nExiting...');
+      return false;
+    }
+
+    // make sure the container element exists in the DOM
+    var el = document.getElementById(containerElOrId);
+    if (! el) {
+      window.alert('ChessBoard Error 1002: Element with id "' +
+        containerElOrId + '" does not exist in the DOM.' +
+        '\n\nExiting...');
+      return false;
+    }
+
+    // set the containerEl
+    containerEl = $(el);
+  }
+
+  // else it must be something that becomes a jQuery collection
+  // with size 1
+  // ie: a single DOM node or jQuery object
+  else {
+    containerEl = $(containerElOrId);
+
+    if (containerEl.length !== 1) {
+      window.alert('ChessBoard Error 1003: The first argument to ' +
+        'ChessBoard() must be an ID or a single DOM node.' +
+        '\n\nExiting...');
+      return false;
+    }
+  }
+
+  // JSON must exist
+  if (! window.JSON ||
+      typeof JSON.stringify !== 'function' ||
+      typeof JSON.parse !== 'function') {
+    window.alert('ChessBoard Error 1004: JSON does not exist. ' +
+      'Please include a JSON polyfill.\n\nExiting...');
+    return false;
+  }
+
+  // check for a compatible version of jQuery
+  if (! (typeof window.$ && $.fn && $.fn.jquery &&
+      compareSemVer($.fn.jquery, MINIMUM_JQUERY_VERSION) === true)) {
+    window.alert('ChessBoard Error 1005: Unable to find a valid version ' +
+      'of jQuery. Please include jQuery ' + MINIMUM_JQUERY_VERSION + ' or ' +
+      'higher on the page.\n\nExiting...');
+    return false;
+  }
+
+  return true;
+}
+
+function validAnimationSpeed(speed) {
+  if (speed === 'fast' || speed === 'slow') {
+    return true;
+  }
+
+  if ((parseInt(speed, 10) + '') !== (speed + '')) {
+    return false;
+  }
+
+  return (speed >= 0);
+}
+
+// validate config / set default options
+function expandConfig() {
+  if (typeof cfg === 'string' || validPositionObject(cfg) === true) {
+    cfg = {
+      position: cfg
+    };
+  }
+
+  // default for orientation is white
+  if (cfg.orientation !== 'black') {
+    cfg.orientation = 'white';
+  }
+  CURRENT_ORIENTATION = cfg.orientation;
+
+  // default for showNotation is true
+  if (cfg.showNotation !== false) {
+    cfg.showNotation = true;
+  }
+
+  // default for draggable is false
+  if (cfg.draggable !== true) {
+    cfg.draggable = false;
+  }
+
+  // default for dropOffBoard is 'snapback'
+  if (cfg.dropOffBoard !== 'trash') {
+    cfg.dropOffBoard = 'snapback';
+  }
+
+  // default for sparePieces is false
+  if (cfg.sparePieces !== true) {
+    cfg.sparePieces = false;
+  }
+
+  // draggable must be true if sparePieces is enabled
+  if (cfg.sparePieces === true) {
+    cfg.draggable = true;
+  }
+
+  // default piece theme is wikipedia
+  if (cfg.hasOwnProperty('pieceTheme') !== true ||
+      (typeof cfg.pieceTheme !== 'string' &&
+       typeof cfg.pieceTheme !== 'function')) {
+    cfg.pieceTheme = 'img/chesspieces/wikipedia/{piece}.png';
+  }
+
+  // animation speeds
+  if (cfg.hasOwnProperty('appearSpeed') !== true ||
+      validAnimationSpeed(cfg.appearSpeed) !== true) {
+    cfg.appearSpeed = 200;
+  }
+  if (cfg.hasOwnProperty('moveSpeed') !== true ||
+      validAnimationSpeed(cfg.moveSpeed) !== true) {
+    cfg.moveSpeed = 200;
+  }
+  if (cfg.hasOwnProperty('snapbackSpeed') !== true ||
+      validAnimationSpeed(cfg.snapbackSpeed) !== true) {
+    cfg.snapbackSpeed = 50;
+  }
+  if (cfg.hasOwnProperty('snapSpeed') !== true ||
+      validAnimationSpeed(cfg.snapSpeed) !== true) {
+    cfg.snapSpeed = 25;
+  }
+  if (cfg.hasOwnProperty('trashSpeed') !== true ||
+      validAnimationSpeed(cfg.trashSpeed) !== true) {
+    cfg.trashSpeed = 100;
+  }
+
+  // make sure position is valid
+  if (cfg.hasOwnProperty('position') === true) {
+    if (cfg.position === 'start') {
+      CURRENT_POSITION = deepCopy(START_POSITION);
+    }
+
+    else if (validFen(cfg.position) === true) {
+      CURRENT_POSITION = fenToObj(cfg.position);
+    }
+
+    else if (validPositionObject(cfg.position) === true) {
+      CURRENT_POSITION = deepCopy(cfg.position);
+    }
+
+    else {
+      error(7263, 'Invalid value passed to config.position.', cfg.position);
+    }
+  }
+
+  return true;
+}
+
+//------------------------------------------------------------------------------
+// DOM Misc
+//------------------------------------------------------------------------------
+
+// calculates square size based on the width of the container
+// got a little CSS black magic here, so let me explain:
+// get the width of the container element (could be anything), reduce by border
+// size, and then keep reducing until we find an exact mod 8 for our square
+// size
+function calculateSquareSize() {
+  var containerWidth = parseInt(containerEl.width(), 10);
+
+  // defensive, prevent infinite loop
+  if (! containerWidth || containerWidth <= 0) {
+    return 0;
+  }
+
+  // pad one pixel
+  var boardWidth = containerWidth - BOARD_BORDER_SIZE * 2;
+
+  while (boardWidth % 8 !== 0 && boardWidth > 0) {
+    boardWidth--;
+  }
+
+  return (boardWidth / 8);
+}
+
+// create random IDs for elements
+function createElIds() {
+  // squares on the board
+  for (var i = 0; i < COLUMNS.length; i++) {
+    for (var j = 1; j <= 8; j++) {
+      var square = COLUMNS[i] + j;
+      SQUARE_ELS_IDS[square] = square + '-' + uuid();
+    }
+  }
+
+  // spare pieces
+  var pieces = 'KQRBNP'.split('');
+  for (var i = 0; i < pieces.length; i++) {
+    var whitePiece = 'w' + pieces[i];
+    var blackPiece = 'b' + pieces[i];
+    SPARE_PIECE_ELS_IDS[whitePiece] = whitePiece + '-' + uuid();
+    SPARE_PIECE_ELS_IDS[blackPiece] = blackPiece + '-' + uuid();
+  }
+}
+
+//------------------------------------------------------------------------------
+// Markup Building
+//------------------------------------------------------------------------------
+
+function buildBoardContainer() {
+  var html = '<div class="' + CSS.chessboard + '">';
+
+  if (cfg.sparePieces === true) {
+    html += '<div class="' + CSS.sparePieces + ' ' +
+      CSS.sparePiecesTop + '"></div>';
+  }
+
+  html += '<div class="' + CSS.board + '"></div>';
+
+  if (cfg.sparePieces === true) {
+    html += '<div class="' + CSS.sparePieces + ' ' +
+      CSS.sparePiecesBottom + '"></div>';
+  }
+
+  html += '</div>';
+
+  return html;
+}
+
+/*
+var buildSquare = function(color, size, id) {
+  var html = '<div class="' + CSS.square + ' ' + CSS[color] + '" ' +
+  'style="width: ' + size + 'px; height: ' + size + 'px" ' +
+  'id="' + id + '">';
+
+  if (cfg.showNotation === true) {
+
+  }
+
+  html += '</div>';
+
+  return html;
+};
+*/
+
+function buildBoard(orientation) {
+  if (orientation !== 'black') {
+    orientation = 'white';
+  }
+
+  var html = '';
+
+  // algebraic notation / orientation
+  var alpha = deepCopy(COLUMNS);
+  var row = 8;
+  if (orientation === 'black') {
+    alpha.reverse();
+    row = 1;
+  }
+
+  var squareColor = 'white';
+  for (var i = 0; i < 8; i++) {
+    html += '<div class="' + CSS.row + '">';
+    for (var j = 0; j < 8; j++) {
+      var square = alpha[j] + row;
+
+      html += '<div class="' + CSS.square + ' ' + CSS[squareColor] + ' ' +
+        'square-' + square + '" ' +
+        'style="width: ' + SQUARE_SIZE + 'px; height: ' + SQUARE_SIZE + 'px" ' +
+        'id="' + SQUARE_ELS_IDS[square] + '" ' +
+        'data-square="' + square + '">';
+
+      if (cfg.showNotation === true) {
+        // alpha notation
+        if ((orientation === 'white' && row === 1) ||
+            (orientation === 'black' && row === 8)) {
+          html += '<div class="' + CSS.notation + ' ' + CSS.alpha + '">' +
+            alpha[j] + '</div>';
+        }
+
+        // numeric notation
+        if (j === 0) {
+          html += '<div class="' + CSS.notation + ' ' + CSS.numeric + '">' +
+            row + '</div>';
+        }
+      }
+
+      html += '</div>'; // end .square
+
+      squareColor = (squareColor === 'white' ? 'black' : 'white');
+    }
+    html += '<div class="' + CSS.clearfix + '"></div></div>';
+
+    squareColor = (squareColor === 'white' ? 'black' : 'white');
+
+    if (orientation === 'white') {
+      row--;
+    }
+    else {
+      row++;
+    }
+  }
+
+  return html;
+}
+
+function buildPieceImgSrc(piece) {
+  if (typeof cfg.pieceTheme === 'function') {
+    return cfg.pieceTheme(piece);
+  }
+
+  if (typeof cfg.pieceTheme === 'string') {
+    return cfg.pieceTheme.replace(/{piece}/g, piece);
+  }
+
+  // NOTE: this should never happen
+  error(8272, 'Unable to build image source for cfg.pieceTheme.');
+  return '';
+}
+
+function buildPiece(piece, hidden, id) {
+  var html = '<img src="' + buildPieceImgSrc(piece) + '" ';
+  if (id && typeof id === 'string') {
+    html += 'id="' + id + '" ';
+  }
+  html += 'alt="" ' +
+  'class="' + CSS.piece + '" ' +
+  'data-piece="' + piece + '" ' +
+  'style="width: ' + SQUARE_SIZE + 'px;' +
+  'height: ' + SQUARE_SIZE + 'px;';
+  if (hidden === true) {
+    html += 'display:none;';
+  }
+  html += '" />';
+
+  return html;
+}
+
+function buildSparePieces(color) {
+  var pieces = ['wK', 'wQ', 'wR', 'wB', 'wN', 'wP'];
+  if (color === 'black') {
+    pieces = ['bK', 'bQ', 'bR', 'bB', 'bN', 'bP'];
+  }
+
+  var html = '';
+  for (var i = 0; i < pieces.length; i++) {
+    html += buildPiece(pieces[i], false, SPARE_PIECE_ELS_IDS[pieces[i]]);
+  }
+
+  return html;
+}
+
+//------------------------------------------------------------------------------
+// Animations
+//------------------------------------------------------------------------------
+
+function animateSquareToSquare(src, dest, piece, completeFn) {
+  // get information about the source and destination squares
+  var srcSquareEl = $('#' + SQUARE_ELS_IDS[src]);
+  var srcSquarePosition = srcSquareEl.offset();
+  var destSquareEl = $('#' + SQUARE_ELS_IDS[dest]);
+  var destSquarePosition = destSquareEl.offset();
+
+  // create the animated piece and absolutely position it
+  // over the source square
+  var animatedPieceId = uuid();
+  $('body').append(buildPiece(piece, true, animatedPieceId));
+  var animatedPieceEl = $('#' + animatedPieceId);
+  animatedPieceEl.css({
+    display: '',
+    position: 'absolute',
+    top: srcSquarePosition.top,
+    left: srcSquarePosition.left
+  });
+
+  // remove original piece from source square
+  srcSquareEl.find('.' + CSS.piece).remove();
+
+  // on complete
+  var complete = function() {
+    // add the "real" piece to the destination square
+    destSquareEl.append(buildPiece(piece));
+
+    // remove the animated piece
+    animatedPieceEl.remove();
+
+    // run complete function
+    if (typeof completeFn === 'function') {
+      completeFn();
+    }
+  };
+
+  // animate the piece to the destination square
+  var opts = {
+    duration: cfg.moveSpeed,
+    complete: complete
+  };
+  animatedPieceEl.animate(destSquarePosition, opts);
+}
+
+function animateSparePieceToSquare(piece, dest, completeFn) {
+  var srcOffset = $('#' + SPARE_PIECE_ELS_IDS[piece]).offset();
+  var destSquareEl = $('#' + SQUARE_ELS_IDS[dest]);
+  var destOffset = destSquareEl.offset();
+
+  // create the animate piece
+  var pieceId = uuid();
+  $('body').append(buildPiece(piece, true, pieceId));
+  var animatedPieceEl = $('#' + pieceId);
+  animatedPieceEl.css({
+    display: '',
+    position: 'absolute',
+    left: srcOffset.left,
+    top: srcOffset.top
+  });
+
+  // on complete
+  var complete = function() {
+    // add the "real" piece to the destination square
+    destSquareEl.find('.' + CSS.piece).remove();
+    destSquareEl.append(buildPiece(piece));
+
+    // remove the animated piece
+    animatedPieceEl.remove();
+
+    // run complete function
+    if (typeof completeFn === 'function') {
+      completeFn();
+    }
+  };
+
+  // animate the piece to the destination square
+  var opts = {
+    duration: cfg.moveSpeed,
+    complete: complete
+  };
+  animatedPieceEl.animate(destOffset, opts);
+}
+
+// execute an array of animations
+function doAnimations(a, oldPos, newPos) {
+  if (a.length === 0) {
+    return;
+  }
+  ANIMATION_HAPPENING = true;
+
+  var numFinished = 0;
+  function onFinish() {
+    numFinished++;
+
+    // exit if all the animations aren't finished
+    if (numFinished !== a.length) return;
+
+    drawPositionInstant();
+    ANIMATION_HAPPENING = false;
+
+    // run their onMoveEnd function
+    if (cfg.hasOwnProperty('onMoveEnd') === true &&
+      typeof cfg.onMoveEnd === 'function') {
+      cfg.onMoveEnd(deepCopy(oldPos), deepCopy(newPos));
+    }
+  }
+
+  for (var i = 0; i < a.length; i++) {
+    // clear a piece
+    if (a[i].type === 'clear') {
+      $('#' + SQUARE_ELS_IDS[a[i].square] + ' .' + CSS.piece)
+        .fadeOut(cfg.trashSpeed, onFinish);
+    }
+
+    // add a piece (no spare pieces)
+    if (a[i].type === 'add' && cfg.sparePieces !== true) {
+      $('#' + SQUARE_ELS_IDS[a[i].square])
+        .append(buildPiece(a[i].piece, true))
+        .find('.' + CSS.piece)
+        .fadeIn(cfg.appearSpeed, onFinish);
+    }
+
+    // add a piece from a spare piece
+    if (a[i].type === 'add' && cfg.sparePieces === true) {
+      animateSparePieceToSquare(a[i].piece, a[i].square, onFinish);
+    }
+
+    // move a piece
+    if (a[i].type === 'move') {
+      animateSquareToSquare(a[i].source, a[i].destination, a[i].piece,
+        onFinish);
+    }
+  }
+}
+
+// returns the distance between two squares
+function squareDistance(s1, s2) {
+  s1 = s1.split('');
+  var s1x = COLUMNS.indexOf(s1[0]) + 1;
+  var s1y = parseInt(s1[1], 10);
+
+  s2 = s2.split('');
+  var s2x = COLUMNS.indexOf(s2[0]) + 1;
+  var s2y = parseInt(s2[1], 10);
+
+  var xDelta = Math.abs(s1x - s2x);
+  var yDelta = Math.abs(s1y - s2y);
+
+  if (xDelta >= yDelta) return xDelta;
+  return yDelta;
+}
+
+// returns an array of closest squares from square
+function createRadius(square) {
+  var squares = [];
+
+  // calculate distance of all squares
+  for (var i = 0; i < 8; i++) {
+    for (var j = 0; j < 8; j++) {
+      var s = COLUMNS[i] + (j + 1);
+
+      // skip the square we're starting from
+      if (square === s) continue;
+
+      squares.push({
+        square: s,
+        distance: squareDistance(square, s)
+      });
+    }
+  }
+
+  // sort by distance
+  squares.sort(function(a, b) {
+    return a.distance - b.distance;
+  });
+
+  // just return the square code
+  var squares2 = [];
+  for (var i = 0; i < squares.length; i++) {
+    squares2.push(squares[i].square);
+  }
+
+  return squares2;
+}
+
+// returns the square of the closest instance of piece
+// returns false if no instance of piece is found in position
+function findClosestPiece(position, piece, square) {
+  // create array of closest squares from square
+  var closestSquares = createRadius(square);
+
+  // search through the position in order of distance for the piece
+  for (var i = 0; i < closestSquares.length; i++) {
+    var s = closestSquares[i];
+
+    if (position.hasOwnProperty(s) === true && position[s] === piece) {
+      return s;
+    }
+  }
+
+  return false;
+}
+
+// calculate an array of animations that need to happen in order to get
+// from pos1 to pos2
+function calculateAnimations(pos1, pos2) {
+  // make copies of both
+  pos1 = deepCopy(pos1);
+  pos2 = deepCopy(pos2);
+
+  var animations = [];
+  var squaresMovedTo = {};
+
+  // remove pieces that are the same in both positions
+  for (var i in pos2) {
+    if (pos2.hasOwnProperty(i) !== true) continue;
+
+    if (pos1.hasOwnProperty(i) === true && pos1[i] === pos2[i]) {
+      delete pos1[i];
+      delete pos2[i];
+    }
+  }
+
+  // find all the "move" animations
+  for (var i in pos2) {
+    if (pos2.hasOwnProperty(i) !== true) continue;
+
+    var closestPiece = findClosestPiece(pos1, pos2[i], i);
+    if (closestPiece !== false) {
+      animations.push({
+        type: 'move',
+        source: closestPiece,
+        destination: i,
+        piece: pos2[i]
+      });
+
+      delete pos1[closestPiece];
+      delete pos2[i];
+      squaresMovedTo[i] = true;
+    }
+  }
+
+  // add pieces to pos2
+  for (var i in pos2) {
+    if (pos2.hasOwnProperty(i) !== true) continue;
+
+    animations.push({
+      type: 'add',
+      square: i,
+      piece: pos2[i]
+    })
+
+    delete pos2[i];
+  }
+
+  // clear pieces from pos1
+  for (var i in pos1) {
+    if (pos1.hasOwnProperty(i) !== true) continue;
+
+    // do not clear a piece if it is on a square that is the result
+    // of a "move", ie: a piece capture
+    if (squaresMovedTo.hasOwnProperty(i) === true) continue;
+
+    animations.push({
+      type: 'clear',
+      square: i,
+      piece: pos1[i]
+    });
+
+    delete pos1[i];
+  }
+
+  return animations;
+}
+
+//------------------------------------------------------------------------------
+// Control Flow
+//------------------------------------------------------------------------------
+
+function drawPositionInstant() {
+  // clear the board
+  boardEl.find('.' + CSS.piece).remove();
+
+  // add the pieces
+  for (var i in CURRENT_POSITION) {
+    if (CURRENT_POSITION.hasOwnProperty(i) !== true) continue;
+      if (DRAGGING_A_PIECE && DRAGGED_PIECE_SOURCE == i) continue;
+    $('#' + SQUARE_ELS_IDS[i]).append(buildPiece(CURRENT_POSITION[i]));
+  }
+}
+
+function drawBoard() {
+  boardEl.html(buildBoard(CURRENT_ORIENTATION));
+  drawPositionInstant();
+
+  if (cfg.sparePieces === true) {
+    if (CURRENT_ORIENTATION === 'white') {
+      sparePiecesTopEl.html(buildSparePieces('black'));
+      sparePiecesBottomEl.html(buildSparePieces('white'));
+    }
+    else {
+      sparePiecesTopEl.html(buildSparePieces('white'));
+      sparePiecesBottomEl.html(buildSparePieces('black'));
+    }
+  }
+}
+
+// given a position and a set of moves, return a new position
+// with the moves executed
+function calculatePositionFromMoves(position, moves) {
+  position = deepCopy(position);
+
+  for (var i in moves) {
+    if (moves.hasOwnProperty(i) !== true) continue;
+
+    // skip the move if the position doesn't have a piece on the source square
+    if (position.hasOwnProperty(i) !== true) continue;
+
+    var piece = position[i];
+    delete position[i];
+    position[moves[i]] = piece;
+  }
+
+  return position;
+}
+
+function setCurrentPosition(position) {
+  var oldPos = deepCopy(CURRENT_POSITION);
+  var newPos = deepCopy(position);
+  var oldFen = objToFen(oldPos);
+  var newFen = objToFen(newPos);
+
+  // do nothing if no change in position
+  if (oldFen === newFen) return;
+
+  // run their onChange function
+  if (cfg.hasOwnProperty('onChange') === true &&
+    typeof cfg.onChange === 'function') {
+    cfg.onChange(oldPos, newPos);
+  }
+
+  // update state
+  CURRENT_POSITION = position;
+}
+
+function isXYOnSquare(x, y) {
+  for (var i in SQUARE_ELS_OFFSETS) {
+    if (SQUARE_ELS_OFFSETS.hasOwnProperty(i) !== true) continue;
+
+    var s = SQUARE_ELS_OFFSETS[i];
+    if (x >= s.left && x < s.left + SQUARE_SIZE &&
+        y >= s.top && y < s.top + SQUARE_SIZE) {
+      return i;
+    }
+  }
+
+  return 'offboard';
+}
+
+// records the XY coords of every square into memory
+function captureSquareOffsets() {
+  SQUARE_ELS_OFFSETS = {};
+
+  for (var i in SQUARE_ELS_IDS) {
+    if (SQUARE_ELS_IDS.hasOwnProperty(i) !== true) continue;
+
+    SQUARE_ELS_OFFSETS[i] = $('#' + SQUARE_ELS_IDS[i]).offset();
+  }
+}
+
+function removeSquareHighlights() {
+  boardEl.find('.' + CSS.square)
+    .removeClass(CSS.highlight1 + ' ' + CSS.highlight2);
+}
+
+function snapbackDraggedPiece() {
+  // there is no "snapback" for spare pieces
+  if (DRAGGED_PIECE_SOURCE === 'spare') {
+    trashDraggedPiece();
+    return;
+  }
+
+  removeSquareHighlights();
+
+  // animation complete
+  function complete() {
+    drawPositionInstant();
+    draggedPieceEl.css('display', 'none');
+
+    // run their onSnapbackEnd function
+    if (cfg.hasOwnProperty('onSnapbackEnd') === true &&
+      typeof cfg.onSnapbackEnd === 'function') {
+      cfg.onSnapbackEnd(DRAGGED_PIECE, DRAGGED_PIECE_SOURCE,
+        deepCopy(CURRENT_POSITION), CURRENT_ORIENTATION);
+    }
+  }
+
+  // get source square position
+  var sourceSquarePosition =
+    $('#' + SQUARE_ELS_IDS[DRAGGED_PIECE_SOURCE]).offset();
+
+  // animate the piece to the target square
+  var opts = {
+    duration: cfg.snapbackSpeed,
+    complete: complete
+  };
+  draggedPieceEl.animate(sourceSquarePosition, opts);
+
+  // set state
+  DRAGGING_A_PIECE = false;
+}
+
+function trashDraggedPiece() {
+  removeSquareHighlights();
+
+  // remove the source piece
+  var newPosition = deepCopy(CURRENT_POSITION);
+  delete newPosition[DRAGGED_PIECE_SOURCE];
+  setCurrentPosition(newPosition);
+
+  // redraw the position
+  drawPositionInstant();
+
+  // hide the dragged piece
+  draggedPieceEl.fadeOut(cfg.trashSpeed);
+
+  // set state
+  DRAGGING_A_PIECE = false;
+}
+
+function dropDraggedPieceOnSquare(square) {
+
+  // if destination is same as source, piece stays picked up and is dropped at the next clicked square.
+  if (CLICK_MOVE == false) {
+    if (square === DRAGGED_PIECE_SOURCE) {
+      CLICK_MOVE = true;
+      return;
+    }
+  }
+
+  CLICK_MOVE = false;
+
+  removeSquareHighlights();
+
+  // update position
+  var newPosition = deepCopy(CURRENT_POSITION);
+  delete newPosition[DRAGGED_PIECE_SOURCE];
+  newPosition[square] = DRAGGED_PIECE;
+  setCurrentPosition(newPosition);
+
+  // get target square information
+  var targetSquarePosition = $('#' + SQUARE_ELS_IDS[square]).offset();
+
+  // animation complete
+  var complete = function() {
+    drawPositionInstant();
+    draggedPieceEl.css('display', 'none');
+
+    // execute their onSnapEnd function
+    if (cfg.hasOwnProperty('onSnapEnd') === true &&
+      typeof cfg.onSnapEnd === 'function') {
+      cfg.onSnapEnd(DRAGGED_PIECE_SOURCE, square, DRAGGED_PIECE);
+    }
+  };
+
+  // snap the piece to the target square
+  var opts = {
+    duration: cfg.snapSpeed,
+    complete: complete
+  };
+  draggedPieceEl.animate(targetSquarePosition, opts);
+
+  // set state
+  DRAGGING_A_PIECE = false;
+}
+
+function beginDraggingPiece(source, piece, x, y) {
+  // run their custom onDragStart function
+  // their custom onDragStart function can cancel drag start
+  if (typeof cfg.onDragStart === 'function' &&
+      cfg.onDragStart(source, piece,
+        deepCopy(CURRENT_POSITION), CURRENT_ORIENTATION) === false) {
+    return;
+  }
+
+  // set state
+  DRAGGING_A_PIECE = true;
+  DRAGGED_PIECE = piece;
+  DRAGGED_PIECE_SOURCE = source;
+
+  // if the piece came from spare pieces, location is offboard
+  if (source === 'spare') {
+    DRAGGED_PIECE_LOCATION = 'offboard';
+  }
+  else {
+    DRAGGED_PIECE_LOCATION = source;
+  }
+
+  // capture the x, y coords of all squares in memory
+  captureSquareOffsets();
+
+  // create the dragged piece
+  draggedPieceEl.attr('src', buildPieceImgSrc(piece))
+    .css({
+      display: '',
+      position: 'absolute',
+      left: x - (SQUARE_SIZE / 2),
+      top: y - (SQUARE_SIZE / 2)
+    });
+
+  if (source !== 'spare') {
+    // highlight the source square and hide the piece
+    $('#' + SQUARE_ELS_IDS[source]).addClass(CSS.highlight1)
+      .find('.' + CSS.piece).css('display', 'none');
+  }
+}
+
+function updateDraggedPiece(x, y) {
+  // put the dragged piece over the mouse cursor
+  draggedPieceEl.css({
+    left: x - (SQUARE_SIZE / 2),
+    top: y - (SQUARE_SIZE / 2)
+  });
+
+  // get location
+  var location = isXYOnSquare(x, y);
+
+  // do nothing if the location has not changed
+  if (location === DRAGGED_PIECE_LOCATION) return;
+
+  // remove highlight from previous square
+  if (validSquare(DRAGGED_PIECE_LOCATION) === true) {
+    $('#' + SQUARE_ELS_IDS[DRAGGED_PIECE_LOCATION])
+      .removeClass(CSS.highlight2);
+  }
+
+  // add highlight to new square
+  if (validSquare(location) === true) {
+    $('#' + SQUARE_ELS_IDS[location]).addClass(CSS.highlight2);
+  }
+
+  // run onDragMove
+  if (typeof cfg.onDragMove === 'function') {
+    cfg.onDragMove(location, DRAGGED_PIECE_LOCATION,
+      DRAGGED_PIECE_SOURCE, DRAGGED_PIECE,
+      deepCopy(CURRENT_POSITION), CURRENT_ORIENTATION);
+  }
+
+  // update state
+  DRAGGED_PIECE_LOCATION = location;
+}
+
+function stopDraggedPiece(location) {
+  // determine what the action should be
+  var action = 'drop';
+  if (location === 'offboard' && cfg.dropOffBoard === 'snapback') {
+    action = 'snapback';
+  }
+  if (location === 'offboard' && cfg.dropOffBoard === 'trash') {
+    action = 'trash';
+  }
+
+  // run their onDrop function, which can potentially change the drop action
+  if (cfg.hasOwnProperty('onDrop') === true &&
+    typeof cfg.onDrop === 'function') {
+    var newPosition = deepCopy(CURRENT_POSITION);
+
+    // source piece is a spare piece and position is on the board
+    if (DRAGGED_PIECE_SOURCE === 'spare' && validSquare(location) === true) {
+      // add the piece to the board
+      newPosition[location] = DRAGGED_PIECE;
+    }
+
+    // source piece was on the board and position is off the board
+    if (validSquare(DRAGGED_PIECE_SOURCE) === true && location === 'offboard') {
+      // remove the piece from the board
+      delete newPosition[DRAGGED_PIECE_SOURCE];
+    }
+
+    // source piece was on the board and position is on the board
+    if (validSquare(DRAGGED_PIECE_SOURCE) === true &&
+      validSquare(location) === true) {
+      if (DRAGGED_PIECE_SOURCE === location) {
+        if (CLICK_MOVE == false) {
+          // pick up spare piece and put it down on next clicked square
+          CLICK_MOVE = true;
+          return;
+        } else {
+          CLICK_MOVE = false;
+        }
+      }
+
+      // move the piece
+      delete newPosition[DRAGGED_PIECE_SOURCE];
+      newPosition[location] = DRAGGED_PIECE;
+    }
+
+    var oldPosition = deepCopy(CURRENT_POSITION);
+
+    var result = cfg.onDrop(DRAGGED_PIECE_SOURCE, location, DRAGGED_PIECE,
+      newPosition, oldPosition, CURRENT_ORIENTATION);
+    if (result === 'snapback' || result === 'trash') {
+      action = result;
+    }
+  }
+
+  // do it!
+  if (action === 'snapback') {
+    snapbackDraggedPiece();
+  }
+  else if (action === 'trash') {
+    trashDraggedPiece();
+  }
+  else if (action === 'drop') {
+    dropDraggedPieceOnSquare(location);
+  }
+}
+
+//------------------------------------------------------------------------------
+// Public Methods
+//------------------------------------------------------------------------------
+
+// clear the board
+widget.clear = function(useAnimation) {
+  widget.position({}, useAnimation);
+};
+
+// remove the widget from the page
+widget.destroy = function() {
+  // remove markup
+  containerEl.html('');
+  draggedPieceEl.remove();
+
+  // remove event handlers
+  containerEl.unbind();
+};
+
+// shorthand method to get the current FEN
+widget.fen = function() {
+  return widget.position('fen');
+};
+
+// flip orientation
+widget.flip = function() {
+  return widget.orientation('flip');
+};
+
+/*
+// TODO: write this, GitHub Issue #5
+widget.highlight = function() {
+
+};
+*/
+// move pieces
+widget.move = function() {
+  // no need to throw an error here; just do nothing
+  if (arguments.length === 0) return;
+
+  var useAnimation = true;
+
+  // collect the moves into an object
+  var moves = {};
+  for (var i = 0; i < arguments.length; i++) {
+    // any "false" to this function means no animations
+    if (arguments[i] === false) {
+      useAnimation = false;
+      continue;
+    }
+
+    // skip invalid arguments
+    if (validMove(arguments[i]) !== true) {
+      error(2826, 'Invalid move passed to the move method.', arguments[i]);
+      continue;
+    }
+
+    var tmp = arguments[i].split('-');
+    moves[tmp[0]] = tmp[1];
+  }
+
+  // calculate position from moves
+  var newPos = calculatePositionFromMoves(CURRENT_POSITION, moves);
+
+  // update the board
+  widget.position(newPos, useAnimation);
+
+  // return the new position object
+  return newPos;
+};
+
+widget.orientation = function(arg) {
+  // no arguments, return the current orientation
+  if (arguments.length === 0) {
+    return CURRENT_ORIENTATION;
+  }
+
+  // set to white or black
+  if (arg === 'white' || arg === 'black') {
+    CURRENT_ORIENTATION = arg;
+    drawBoard();
+    return CURRENT_ORIENTATION;
+  }
+
+  // flip orientation
+  if (arg === 'flip') {
+    CURRENT_ORIENTATION = (CURRENT_ORIENTATION === 'white') ? 'black' : 'white';
+    drawBoard();
+    return CURRENT_ORIENTATION;
+  }
+
+  error(5482, 'Invalid value passed to the orientation method.', arg);
+};
+
+widget.position = function(position, useAnimation) {
+  // no arguments, return the current position
+  if (arguments.length === 0) {
+    return deepCopy(CURRENT_POSITION);
+  }
+
+  // get position as FEN
+  if (typeof position === 'string' && position.toLowerCase() === 'fen') {
+    return objToFen(CURRENT_POSITION);
+  }
+
+  // default for useAnimations is true
+  if (useAnimation !== false) {
+    useAnimation = true;
+  }
+
+  // start position
+  if (typeof position === 'string' && position.toLowerCase() === 'start') {
+    position = deepCopy(START_POSITION);
+  }
+
+  // convert FEN to position object
+  if (validFen(position) === true) {
+    position = fenToObj(position);
+  }
+
+  // validate position object
+  if (validPositionObject(position) !== true) {
+    error(6482, 'Invalid value passed to the position method.', position);
+    return;
+  }
+
+  if (useAnimation === true) {
+    // start the animations
+    doAnimations(calculateAnimations(CURRENT_POSITION, position),
+      CURRENT_POSITION, position);
+
+    // set the new position
+    setCurrentPosition(position);
+  }
+  // instant update
+  else {
+    setCurrentPosition(position);
+    drawPositionInstant();
+  }
+};
+
+widget.resize = function() {
+  // calulate the new square size
+  SQUARE_SIZE = calculateSquareSize();
+
+  // set board width
+  boardEl.css('width', (SQUARE_SIZE * 8) + 'px');
+
+  // set drag piece size
+  draggedPieceEl.css({
+    height: SQUARE_SIZE,
+    width: SQUARE_SIZE
+  });
+
+  // spare pieces
+  if (cfg.sparePieces === true) {
+    containerEl.find('.' + CSS.sparePieces)
+      .css('paddingLeft', (SQUARE_SIZE + BOARD_BORDER_SIZE) + 'px');
+  }
+
+  // redraw the board
+  drawBoard();
+};
+
+// set the starting position
+widget.start = function(useAnimation) {
+  widget.position('start', useAnimation);
+};
+
+// turn notation on or off
+widget.showNotation = function(show) {
+  cfg.showNotation = show;
+  drawBoard();
+}
+
+//------------------------------------------------------------------------------
+// Browser Events
+//------------------------------------------------------------------------------
+
+function isTouchDevice() {
+  return ('ontouchstart' in document.documentElement);
+}
+
+// reference: http://www.quirksmode.org/js/detect.html
+function isMSIE() {
+  return (navigator && navigator.userAgent &&
+      navigator.userAgent.search(/MSIE/) !== -1);
+}
+
+function stopDefault(e) {
+  e.preventDefault();
+}
+
+function mousedownSquare(e) {
+  // do nothing if we're not draggable
+  if (cfg.draggable !== true) return;
+
+  var square = $(this).attr('data-square');
+
+  // no piece on this square
+  if (validSquare(square) !== true ||
+      CURRENT_POSITION.hasOwnProperty(square) !== true) {
+    return;
+  }
+
+  beginDraggingPiece(square, CURRENT_POSITION[square], e.pageX, e.pageY);
+}
+
+function touchstartSquare(e) {
+  // do nothing if we're not draggable
+  if (cfg.draggable !== true) return;
+
+  var square = $(this).attr('data-square');
+
+  // no piece on this square
+  if (validSquare(square) !== true ||
+      CURRENT_POSITION.hasOwnProperty(square) !== true) {
+    return;
+  }
+
+  e = e.originalEvent;
+  beginDraggingPiece(square, CURRENT_POSITION[square],
+    e.changedTouches[0].pageX, e.changedTouches[0].pageY);
+}
+
+function mousedownSparePiece(e) {
+  // do nothing if sparePieces is not enabled
+  if (cfg.sparePieces !== true) return;
+
+  var piece = $(this).attr('data-piece');
+
+  beginDraggingPiece('spare', piece, e.pageX, e.pageY);
+}
+
+function touchstartSparePiece(e) {
+  // do nothing if sparePieces is not enabled
+  if (cfg.sparePieces !== true) return;
+
+  var piece = $(this).attr('data-piece');
+
+  e = e.originalEvent;
+  beginDraggingPiece('spare', piece,
+    e.changedTouches[0].pageX, e.changedTouches[0].pageY);
+}
+
+function mousemoveWindow(e) {
+  // do nothing if we are not dragging a piece
+  if (DRAGGING_A_PIECE !== true) return;
+
+  updateDraggedPiece(e.pageX, e.pageY);
+}
+
+function touchmoveWindow(e) {
+  // do nothing if we are not dragging a piece
+  if (DRAGGING_A_PIECE !== true) return;
+
+  // prevent screen from scrolling
+  e.preventDefault();
+
+  updateDraggedPiece(e.originalEvent.changedTouches[0].pageX,
+    e.originalEvent.changedTouches[0].pageY);
+}
+
+function mouseupWindow(e) {
+  // do nothing if we are not dragging a piece
+  if (DRAGGING_A_PIECE !== true) return;
+
+  // get the location
+  var location = isXYOnSquare(e.pageX, e.pageY);
+
+  stopDraggedPiece(location);
+}
+
+function touchendWindow(e) {
+  // do nothing if we are not dragging a piece
+  if (DRAGGING_A_PIECE !== true) return;
+
+  // get the location
+  var location = isXYOnSquare(e.originalEvent.changedTouches[0].pageX,
+    e.originalEvent.changedTouches[0].pageY);
+
+  stopDraggedPiece(location);
+}
+
+function mouseenterSquare(e) {
+  // do not fire this event if we are dragging a piece
+  // NOTE: this should never happen, but it's a safeguard
+  if (DRAGGING_A_PIECE !== false) return;
+
+  if (cfg.hasOwnProperty('onMouseoverSquare') !== true ||
+    typeof cfg.onMouseoverSquare !== 'function') return;
+
+  // get the square
+  var square = $(e.currentTarget).attr('data-square');
+
+  // NOTE: this should never happen; defensive
+  if (validSquare(square) !== true) return;
+
+  // get the piece on this square
+  var piece = false;
+  if (CURRENT_POSITION.hasOwnProperty(square) === true) {
+    piece = CURRENT_POSITION[square];
+  }
+
+  // execute their function
+  cfg.onMouseoverSquare(square, piece, deepCopy(CURRENT_POSITION),
+    CURRENT_ORIENTATION);
+}
+
+function mouseleaveSquare(e) {
+  // do not fire this event if we are dragging a piece
+  // NOTE: this should never happen, but it's a safeguard
+  if (DRAGGING_A_PIECE !== false) return;
+
+  if (cfg.hasOwnProperty('onMouseoutSquare') !== true ||
+    typeof cfg.onMouseoutSquare !== 'function') return;
+
+  // get the square
+  var square = $(e.currentTarget).attr('data-square');
+
+  // NOTE: this should never happen; defensive
+  if (validSquare(square) !== true) return;
+
+  // get the piece on this square
+  var piece = false;
+  if (CURRENT_POSITION.hasOwnProperty(square) === true) {
+    piece = CURRENT_POSITION[square];
+  }
+
+  // execute their function
+  cfg.onMouseoutSquare(square, piece, deepCopy(CURRENT_POSITION),
+    CURRENT_ORIENTATION);
+}
+
+//------------------------------------------------------------------------------
+// Initialization
+//------------------------------------------------------------------------------
+
+function addEvents() {
+  // prevent browser "image drag"
+  $('body').on('mousedown mousemove', '.' + CSS.piece, stopDefault);
+
+  // mouse drag pieces
+  boardEl.on('mousedown', '.' + CSS.square, mousedownSquare);
+  containerEl.on('mousedown', '.' + CSS.sparePieces + ' .' + CSS.piece,
+    mousedownSparePiece);
+
+  // mouse enter / leave square
+  boardEl.on('mouseenter', '.' + CSS.square, mouseenterSquare)
+    .on('mouseleave', '.' + CSS.square, mouseleaveSquare);
+
+  // IE doesn't like the events on the window object, but other browsers
+  // perform better that way
+  if (isMSIE() === true) {
+    // IE-specific prevent browser "image drag"
+    document.ondragstart = function() { return false; };
+
+    $('body').on('mousemove', mousemoveWindow)
+      .on('mouseup', mouseupWindow);
+  }
+  else {
+    $(window).on('mousemove', mousemoveWindow)
+      .on('mouseup', mouseupWindow);
+  }
+
+  // touch drag pieces
+  if (isTouchDevice() === true) {
+    boardEl.on('touchstart', '.' + CSS.square, touchstartSquare);
+    containerEl.on('touchstart', '.' + CSS.sparePieces + ' .' + CSS.piece,
+      touchstartSparePiece);
+    $(window).on('touchmove', touchmoveWindow)
+      .on('touchend', touchendWindow);
+  }
+}
+
+function initDom() {
+  // create unique IDs for all the elements we will create
+  createElIds();
+
+  // build board and save it in memory
+  containerEl.html(buildBoardContainer());
+  boardEl = containerEl.find('.' + CSS.board);
+
+  if (cfg.sparePieces === true) {
+    sparePiecesTopEl = containerEl.find('.' + CSS.sparePiecesTop);
+    sparePiecesBottomEl = containerEl.find('.' + CSS.sparePiecesBottom);
+  }
+
+  // create the drag piece
+  var draggedPieceId = uuid();
+  $('body').append(buildPiece('wP', true, draggedPieceId));
+  draggedPieceEl = $('#' + draggedPieceId);
+
+  // get the border size
+  BOARD_BORDER_SIZE = parseInt(boardEl.css('borderLeftWidth'), 10);
+
+  // set the size and draw the board
+  widget.resize();
+}
+
+function init() {
+  if (checkDeps() !== true ||
+      expandConfig() !== true) return;
+
+  initDom();
+  addEvents();
+}
+
+// go time
+init();
+
+// return the widget object
+return widget;
+
+}; // end ChessBoard
+
+// expose util functions
+ChessBoard.fenToObj = fenToObj;
+ChessBoard.objToFen = objToFen;
+
+module.exports = ChessBoard;
+
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+function SToHHMMSS(sec) {
+    var h = Math.abs(Math.floor(Math.abs(sec) / 3600));
+    var m = Math.abs(Math.floor(Math.abs(sec) % 3600 / 60));
+    var s = Math.abs(Math.floor(Math.abs(sec) % 3600 % 60));
+    return ((sec < 0 ? '-' : '')
+        + (h > 0 ? (h >= 0 && h < 10 ? '0' : '') + h + ':' : '')
+        + (m >= 0 && m < 10 ? '0' : '') + m + ':'
+        + (s >= 0 && s < 10 ? '0' : '') + s);
+}
+exports.SToHHMMSS = SToHHMMSS;
+function startBlackClock(game, clock) {
+    return setInterval(function () {
+        if (game.chess.turn() === 'w') {
+            return;
+        }
+        game.btime = game.btime - 1;
+        if (game.btime < 20 && clock.css('color') !== 'red') {
+            clock.css('color', 'red');
+        }
+        if (game.btime > 20) {
+            clock.css('color', '');
+        }
+        clock.text(SToHHMMSS(game.btime));
+    }, 1000);
+}
+exports.startBlackClock = startBlackClock;
+function startWhiteClock(game, clock) {
+    return setInterval(function () {
+        if (game.chess.turn() === 'b') {
+            return;
+        }
+        game.wtime = game.wtime - 1;
+        if (game.wtime < 20 && clock.css('color') !== 'red') {
+            clock.css('color', 'red');
+        }
+        if (game.wtime > 20) {
+            clock.css('color', '');
+        }
+        clock.text(SToHHMMSS(game.wtime));
+    }, 1000);
+}
+exports.startWhiteClock = startWhiteClock;
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+exports.__esModule = true;
+var History = (function () {
+    function History(board, initialPosition) {
+        this.board = board;
+        this.moves = [initialPosition];
+        this.id = 0;
+    }
+    History.prototype.add = function (move) {
+        this.moves.push(move);
+        this.id = this.moves.length - 1;
+    };
+    History.prototype.length = function () {
+        return this.moves.length - 1;
+    };
+    History.prototype.display = function (id) {
+        if (id !== undefined) {
+            this.id = id;
+        }
+        if (this.id >= 0 && this.id < this.moves.length) {
+            this.board.position(this.moves[this.id]);
+        }
+    };
+    History.prototype.beginning = function () {
+        this.display(0);
+    };
+    History.prototype.backward = function () {
+        if (this.id > 0) {
+            this.display(this.id - 1);
+        }
+    };
+    History.prototype.forward = function () {
+        if (this.id < this.moves.length - 1) {
+            this.display(this.id + 1);
+        }
+    };
+    History.prototype.end = function () {
+        this.display(this.moves.length - 1);
+    };
+    return History;
+}());
+exports["default"] = History;
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+exports.__esModule = true;
+var message_1 = __webpack_require__(11);
+var Session = (function () {
+    function Session(onMessage, user, pass) {
+        this.connected = false;
+        this.handle = '';
+        this.connect(onMessage, user, pass);
+    }
+    Session.prototype.getHandle = function () {
+        return this.handle;
+    };
+    Session.prototype.setHandle = function (handle) {
+        this.connected = true;
+        this.handle = handle;
+        $('#chat-status').text('Connected as ' + handle);
+    };
+    Session.prototype.isConnected = function () {
+        return this.connected;
+    };
+    Session.prototype.connect = function (onMessage, user, pass) {
+        var _this = this;
+        $('#chat-status').text('Connecting...');
+        var login = (user !== undefined && pass !== undefined);
+        var loginOptions = '';
+        if (login) {
+            loginOptions += '?login=1';
+        }
+        this.websocket = new WebSocket(location.protocol.replace('http', 'ws') + '//' + location.host + '/ws' + loginOptions);
+        this.websocket.onmessage = onMessage;
+        this.websocket.onclose = this.reset;
+        if (login) {
+            this.websocket.onopen = function () {
+                _this.websocket.send(JSON.stringify({ type: message_1["default"].Control, command: 1, text: '[' + user + ',' + btoa(pass) + ']' }));
+            };
+        }
+    };
+    Session.prototype.disconnect = function () {
+        if (this.isConnected()) {
+            $('#chat-status').text('Disconnecting...');
+            this.websocket.close();
+            this.connected = false;
+            this.handle = '';
+        }
+    };
+    Session.prototype.reset = function (evt) {
+        $('#chat-status').text('Disconnected');
+    };
+    Session.prototype.send = function (payload) {
+        if (!this.isConnected()) {
+            throw new Error('Session not connected.');
+        }
+        var data;
+        if (typeof payload === 'object') {
+            data = JSON.stringify(payload);
+        }
+        else {
+            data = payload;
+        }
+        this.websocket.send(data);
+    };
+    return Session;
+}());
+exports["default"] = Session;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ })
 /******/ ]);
