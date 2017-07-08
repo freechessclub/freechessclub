@@ -29,7 +29,7 @@ import (
 const (
 	loginPrompt    = "login:"
 	passwordPrompt = "password:"
-	ficsPrompt     = "fics%"
+	ficsPrompt     = "\n"
 )
 
 var (
@@ -79,11 +79,12 @@ func Connect(network, addr string, timeout, retries int) (*telnet.Conn, error) {
 }
 
 func sanitize(b []byte) []byte {
-	b = bytes.TrimSuffix(b, []byte(ficsPrompt))
+	b = bytes.Replace(b, []byte("\u0007"), []byte{}, -1)
 	b = bytes.Replace(b, []byte("\x00"), []byte{}, -1)
 	b = bytes.Replace(b, []byte("\\   "), []byte{}, -1)
 	b = bytes.Replace(b, []byte("\r"), []byte{}, -1)
 	b = bytes.Replace(b, []byte("\n"), []byte(" "), -1)
+	b = bytes.Replace(b, []byte("fics%"), []byte{}, -1)
 	return bytes.TrimSpace(b)
 }
 
@@ -217,13 +218,7 @@ func (s *Session) decodeMessage(msg []byte) ([]byte, error) {
 			Move:  string(matches[18][:]),
 		}
 
-		if string(matches[19][:]) != "" {
-			bs, _ := json.Marshal(m)
-			sendWebsocket(s.ws, bs)
-			return s.decodeMessage(matches[19][:])
-		} else {
-			return json.Marshal(m)
-		}
+		return json.Marshal(m)
 	}
 
 	matches = gameStartRE.FindSubmatch(msg)
@@ -294,12 +289,14 @@ func (s *Session) ficsReader() {
 			return
 		}
 		out = sanitize(out)
-		bs, err := s.decodeMessage(out)
-		if err != nil {
-			log.Println("error decoding message")
-		}
-		if bs != nil {
-			sendWebsocket(s.ws, bs)
+		if len(out) > 0 {
+			bs, err := s.decodeMessage(out)
+			if err != nil {
+				log.Println("error decoding message")
+			}
+			if bs != nil {
+				sendWebsocket(s.ws, bs)
+			}
 		}
 	}
 }
