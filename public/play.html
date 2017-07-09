@@ -25,10 +25,10 @@
   </header>
   <div class="feature3">
     <div class="container">
-      <div class="row">
-        <div class="col-sm-3">
+      <div class="row align-items-center">
+        <div class="col-sm-3 align-self-center">
           <div class="card">
-            <div class="card-header center" id="cardHeader">
+            <div class="card-header center" id="left-panel-header">
               <div class="btn-toolbar">
                 <button type="button" id="fast-backward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Beginning">
                   <span class="fa fa-fast-backward" aria-hidden="false"></span>
@@ -46,17 +46,17 @@
             </div>
             <div class="card-header">
               <div class="dropdown center">
-                <button type="button" class="btn btn-secondary btn-block btn-sm" aria-haspopup="true" aria-expanded="false" id="newGame">
+                <button type="button" class="btn btn-secondary btn-block btn-sm" aria-haspopup="true" aria-expanded="false" id="new-game">
                   Start a new game
                 </button>
-                <button type="button" class="btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="newGameMenu">
+                <button type="button" class="btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="new-game-menu">
                   <span class="fa fa-toggle-down"></span>
                 </button>
-                <div class="dropdown-menu" aria-labelledby="newGameMenu" style="border-width: 0; padding-top: 0">
+                <div class="dropdown-menu" aria-labelledby="new-game-menu" style="border-width: 0; padding-top: 0">
                   <div class="btn-group-vertical btn-block center" role="group" aria-label="New Game Menu">
                     <div class="input-group input-group-sm">
-                      <span class="input-group-addon" id="opponentPlayer">Play against</span>
-                      <input type="text" class="form-control" id="opponentName" placeholder="Random Player" aria-describedby="opponentPlayer">
+                      <span class="input-group-addon" id="opponent-player">Play against</span>
+                      <input type="text" class="form-control" id="opponent-name" placeholder="Random Player" aria-describedby="opponent-player">
                     </div>
                     <a href="#" class="btn btn-primary btn-sm disabled" role="button" aria-disabled="true">Lightning</a>
                     <button type="button" class="btn btn-secondary btn-block btn-sm" id="onezero">1 + 0</button>
@@ -70,21 +70,21 @@
                     <button type="button" class="btn btn-secondary btn-block btn-sm" id="fifteenzero">15 + 0</button>
                     <a href="#" class="btn btn-danger btn-sm disabled" role="button" aria-disabled="true">Custom</a>
                     <div class="input-group input-group-sm">
-                      <input type="text" class="form-control text-center" placeholder="5" id="customControlMin">
+                      <input type="text" class="form-control text-center" placeholder="5" id="custom-control-min">
                       <span class="input-group-addon"> min </span>
-                      <input type="text" class="form-control text-center" placeholder="10" id="customControlSec">
+                      <input type="text" class="form-control text-center" placeholder="10" id="custom-control-sec">
                       <span class="input-group-addon"> sec </span>
                       <span class="input-group-btn">
-                        <button class="btn btn-secondary btn-sm" type="button" id="customControl">Go</button>
+                        <button class="btn btn-secondary btn-sm" type="button" id="custom-control">Go</button>
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="card-block history noselect text-center" id="leftPanel">
+            <div class="card-block history noselect text-center" id="left-panel">
               <table class="table table-sm table-striped table-hover">
-                <tbody id="moveHistory"></tbody>
+                <tbody id="move-history"></tbody>
               </table>
               <div id="game-status"></div>
             </div>
@@ -106,7 +106,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-5 align-self-center">
           <div class="card">
             <div class="d-flex justify-content-between align-items-center card-header status" id="opponent-status">
               <div class="mr-auto p-2 name noselect" id="opponent-name"></div>
@@ -123,9 +123,9 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-4 align-self-center">
           <div class="card">
-            <div class="card-header status" id="cardHeader">
+            <div class="card-header status" id="right-panel-header">
               <div class="noselect" id="chat-status"></div>
               <div class="btn-toolbar inline-block pull-right">
                 <div id="settings-dropdown" class="dropdown">
@@ -143,7 +143,7 @@
                 </button>
               </div>
             </div>
-            <div id="collapse-chat" class="collapse show" aria-labelledby="cardHeader">
+            <div id="collapse-chat" class="collapse show" aria-labelledby="right-panel-header">
               <div class="card-block">
                 <ul class="nav nav-tabs flex-column flex-sm-row" id="tabs">
                   <a class="flex-sm-fill text-sm-center nav-link active" data-toggle="tab" href="#content-53" id="53" role="tab">Guest Chat</a>
@@ -169,11 +169,11 @@
               </div>
             </div>
           </div>
-          <div class="modal" id="login-screen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal" id="login-screen" tabindex="-1" role="dialog" aria-labelledby="login-modal" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Login to FICS</h5>
+                  <h5 class="modal-title" id="login-modal">Login to FICS</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -200,11 +200,11 @@
         <button type="button" class="btn btn-primary ctas-button-2" data-toggle="modal" data-target="#donate">
           Donate
         </button>
-        <div class="modal fade" id="donate" tabindex="-1" role="dialog" aria-labelledby="donateToTFCC" aria-hidden="true">
+        <div class="modal fade" id="donate" tabindex="-1" role="dialog" aria-labelledby="donate-tfcc" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title text-muted" id="donateToTFCC">Donate to The Free Chess Club</h5>
+                <h5 class="modal-title text-muted" id="donate-tfcc">Donate to The Free Chess Club</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>

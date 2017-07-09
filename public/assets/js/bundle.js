@@ -10450,13 +10450,13 @@ window.showMove = function (id) {
 function addMoveHistory(move) {
     var id = game_1["default"].history.length();
     if (id % 2 === 1) {
-        $('#moveHistory').append('<tr><td><a href="javascript:void(0);" onclick="showMove(' +
+        $('#move-history').append('<tr><td><a href="javascript:void(0);" onclick="showMove(' +
             id + ')">' + id + '. ' + move.san + '</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>');
         var height = 102 + (((id + 1) / 2) * 30);
-        $('#leftPanel').scrollTop(height);
+        $('#left-panel').scrollTop(height);
     }
     else {
-        $('#moveHistory tr:last td').eq(1).html('<a href="javascript:void(0);" onclick="showMove(' +
+        $('#move-history tr:last td').eq(1).html('<a href="javascript:void(0);" onclick="showMove(' +
             id + ')">' + id + '. ' + move.san + '</a>');
     }
 }
@@ -10503,7 +10503,7 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
 });
 function showStatusMsg(msg) {
     $('#game-status').html(msg + '<br/>');
-    $('#leftPanel').scrollTop($('#leftPanel').height());
+    $('#left-panel').scrollTop($('#left-panel').height());
 }
 function handleChatMsg(from, data) {
     var tab;
@@ -10573,7 +10573,7 @@ function ICSMessageHandler(message) {
                 $('#player-captured').text('');
                 $('#opponent-captured').text('');
                 showStatusMsg('');
-                $('#moveHistory').empty();
+                $('#move-history').empty();
                 $('#player-status').css('background-color', '');
                 $('#opponent-status').css('background-color', '');
                 if (data.role >= 0) {
@@ -10677,7 +10677,7 @@ $(document).ready(function () {
     $('#opponent-time').text('00:00');
     $('#player-time').text('00:00');
     $('.chat-text').height($('#board').height() - 40);
-    $('#leftPanel').height($('#board').height() - 30);
+    $('#left-panel').height($('#board').height() - 30);
     tabsList = { 53: $('#content-53') };
     board_1["default"].start(false);
 });
@@ -10736,37 +10736,37 @@ function getGame(opponent, min, sec) {
         session.send({ type: message_1["default"].Control, command: 0, text: cmd + ' ' + min + ' ' + sec });
     }
 }
-$('#newGame').on('click', function (event) {
+$('#new-game').on('click', function (event) {
     if (game_1["default"].chess === null) {
         session.send({ type: message_1["default"].Control, command: 0, text: 'getgame' });
     }
 });
 $('#onezero').on('click', function (event) {
-    getGame(getValue('#opponentName'), '1', '0');
+    getGame(getValue('#opponent-name'), '1', '0');
 });
 $('#threezero').on('click', function (event) {
-    getGame(getValue('#opponentName'), '3', '0');
+    getGame(getValue('#opponent-name'), '3', '0');
 });
 $('#threetwo').on('click', function (event) {
-    getGame(getValue('#opponentName'), '3', '2');
+    getGame(getValue('#opponent-name'), '3', '2');
 });
 $('#fivezero').on('click', function (event) {
-    getGame(getValue('#opponentName'), '5', '0');
+    getGame(getValue('#opponent-name'), '5', '0');
 });
 $('#fivefive').on('click', function (event) {
-    getGame(getValue('#opponentName'), '5', '5');
+    getGame(getValue('#opponent-name'), '5', '5');
 });
 $('#tenfive').on('click', function (event) {
-    getGame(getValue('#opponentName'), '10', '5');
+    getGame(getValue('#opponent-name'), '10', '5');
 });
 $('#fifteenzero').on('click', function (event) {
-    getGame(getValue('#opponentName'), '15', '0');
+    getGame(getValue('#opponent-name'), '15', '0');
 });
-$('#customControl').on('click', function (event) {
+$('#custom-control').on('click', function (event) {
     if (game_1["default"].chess === null) {
-        var min = getValue('#customControlMin');
-        var sec = getValue('#customControlSec');
-        getGame(getValue('#opponentName'), min, sec);
+        var min = getValue('#custom-control-min');
+        var sec = getValue('#custom-control-sec');
+        getGame(getValue('#opponent-name'), min, sec);
     }
 });
 $('#disconnect').on('click', function (event) {

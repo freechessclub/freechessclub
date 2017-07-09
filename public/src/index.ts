@@ -59,12 +59,12 @@ function showCapturePiece(color: string, piece: string): void {
 function addMoveHistory(move: any): void {
   const id: number = game.history.length();
   if (id % 2 === 1) {
-    $('#moveHistory').append('<tr><td><a href="javascript:void(0);" onclick="showMove(' +
+    $('#move-history').append('<tr><td><a href="javascript:void(0);" onclick="showMove(' +
       id + ')">' + id + '. ' + move.san + '</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>');
     const height: number = 102 + (((id + 1) / 2) * 30);
-    $('#leftPanel').scrollTop(height);
+    $('#left-panel').scrollTop(height);
   } else {
-    $('#moveHistory tr:last td').eq(1).html('<a href="javascript:void(0);" onclick="showMove(' +
+    $('#move-history tr:last td').eq(1).html('<a href="javascript:void(0);" onclick="showMove(' +
       id + ')">' + id + '. ' + move.san + '</a>');
   }
 }
@@ -122,7 +122,7 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', (e) => {
 
 function showStatusMsg(msg: string) {
   $('#game-status').html(msg + '<br/>');
-  $('#leftPanel').scrollTop($('#leftPanel').height());
+  $('#left-panel').scrollTop($('#left-panel').height());
 }
 
 function handleChatMsg(from, data) {
@@ -194,7 +194,7 @@ function ICSMessageHandler(message) {
         $('#player-captured').text('');
         $('#opponent-captured').text('');
         showStatusMsg('');
-        $('#moveHistory').empty();
+        $('#move-history').empty();
         $('#player-status').css('background-color', '');
         $('#opponent-status').css('background-color', '');
 
@@ -305,7 +305,7 @@ $(document).ready(() => {
   $('#opponent-time').text('00:00');
   $('#player-time').text('00:00');
   $('.chat-text').height($('#board').height() - 40);
-  $('#leftPanel').height($('#board').height() - 30);
+  $('#left-panel').height($('#board').height() - 30);
   tabsList = { 53: $('#content-53') };
   board.start(false);
 });
@@ -369,45 +369,45 @@ function getGame(opponent: string, min: string, sec: string) {
   }
 }
 
-$('#newGame').on('click', (event) => {
+$('#new-game').on('click', (event) => {
   if (game.chess === null) {
     session.send({ type: MessageType.Control, command: 0, text: 'getgame' });
   }
 });
 
 $('#onezero').on('click', (event) => {
-  getGame(getValue('#opponentName'), '1', '0');
+  getGame(getValue('#opponent-name'), '1', '0');
 });
 
 $('#threezero').on('click', (event) => {
-  getGame(getValue('#opponentName'), '3', '0');
+  getGame(getValue('#opponent-name'), '3', '0');
 });
 
 $('#threetwo').on('click', (event) => {
-  getGame(getValue('#opponentName'), '3', '2');
+  getGame(getValue('#opponent-name'), '3', '2');
 });
 
 $('#fivezero').on('click', (event) => {
-  getGame(getValue('#opponentName'), '5', '0');
+  getGame(getValue('#opponent-name'), '5', '0');
 });
 
 $('#fivefive').on('click', (event) => {
-  getGame(getValue('#opponentName'), '5', '5');
+  getGame(getValue('#opponent-name'), '5', '5');
 });
 
 $('#tenfive').on('click', (event) => {
-  getGame(getValue('#opponentName'), '10', '5');
+  getGame(getValue('#opponent-name'), '10', '5');
 });
 
 $('#fifteenzero').on('click', (event) => {
-  getGame(getValue('#opponentName'), '15', '0');
+  getGame(getValue('#opponent-name'), '15', '0');
 });
 
-$('#customControl').on('click', (event) => {
+$('#custom-control').on('click', (event) => {
   if (game.chess === null) {
-    const min: string = getValue('#customControlMin');
-    const sec: string = getValue('#customControlSec');
-    getGame(getValue('#opponentName'), min, sec);
+    const min: string = getValue('#custom-control-min');
+    const sec: string = getValue('#custom-control-sec');
+    getGame(getValue('#opponent-name'), min, sec);
   }
 });
 
