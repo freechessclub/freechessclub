@@ -107,6 +107,13 @@ $('#collapse-chat').on('shown.bs.collapse', () => {
   $('#chat-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
 });
 
+$('#collapse-history').on('hidden.bs.collapse', () => {
+  $('#history-toggle-icon').removeClass('fa-toggle-up').addClass('fa-toggle-down');
+});
+$('#collapse-history').on('shown.bs.collapse', () => {
+  $('#history-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
+});
+
 jQuery(document.body).on('click', '.closeTab', (event) => {
   const tabContentId: string = $(event.target).parent().attr('id');
   $(event.target).parent().remove();
@@ -305,6 +312,10 @@ $(document).ready(() => {
   $('#opponent-time').text('00:00');
   $('#player-time').text('00:00');
   $('.chat-text').height($('#board').height() - 40);
+  if ($(window).width() < 767) {
+    $('#collapse-chat').collapse('hide');
+    $('#collapse-history').collapse('hide');
+  }
   $('#left-panel').height($('#board').height() - 30);
   tabsList = { 53: $('#content-53') };
   board.start(false);
