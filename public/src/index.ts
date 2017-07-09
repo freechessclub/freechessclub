@@ -387,38 +387,38 @@ $('#new-game').on('click', (event) => {
 });
 
 $('#onezero').on('click', (event) => {
-  getGame(getValue('#opponent-name'), '1', '0');
+  getGame(getValue('#opponent-player-name'), '1', '0');
 });
 
 $('#threezero').on('click', (event) => {
-  getGame(getValue('#opponent-name'), '3', '0');
+  getGame(getValue('#opponent-player-name'), '3', '0');
 });
 
 $('#threetwo').on('click', (event) => {
-  getGame(getValue('#opponent-name'), '3', '2');
+  getGame(getValue('#opponent-player-name'), '3', '2');
 });
 
 $('#fivezero').on('click', (event) => {
-  getGame(getValue('#opponent-name'), '5', '0');
+  getGame(getValue('#opponent-player-name'), '5', '0');
 });
 
 $('#fivefive').on('click', (event) => {
-  getGame(getValue('#opponent-name'), '5', '5');
+  getGame(getValue('#opponent-player-name'), '5', '5');
 });
 
 $('#tenfive').on('click', (event) => {
-  getGame(getValue('#opponent-name'), '10', '5');
+  getGame(getValue('#opponent-player-name'), '10', '5');
 });
 
 $('#fifteenzero').on('click', (event) => {
-  getGame(getValue('#opponent-name'), '15', '0');
+  getGame(getValue('#opponent-player-name'), '15', '0');
 });
 
 $('#custom-control').on('click', (event) => {
   if (game.chess === null) {
     const min: string = getValue('#custom-control-min');
     const sec: string = getValue('#custom-control-sec');
-    getGame(getValue('#opponent-name'), min, sec);
+    getGame(getValue('#opponent-player-name'), min, sec);
   }
 });
 

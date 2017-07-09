@@ -10752,31 +10752,31 @@ $('#new-game').on('click', function (event) {
     }
 });
 $('#onezero').on('click', function (event) {
-    getGame(getValue('#opponent-name'), '1', '0');
+    getGame(getValue('#opponent-player-name'), '1', '0');
 });
 $('#threezero').on('click', function (event) {
-    getGame(getValue('#opponent-name'), '3', '0');
+    getGame(getValue('#opponent-player-name'), '3', '0');
 });
 $('#threetwo').on('click', function (event) {
-    getGame(getValue('#opponent-name'), '3', '2');
+    getGame(getValue('#opponent-player-name'), '3', '2');
 });
 $('#fivezero').on('click', function (event) {
-    getGame(getValue('#opponent-name'), '5', '0');
+    getGame(getValue('#opponent-player-name'), '5', '0');
 });
 $('#fivefive').on('click', function (event) {
-    getGame(getValue('#opponent-name'), '5', '5');
+    getGame(getValue('#opponent-player-name'), '5', '5');
 });
 $('#tenfive').on('click', function (event) {
-    getGame(getValue('#opponent-name'), '10', '5');
+    getGame(getValue('#opponent-player-name'), '10', '5');
 });
 $('#fifteenzero').on('click', function (event) {
-    getGame(getValue('#opponent-name'), '15', '0');
+    getGame(getValue('#opponent-player-name'), '15', '0');
 });
 $('#custom-control').on('click', function (event) {
     if (game_1["default"].chess === null) {
         var min = getValue('#custom-control-min');
         var sec = getValue('#custom-control-sec');
-        getGame(getValue('#opponent-name'), min, sec);
+        getGame(getValue('#opponent-player-name'), min, sec);
     }
 });
 $('#disconnect').on('click', function (event) {
