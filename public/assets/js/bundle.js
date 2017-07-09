@@ -19940,6 +19940,7 @@ function touchstartSquare(e) {
   e = e.originalEvent;
   beginDraggingPiece(square, CURRENT_POSITION[square],
     e.changedTouches[0].pageX, e.changedTouches[0].pageY);
+  e.preventDefault();
 }
 
 function mousedownSparePiece(e) {
@@ -19960,6 +19961,7 @@ function touchstartSparePiece(e) {
   e = e.originalEvent;
   beginDraggingPiece('spare', piece,
     e.changedTouches[0].pageX, e.changedTouches[0].pageY);
+  e.preventDefault();
 }
 
 function mousemoveWindow(e) {
@@ -19999,6 +20001,7 @@ function touchendWindow(e) {
     e.originalEvent.changedTouches[0].pageY);
 
   stopDraggedPiece(location);
+  e.preventDefault();
 }
 
 function mouseenterSquare(e) {
@@ -20083,13 +20086,11 @@ function addEvents() {
   }
 
   // touch drag pieces
-  if (isTouchDevice() === true) {
-    boardEl.on('touchstart', '.' + CSS.square, touchstartSquare);
-    containerEl.on('touchstart', '.' + CSS.sparePieces + ' .' + CSS.piece,
-      touchstartSparePiece);
-    $(window).on('touchmove', touchmoveWindow)
-      .on('touchend', touchendWindow);
-  }
+  boardEl.on('touchstart', '.' + CSS.square, touchstartSquare);
+  containerEl.on('touchstart', '.' + CSS.sparePieces + ' .' + CSS.piece,
+    touchstartSparePiece);
+  $(window).on('touchmove', touchmoveWindow)
+    .on('touchend', touchendWindow);
 }
 
 function initDom() {
