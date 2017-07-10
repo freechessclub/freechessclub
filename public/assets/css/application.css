@@ -9,6 +9,15 @@
                                   supported by Chrome and Opera */
 }
 
+html, body {
+  height: 100%;
+}
+
+.fill {
+  min-height: 100%;
+  height: 100%;
+}
+
 .chat-text {
   width: 100%;
   height: auto;
