@@ -9,16 +9,17 @@
   <link href="assets/css/chessboard-0.3.0.min.css" rel="stylesheet">
   <link href="assets/css/main.css" rel="stylesheet">
   <link href="assets/css/application.css" rel="stylesheet">
+  <link href="assets/css/themes/default.css" rel="stylesheet" id="colortheme">
   <link href="https://fonts.googleapis.com/css?family=Signika" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Pacifico&text=The%20Free%20Chess%20Club">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-  <header class="header">
+  <header class="header" style="padding: 10px 0 10px 0">
     <div class="container-lrg">
       <div class="col-sm-12 spread">
         <div>
-          <a class="logo" href="/">The Free Chess Club</a>
+          <a class="logo" href="/" style="font-size: 32px">The Free Chess Club</a>
         </div>
       </div>
     </div>
@@ -133,10 +134,20 @@
             <div class="card-header status" id="right-panel-header">
               <div class="noselect" id="chat-status"></div>
               <div class="btn-toolbar inline-block pull-right">
-                <div id="settings-dropdown" class="dropdown">
-                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="connectButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Settings">
+                <div id="color-dropdown" class="dropdown" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Color Theme">
+                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="themeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Color">
                     <span class="fa fa-gear" aria-hidden="false"></span>
                   </button>
+                  <div class="dropdown-menu" aria-labelledby="themeButton">
+                    <a class="dropdown-item noselect" id="colortheme-default">Arctic Blue</a>
+                    <a class="dropdown-item noselect" id="colortheme-green">Green Bean</a>
+                    <a class="dropdown-item noselect" id="colortheme-yellow">Coffee & Cream</a>
+                  </div>
+                </div>
+                <div id="settings-dropdown" class="dropdown" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Connection">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="connectButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Settings">
+                      <span class="fa fa-user" aria-hidden="false"></span>
+                    </button>
                   <div class="dropdown-menu" aria-labelledby="connectButton">
                     <a class="dropdown-item noselect" id="disconnect">Disconnect</a>
                     <a class="dropdown-item noselect" id="connect-guest">Connect as Guest</a>

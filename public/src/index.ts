@@ -455,6 +455,18 @@ $('#connect-guest').on('click', (event) => {
   }
 });
 
+$('#colortheme-default').on('click', (event) => {
+  $('#colortheme').attr('href', '../assets/css/themes/default.css');
+});
+
+$('#colortheme-green').on('click', (event) => {
+  $('#colortheme').attr('href', '../assets/css/themes/green.css');
+});
+
+$('#colortheme-yellow').on('click', (event) => {
+  $('#colortheme').attr('href', '../assets/css/themes/yellow.css');
+});
+
 $(window).focus(() => {
   if (game.chess) {
     board.position(game.chess.fen());

@@ -10810,6 +10810,15 @@ $('#connect-guest').on('click', function (event) {
         }
     }
 });
+$('#colortheme-default').on('click', function (event) {
+    $('#colortheme').attr('href', '../assets/css/themes/default.css');
+});
+$('#colortheme-green').on('click', function (event) {
+    $('#colortheme').attr('href', '../assets/css/themes/green.css');
+});
+$('#colortheme-yellow').on('click', function (event) {
+    $('#colortheme').attr('href', '../assets/css/themes/yellow.css');
+});
 $(window).focus(function () {
     if (game_1["default"].chess) {
         board_1["default"].position(game_1["default"].chess.fen());
