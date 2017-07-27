@@ -283,10 +283,30 @@ function getValue(elt: string): string {
   return $(elt).val() as string;
 }
 
+const chatHistory = new Array(15);
+let chatHistoryCounter = 0;
+let currentCounter = -1;
+
+$('#input-text').keydown((e) => {
+  const code = (e.keyCode ? e.keyCode : e.which);
+  if (code === 38 && chatHistoryCounter > 0) {
+    currentCounter = (currentCounter + 1) % chatHistoryCounter;
+    $('#input-text').val(chatHistory[chatHistoryCounter - currentCounter - 1]);
+  } else if (code === 40) {
+    if (currentCounter > 0 && chatHistoryCounter > 0) {
+      currentCounter = (currentCounter - 1) % (chatHistoryCounter - 1);
+    }
+    $('#input-text').val(chatHistory[chatHistoryCounter - currentCounter - 1]);
+  }
+});
+
 $('#input-form').on('submit', (event) => {
   event.preventDefault();
   let text;
   const val: string = getValue('#input-text');
+  chatHistory[chatHistoryCounter] = val;
+  chatHistoryCounter = (chatHistoryCounter + 1) % chatHistory.length;
+  currentCounter = -1;
   if (!$('#input-command').is(':checked')) {
     if (val.charAt(0) !== '@') {
       const msg = $('#input-text').val();
