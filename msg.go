@@ -274,22 +274,26 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 			m := msg.(ctlMsg)
 			if m.Command == 1 {
 				up := strings.Split(m.Text, ",")
-				if len(up) != 2 {
-					log.WithField("err", err).Println("ignoring malformed user/pass request")
-					return
+				if len(up) > 1 {
+					user = up[0][1:]
+					b, err := base64.StdEncoding.DecodeString(up[1][:len(up[1])-1])
+					if err != nil {
+						log.WithField("err", err).Println("error decoding password")
+						return
+					}
+					pass = string(b)
+				} else {
+					user = up[0][1:len(up[0])-1];
 				}
-				user = up[0][1:]
-				b, err := base64.StdEncoding.DecodeString(up[1][:len(up[1])-1])
-				if err != nil {
-					log.WithField("err", err).Println("error decoding password")
-					return
-				}
-				pass = string(b)
 			}
 		}
 	}
 
 	s, err := newSession(user, pass, ws)
+	if err != nil {
+		http.Error(w, "authentication failed", http.StatusUnauthorized)
+		return
+	}
 	keepAlive(ws, 50*time.Second)
 
 	for {
