@@ -109,7 +109,7 @@ func sendAndReadUntil(conn *telnet.Conn, cmd string, delims ...string) ([]byte, 
 func Login(conn *telnet.Conn, username, password string) (string, error) {
 	var prompt string
 	// guests have no passwords
-	if username != "guest" {
+	if username != "guest" && len(password) > 0 {
 		prompt = passwordPrompt
 	} else {
 		prompt = "Press return to enter the server as"

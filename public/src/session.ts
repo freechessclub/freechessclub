@@ -35,6 +35,12 @@ export default class Session {
       loginOptions += '?login=1';
     }
 
+    let text = '[' + user;
+    if (pass !== undefined && pass.length > 0) {
+      text += ',' + btoa(pass);
+    }
+    text += ']';
+
     this.websocket = new WebSocket(
       location.protocol.replace('http', 'ws') + '//' + location.host + '/ws' + loginOptions);
     this.websocket.onmessage = onMessage;
@@ -42,7 +48,7 @@ export default class Session {
     if (login) {
       this.websocket.onopen = () => {
         this.websocket.send(
-          JSON.stringify({ type: MessageType.Control, command: 1, text: '[' + user + ',' + btoa(pass) + ']' }));
+          JSON.stringify({ type: MessageType.Control, command: 1, text }));
       };
     }
   }
