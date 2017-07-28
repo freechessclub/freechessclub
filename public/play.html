@@ -139,9 +139,9 @@
                     <span class="fa fa-gear" aria-hidden="false"></span>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="themeButton">
-                    <a class="dropdown-item noselect" id="colortheme-default">Arctic Blue</a>
-                    <a class="dropdown-item noselect" id="colortheme-green">Green Bean</a>
-                    <a class="dropdown-item noselect" id="colortheme-yellow">Coffee & Cream</a>
+                    <div class="dropdown-item noselect" style="color: #5789a9; background-color: white" id="colortheme-default" onmouseover="this.style.background='#e6f5ff';" onmouseout="this.style.background='white';">Arctic Blue<div class="color-box" style="background-color: #5789a9"></div></div>
+                    <div class="dropdown-item noselect" style="background-color: white" id="colortheme-green" onmouseover="this.style.background='#eaffeb';" onmouseout="this.style.background='white';">Green Bean<div class="color-box" style="background-color: #74a077"></div></div>
+                    <div class="dropdown-item noselect" style="background-color: white" id="colortheme-yellow" onmouseover="this.style.background='#f0d9b5';" onmouseout="this.style.background='white';">Coffee & Cream<div class="color-box" style="background-color: #b58863"></div></div>
                   </div>
                 </div>
                 <div id="settings-dropdown" class="dropdown" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Connection">
@@ -179,7 +179,7 @@
                         </label>
                       </div>
                     </span>
-                    <input id="input-text" type="text" class="form-control" placeholder="Press Enter to send message!" autocomplete="off">
+                    <input id="input-text" type="text" class="form-control" placeholder="Press Enter to send message!" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                   </div>
                 </form>
               </div>

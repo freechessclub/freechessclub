@@ -127,3 +127,11 @@ html, body {
 .dropdown-menu {
   font-size: 14px;
 }
+
+.color-box {
+  margin: 0 5px;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  position: relative;
+}
