@@ -100,11 +100,21 @@ html, body {
 }
 
 .history {
-  width: 100%;
   height: auto;
   overflow: auto;
   font-size: 14px;
   font-weight: 60;
+}
+
+.history td {
+  width: 60px;
+}
+
+.moveNumber {
+  display: inline;
+  font-weight: bold;
+  padding: 0 35px 0 30px;
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .history a:hover {

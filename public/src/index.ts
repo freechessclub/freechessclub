@@ -59,13 +59,14 @@ function showCapturePiece(color: string, piece: string): void {
 function addMoveHistory(move: any): void {
   const id: number = game.history.length();
   if (id % 2 === 1) {
-    $('#move-history').append('<tr><td><a href="javascript:void(0);" onclick="showMove(' +
-      id + ')">' + id + '. ' + move.san + '</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>');
+    $('#move-history').append('<tr><td><div class="moveNumber">'
+      + (id + 1) / 2 + '.</div><a href="javascript:void(0);" onclick="showMove(' + id + ')">'
+      + move.san + '</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>');
     const height: number = 102 + (((id + 1) / 2) * 30);
     $('#left-panel').scrollTop(height);
   } else {
     $('#move-history tr:last td').eq(1).html('<a href="javascript:void(0);" onclick="showMove(' +
-      id + ')">' + id + '. ' + move.san + '</a>');
+      id + ')">' + move.san + '</a>');
   }
 }
 
