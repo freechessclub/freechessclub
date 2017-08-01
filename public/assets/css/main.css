@@ -199,7 +199,20 @@ a.logo {
 	color: white;
 	margin: 0 0 0 10px;
 }
+.ctas-input {
+	outline: none;
+	border: none;
+	letter-spacing: .3px;
+	border-radius: 3px;
+	font-size: 18px;
+	height: 40px;
+	line-height: 40px;
+	padding: 0 15px;
+	width: 360px;
+	display: inline-block;
+}
 @media (max-width: 440px) {
+	.ctas-input,
 	.ctas-button,
 	.ctas-button-2 {
 		display: block;
@@ -231,6 +244,7 @@ a.logo {
 	color: white;
 	margin: 0 0 0 10px;
 }
+
 @media (max-width: 440px) {
 	.ctas-button,
 	.ctas-button-2 {
