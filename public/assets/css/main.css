@@ -39,8 +39,13 @@ body {
     line-height: 35px;
   }
 }
+
+.item {
+  padding-right: 40px;
+}
+
 .paragraph {
-  font-size: 17px;
+  font-size: 18px;
   line-height: 32px;
   font-weight: 100;
 }
@@ -305,7 +310,7 @@ a.logo {
     font-size: 40px;
   }
   .feature3 .flex {
-  	flex-wrap: wrap;
+    flex-wrap: wrap;
   }
   .feature3 .col-4:nth-of-type(1) {
   	width: 100%;
