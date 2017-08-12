@@ -18,11 +18,10 @@
     "bootstrap": "v4.0.0-alpha.6",
     "chess.js": "^0.10.2",
     "chessboardjs": "freechessclub/chessboardjs",
-    "electron": "^1.6.7",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "tether": "^1.4.0",
-    "tslint": "^5.5.0"
+    "tslint": "^5.6.0"
   },
   "devDependencies": {
     "@types/bootstrap": "^3.3.34",

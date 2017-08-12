@@ -53,7 +53,9 @@ function showCapturePiece(color: string, piece: string): void {
 }
 
 (window as any).showMove = (id: number) => {
-  game.history.display(id);
+  if (game.history) {
+    game.history.display(id);
+  }
 };
 
 function addMoveHistory(move: any): void {
@@ -343,19 +345,27 @@ $(document).ready(() => {
 });
 
 $('#fast-backward').on('click', (event) => {
-  game.history.beginning();
+  if (game.history) {
+    game.history.beginning();
+  }
 });
 
 $('#backward').on('click', (event) => {
+  if (game.history) {
   game.history.backward();
+  }
 });
 
 $('#forward').on('click', (event) => {
-  game.history.forward();
+  if (game.history) {
+    game.history.forward();
+  }
 });
 
 $('#fast-forward').on('click', (event) => {
-  game.history.end();
+  if (game.history) {
+    game.history.end();
+  }
 });
 
 $('#resign').on('click', (event) => {
