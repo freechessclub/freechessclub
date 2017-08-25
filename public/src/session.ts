@@ -41,8 +41,17 @@ export default class Session {
     }
     text += ']';
 
-    this.websocket = new WebSocket(
-      location.protocol.replace('http', 'ws') + '//' + location.host + '/ws' + loginOptions);
+    let host = location.host;
+    if (host === '') {
+      host = 'www.freechess.club';
+    }
+
+    let protocol = 'ws://';
+    if (location.protocol === 'https://') {
+      protocol = 'wss://';
+    }
+
+    this.websocket = new WebSocket(protocol + host + '/ws' + loginOptions);
     this.websocket.onmessage = onMessage;
     this.websocket.onclose = this.reset;
     if (login) {

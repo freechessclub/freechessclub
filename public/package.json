@@ -1,8 +1,10 @@
 {
   "name": "freechessclub",
   "version": "1.0.0",
+  "license": "MIT",
   "description": "The Free Chess Club: A modern web client for FICS.",
   "scripts": {
+    "app": "tsc src/app.ts && electron src/app.js",
     "lint": "./node_modules/.bin/tslint -c tslint.json --type-check --fix -p tsconfig.json",
     "bundle": "NODE_ENV=production webpack -p --optimize-minimize"
   },
@@ -28,6 +30,7 @@
     "@types/jquery": "^3.2.6",
     "@types/websocket": "^0.0.34",
     "css-loader": "^0.28.4",
+    "electron": "^1.7.5",
     "exports-loader": "^0.6.4",
     "file-loader": "^0.11.2",
     "style-loader": "^0.18.2",
