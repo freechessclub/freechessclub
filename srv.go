@@ -18,6 +18,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"net/http"
+	"net/url"
 	"regexp"
 	"strconv"
 	"time"
@@ -36,6 +38,7 @@ var (
 	upgrader = websocket.Upgrader{
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
+		CheckOrigin: checkSameOrigin,
 	}
 )
 
@@ -51,6 +54,22 @@ var gameMoveRE *regexp.Regexp
 var gameStartRE *regexp.Regexp
 var gameEndRE *regexp.Regexp
 var toldMsgRE *regexp.Regexp
+
+func checkSameOrigin(r *http.Request) bool {
+	if r.UserAgent() == "The Free Chess Club" {
+		return true
+	}
+
+	origin := r.Header["Origin"]
+	if len(origin) == 0 {
+		return true
+	}
+	u, err := url.Parse(origin[0])
+	if err != nil {
+		return false
+	}
+	return u.Host == r.Host
+}
 
 func Connect(network, addr string, timeout, retries int) (*telnet.Conn, error) {
 	ts := time.Duration(timeout) * time.Second
