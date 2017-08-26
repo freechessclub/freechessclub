@@ -218,7 +218,7 @@ function createWindow() {
         center: true,
         resizable: false,
         title: electron_1.app.getName(),
-        icon: path.join(__dirname, '../assets/img/tfcc.png')
+        icon: path.join(__dirname, '../assets/img/tfcc-small.png')
     });
     var ur = url.format({
         protocol: 'file',
@@ -228,7 +228,6 @@ function createWindow() {
     mainWindow.loadURL(ur, {
         userAgent: 'The Free Chess Club'
     });
-    mainWindow.webContents.openDevTools();
     mainWindow.on('closed', function () {
         mainWindow = null;
     });

@@ -3,17 +3,34 @@
   "version": "1.0.0",
   "license": "MIT",
   "description": "The Free Chess Club: A modern web client for FICS.",
+  "main": "src/app.js",
   "scripts": {
     "app": "tsc src/app.ts && electron src/app.js",
-    "lint": "./node_modules/.bin/tslint -c tslint.json --type-check --fix -p tsconfig.json",
-    "bundle": "NODE_ENV=production webpack -p --optimize-minimize"
+    "lint": "tslint -c tslint.json --type-check --fix -p tsconfig.json",
+    "bundle": "NODE_ENV=production webpack -p --optimize-minimize",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "release": "electron-builder -mwl -p always"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/freechessclub/go-freechessclub"
   },
   "author": {
-    "name": "Abhishek Kulkarni"
+    "name": "The Free Chess Club Author(s)",
+    "email": "support@freechess.club"
+  },
+  "build": {
+    "appId": "club.freechess.TheFreeChessClub",
+    "productName": "The Free Chess Club",
+    "copyright": "Copyright © 2017 The Free Chess Club Author(s)",
+    "mac": {
+      "category": "public.app-category.board-games"
+    },
+    "linux": {
+      "target": ["tar.gz", "zip"],
+      "category": "Game"
+    }
   },
   "dependencies": {
     "anchorme": "^1.1.2",
@@ -31,6 +48,7 @@
     "@types/websocket": "^0.0.34",
     "css-loader": "^0.28.4",
     "electron": "^1.7.5",
+    "electron-builder": "^19.24.1",
     "exports-loader": "^0.6.4",
     "file-loader": "^0.11.2",
     "style-loader": "^0.18.2",

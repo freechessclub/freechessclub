@@ -228,7 +228,10 @@ function createWindow() {
     center: true,
     resizable: false,
     title: app.getName(),
-    icon: path.join(__dirname, '../assets/img/tfcc.png'),
+    icon: path.join(__dirname, '../assets/img/tfcc-small.png'),
+    webPreferences: {
+      devTools: false,
+    },
   });
 
   const ur = url.format({
@@ -240,7 +243,6 @@ function createWindow() {
   mainWindow.loadURL(ur, {
     userAgent: 'The Free Chess Club',
   });
-  mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -248,7 +250,6 @@ function createWindow() {
 
   const menu = Menu.buildFromTemplate(template as any);
   Menu.setApplicationMenu(menu);
-
   mainWindow.show();
 }
 
