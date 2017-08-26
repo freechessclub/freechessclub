@@ -3,7 +3,7 @@
   "description": "The Free Chess Club: A modern web client for FICS.",
   "keywords": ["chess", "fics", "freechessclub"],
   "image": "heroku/go:latest",
-  "mount_dir": "src/github.com/freechessclub/go-freechessclub",
+  "mount_dir": "src/github.com/freechessclub/freechessclub",
   "website": "http://www.freechess.club",
-  "repository": "https://github.com/freechessclub/go-freechessclub",
+  "repository": "https://github.com/freechessclub/freechessclub",
 }
