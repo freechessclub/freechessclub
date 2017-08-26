@@ -1,1 +1,1 @@
-web: go-freechessclub
+web: freechessclub
