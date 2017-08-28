@@ -60,8 +60,8 @@
                 <label for="message">Message</label>
                 <textarea class="form-control" id="message" name="message" rows="3" required="true"></textarea>
               </div>
-              <div id="result" class="form-text"></div><br/>
               <div class="g-recaptcha" data-sitekey="6LcDcC4UAAAAAOA9EBHuybilpS0VDGJWr_vtASp5"></div><br/>
+              <div id="result" class="form-text"></div><br/>
               <button type="submit" id="submit" class="btn btn-primary">Submit</button>
             </form>
           </div>
@@ -129,7 +129,7 @@
       </div>
     </div>
   </div>
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   <script>
@@ -139,6 +139,12 @@
     });
     $("#contact-form").submit(function(event) {
       event.preventDefault();
+      if (grecaptcha.getResponse().length === 0) {
+        $("#result").html("Are you a robot?");
+        $("#result").css("color", "red");
+        return;
+      }
+
       var jsonData = {};
       $.each($("#contact-form").serializeArray(), function() {
         jsonData[this.name] = this.value;
