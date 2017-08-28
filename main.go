@@ -18,8 +18,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/gorilla/handlers"
 	"github.com/Sirupsen/logrus"
+	"github.com/gorilla/handlers"
 )
 
 var (

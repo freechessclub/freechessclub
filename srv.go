@@ -38,7 +38,7 @@ var (
 	upgrader = websocket.Upgrader{
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
-		CheckOrigin: checkSameOrigin,
+		CheckOrigin:     checkSameOrigin,
 	}
 )
 
@@ -260,11 +260,11 @@ func (s *Session) decodeMessage(msg []byte) ([]byte, error) {
 
 		winner, loser, reason := decodeEndMessage(p1, p2, who, action)
 		m := &gameEndMsg{
-			Type:   gameEnd,
-			Id:     atoi(matches[1][:]),
-			Winner: winner,
-			Loser:  loser,
-			Reason: reason,
+			Type:    gameEnd,
+			Id:      atoi(matches[1][:]),
+			Winner:  winner,
+			Loser:   loser,
+			Reason:  reason,
 			Message: string(msg),
 		}
 		return json.Marshal(m)
