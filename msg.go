@@ -122,12 +122,12 @@ func decodeEndMessage(p1, p2, who, action string) (string, string, int) {
 }
 
 type gameEndMsg struct {
-	Type   MessageType `json:"type"`
-	Id     int         `json:"id"`
-	Winner string      `json:"winner"`
-	Loser  string      `json:"loser"`
-	Reason int         `json:"reason"`
-	Message string     `json:"message"`
+	Type    MessageType `json:"type"`
+	Id      int         `json:"id"`
+	Winner  string      `json:"winner"`
+	Loser   string      `json:"loser"`
+	Reason  int         `json:"reason"`
+	Message string      `json:"message"`
 }
 
 type gameMoveMsg struct {
@@ -283,7 +283,7 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 					}
 					pass = string(b)
 				} else {
-					user = up[0][1:len(up[0])-1];
+					user = up[0][1 : len(up[0])-1]
 				}
 			}
 		}
