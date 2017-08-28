@@ -5,7 +5,7 @@
 .header {
 	background-color: #275981;
 	background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h16v2h-6v6h6v8H8v-6H2v6H0V0zm4 4h2v2H4V4zm8 8h2v2h-2v-2zm-8 0h2v2H4v-2zm8-8h2v2h-2V4z' fill='%23dae9f9' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E");
-	color: white;
+	color: aliceblue;
 }
 *,
 *:before,
@@ -15,6 +15,71 @@
 }
 body {
   -webkit-font-smoothing: antialiased;
+}
+.download {
+	margin: 30px 0 30px 0;
+	padding: 30px 20px 10px 0px;
+	background-color: #275881;
+	border-radius: 5px;
+  position: relative;
+  border: 1px solid #BBB;
+}
+.download .btn {
+	margin-bottom: 5px;
+	color: sandybrown;
+}
+.download .btn:hover {
+	background-color: sandybrown;
+	color: #275881;
+}
+.download .links {
+	color: sandybrown;
+}
+.download .links:hover {
+	text-decoration: none;
+	border-bottom: 2px dotted;
+}
+.download .ribbon {
+  position: absolute;
+  right: -5px; top: -5px;
+  z-index: 1;
+  overflow: hidden;
+  width: 75px; height: 75px;
+  text-align: right;
+}
+.download .ribbon span {
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 20px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  width: 100px;
+  display: block;
+  background: linear-gradient(#2989d8 0%, #1e5799 100%);
+  box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 19px; right: -21px;
+}
+.download .ribbon span::before {
+  content: "";
+  position: absolute; left: 0px; top: 100%;
+  z-index: -1;
+  border-left: 3px solid #1e5799;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #1e5799;
+}
+.download .ribbon span::after {
+  content: "";
+  position: absolute; right: 0px; top: 100%;
+  z-index: -1;
+  border-left: 3px solid transparent;
+  border-right: 3px solid #1e5799;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #1e5799;
 }
 /*text*/
 .heading {
@@ -84,7 +149,7 @@ a.logo {
   margin-left: 20px;
 }
 .nav-link:hover {
-	color: #DB7093;
+	color: sandybrown;
 }
 .text-center {
   text-align: center;
@@ -190,7 +255,7 @@ a.logo {
 	height: 40px;
 	line-height: 38px;
 	padding: 0 30px;
-	background: #fff;
+	background: white;
 	border-radius: 3px;
 	font-size: 15px;
 	font-weight: 600;
@@ -228,6 +293,7 @@ a.logo {
 		margin: 10px 0 0 0;
 	}
 }.socialproof {
+	background-color: oldlace;
 	padding: 90px 0;
 }.ctas-button,
 .ctas-button-2 {
@@ -272,7 +338,7 @@ a.logo {
 	height: 40px;
 	line-height: 38px;
 	padding: 0 30px;
-	background: #fff;
+	background: white;
 	border-radius: 3px;
 	font-size: 15px;
 	font-weight: 600;
@@ -299,7 +365,7 @@ a.logo {
 }.feature3 {
 	padding: 60px 0;
 	border-bottom: 1px solid rgba(0,0,0,.1);
-	background-color: #e7f5ff;
+	background-color: aliceblue;
 }
 .feature3 .emoji {
 	font-size: 55px;

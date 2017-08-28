@@ -35,15 +35,15 @@
       </div>
     </div>
     <div class="container-lrg flex">
-      <div class="col-sm-6 centervertical">
+      <div class="col-sm-5 centervertical">
         <h1 class="heading">
           Play online chess for free.
         </h1>
-        <h2 class="paragraph ">
-          We're creating a modern web-based interface for the Free Internet Chess Server (FICS) — one of the oldest Internet Chess Servers with over 800,000 registered accounts. At The Free Chess Club, you can access everything that the Free Internet Chess Server community has to offer, right within your browser!
+        <h2 class="paragraph">
+          We're creating a modern web-based interface for the Free Internet Chess Server (FICS) — one of the oldest Internet Chess Servers with over 800,000 registered accounts. At The Free Chess Club, you can access everything that the Free Internet Chess Server (FICS) community has to offer, right within your browser!
         </h2>
-        <div class="ctas">
-          <a class="ctas-button" href="/play">
+        <div class="ctas text-center">
+          <a class="btn ctas-button" href="/play">
             Play Now
           </a>
           <a class="btn btn-primary ctas-button-2" href="http://www.freechess.org/Register/">
@@ -51,6 +51,7 @@
           </a>
         </div>
       </div>
+      <div class="col-sm-1"></div>
       <div class="col-sm-6 sidedevices">
         <div class="iphoneipad">
           <div class="iphone">
@@ -67,8 +68,14 @@
       </div>
     </div>
     <div class="container-lrg">
-      <div class="col-sm-12">
-        <br/><br/><br/>
+      <div class="col-sm-5 download text-center">
+        <div class="ribbon"><span>NEW</span></div>
+        <a href="javascript:void(0)" id="downloadBtn" class="btn btn-secondary ctas-button-2">
+          💾 Download
+        </a>
+        <p>
+          <a class="links" href="https://github.com/freechessclub/freechessclub/releases">View all releases</a> on GitHub
+        </p>
       </div>
     </div>
   </header>
@@ -184,6 +191,35 @@
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+  <script>
+    function getPlatform() {
+      var platform = window.navigator.platform;
+      var macPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
+      var winPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'];
+      if (macPlatforms.indexOf(platform) !== -1)
+        return "mac";
+      else if (winPlatforms.indexOf(platform) !== -1)
+        return "windows";
+      else if (!os && /Linux/.test(platform))
+        return "linux";
+      return "";
+    }
+    let platform = getPlatform();
+    function getDownloadLink() {
+      let version = '1.0.0';
+      let baseLink = 'https://github.com/freechessclub/freechessclub/releases/';
+      if (platform === 'mac')
+        return baseLink + 'download/v' + version + '/freechessclub-' + version + '.dmg';
+      else if (platform === 'linux')
+        return baseLink + 'download/v' + version + '/freechessclub-' + version + '.tar.gz';
+      else if (platform ==='windows')
+        return baseLink + 'download/v' + version + '/freechessclub-setup-' + version + '.exe';
+      else
+        return baseLink;
+    }
+    jQuery("#downloadBtn").text(jQuery("#downloadBtn").text() + (platform ? ("for " + getPlatform()) : ""));
+    jQuery("#downloadBtn").click(() => { window.location = getDownloadLink(); });
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   <script>
@@ -191,7 +227,6 @@
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
   ga('create', 'UA-93678919-1', 'auto');
   ga('send', 'pageview');
   </script>
