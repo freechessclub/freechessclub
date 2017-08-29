@@ -1,12 +1,12 @@
 // Copyright 2017 The Free Chess Club.
 
+import anchorme from 'anchorme';
 import 'bootstrap';
+import * as Chess from 'chess.js';
 import * as $ from 'jquery';
 
-import anchorme from 'anchorme';
-import * as Chess from 'chess.js';
-
 import board from './board';
+import channelList from './channels';
 import * as clock from './clock';
 import game from './game';
 import * as highlight from './highlight';
@@ -17,8 +17,10 @@ import Session from './session';
 // ICS session
 let session: Session;
 
-// List of active tabs
-let tabsList = {};
+// list of active tabs
+const tabsList = {
+  console: $('#content-console'),
+};
 
 function showCapturePiece(color: string, piece: string): void {
   const p: string = highlight.swapColor(color) + piece.toUpperCase();
@@ -117,7 +119,7 @@ $('#collapse-history').on('shown.bs.collapse', () => {
   $('#history-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
 });
 
-jQuery(document.body).on('click', '.closeTab', (event) => {
+$(document.body).on('click', '.closeTab', (event) => {
   const tabContentId: string = $(event.target).parent().attr('id');
   $(event.target).parent().remove();
   delete tabsList[tabContentId];
@@ -135,38 +137,45 @@ function showStatusMsg(msg: string) {
   $('#left-panel').scrollTop($('#left-panel').height());
 }
 
-function handleChatMsg(from, data) {
-  let tab;
-  if (!tabsList.hasOwnProperty(from)) {
-    let chName = from;
-    if (from === '4') {
-      chName = 'Help';
-    }
-    $('<a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" href="#content-' +
-      from + '" id="' + from + '" role="tab">' + chName +
-      '<span class="btn btn-default btn-sm closeTab">×</span></a>').appendTo('#tabs');
-    $('<div class="tab-pane chat-text" id="content-' + from + '" role="tabpanel"></div>').appendTo('.tab-content');
-    $('.chat-text').height($('#board').height() - 40);
-    tab = $('#content-' + from);
-    tabsList[from] = tab;
-  } else {
-    tab = tabsList[from];
+function createOrGetTab(from) {
+  if (tabsList.hasOwnProperty(from)) {
+    return tabsList[from];
   }
 
+  let chName = from;
+  if (channelList[from] !== undefined) {
+    chName = channelList[from];
+  }
+
+  $('<a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" href="#content-' +
+    from + '" id="' + from + '" role="tab">' + chName +
+    '<span class="btn btn-default btn-sm closeTab">×</span></a>').appendTo('#tabs');
+  $('<div class="tab-pane chat-text" id="content-' + from + '" role="tabpanel"></div>').appendTo('.tab-content');
+  $('.chat-text').height($('#board').height() - 40);
+  tabsList[from] = $('#content-' + from);
+  return tabsList[from];
+}
+
+function handleChatMsg(from, data) {
+  const tab = createOrGetTab(from);
   let who = '';
-  let tabheader = $('#' + $('ul#tabs a.active').attr('id'));
   if (data.hasOwnProperty('handle')) {
     let textclass = '';
     if (session.getHandle() === data.handle) {
       textclass = ' class="mine"';
     }
     who = '<strong' + textclass + '>' + $('<span/>').text(data.handle).html() + '</strong>: ';
-    if (data.type === MessageType.ChannelTell) {
-      tabheader = $('#' + data.channel);
-    } else {
-      tabheader = $('#' + data.handle);
-    }
   }
+
+  let tabheader;
+  if (data.type === MessageType.ChannelTell) {
+    tabheader = $('#' + data.channel);
+  } else if (data.type === MessageType.PrivateTell) {
+    tabheader = $('#' + data.handle);
+  } else {
+    tabheader = $('#console');
+  }
+
   tab.append(who +
     anchorme($('<span/>').text(data.text).html(), {attributes: [{name: 'target', value: '_blank'} ]}) + '</br>');
 
@@ -277,7 +286,7 @@ function ICSMessageHandler(message) {
       break;
     case MessageType.Unknown:
     default:
-      handleChatMsg($('ul#tabs a.active').attr('id'), data);
+      handleChatMsg('console', data);
       break;
   }
 }
@@ -310,10 +319,10 @@ $('#input-form').on('submit', (event) => {
   chatHistory[chatHistoryCounter] = val;
   chatHistoryCounter = (chatHistoryCounter + 1) % chatHistory.length;
   currentCounter = -1;
-  if (!$('#input-command').is(':checked')) {
+  const tab = $('ul#tabs a.active').attr('id');
+  if (!$('#input-command').is(':checked') && tab !== 'console') {
     if (val.charAt(0) !== '@') {
       const msg = $('#input-text').val();
-      const tab = $('ul#tabs a.active').attr('id');
       text = 't ' + tab + ' ' + msg;
       handleChatMsg(tab, { type: MessageType.ChannelTell, channel: tab, handle: session.getHandle(), text: msg });
     } else {
@@ -340,7 +349,6 @@ $(document).ready(() => {
     $('#collapse-history').collapse('hide');
   }
   $('#left-panel').height($('#board').height() - 30);
-  tabsList = { 53: $('#content-53') };
   board.start(false);
 });
 
