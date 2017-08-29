@@ -1,4 +1,4 @@
-var webpack = require('webpack');
+const webpack = require('webpack');
 
 module.exports = {
     entry: "./src/index.ts",
@@ -24,6 +24,14 @@ module.exports = {
         ]
     },
     plugins: [
+        new webpack.optimize.AggressiveMergingPlugin(),
+        new webpack.optimize.UglifyJsPlugin({ minimize: true }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        }),
+
         new webpack.ProvidePlugin({
             $: "jquery",
             jquery: "jquery",

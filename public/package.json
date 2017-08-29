@@ -7,7 +7,7 @@
   "scripts": {
     "app": "tsc src/app.ts && electron src/app.js",
     "lint": "tslint -c tslint.json --type-check --fix -p tsconfig.json",
-    "bundle": "NODE_ENV=production webpack -p --optimize-minimize",
+    "bundle": "webpack",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "release": "electron-builder -mwl -p always"
@@ -58,6 +58,6 @@
     "ts-loader": "^2.2.2",
     "typescript": "^2.4.1",
     "url-loader": "^0.5.9",
-    "webpack": "^3.0.0"
+    "webpack": "^3.5.5"
   }
 }
