@@ -31,7 +31,8 @@ import (
 const (
 	loginPrompt    = "login:"
 	passwordPrompt = "password:"
-	ficsPrompt     = "\n"
+	newLine        = "\n"
+	ficsPrompt     = "fics%"
 )
 
 var (
@@ -102,7 +103,6 @@ func sanitize(b []byte) []byte {
 	b = bytes.Replace(b, []byte("\x00"), []byte{}, -1)
 	b = bytes.Replace(b, []byte("\\   "), []byte{}, -1)
 	b = bytes.Replace(b, []byte("\r"), []byte{}, -1)
-	b = bytes.Replace(b, []byte("\n"), []byte(" "), -1)
 	b = bytes.Replace(b, []byte("fics%"), []byte{}, -1)
 	return bytes.TrimSpace(b)
 }
@@ -150,7 +150,7 @@ func Login(conn *telnet.Conn, username, password string) (string, error) {
 	}
 
 	// wait for the password prompt
-	_, err = sendAndReadUntil(conn, password, ficsPrompt)
+	_, err = sendAndReadUntil(conn, password, newLine)
 	if err != nil {
 		return "", fmt.Errorf("failed authentication for %s (password %s): %v", username, password, err)
 	}
@@ -167,18 +167,18 @@ func init() {
 	gameMoveRE = regexp.MustCompile(`<12>\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([BW\-])\s(?:\-?[0-7])\s(?:[01])\s(?:[01])\s(?:[01])\s(?:[01])\s(?:[0-9]+)\s([0-9]+)\s([a-zA-Z]+)\s([a-zA-Z]+)\s(\-?[0-3])\s([0-9]+)\s([0-9]+)\s(?:[0-9]+)\s(?:[0-9]+)\s(\-?[0-9]+)\s(\-?[0-9]+)\s(?:[0-9]+)\s(?:\S+)\s\((?:[0-9]+)\:(?:[0-9]+)\)\s(\S+)\s(?:[01])\s(?:[0-9]+)\s(?:[0-9]+)\s*(.*)`)
 
 	// {Game 117 (GuestMDPS vs. guestl) Creating unrated blitz match.}
-	gameStartRE = regexp.MustCompile(`.*\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\sCreating.*\}(.*)`)
+	gameStartRE = regexp.MustCompile(`(?s)\s*\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\sCreating.*\}.*`)
 
-	gameEndRE = regexp.MustCompile(`\s*(?:Game\s[0-9]+:.*)?\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\s([a-zA-Z]+)\s([a-zA-Z0-9\s]+)\} [012/]*-[012/]*.*\.(.*)`)
+	gameEndRE = regexp.MustCompile(`(?s)\s*(?:Game\s[0-9]+:.*)?\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\s([a-zA-Z]+)\s([a-zA-Z0-9\s]+)\} [012/]+-[012/]+.*`)
 
 	// channel tell
-	chTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:\([A-Z\*]+\))*\(([0-9]+)\):\s+(.*)`)
+	chTellRE = regexp.MustCompile(`(?s)([a-zA-Z]+)(?:\([A-Z\*]+\))*\(([0-9]+)\):\s+(.*)`)
 
 	// private tell
-	pTellRE = regexp.MustCompile(`([a-zA-Z]+)(?:[\(\[][A-Z0-9\*\-]+[\)\]])* (?:tells you|says|kibitzes):\s+(.*)`)
+	pTellRE = regexp.MustCompile(`(?s)([a-zA-Z]+)(?:[\(\[][A-Z0-9\*\-]+[\)\]])* (?:tells you|says|kibitzes):\s+(.*)`)
 
 	// told status
-	toldMsgRE = regexp.MustCompile(`\s*\(told .+\)\s*`)
+	toldMsgRE = regexp.MustCompile(`\(told .+\)`)
 }
 
 func style12ToFEN(b []byte) string {
@@ -237,6 +237,11 @@ func (s *Session) decodeMessage(msg []byte) ([]byte, error) {
 			Move:  string(matches[18][:]),
 		}
 
+		if string(matches[19][:]) != "" {
+			bs, _ := json.Marshal(m)
+			sendWebsocket(s.ws, bs)
+			return s.decodeMessage(matches[19][:])
+		}
 		return json.Marshal(m)
 	}
 
@@ -276,7 +281,7 @@ func (s *Session) decodeMessage(msg []byte) ([]byte, error) {
 			Type:    chTell,
 			Channel: string(matches[2][:]),
 			Handle:  string(matches[1][:]),
-			Text:    string(matches[3][:]),
+			Text:    string(bytes.Replace(matches[3][:], []byte("\n"), []byte(" "), -1)),
 		}
 		return json.Marshal(m)
 	}
@@ -343,22 +348,22 @@ func newSession(user, pass string, ws *websocket.Conn) (*Session, error) {
 	bs, _ := json.Marshal(msg)
 	sendWebsocket(ws, bs)
 
-	_, err = sendAndReadUntil(conn, "set seek 0", ficsPrompt)
+	_, err = sendAndReadUntil(conn, "set seek 0", newLine)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = sendAndReadUntil(conn, "set echo 0", ficsPrompt)
+	_, err = sendAndReadUntil(conn, "set echo 0", newLine)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = sendAndReadUntil(conn, "set style 12", ficsPrompt)
+	_, err = sendAndReadUntil(conn, "set style 12", newLine)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = sendAndReadUntil(conn, "set interface www.freechess.club", ficsPrompt)
+	_, err = sendAndReadUntil(conn, "set interface www.freechess.club", newLine)
 	if err != nil {
 		return nil, err
 	}
