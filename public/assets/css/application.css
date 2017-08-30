@@ -49,10 +49,6 @@ html, body {
   text-decoration: none;
 }
 
-.dropdown-toggle::after {
-  display: none;
-}
-
 .btn-toolbar .btn {
     margin-right: 10px;
 }
@@ -139,8 +135,16 @@ html, body {
   padding-bottom: 1px;
 }
 
-.dropdown-menu {
+.dropdown-menu, .dropdown-header {
   font-size: 14px;
+}
+
+.dropdown-icon {
+  margin-right: 6px;
+}
+
+.dropdown-toggle::after {
+  display: none;
 }
 
 .color-box {

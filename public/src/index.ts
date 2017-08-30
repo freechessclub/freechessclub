@@ -13,9 +13,13 @@ import * as highlight from './highlight';
 import History from './history';
 import MessageType from './message';
 import Session from './session';
+import * as Sounds from './sounds';
 
 // ICS session
 let session: Session;
+
+// toggle game sounds
+let soundToggle: boolean = true;
 
 // list of active tabs
 const tabsList = {
@@ -96,7 +100,19 @@ export function movePiece(source, target) {
   if (move.captured) {
     showCapturePiece(move.color, move.captured);
   }
-  highlight.showCheck(move.color, move.san);
+  if (highlight.showCheck(move.color, move.san)) {
+    if (soundToggle) {
+      Sounds.checkSound.play();
+    }
+  } else {
+    if (soundToggle) {
+      if (move.captured) {
+        Sounds.captureSound.play();
+      } else {
+        Sounds.moveSound.play();
+      }
+    }
+  }
 }
 
 // enable tooltips
@@ -272,7 +288,19 @@ function ICSMessageHandler(message) {
             if (move.captured) {
               showCapturePiece(move.color, move.captured);
             }
-            highlight.showCheck(move.color, move.san);
+            if (highlight.showCheck(move.color, move.san)) {
+              if (soundToggle) {
+                Sounds.checkSound.play();
+              }
+            } else {
+              if (soundToggle) {
+                if (move.captured) {
+                  Sounds.captureSound.play();
+                } else {
+                  Sounds.moveSound.play();
+                }
+              }
+            }
             game.history.add(game.chess.fen());
             addMoveHistory(move);
           }
@@ -489,6 +517,14 @@ $('#custom-control').on('click', (event) => {
     const sec: string = getValue('#custom-control-sec');
     getGame(getValue('#opponent-player-name'), min, sec);
   }
+});
+
+$('#sound-toggle').on('click', (event) => {
+  // todo: disable sound
+  const iconClass = 'dropdown-icon fa fa-volume-' + (soundToggle ? 'up' : 'off');
+  $('#sound-toggle').html('<span id="sound-toggle-icon" class="' + iconClass +
+    '" aria-hidden="false"></span>Sounds ' + (soundToggle ? 'ON' : 'OFF'));
+  soundToggle = !soundToggle;
 });
 
 $('#disconnect').on('click', (event) => {

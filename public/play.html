@@ -146,14 +146,17 @@
             <div class="card-header status" id="right-panel-header">
               <div class="noselect" id="chat-status"></div>
               <div class="btn-toolbar inline-block pull-right">
-                <div id="color-dropdown" class="dropdown" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Color Theme">
-                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="themeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Color">
+                <div id="settings-dropdown" class="dropdown" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Settings">
+                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="settingsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Settings">
                     <span class="fa fa-gear" aria-hidden="false"></span>
                   </button>
-                  <div class="dropdown-menu" aria-labelledby="themeButton">
-                    <div class="dropdown-item noselect" style="color: #5789a9; background-color: white" id="colortheme-default" onmouseover="this.style.background='#e6f5ff';" onmouseout="this.style.background='white';">Arctic Blue<div class="color-box" style="background-color: #5789a9"></div></div>
-                    <div class="dropdown-item noselect" style="background-color: white" id="colortheme-green" onmouseover="this.style.background='#eaffeb';" onmouseout="this.style.background='white';">Green Bean<div class="color-box" style="background-color: #74a077"></div></div>
-                    <div class="dropdown-item noselect" style="background-color: white" id="colortheme-yellow" onmouseover="this.style.background='#f0d9b5';" onmouseout="this.style.background='white';">Coffee & Cream<div class="color-box" style="background-color: #b58863"></div></div>
+                  <div class="dropdown-menu" aria-labelledby="settingsButton">
+                    <div class="dropdown-item noselect" id="sound-toggle"><span id="sound-toggle-icon" class="fa fa-volume-off dropdown-icon" aria-hidden="false"></span>Sounds OFF</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-header">Color Themes</div>
+                    <div class="dropdown-item noselect" style="color: #5789a9; background-color: white" id="colortheme-default" onmouseover="this.style.background='#e6f5ff';" onmouseout="this.style.background='white';"><div class="color-box" style="background-color: #5789a9"></div>Arctic Blue</div>
+                    <div class="dropdown-item noselect" style="background-color: white" id="colortheme-green" onmouseover="this.style.background='#eaffeb';" onmouseout="this.style.background='white';"><div class="color-box" style="background-color: #74a077"></div>Green Bean</div>
+                    <div class="dropdown-item noselect" style="background-color: white" id="colortheme-yellow" onmouseover="this.style.background='#f0d9b5';" onmouseout="this.style.background='white';"><div class="color-box" style="background-color: #b58863"></div>Coffee & Cream</div>
                   </div>
                 </div>
                 <div id="settings-dropdown" class="dropdown" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Connection">
@@ -161,9 +164,9 @@
                       <span class="fa fa-user" aria-hidden="false"></span>
                     </button>
                   <div class="dropdown-menu" aria-labelledby="connectButton">
-                    <a class="dropdown-item noselect" id="disconnect">Disconnect</a>
-                    <a class="dropdown-item noselect" id="connect-guest">Connect as Guest</a>
-                    <a class="dropdown-item noselect" id="connect-user">Connect as User</a>
+                    <a class="dropdown-item noselect" id="disconnect"><span class="fa fa-unlink dropdown-icon" aria-hidden="false"></span>Disconnect</a>
+                    <a class="dropdown-item noselect" id="connect-guest"><span class="fa fa-user-secret dropdown-icon" aria-hidden="false"></span>Connect as Guest</a>
+                    <a class="dropdown-item noselect" id="connect-user"><span class="fa fa-user dropdown-icon" aria-hidden="false"></span>Connect as User</a>
                   </div>
                 </div>
                 <button id="chat-toggle-btn" class="btn btn-secondary btn-sm" type="button" data-toggle="collapse" data-target="#collapse-chat" data-placement="top" aria-expanded="true" aria-controls="collapse-chat" title="Toggle Chat">

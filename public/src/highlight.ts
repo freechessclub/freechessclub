@@ -76,9 +76,11 @@ export function swapColor(color: string): string {
 /**
  * Show check on the board by highlighting the king square.
  */
-export function showCheck(color: string, san: string) {
+export function showCheck(color: string, san: string): boolean {
   if (san.slice(-1) === '+') {
     const square = $('div').find("[data-piece='" + swapColor(color) + "K']");
     highlightCheck(square.parent().data('square'));
+    return true;
   }
+  return false;
 }
