@@ -164,7 +164,7 @@ func Login(conn *telnet.Conn, username, password string) (string, error) {
 func init() {
 	// game move
 	// <12> rnbqkb-r pppppppp -----n-- -------- ----P--- -------- PPPPKPPP RNBQ-BNR B -1 0 0 1 1 0 7 Newton Einstein 1 2 12 39 39 119 122 2 K/e1-e2 (0:06) Ke2 0
-	gameMoveRE = regexp.MustCompile(`<12>\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([BW\-])\s(?:\-?[0-7])\s(?:[01])\s(?:[01])\s(?:[01])\s(?:[01])\s(?:[0-9]+)\s([0-9]+)\s([a-zA-Z]+)\s([a-zA-Z]+)\s(\-?[0-3])\s([0-9]+)\s([0-9]+)\s(?:[0-9]+)\s(?:[0-9]+)\s(\-?[0-9]+)\s(\-?[0-9]+)\s(?:[0-9]+)\s(?:\S+)\s\((?:[0-9]+)\:(?:[0-9]+)\)\s(\S+)\s(?:[01])\s(?:[0-9]+)\s(?:[0-9]+)\s*(.*)`)
+	gameMoveRE = regexp.MustCompile(`<12>\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([BW\-])\s(?:\-?[0-7])\s(?:[01])\s(?:[01])\s(?:[01])\s(?:[01])\s(?:[0-9]+)\s([0-9]+)\s([a-zA-Z]+)\s([a-zA-Z]+)\s(\-?[0-3])\s([0-9]+)\s([0-9]+)\s(?:[0-9]+)\s(?:[0-9]+)\s(\-?[0-9]+)\s(\-?[0-9]+)\s(?:[0-9]+)\s(?:\S+)\s\((?:[0-9]+)\:(?:[0-9]+)\)\s(\S+)\s(?:[01])\s(?:[0-9]+)\s(?:[0-9]+)\s*`)
 
 	// {Game 117 (GuestMDPS vs. guestl) Creating unrated blitz match.}
 	gameStartRE = regexp.MustCompile(`(?s)\s*\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\sCreating.*\}.*`)
@@ -209,12 +209,25 @@ func atoi(b []byte) int {
 
 func (s *Session) decodeMessage(msg []byte) ([]byte, error) {
 	msg = toldMsgRE.ReplaceAll(msg, []byte{})
-	if msg == nil {
+	if msg == nil || bytes.Equal(msg, []byte("\n")) {
 		return nil, nil
 	}
 
 	matches := gameMoveRE.FindSubmatch(msg)
 	if matches != nil && len(matches) >= 18 {
+		msgs := bytes.Split(msg, []byte("\n"))
+		msgIndex := 0;
+		for msgIndex = 1; msgIndex <= len(msgs); msgIndex++ {
+			if gameMoveRE.Match(msgs[msgIndex-1]) {
+				break;
+			}
+			bs, err := s.decodeMessage(msgs[msgIndex-1])
+			if err != nil {
+				return nil, err
+			}
+			sendWebsocket(s.ws, bs)
+		}
+
 		fen := ""
 		for i := 1; i < 8; i++ {
 			fen += style12ToFEN(matches[i][:])
@@ -237,16 +250,29 @@ func (s *Session) decodeMessage(msg []byte) ([]byte, error) {
 			Move:  string(matches[18][:]),
 		}
 
-		if string(matches[19][:]) != "" {
+		if (msgIndex < len(msgs)) {
 			bs, _ := json.Marshal(m)
 			sendWebsocket(s.ws, bs)
-			return s.decodeMessage(matches[19][:])
+
+			for msgIndex = msgIndex + 1; msgIndex < len(msgs); msgIndex++ {
+				bs, err := s.decodeMessage(msgs[msgIndex-1])
+				if err != nil {
+					return nil, err
+				}
+
+				if (msgIndex == len(msgs)-1) {
+					return bs, err
+				} else {
+					sendWebsocket(s.ws, bs)
+				}
+			}
 		}
+
 		return json.Marshal(m)
 	}
 
 	matches = gameStartRE.FindSubmatch(msg)
-	if matches != nil && len(matches) > 3 {
+	if matches != nil && len(matches) > 2 {
 		m := &gameStartMsg{
 			Type:      gameStart,
 			Id:        atoi(matches[1][:]),
@@ -318,9 +344,7 @@ func (s *Session) ficsReader() {
 			if err != nil {
 				log.Println("error decoding message")
 			}
-			if bs != nil {
-				sendWebsocket(s.ws, bs)
-			}
+			sendWebsocket(s.ws, bs)
 		}
 	}
 }
