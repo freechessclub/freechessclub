@@ -173,7 +173,14 @@
             </div>
             <div id="collapse-chat" class="collapse show" aria-labelledby="right-panel-header">
               <div class="card-block">
-                <ul class="nav nav-tabs flex-column flex-sm-row" id="tabs">
+                <ul class="nav nav-tabs d-flex flex-wrap justify-content-start" id="tabs">
+                  <div id="chan-dropdown" class="d-flex dropdown" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Join Channel">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="chanButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Channel">
+                      <span class="fa fa-plus" aria-hidden="false"></span>
+                    </button>
+                    <div id="chan-dropdown-menu" class="dropdown-menu" aria-labelledby="chanButton">
+                    </div>
+                  </div>
                   <a class="flex-sm-fill text-sm-center nav-link active" data-toggle="tab" href="#content-console" id="console" role="tab">Console</a>
                 </ul>
                 <br/>

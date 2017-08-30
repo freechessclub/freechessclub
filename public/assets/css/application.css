@@ -123,13 +123,18 @@ html, body {
 }
 
 .nav-tabs .nav-link .closeTab {
-  margin: -2px 0 0 -3px;
-  padding-right: 1px;
-  font-size: 20px;
+  opacity: 0;
+  margin-right: 0px;
+  padding-right: 0px;
+  font-size: 18px;
+}
+
+.nav-tabs .nav-link:hover .closeTab {
+  opacity: 1;
 }
 
 .nav-tabs .nav-link {
-  font-size: 14px;
+  font-size: 12px;
   padding-top: 1px;
   padding-bottom: 1px;
 }

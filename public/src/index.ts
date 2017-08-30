@@ -174,6 +174,29 @@ function handleChatMsg(from, data) {
     tabheader = $('#' + data.handle);
   } else {
     tabheader = $('#console');
+    const chListMatches = data.text.match(/-- channel list: \d+ channels --(?:\n)([\d\s]*)/);
+    if (chListMatches !== null && chListMatches.length > 1) {
+      const joinedChannels = chListMatches[1].split(/\s+/);
+      joinedChannels.forEach((ch) => {
+        $('#chan-dropdown-menu').append(
+          '<a class="dropdown-item noselect" id="ch-' + ch +
+          '">' + channelList[Number(ch)] + '</a>');
+
+        $('#ch-' + ch).on('click', (event) => {
+          event.preventDefault();
+          createOrGetTab(Number(ch));
+          // createOrGetTab(Number(ch)).tab('show');
+        });
+      });
+      return;
+    }
+    if (
+      data.text === 'Style 12 set.' ||
+      data.text === 'You will not see seek ads.' ||
+      data.text === 'You will now not hear communications echoed.'
+    ) {
+      return;
+    }
   }
 
   tab.append(who +
@@ -192,6 +215,7 @@ function ICSMessageHandler(message) {
     case MessageType.Control:
       if (!session.isConnected() && data.command === 1) {
         session.setHandle(data.text);
+        session.send({ type: MessageType.Control, command: 0, text: '=ch' });
       }
       break;
     case MessageType.ChannelTell:
@@ -262,6 +286,12 @@ function ICSMessageHandler(message) {
       board.position(data.fen);
       break;
     case MessageType.GameStart:
+      const handle = session.getHandle();
+      if (data.playerone === handle) {
+        createOrGetTab(data.playertwo);
+      } else {
+        createOrGetTab(data.playerone);
+      }
       break;
     case MessageType.GameEnd:
       if (data.reason < 4 && session.getHandle() === data.winner) {
