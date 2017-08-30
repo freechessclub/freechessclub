@@ -169,7 +169,7 @@ func init() {
 	// {Game 117 (GuestMDPS vs. guestl) Creating unrated blitz match.}
 	gameStartRE = regexp.MustCompile(`(?s)\s*\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\sCreating.*\}.*`)
 
-	gameEndRE = regexp.MustCompile(`(?s)\s*(?:Game\s[0-9]+:.*)?\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\s([a-zA-Z]+)\s([a-zA-Z0-9\s]+)\} [012/]+-[012/]+.*`)
+	gameEndRE = regexp.MustCompile(`(?s)\s*(?:Game\s[0-9]+:.*)?\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\s([a-zA-Z]+)\s([a-zA-Z0-9\s]+)\}\s(?:[012/]+-[012/]+)?.*`)
 
 	// channel tell
 	chTellRE = regexp.MustCompile(`(?s)([a-zA-Z]+)(?:\([A-Z\*]+\))*\(([0-9]+)\):\s+(.*)`)
