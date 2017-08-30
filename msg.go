@@ -186,6 +186,10 @@ func validateMessage(data []byte) (interface{}, error) {
 }
 
 func sendWebsocket(ws *websocket.Conn, bs []byte) error {
+	if bs == nil || len(bs) == 0 {
+		return nil
+	}
+
 	var err error
 	if err = ws.WriteMessage(websocket.TextMessage, bs); err != nil {
 		log.WithFields(logrus.Fields{
