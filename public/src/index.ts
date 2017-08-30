@@ -21,6 +21,9 @@ let session: Session;
 // toggle game sounds
 let soundToggle: boolean = true;
 
+// pending takeback requests
+let pendingTakeback = 0;
+
 // list of active tabs
 const tabsList = {
   console: $('#content-console'),
@@ -79,9 +82,8 @@ function addMoveHistory(move: any): void {
 }
 
 export function movePiece(source, target) {
-  const chess = game.chess;
   // see if the move is legal
-  const move = chess.move({
+  const move = game.chess.move({
     from: source,
     to: target,
     promotion: 'q', // TODO: Allow non-queen promotes
@@ -94,7 +96,7 @@ export function movePiece(source, target) {
   }
 
   session.send({ type: MessageType.Control, command: 0, text: source + '-' + target });
-  game.history.add(chess.fen());
+  game.history.add(game.chess.fen());
   addMoveHistory(move);
   highlight.highlightMove(move.from, move.to);
   if (move.captured) {
@@ -190,6 +192,50 @@ function handleChatMsg(from, data) {
     tabheader = $('#' + data.handle);
   } else {
     tabheader = $('#console');
+
+    let takeBacker = null;
+    let action = null;
+    if (pendingTakeback) {
+      let takebackMatches = data.text.match(/(\w+) (\w+) the takeback request\./);
+      if (takebackMatches !== null && takebackMatches.length > 1) {
+        takeBacker = takebackMatches[1];
+        action = takebackMatches[2];
+      } else {
+        takebackMatches = data.text.match(/You (\w+) the takeback request from (\w+)\./);
+        if (takebackMatches !== null && takebackMatches.length > 1) {
+          takeBacker = takebackMatches[2];
+          action = takebackMatches[1];
+        }
+      }
+
+      if (takeBacker !== null && action !== null) {
+        if (takeBacker === $('#opponent-name').text()) {
+          if (action.startsWith('decline')) {
+            pendingTakeback = 0;
+            return;
+          }
+          game.premove = null;
+          for (let i = 0; i < pendingTakeback; i++) {
+            if (game.chess) {
+              game.chess.undo();
+            }
+            if (game.history) {
+              game.history.undo();
+            }
+          }
+          pendingTakeback = 0;
+          return;
+        }
+      }
+    }
+
+    const takebackReq = data.text.match(/(\w+) would like to take back (\d+) half move\(s\)\./);
+    if (takebackReq != null && takebackReq.length > 1) {
+      if (takebackReq[1] === $('#opponent-name').text()) {
+        pendingTakeback = Number(takebackReq[2]);
+      }
+    }
+
     const chListMatches = data.text.match(/-- channel list: \d+ channels --(?:\n)([\d\s]*)/);
     if (chListMatches !== null && chListMatches.length > 1) {
       const joinedChannels = chListMatches[1].split(/\s+/);
@@ -418,7 +464,7 @@ $('#fast-backward').on('click', (event) => {
 
 $('#backward').on('click', (event) => {
   if (game.history) {
-  game.history.backward();
+    game.history.backward();
   }
 });
 
@@ -453,8 +499,10 @@ $('#abort').on('click', (event) => {
 $('#takeback').on('click', (event) => {
   if (game.chess !== null) {
     if (game.chess.turn() === game.color) {
+      pendingTakeback = 2;
       session.send({ type: MessageType.Control, command: 0, text: 'take 2'});
     } else {
+      pendingTakeback = 1;
       session.send({ type: MessageType.Control, command: 0, text: 'take 1'});
     }
   } else {
