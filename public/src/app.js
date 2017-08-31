@@ -218,7 +218,10 @@ function createWindow() {
         center: true,
         resizable: false,
         title: electron_1.app.getName(),
-        icon: path.join(__dirname, '../assets/img/tfcc-small.png')
+        icon: path.join(__dirname, '../assets/img/tfcc-small.png'),
+        webPreferences: {
+            devTools: false
+        }
     });
     var ur = url.format({
         protocol: 'file',

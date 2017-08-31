@@ -27,191 +27,201 @@
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-<div class="feature3">
-  <div class="container">
-    <div class="row align-items-center justify-content-around">
-      <div class="col-sm-3 align-self-center">
-        <div class="card">
-          <div class="card-header center" id="left-panel-header">
-            <div class="btn-toolbar">
-              <button type="button" id="fast-backward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Beginning">
-                <span class="fa fa-fast-backward" aria-hidden="false"></span>
-              </button>
-              <button type="button" id="backward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Back">
-                <span class="fa fa-backward" aria-hidden="false"></span>
-              </button>
-              <button type="button" id="forward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Forward">
-                <span class="fa fa-forward" aria-hidden="false"></span>
-              </button>
-              <button type="button" id="fast-forward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Current">
-                <span class="fa fa-fast-forward" aria-hidden="false"></span>
-              </button>
-              <button id="history-toggle-btn" class="btn btn-secondary btn-sm" type="button" data-toggle="collapse" data-target="#collapse-history" data-placement="top" aria-expanded="true" aria-controls="collapse-history" title="Toggle Game History">
-                <span id="history-toggle-icon" class="fa fa-toggle-up" aria-hidden="false"></span>
-              </button>
-            </div>
-          </div>
-          <div class="card-header">
-            <div class="dropdown center">
-              <button type="button" class="btn btn-secondary btn-block btn-sm" aria-haspopup="true" aria-expanded="false" id="new-game">
-                Start a new game
-              </button>
-              <button type="button" class="btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="new-game-menu">
-                <span class="fa fa-toggle-down"></span>
-              </button>
-              <div class="dropdown-menu" aria-labelledby="new-game-menu" style="border-width: 0; padding-top: 0">
-                <div class="btn-group-vertical btn-block center" role="group" aria-label="New Game Menu">
-                  <div class="input-group input-group-sm">
-                    <span class="input-group-addon" id="opponent-player">Play against</span>
-                    <input type="text" class="form-control" id="opponent-player-name" placeholder="Random Player" aria-describedby="opponent-player">
-                  </div>
-                  <a href="#" class="btn btn-primary btn-sm disabled" role="button" aria-disabled="true">Lightning</a>
-                  <button type="button" class="btn btn-secondary btn-block btn-sm" id="onezero">1 + 0</button>
-                  <a href="#" class="btn btn-success btn-sm disabled" role="button" aria-disabled="true">Blitz</a>
-                  <button type="button" class="btn btn-secondary btn-block btn-sm" id="threezero">3 + 0</button>
-                  <button type="button" class="btn btn-secondary btn-block btn-sm" id="threetwo">3 + 2</button>
-                  <button type="button" class="btn btn-secondary btn-block btn-sm" id="fivezero">5 + 0</button>
-                  <button type="button" class="btn btn-secondary btn-block btn-sm" id="fivefive">5 + 5</button>
-                  <a href="#" class="btn btn-warning btn-sm disabled" role="button" aria-disabled="true">Standard</a>
-                  <button type="button" class="btn btn-secondary btn-block btn-sm" id="tenfive">10 + 5</button>
-                  <button type="button" class="btn btn-secondary btn-block btn-sm" id="fifteenzero">15 + 0</button>
-                  <a href="#" class="btn btn-danger btn-sm disabled" role="button" aria-disabled="true">Custom</a>
-                  <div class="input-group input-group-sm">
-                    <input type="text" class="form-control text-center" placeholder="5" id="custom-control-min">
-                    <span class="input-group-addon"> min </span>
-                    <input type="text" class="form-control text-center" placeholder="10" id="custom-control-sec">
-                    <span class="input-group-addon"> sec </span>
-                    <span class="input-group-btn">
-                      <button class="btn btn-secondary btn-sm" type="button" id="custom-control">Go</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div id="collapse-history" class="collapse show" aria-labelledby="left-panel-header">
-            <div class="card-block history noselect" id="left-panel">
-              <table class="table table-sm table-striped table-hover">
-                <tbody id="move-history"></tbody>
-              </table>
-              <div id="game-status"></div>
-            </div>
-          </div>
-          <div class="card-footer center">
-            <div class="btn-toolbar">
-              <button type="button" id="takeback" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Takeback">
-                <span class="fa fa-undo" aria-hidden="false"></span>
-              </button>
-              <button type="button" id="draw" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Draw">
-                <span class="fa fa-handshake-o" aria-hidden="false"></span>
-              </button>
-              <button type="button" id="abort" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Abort">
-                <span class="fa fa-times-circle" aria-hidden="false"></span>
-              </button>
-              <button type="button" id="resign" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Resign">
-                <span class="fa fa-flag-o" aria-hidden="false"></span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-5 align-self-center">
-        <div class="card">
-          <div class="d-flex justify-content-between align-items-center card-header status" id="opponent-status">
-            <div class="mr-auto p-2 name noselect" id="opponent-name"></div>
-            <div class="p-2 captured noselect" id="opponent-captured"></div>
-            <div class="p-2 clock noselect" id="opponent-time"></div>
-          </div>
-          <div class="card-block" id="board-card">
-            <div id="board"></div>
-          </div>
-          <div class="d-flex justify-content-between align-items-center card-footer status" id="player-status">
-            <div class="mr-auto p-2 name noselect" id="player-name"></div>
-            <div class="p-2 captured noselect" id="player-captured"></div>
-            <div class="p-2 clock noselect" id="player-time"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4 align-self-center">
-        <div class="card">
-          <div class="card-header status" id="right-panel-header">
-            <div class="noselect" id="chat-status"></div>
-            <div class="btn-toolbar inline-block pull-right">
-              <div id="color-dropdown" class="dropdown" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Color Theme">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="themeButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Color">
-                  <span class="fa fa-gear" aria-hidden="false"></span>
+  <div class="feature3">
+    <div class="container">
+      <div class="row align-items-center justify-content-around">
+        <div class="col-sm-3 align-self-center">
+          <div class="card">
+            <div class="card-header center" id="left-panel-header">
+              <div class="btn-toolbar">
+                <button type="button" id="fast-backward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Beginning">
+                  <span class="fa fa-fast-backward" aria-hidden="false"></span>
                 </button>
-                <div class="dropdown-menu" aria-labelledby="themeButton">
-                  <div class="dropdown-item noselect" style="color: #5789a9; background-color: white" id="colortheme-default" onmouseover="this.style.background='#e6f5ff';" onmouseout="this.style.background='white';">Arctic Blue<div class="color-box" style="background-color: #5789a9"></div></div>
-                  <div class="dropdown-item noselect" style="background-color: white" id="colortheme-green" onmouseover="this.style.background='#eaffeb';" onmouseout="this.style.background='white';">Green Bean<div class="color-box" style="background-color: #74a077"></div></div>
-                  <div class="dropdown-item noselect" style="background-color: white" id="colortheme-yellow" onmouseover="this.style.background='#f0d9b5';" onmouseout="this.style.background='white';">Coffee & Cream<div class="color-box" style="background-color: #b58863"></div></div>
-                </div>
-              </div>
-              <div id="settings-dropdown" class="dropdown" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Connection">
-                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="connectButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Settings">
-                    <span class="fa fa-user" aria-hidden="false"></span>
-                  </button>
-                <div class="dropdown-menu" aria-labelledby="connectButton">
-                  <a class="dropdown-item noselect" id="disconnect">Disconnect</a>
-                  <a class="dropdown-item noselect" id="connect-guest">Connect as Guest</a>
-                  <a class="dropdown-item noselect" id="connect-user">Connect as User</a>
-                </div>
-              </div>
-              <button id="chat-toggle-btn" class="btn btn-secondary btn-sm" type="button" data-toggle="collapse" data-target="#collapse-chat" data-placement="top" aria-expanded="true" aria-controls="collapse-chat" title="Toggle Chat">
-                <span id="chat-toggle-icon" class="fa fa-toggle-up" aria-hidden="false"></span>
-              </button>
-            </div>
-          </div>
-          <div id="collapse-chat" class="collapse show" aria-labelledby="right-panel-header">
-            <div class="card-block">
-              <ul class="nav nav-tabs flex-column flex-sm-row" id="tabs">
-                <a class="flex-sm-fill text-sm-center nav-link active" data-toggle="tab" href="#content-53" id="53" role="tab">Guest Chat</a>
-              </ul>
-              <br/>
-              <div class="tab-content">
-                <div class="tab-pane active chat-text" id="content-53" role="tabpanel"></div>
+                <button type="button" id="backward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Back">
+                  <span class="fa fa-backward" aria-hidden="false"></span>
+                </button>
+                <button type="button" id="forward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Forward">
+                  <span class="fa fa-forward" aria-hidden="false"></span>
+                </button>
+                <button type="button" id="fast-forward" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Current">
+                  <span class="fa fa-fast-forward" aria-hidden="false"></span>
+                </button>
+                <button id="history-toggle-btn" class="btn btn-secondary btn-sm" type="button" data-toggle="collapse" data-target="#collapse-history" data-placement="top" aria-expanded="true" aria-controls="collapse-history" title="Toggle Game History">
+                  <span id="history-toggle-icon" class="fa fa-toggle-up" aria-hidden="false"></span>
+                </button>
               </div>
             </div>
-            <div class="card-footer widget">
-              <form id="input-form" class="form-inline">
-                <div class="input-group input-group-sm" style="width: 100%">
-                  <span class="input-group-addon">
-                    <div class="form-check">
-                      <label class="form-check-label" data-toggle="tooltip" data-placement="bottom" title="Commands can also be prefixed with an @ (eg: @showa)">
-                        <input id="input-command" class="form-check-input" type="checkbox" aria-label="Console command">Command
-                      </label>
+            <div class="card-header">
+              <div class="dropdown center">
+                <button type="button" class="btn btn-secondary btn-block btn-sm" aria-haspopup="true" aria-expanded="false" id="new-game">
+                  Start a new game
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="new-game-menu">
+                  <span class="fa fa-toggle-down"></span>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="new-game-menu" style="border-width: 0; padding-top: 0">
+                  <div class="btn-group-vertical btn-block center" role="group" aria-label="New Game Menu">
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-addon" id="opponent-player">Play against</span>
+                      <input type="text" class="form-control" id="opponent-player-name" placeholder="Random Player" aria-describedby="opponent-player">
                     </div>
-                  </span>
-                  <input id="input-text" type="text" class="form-control" placeholder="Press Enter to send message!" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                    <a href="#" class="btn btn-primary btn-sm disabled" role="button" aria-disabled="true">Lightning</a>
+                    <button type="button" class="btn btn-secondary btn-block btn-sm" id="onezero">1 + 0</button>
+                    <a href="#" class="btn btn-success btn-sm disabled" role="button" aria-disabled="true">Blitz</a>
+                    <button type="button" class="btn btn-secondary btn-block btn-sm" id="threezero">3 + 0</button>
+                    <button type="button" class="btn btn-secondary btn-block btn-sm" id="threetwo">3 + 2</button>
+                    <button type="button" class="btn btn-secondary btn-block btn-sm" id="fivezero">5 + 0</button>
+                    <button type="button" class="btn btn-secondary btn-block btn-sm" id="fivefive">5 + 5</button>
+                    <a href="#" class="btn btn-warning btn-sm disabled" role="button" aria-disabled="true">Standard</a>
+                    <button type="button" class="btn btn-secondary btn-block btn-sm" id="tenfive">10 + 5</button>
+                    <button type="button" class="btn btn-secondary btn-block btn-sm" id="fifteenzero">15 + 0</button>
+                    <a href="#" class="btn btn-danger btn-sm disabled" role="button" aria-disabled="true">Custom</a>
+                    <div class="input-group input-group-sm">
+                      <input type="text" class="form-control text-center" placeholder="5" id="custom-control-min">
+                      <span class="input-group-addon"> min </span>
+                      <input type="text" class="form-control text-center" placeholder="10" id="custom-control-sec">
+                      <span class="input-group-addon"> sec </span>
+                      <span class="input-group-btn">
+                        <button class="btn btn-secondary btn-sm" type="button" id="custom-control">Go</button>
+                      </span>
+                    </div>
+                  </div>
                 </div>
-              </form>
+              </div>
+            </div>
+            <div id="collapse-history" class="collapse show" aria-labelledby="left-panel-header">
+              <div class="card-block history noselect" id="left-panel">
+                <table class="table table-sm table-striped table-hover">
+                  <tbody id="move-history"></tbody>
+                </table>
+                <div id="game-status"></div>
+              </div>
+            </div>
+            <div class="card-footer center">
+              <div class="btn-toolbar">
+                <button type="button" id="takeback" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Takeback">
+                  <span class="fa fa-undo" aria-hidden="false"></span>
+                </button>
+                <button type="button" id="draw" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Draw">
+                  <span class="fa fa-handshake-o" aria-hidden="false"></span>
+                </button>
+                <button type="button" id="abort" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Abort">
+                  <span class="fa fa-times-circle" aria-hidden="false"></span>
+                </button>
+                <button type="button" id="resign" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Resign">
+                  <span class="fa fa-flag-o" aria-hidden="false"></span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-        <div class="modal" id="login-screen" tabindex="-1" role="dialog" aria-labelledby="login-modal" aria-hidden="true">
-          <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="login-modal">Login to FICS</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+        <div class="col-sm-5 align-self-center">
+          <div class="card">
+            <div class="d-flex justify-content-between align-items-center card-header status" id="opponent-status">
+              <div class="mr-auto p-2 name noselect" id="opponent-name"></div>
+              <div class="p-2 captured noselect" id="opponent-captured"></div>
+              <div class="p-2 clock noselect" id="opponent-time"></div>
+            </div>
+            <div class="card-block" id="board-card">
+              <div id="board"></div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center card-footer status" id="player-status">
+              <div class="mr-auto p-2 name noselect" id="player-name"></div>
+              <div class="p-2 captured noselect" id="player-captured"></div>
+              <div class="p-2 clock noselect" id="player-time"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 align-self-center">
+          <div class="card">
+            <div class="card-header status" id="right-panel-header">
+              <div class="noselect" id="chat-status"></div>
+              <div class="btn-toolbar inline-block pull-right">
+                <div id="settings-dropdown" class="dropdown" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Settings">
+                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="settingsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Settings">
+                    <span class="fa fa-gear" aria-hidden="false"></span>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="settingsButton">
+                    <div class="dropdown-item noselect" id="sound-toggle"><span id="sound-toggle-icon" class="fa fa-volume-off dropdown-icon" aria-hidden="false"></span>Sounds OFF</div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-header">Color Themes</div>
+                    <div class="dropdown-item noselect" style="color: #5789a9; background-color: white" id="colortheme-default" onmouseover="this.style.background='#e6f5ff';" onmouseout="this.style.background='white';"><div class="color-box" style="background-color: #5789a9"></div>Arctic Blue</div>
+                    <div class="dropdown-item noselect" style="background-color: white" id="colortheme-green" onmouseover="this.style.background='#eaffeb';" onmouseout="this.style.background='white';"><div class="color-box" style="background-color: #74a077"></div>Green Bean</div>
+                    <div class="dropdown-item noselect" style="background-color: white" id="colortheme-yellow" onmouseover="this.style.background='#f0d9b5';" onmouseout="this.style.background='white';"><div class="color-box" style="background-color: #b58863"></div>Coffee & Cream</div>
+                  </div>
+                </div>
+                <div id="settings-dropdown" class="dropdown" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Connection">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="connectButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Settings">
+                      <span class="fa fa-user" aria-hidden="false"></span>
+                    </button>
+                  <div class="dropdown-menu" aria-labelledby="connectButton">
+                    <a class="dropdown-item noselect" id="disconnect"><span class="fa fa-unlink dropdown-icon" aria-hidden="false"></span>Disconnect</a>
+                    <a class="dropdown-item noselect" id="connect-guest"><span class="fa fa-user-secret dropdown-icon" aria-hidden="false"></span>Connect as Guest</a>
+                    <a class="dropdown-item noselect" id="connect-user"><span class="fa fa-user dropdown-icon" aria-hidden="false"></span>Connect as User</a>
+                  </div>
+                </div>
+                <button id="chat-toggle-btn" class="btn btn-secondary btn-sm" type="button" data-toggle="collapse" data-target="#collapse-chat" data-placement="top" aria-expanded="true" aria-controls="collapse-chat" title="Toggle Chat">
+                  <span id="chat-toggle-icon" class="fa fa-toggle-up" aria-hidden="false"></span>
                 </button>
               </div>
-              <div class="modal-body">
-                <input id="login-user" type="text" class="form-control" placeholder="Username" autocomplete="off">
+            </div>
+            <div id="collapse-chat" class="collapse show" aria-labelledby="right-panel-header">
+              <div class="card-block">
+                <ul class="nav nav-tabs d-flex flex-wrap justify-content-start" id="tabs">
+                  <div id="chan-dropdown" class="d-flex dropdown" data-toggle="tooltip" data-placement="top" data-trigger="hover" title="Join Channel">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="chanButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Channel">
+                      <span class="fa fa-plus" aria-hidden="false"></span>
+                    </button>
+                    <div id="chan-dropdown-menu" class="dropdown-menu" aria-labelledby="chanButton">
+                    </div>
+                  </div>
+                  <a class="flex-sm-fill text-sm-center nav-link active" data-toggle="tab" href="#content-console" id="console" role="tab">Console</a>
+                </ul>
                 <br/>
-                <input id="login-pass" type="password" class="form-control" placeholder="Password" autocomplete="off">
+                <div class="tab-content">
+                  <div class="tab-pane chat-text active" id="content-console" role="tabpanel"></div>
+                </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" id="login" class="btn btn-primary">Login</button>
+              <div class="card-footer widget">
+                <form id="input-form" class="form-inline">
+                  <div class="input-group input-group-sm" style="width: 100%">
+                    <span class="input-group-addon">
+                      <div class="form-check">
+                        <label class="form-check-label" data-toggle="tooltip" data-placement="bottom" title="Commands can also be prefixed with an @ (eg: @showa)">
+                          <input id="input-command" class="form-check-input" type="checkbox" aria-label="Console command">Command
+                        </label>
+                      </div>
+                    </span>
+                    <input id="input-text" type="text" class="form-control" placeholder="Press Enter to send message!" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="modal" id="login-screen" tabindex="-1" role="dialog" aria-labelledby="login-modal" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="login-modal">Login to FICS</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input id="login-user" type="text" class="form-control" placeholder="Username" autocomplete="off">
+                  <br/>
+                  <input id="login-pass" type="password" class="form-control" placeholder="Password" autocomplete="off">
+                </div>
+                <div class="modal-footer center">
+                  <button type="button" id="login" class="btn btn-primary">Login</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
   <script type="text/javascript" src="assets/js/bundle.js"></script>
   <script>
