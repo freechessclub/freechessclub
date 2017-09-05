@@ -420,15 +420,17 @@ $('#input-form').on('submit', (event) => {
   event.preventDefault();
   let text;
   const val: string = getValue('#input-text');
+  if (val === '' || val === '\n') {
+    return;
+  }
   chatHistory[chatHistoryCounter] = val;
   chatHistoryCounter = (chatHistoryCounter + 1) % chatHistory.length;
   currentCounter = -1;
   const tab = $('ul#tabs a.active').attr('id');
   if (!$('#input-command').is(':checked') && tab !== 'console') {
     if (val.charAt(0) !== '@') {
-      const msg = $('#input-text').val();
-      text = 't ' + tab + ' ' + msg;
-      handleChatMsg(tab, { type: MessageType.ChannelTell, channel: tab, handle: session.getHandle(), text: msg });
+      text = 't ' + tab + ' ' + val;
+      handleChatMsg(tab, { type: MessageType.ChannelTell, channel: tab, handle: session.getHandle(), text: val });
     } else {
       text = val.substr(1);
     }
