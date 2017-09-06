@@ -595,9 +595,11 @@ $('#login').on('click', (event) => {
 });
 
 $('#connect-user').on('click', (event) => {
-  if (!session || (session && !session.isConnected())) {
-    $('#login-screen').modal('show');
+  if (session && !session.isConnected()) {
+    session.disconnect();
   }
+
+  $('#login-screen').modal('show');
 });
 
 $('#connect-guest').on('click', (event) => {
