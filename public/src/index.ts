@@ -238,6 +238,7 @@ function handleChatMsg(from, data) {
 
     const chListMatches = data.text.match(/-- channel list: \d+ channels --(?:\n)([\d\s]*)/);
     if (chListMatches !== null && chListMatches.length > 1) {
+      $('#chan-dropdown-menu').empty();
       const joinedChannels = chListMatches[1].split(/\s+/);
       joinedChannels.forEach((ch) => {
         $('#chan-dropdown-menu').append(
@@ -595,7 +596,7 @@ $('#login').on('click', (event) => {
 });
 
 $('#connect-user').on('click', (event) => {
-  if (session && !session.isConnected()) {
+  if (session && session.isConnected()) {
     session.disconnect();
   }
 
