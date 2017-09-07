@@ -19,18 +19,19 @@ import (
 	"io"
 	"net/http"
 	"strings"
+	"sync"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/gorilla/websocket"
 )
 
-func sendWebsocket(ws *websocket.Conn, bs []byte) error {
+func sendWS(ws *websocket.Conn, bs []byte) error {
 	if bs == nil || len(bs) == 0 {
 		return nil
 	}
 
-	var err error
-	if err = ws.WriteMessage(websocket.TextMessage, bs); err != nil {
+	err := ws.WriteMessage(websocket.TextMessage, bs)
+	if err != nil {
 		log.WithFields(logrus.Fields{
 			"data": bs,
 			"err":  err,
@@ -40,11 +41,18 @@ func sendWebsocket(ws *websocket.Conn, bs []byte) error {
 	return err
 }
 
-func recvWebsocket(ws *websocket.Conn) interface{} {
+func recvWS(ws *websocket.Conn, lock *sync.Mutex) interface{} {
+	if lock != nil {
+		lock.Lock()
+	}
 	ws.SetReadLimit(2048)
 	mt, data, err := ws.ReadMessage()
-	l := log.WithFields(logrus.Fields{"mt": mt, "data": data, "err": err})
+	if lock != nil {
+		lock.Unlock()
+	}
+
 	if err != nil {
+		l := log.WithFields(logrus.Fields{"mt": mt, "data": data, "err": err})
 		if err == io.EOF {
 			l.Info("websocket closed!")
 		} else {
@@ -57,12 +65,12 @@ func recvWebsocket(ws *websocket.Conn) interface{} {
 	case websocket.TextMessage:
 		msg, err := validateMessage(data)
 		if err != nil {
-			l.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("invalid message")
+			log.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("invalid message")
 			return nil
 		}
 		return msg
 	default:
-		l.Warning("unknown message!")
+		log.Warning("unknown message!")
 		return nil
 	}
 }
@@ -86,7 +94,7 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 	pass := ""
 	login := r.URL.Query().Get("login")
 	if login != "" {
-		msg := recvWebsocket(ws)
+		msg := recvWS(ws, nil)
 		if msg == nil {
 			return
 		}
@@ -117,7 +125,7 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for {
-		msg := recvWebsocket(ws)
+		msg := s.recvWS()
 		if msg == nil {
 			if s != nil {
 				s.end()

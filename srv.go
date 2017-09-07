@@ -19,6 +19,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"regexp"
+	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -36,6 +38,8 @@ type Session struct {
 	conn     *telnet.Conn
 	ws       *websocket.Conn
 	username string
+	wlock    sync.Mutex
+	rlock    sync.Mutex
 }
 
 func Connect(network, addr string, timeout, retries int) (*telnet.Conn, error) {
@@ -131,9 +135,9 @@ func (s *Session) ficsReader() {
 	for {
 		s.conn.SetReadDeadline(time.Now().Add(3600 * time.Second))
 		out, err := s.conn.ReadUntil(ficsPrompt)
+
 		if err != nil {
-			s.ws.WriteMessage(websocket.CloseMessage, []byte{})
-			log.Println("Closing session.")
+			s.end()
 			return
 		}
 		out = sanitize(out)
@@ -164,12 +168,18 @@ func (s *Session) ficsReader() {
 			continue
 		}
 
-		sendWebsocket(s.ws, bs)
+		s.wlock.Lock()
+		sendWS(s.ws, bs)
+		s.wlock.Unlock()
 	}
 }
 
 func (s *Session) send(msg string) error {
 	return send(s.conn, msg)
+}
+
+func (s *Session) recvWS() interface{} {
+	return recvWS(s.ws, &s.rlock)
 }
 
 func newSession(user, pass string, ws *websocket.Conn) (*Session, error) {
@@ -189,7 +199,7 @@ func newSession(user, pass string, ws *websocket.Conn) (*Session, error) {
 		Text:    username,
 	}
 	bs, _ := json.Marshal(msg)
-	sendWebsocket(ws, bs)
+	sendWS(ws, bs)
 
 	_, err = sendAndReadUntil(conn, "set seek 0", newLine)
 	if err != nil {
@@ -223,19 +233,24 @@ func newSession(user, pass string, ws *websocket.Conn) (*Session, error) {
 }
 
 func (s *Session) keepAlive(timeout time.Duration) {
-	lastResponse := time.Now()
+	var lastResponse int64
+	atomic.StoreInt64(&lastResponse, time.Now().UnixNano())
+	s.rlock.Lock()
 	s.ws.SetPongHandler(func(msg string) error {
-		lastResponse = time.Now()
+		atomic.StoreInt64(&lastResponse, time.Now().UnixNano())
 		return nil
 	})
+	s.rlock.Unlock()
 
 	for {
+		s.wlock.Lock()
 		err := s.ws.WriteMessage(websocket.PingMessage, []byte("keepalive"))
+		s.wlock.Unlock()
 		if err != nil {
 			return
 		}
 		time.Sleep(timeout / 2)
-		if time.Now().Sub(lastResponse) > timeout {
+		if atomic.LoadInt64(&lastResponse) < time.Now().Add(-timeout).UnixNano() {
 			s.ws.Close()
 			return
 		}
@@ -243,7 +258,9 @@ func (s *Session) keepAlive(timeout time.Duration) {
 }
 
 func (s *Session) end() {
+	s.wlock.Lock()
 	s.ws.WriteMessage(websocket.CloseMessage, []byte{})
+	s.wlock.Unlock()
 	send(s.conn, "exit")
 	s.conn.Close()
 }
