@@ -18,10 +18,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"net/http"
-	"net/url"
 	"regexp"
-	"strconv"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -35,41 +32,10 @@ const (
 	ficsPrompt     = "fics%"
 )
 
-var (
-	upgrader = websocket.Upgrader{
-		ReadBufferSize:  1024,
-		WriteBufferSize: 1024,
-		CheckOrigin:     checkSameOrigin,
-	}
-)
-
 type Session struct {
 	conn     *telnet.Conn
 	ws       *websocket.Conn
 	username string
-}
-
-var chTellRE *regexp.Regexp
-var pTellRE *regexp.Regexp
-var gameMoveRE *regexp.Regexp
-var gameStartRE *regexp.Regexp
-var gameEndRE *regexp.Regexp
-var toldMsgRE *regexp.Regexp
-
-func checkSameOrigin(r *http.Request) bool {
-	if r.UserAgent() == "The Free Chess Club" {
-		return true
-	}
-
-	origin := r.Header["Origin"]
-	if len(origin) == 0 {
-		return true
-	}
-	u, err := url.Parse(origin[0])
-	if err != nil {
-		return false
-	}
-	return u.Host == r.Host
 }
 
 func Connect(network, addr string, timeout, retries int) (*telnet.Conn, error) {
@@ -161,174 +127,6 @@ func Login(conn *telnet.Conn, username, password string) (string, error) {
 	return username, nil
 }
 
-func init() {
-	// game move
-	// <12> rnbqkb-r pppppppp -----n-- -------- ----P--- -------- PPPPKPPP RNBQ-BNR B -1 0 0 1 1 0 7 Newton Einstein 1 2 12 39 39 119 122 2 K/e1-e2 (0:06) Ke2 0
-	gameMoveRE = regexp.MustCompile(`<12>\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([rnbqkpRNBQKP\-]{8})\s([BW\-])\s(?:\-?[0-7])\s(?:[01])\s(?:[01])\s(?:[01])\s(?:[01])\s(?:[0-9]+)\s([0-9]+)\s([a-zA-Z]+)\s([a-zA-Z]+)\s(\-?[0-3])\s([0-9]+)\s([0-9]+)\s(?:[0-9]+)\s(?:[0-9]+)\s(\-?[0-9]+)\s(\-?[0-9]+)\s(?:[0-9]+)\s(?:\S+)\s\((?:[0-9]+)\:(?:[0-9]+)\)\s(\S+)\s(?:[01])\s(?:[0-9]+)\s(?:[0-9]+)\s*`)
-
-	// {Game 117 (GuestMDPS vs. guestl) Creating unrated blitz match.}
-	gameStartRE = regexp.MustCompile(`(?s)\s*\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\sCreating.*\}.*`)
-
-	gameEndRE = regexp.MustCompile(`(?s)\s*(?:Game\s[0-9]+:.*)?\{Game\s([0-9]+)\s\(([a-zA-Z]+)\svs\.\s([a-zA-Z]+)\)\s([a-zA-Z]+)\s([a-zA-Z0-9\s]+)\}\s(?:[012/]+-[012/]+)?.*`)
-
-	// channel tell
-	chTellRE = regexp.MustCompile(`(?s)([a-zA-Z]+)(?:\([A-Z\*]+\))*\(([0-9]+)\):\s+(.*)`)
-
-	// private tell
-	pTellRE = regexp.MustCompile(`(?s)([a-zA-Z]+)(?:[\(\[][A-Z0-9\*\-]+[\)\]])* (?:tells you|says|kibitzes):\s+(.*)`)
-
-	// told status
-	toldMsgRE = regexp.MustCompile(`\(told .+\)`)
-}
-
-func style12ToFEN(b []byte) string {
-	str := string(b[:])
-	var fen string
-	count := 0
-	for i := 0; i < 8; i++ {
-		if str[i] == '-' {
-			count++
-			if i == 7 {
-				fen += strconv.Itoa(count)
-			}
-		} else {
-			if count > 0 {
-				fen += strconv.Itoa(count)
-				count = 0
-			}
-			fen += string(str[i])
-		}
-	}
-	return fen
-}
-
-func atoi(b []byte) int {
-	i, _ := strconv.Atoi(string(b))
-	return i
-}
-
-func (s *Session) decodeMessage(msg []byte) ([]byte, error) {
-	msg = toldMsgRE.ReplaceAll(msg, []byte{})
-	if msg == nil || bytes.Equal(msg, []byte("\n")) {
-		return nil, nil
-	}
-
-	matches := gameMoveRE.FindSubmatch(msg)
-	if matches != nil && len(matches) >= 18 {
-		msgs := bytes.Split(msg, []byte("\n"))
-		msgIndex := 0;
-		for msgIndex = 1; msgIndex <= len(msgs); msgIndex++ {
-			if gameMoveRE.Match(msgs[msgIndex-1]) {
-				break;
-			}
-			bs, err := s.decodeMessage(msgs[msgIndex-1])
-			if err != nil {
-				return nil, err
-			}
-			sendWebsocket(s.ws, bs)
-		}
-
-		fen := ""
-		for i := 1; i < 8; i++ {
-			fen += style12ToFEN(matches[i][:])
-			fen += "/"
-		}
-		fen += style12ToFEN(matches[8][:])
-
-		m := &gameMoveMsg{
-			Type:  gameMove,
-			FEN:   fen,
-			Turn:  string(matches[9][:]),
-			Game:  atoi(matches[10][:]),
-			WName: string(matches[11][:]),
-			BName: string(matches[12][:]),
-			Role:  atoi(matches[13][:]),
-			Time:  atoi(matches[14][:]),
-			Inc:   atoi(matches[15][:]),
-			WTime: atoi(matches[16][:]),
-			BTime: atoi(matches[17][:]),
-			Move:  string(matches[18][:]),
-		}
-
-		if (msgIndex < len(msgs)) {
-			bs, _ := json.Marshal(m)
-			sendWebsocket(s.ws, bs)
-
-			for msgIndex = msgIndex + 1; msgIndex < len(msgs); msgIndex++ {
-				bs, err := s.decodeMessage(msgs[msgIndex-1])
-				if err != nil {
-					return nil, err
-				}
-
-				if (msgIndex == len(msgs)-1) {
-					return bs, err
-				} else {
-					sendWebsocket(s.ws, bs)
-				}
-			}
-		}
-
-		return json.Marshal(m)
-	}
-
-	matches = gameStartRE.FindSubmatch(msg)
-	if matches != nil && len(matches) > 2 {
-		m := &gameStartMsg{
-			Type:      gameStart,
-			Id:        atoi(matches[1][:]),
-			PlayerOne: string(matches[2][:]),
-			PlayerTwo: string(matches[3][:]),
-		}
-		return json.Marshal(m)
-	}
-
-	matches = gameEndRE.FindSubmatch(msg)
-	if matches != nil && len(matches) > 4 {
-		p1 := string(matches[2][:])
-		p2 := string(matches[3][:])
-		who := string(matches[4][:])
-		action := string(matches[5][:])
-
-		winner, loser, reason := decodeEndMessage(p1, p2, who, action)
-		m := &gameEndMsg{
-			Type:    gameEnd,
-			Id:      atoi(matches[1][:]),
-			Winner:  winner,
-			Loser:   loser,
-			Reason:  reason,
-			Message: string(msg),
-		}
-		return json.Marshal(m)
-	}
-
-	matches = chTellRE.FindSubmatch(msg)
-	if matches != nil && len(matches) > 3 {
-		m := &chTellMsg{
-			Type:    chTell,
-			Channel: string(matches[2][:]),
-			Handle:  string(matches[1][:]),
-			Text:    string(bytes.Replace(matches[3][:], []byte("\n"), []byte(" "), -1)),
-		}
-		return json.Marshal(m)
-	}
-
-	matches = pTellRE.FindSubmatch(msg)
-	if matches != nil && len(matches) > 2 {
-		m := &pTellMsg{
-			Type:   pTell,
-			Handle: string(matches[1][:]),
-			Text:   string(matches[2][:]),
-		}
-		return json.Marshal(m)
-	}
-
-	m := &unknownMsg{
-		Type: unknown,
-		Text: string(msg[:]),
-	}
-	return json.Marshal(m)
-}
-
 func (s *Session) ficsReader() {
 	for {
 		s.conn.SetReadDeadline(time.Now().Add(3600 * time.Second))
@@ -339,13 +137,34 @@ func (s *Session) ficsReader() {
 			return
 		}
 		out = sanitize(out)
-		if len(out) > 0 {
-			bs, err := s.decodeMessage(out)
-			if err != nil {
-				log.Println("error decoding message")
-			}
-			sendWebsocket(s.ws, bs)
+		if len(out) == 0 {
+			continue
 		}
+
+		msgs, err := decodeMessage(out)
+		if err != nil {
+			log.Println("error decoding message")
+		}
+
+		if msgs == nil {
+			continue
+		}
+
+		arr, ok := msgs.([]interface{})
+		if ok && len(arr) == 0 {
+			continue
+		}
+
+		bs, err := json.Marshal(msgs)
+		if err != nil {
+			log.Println("error marshaling message")
+		}
+
+		if bs == nil {
+			continue
+		}
+
+		sendWebsocket(s.ws, bs)
 	}
 }
 
@@ -399,7 +218,28 @@ func newSession(user, pass string, ws *websocket.Conn) (*Session, error) {
 	}
 
 	go s.ficsReader()
+	go s.keepAlive(50*time.Second)
 	return s, nil
+}
+
+func (s *Session) keepAlive(timeout time.Duration) {
+	lastResponse := time.Now()
+	s.ws.SetPongHandler(func(msg string) error {
+		lastResponse = time.Now()
+		return nil
+	})
+
+	for {
+		err := s.ws.WriteMessage(websocket.PingMessage, []byte("keepalive"))
+		if err != nil {
+			return
+		}
+		time.Sleep(timeout / 2)
+		if time.Now().Sub(lastResponse) > timeout {
+			s.ws.Close()
+			return
+		}
+	}
 }
 
 func (s *Session) end() {
