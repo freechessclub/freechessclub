@@ -16,15 +16,38 @@ package main
 
 import (
 	"net/http"
+	"net/url"
 	"os"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/gorilla/handlers"
+	"github.com/gorilla/websocket"
 )
 
 var (
 	log = logrus.New()
+	upgrader = websocket.Upgrader{
+		ReadBufferSize:  1024,
+		WriteBufferSize: 1024,
+		CheckOrigin:     checkSameOrigin,
+	}
 )
+
+func checkSameOrigin(r *http.Request) bool {
+	if r.UserAgent() == "The Free Chess Club" {
+		return true
+	}
+
+	origin := r.Header["Origin"]
+	if len(origin) == 0 {
+		return true
+	}
+	u, err := url.Parse(origin[0])
+	if err != nil {
+		return false
+	}
+	return u.Host == r.Host
+}
 
 func main() {
 	port := os.Getenv("PORT")
