@@ -428,7 +428,7 @@ $('#input-form').on('submit', (event) => {
   chatHistoryCounter = (chatHistoryCounter + 1) % chatHistory.length;
   currentCounter = -1;
   const tab = $('ul#tabs a.active').attr('id');
-  if (!$('#input-command').is(':checked') && tab !== 'console') {
+  if (tab !== 'console') {
     if (val.charAt(0) !== '@') {
       text = 't ' + tab + ' ' + val;
       handleChatMsg(tab, { type: MessageType.ChannelTell, channel: tab, handle: session.getHandle(), text: val });
