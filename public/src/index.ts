@@ -274,6 +274,18 @@ function handleChatMsg(from, data) {
 
 function ICSMessageHandler(message) {
   const data = JSON.parse(message.data);
+  if (Array.isArray(data)) {
+    data.map((m) => messageHandler(m));
+  } else {
+    messageHandler(data);
+  }
+}
+
+function messageHandler(data) {
+  if (data === undefined || data === null) {
+    return;
+  }
+
   switch (data.type) {
     case MessageType.Control:
       if (!session.isConnected() && data.command === 1) {
