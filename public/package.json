@@ -5,12 +5,12 @@
   "description": "The Free Chess Club: A modern web client for FICS.",
   "main": "src/app.js",
   "scripts": {
-    "app": "tsc src/app.ts && electron src/app.js",
+    "app": "tsc src/app.ts && node app.js && electron src/app.js",
     "lint": "tslint -c tslint.json --type-check --fix -p tsconfig.json",
     "bundle": "webpack",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
-    "release": "electron-builder -mwl -p always"
+    "release": "node app.js && electron-builder -mwl -p always"
   },
   "repository": {
     "type": "git",
@@ -49,6 +49,7 @@
     "@types/bootstrap": "^3.3.34",
     "@types/jquery": "^3.2.6",
     "@types/websocket": "^0.0.34",
+    "cheerio": "^1.0.0-rc.2",
     "css-loader": "^0.28.4",
     "electron": "^1.7.5",
     "electron-builder": "^19.24.1",
