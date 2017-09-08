@@ -151,6 +151,7 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', (e) => {
 
 function showStatusMsg(msg: string) {
   $('#game-status').html(msg + '<br/>');
+  $('#left-panel').scrollTop(document.getElementById('left-panel').scrollHeight);
 }
 
 function createOrGetTab(from) {
