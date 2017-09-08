@@ -49,6 +49,7 @@ type chTellMsg struct {
 	Handle  string      `json:"handle"`
 	Text    string      `json:"text"`
 }
+
 var chTellRE *regexp.Regexp
 
 // private tell
@@ -57,6 +58,7 @@ type pTellMsg struct {
 	Handle string      `json:"handle"`
 	Text   string      `json:"text"`
 }
+
 var pTellRE *regexp.Regexp
 
 // game start
@@ -66,6 +68,7 @@ type gameStartMsg struct {
 	PlayerOne string      `json:"playerone"`
 	PlayerTwo string      `json:"playertwo"`
 }
+
 var gameStartRE *regexp.Regexp
 
 // game move
@@ -83,6 +86,7 @@ type gameMoveMsg struct {
 	BTime int         `json:"btime"`
 	Move  string      `json:"move"`
 }
+
 var gameMoveRE *regexp.Regexp
 
 // game end
@@ -94,6 +98,7 @@ type gameEndMsg struct {
 	Reason  int         `json:"reason"`
 	Message string      `json:"message"`
 }
+
 var gameEndRE *regexp.Regexp
 
 // type of game end messages
@@ -224,10 +229,10 @@ func decodeMessage(msg []byte) (interface{}, error) {
 	matches := gameMoveRE.FindSubmatch(msg)
 	if matches != nil && len(matches) >= 18 {
 		m := bytes.Split(msg, []byte("\n"))
-		if (len(m) > 1) {
+		if len(m) > 1 {
 			var msgs []interface{}
 			for i := 0; i < len(m); i++ {
-				if (len(m[i]) > 0) {
+				if len(m[i]) > 0 {
 					dm, err := decodeMessage(m[i])
 					if dm != nil && err == nil {
 						msgs = append(msgs, dm)
@@ -312,4 +317,3 @@ func decodeMessage(msg []byte) (interface{}, error) {
 		Text: string(msg[:]),
 	}, nil
 }
-
