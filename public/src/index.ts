@@ -73,8 +73,7 @@ function addMoveHistory(move: any): void {
     $('#move-history').append('<tr><td><div class="moveNumber">'
       + (id + 1) / 2 + '.</div><a href="javascript:void(0);" onclick="showMove(' + id + ')">'
       + move.san + '</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>');
-    const height: number = 102 + (((id + 1) / 2) * 30);
-    $('#left-panel').scrollTop(height);
+    $('#left-panel').scrollTop(document.getElementById('left-panel').scrollHeight);
   } else {
     $('#move-history tr:last td').eq(1).html('<a href="javascript:void(0);" onclick="showMove(' +
       id + ')">' + move.san + '</a>');
@@ -152,7 +151,6 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', (e) => {
 
 function showStatusMsg(msg: string) {
   $('#game-status').html(msg + '<br/>');
-  $('#left-panel').scrollTop($('#left-panel').height());
 }
 
 function createOrGetTab(from) {
