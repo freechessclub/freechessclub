@@ -25,7 +25,7 @@ import (
 )
 
 var (
-	log = logrus.New()
+	log      = logrus.New()
 	upgrader = websocket.Upgrader{
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
