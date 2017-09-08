@@ -3,8 +3,8 @@
 	font-family: 'Signika', sans-serif;
 }.footer,
 .header {
-	background-color: #275981;
-	background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h16v2h-6v6h6v8H8v-6H2v6H0V0zm4 4h2v2H4V4zm8 8h2v2h-2v-2zm-8 0h2v2H4v-2zm8-8h2v2h-2V4z' fill='%23dae9f9' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E");
+	background-color: #34495e;
+	background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%233498db' fill-opacity='0.25' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
 	color: aliceblue;
 }
 *,
@@ -16,10 +16,14 @@
 body {
   -webkit-font-smoothing: antialiased;
 }
+#topbar {
+	margin-top: 20px;
+	margin-bottom: 60px;
+}
 .download {
 	margin: 30px 0 30px 0;
 	padding: 30px 20px 10px 0px;
-	background-color: #275881;
+	background-color: #34495e;
 	border-radius: 5px;
   position: relative;
   border: 1px solid #BBB;
@@ -30,7 +34,7 @@ body {
 }
 .download .btn:hover {
 	background-color: sandybrown;
-	color: #275881;
+	color: #34495e;
 }
 .download .links {
 	color: sandybrown;
@@ -84,7 +88,7 @@ body {
 /*text*/
 .heading {
   font-weight: 100;
-  font-size: 50px;
+  font-size: 38px;
   line-height: 68px;
 }
 @media (max-width: 900px) {
@@ -115,7 +119,7 @@ body {
   font-weight: 100;
 }
 .heading + .paragraph {
-  margin-top: 30px;
+  margin-top: 40px;
 }
 .subheading + .paragraph {
   margin-top: 10px;
@@ -123,19 +127,20 @@ body {
 p.paragraph {
   color: rgba(0,0,0,.5);
 }
+
 a.logo {
   font-family: 'Pacifico', serif;
-  font-size: 36px;
+  font-size: 44px;
   line-height: 60px;
   font-weight: 900;
-  text-shadow: 0 0.032em 0 #b0b0b0, 0px 0.15em 0.11em rgba(0,0,0,0.15), 0px 0.25em 0.021em rgba(0,0,0,0.1), 0px 0.32em 0.32em rgba(0,0,0,0.1);
 	text-decoration: none;
-	color: #b3ecff;
+	text-shadow: 0 0.032em 0 #32230B, 0px 0.15em 0.11em rgba(0,0,0,0.15), 0px 0.25em 0.021em rgba(0,0,0,0.1), 0px 0.32em 0.32em rgba(0,0,0,0.1);
+	color: #03A9F4;
 }
 
 @media (max-width: 420px) {
-  .logo {
-    font-size: 22px;
+  a.logo {
+    font-size: 40px;
   }
 }
 .nav-link2,
@@ -234,7 +239,7 @@ a.logo {
 	overflow: hidden;
 }
 .header .sidedevices {
-	margin: 60px 0 0
+	margin: 40px 0 0
 }
 @media (max-width: 900px) {
 	.header .sidedevices {
@@ -294,7 +299,7 @@ a.logo {
 	}
 }.socialproof {
 	background-color: oldlace;
-	padding: 90px 0;
+	padding: 100px 0;
 }.ctas-button,
 .ctas-button-2 {
 	display: inline-block;
@@ -363,7 +368,7 @@ a.logo {
 		margin: 10px 0 0 0;
 	}
 }.feature3 {
-	padding: 60px 0;
+	padding: 100px 0;
 	border-bottom: 1px solid rgba(0,0,0,.1);
 	background-color: aliceblue;
 }

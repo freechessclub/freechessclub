@@ -27,11 +27,9 @@
 </head>
 <body>
   <header class="header">
-    <div class="container-lrg">
-      <div class="col-sm-12 spread">
-        <div>
-          <a class="logo" href="/">The Free Chess Club</a>
-        </div>
+    <div class="container-lrg" id="topbar">
+      <div class="col-sm-12">
+        <a class="logo" href="/">The Free Chess Club</a>
       </div>
     </div>
     <div class="container-lrg flex">
@@ -42,11 +40,12 @@
         <h2 class="paragraph">
           We're creating a modern web-based interface for the Free Internet Chess Server (FICS) — one of the oldest internet chess server with over 800,000 registered accounts. At The Free Chess Club, you have access to online chess, puzzles, tournaments and analysis — right within your browser!
         </h2>
-        <div class="ctas text-center">
-          <a class="btn ctas-button" href="/play">
+        <div class="ctas center flex">
+          <a class="col-sm-5 btn ctas-button" href="/play">
             Play Now
           </a>
-          <a class="btn btn-primary ctas-button-2" href="http://www.freechess.org/Register/">
+          <div class="col-sm-1"></div>
+          <a class="col-sm-5 btn btn-primary ctas-button-2" href="http://www.freechess.org/Register/">
             Register
           </a>
         </div>
@@ -56,34 +55,37 @@
         <div class="iphoneipad">
           <div class="iphone">
             <div class="mask">
-              <img class="mask-img" src="assets/img/mobileapp.svg">
+              <img class="mask-img" src="assets/img/mobileapp.png">
             </div>
           </div>
           <div class="ipad">
             <div class="mask">
-              <img class="mask-img" src="assets/img/webapp.svg">
+              <img class="mask-img" src="assets/img/webapp.png">
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="container-lrg">
-      <div class="col-sm-5 centervertical"> 
-        <h2 class="paragraph">
-          Alternatively, extend your chess experience beyond the browser with our cross-platform desktop client. Try out The Free Chess Club Desktop App:
-        </h2>
-      </div>
-      <div class="col-sm-5 download text-center">
-        <div class="ribbon"><span>NEW</span></div>
-        <a href="javascript:void(0)" id="downloadBtn" class="btn btn-secondary ctas-button-2">
-          💾 Download
-        </a>
-        <p>
-          <a class="links" href="https://github.com/freechessclub/freechessclub/releases">View all releases</a> on GitHub
-        </p>
-      </div>
-    </div>
+  <div><br/><br/></div>
   </header>
+  <div class="feature3" style="background-color: #2980b9; color: aliceblue">
+    <div class="container-lrg center flex">
+        <div class="col-sm-6 text-center centervertical"> 
+          <h2 class="paragraph">
+            Alternatively, extend your chess experience beyond the browser with our cross-platform desktop client. Try out The Free Chess Club Desktop App:
+          </h2>
+          <div class="download">
+            <div class="ribbon"><span>NEW</span></div>
+            <a href="javascript:void(0)" id="downloadBtn" class="btn btn-secondary ctas-button-2">
+              💾 Download
+            </a>
+            <p>
+              <a class="links" href="https://github.com/freechessclub/freechessclub/releases">View all releases</a> on GitHub
+            </p>
+          </div>
+        </div>        
+      </div>
+  </div>
   <div class="feature3">
     <div class="container-lrg flex">
       <div class="col-sm-4 text-center item">
