@@ -228,7 +228,7 @@ func newSession(user, pass string, ws *websocket.Conn) (*Session, error) {
 	}
 
 	go s.ficsReader()
-	go s.keepAlive(50 * time.Second)
+	go s.keepAlive(30 * time.Second)
 	return s, nil
 }
 
@@ -242,21 +242,19 @@ func (s *Session) keepAlive(timeout time.Duration) {
 	})
 	s.rlock.Unlock()
 
-	go func() {
-		for {
-			s.wlock.Lock()
-			err := s.ws.WriteMessage(websocket.PingMessage, []byte("keepalive"))
-			s.wlock.Unlock()
-			if err != nil {
-				return
-			}
-			time.Sleep(timeout / 2)
-			if atomic.LoadInt64(&lastResponse) < time.Now().Add(-timeout).UnixNano() {
-				s.end()
-				return
-			}
+	for {
+		s.wlock.Lock()
+		err := s.ws.WriteMessage(websocket.PingMessage, []byte("keepalive"))
+		s.wlock.Unlock()
+		if err != nil {
+			return
 		}
-	}()
+		time.Sleep(timeout / 2)
+		if atomic.LoadInt64(&lastResponse) < time.Now().Add(-timeout).UnixNano() {
+			s.end()
+			return
+		}
+	}
 }
 
 func (s *Session) end() {
