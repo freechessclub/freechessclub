@@ -138,17 +138,15 @@ a.logo {
 	color: #97E3F9;
 }
 
-img.logo {
-	margin-top: -25px;
+a.logo img {
+	margin-top: -10px;
 	margin-right: 10px;
 	width: 60px;
 	height: auto;
-	line-height: 60px;
 }
 
 @media (max-width: 420px) {
-  img.logo {
-		margin-top: -15px;
+  a.logo img {
 		margin-right: 5px;
     width: 42px;
   }
