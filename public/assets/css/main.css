@@ -135,12 +135,26 @@ a.logo {
   font-weight: 900;
 	text-decoration: none;
 	text-shadow: 0 0.032em 0 #32230B, 0px 0.15em 0.11em rgba(0,0,0,0.15), 0px 0.25em 0.021em rgba(0,0,0,0.1), 0px 0.32em 0.32em rgba(0,0,0,0.1);
-	color: #03A9F4;
+	color: #97E3F9;
+}
+
+img.logo {
+	margin-top: -25px;
+	margin-right: 10px;
+	width: 60px;
+	height: auto;
+	line-height: 60px;
 }
 
 @media (max-width: 420px) {
-  a.logo {
-    font-size: 40px;
+  img.logo {
+		margin-top: -15px;
+		margin-right: 5px;
+    width: 42px;
+  }
+
+	a.logo {
+    font-size: 32px;
   }
 }
 .nav-link2,
