@@ -1,6 +1,6 @@
 {
   "name": "freechessclub",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "description": "The Free Chess Club: A modern web client for FICS.",
   "main": "src/app.js",

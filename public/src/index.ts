@@ -255,7 +255,7 @@ function handleChatMsg(from, data) {
     if (
       data.text === 'Style 12 set.' ||
       data.text === 'You will not see seek ads.' ||
-      data.text === 'You will now not hear communications echoed.'
+      data.text === 'You will now hear communications echoed.'
     ) {
       return;
     }
@@ -442,7 +442,6 @@ $('#input-form').on('submit', (event) => {
   if (tab !== 'console') {
     if (val.charAt(0) !== '@') {
       text = 't ' + tab + ' ' + val;
-      handleChatMsg(tab, { type: MessageType.ChannelTell, channel: tab, handle: session.getHandle(), text: val });
     } else {
       text = val.substr(1);
     }
@@ -453,6 +452,7 @@ $('#input-form').on('submit', (event) => {
       text = val.substr(1);
     }
   }
+
   session.send({ type: MessageType.Control, command: 0, text });
   $('#input-text').val('');
 });

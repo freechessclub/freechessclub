@@ -206,7 +206,7 @@ func newSession(user, pass string, ws *websocket.Conn) (*Session, error) {
 		return nil, err
 	}
 
-	_, err = sendAndReadUntil(conn, "set echo 0", newLine)
+	_, err = sendAndReadUntil(conn, "set echo 1", newLine)
 	if err != nil {
 		return nil, err
 	}
