@@ -265,5 +265,4 @@ func (s *Session) end() {
 	send(s.conn, "exit")
 	s.conn.Close()
 	s.ws.Close()
-	s.ws = nil
 }
