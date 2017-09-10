@@ -75,53 +75,10 @@ func recvWS(ws *websocket.Conn, lock *sync.Mutex) interface{} {
 	}
 }
 
-// handleWebsocket connection.
-func handleWebsocket(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "GET" {
-		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
-	ws, err := upgrader.Upgrade(w, r, nil)
-	if err != nil {
-		m := "unable to upgrade to websockets"
-		log.WithField("err", err).Println(m)
-		http.Error(w, m, http.StatusBadRequest)
-		return
-	}
-
-	user := "guest"
-	pass := ""
-	login := r.URL.Query().Get("login")
-	if login != "" {
-		msg := recvWS(ws, nil)
-		if msg == nil {
-			return
-		}
-		switch msg.(type) {
-		case ctlMsg:
-			m := msg.(ctlMsg)
-			if m.Command == 1 {
-				up := strings.Split(m.Text, ",")
-				if len(up) > 1 {
-					user = up[0][1:]
-					b, err := base64.StdEncoding.DecodeString(up[1][:len(up[1])-1])
-					if err != nil {
-						log.WithField("err", err).Println("error decoding password")
-						return
-					}
-					pass = string(b)
-				} else {
-					user = up[0][1 : len(up[0])-1]
-				}
-			}
-		}
-	}
-
+func wsHandler(user, pass string, ws *websocket.Conn) {
 	s, err := newSession(user, pass, ws)
 	if err != nil {
-		http.Error(w, "authentication failed", http.StatusUnauthorized)
-		return
+		log.WithField("err", err).Println("failed to create a new session")
 	}
 
 	for {
@@ -151,4 +108,52 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 			log.WithField("err", err).Println("ignoring unknown message from client")
 		}
 	}
+}
+
+// handleWebsocket connection.
+func handleWebsocket(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "GET" {
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	ws, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		errmsg := "unable to upgrade to websockets"
+		log.WithField("err", err).Println(errmsg)
+		http.Error(w, errmsg, http.StatusBadRequest)
+		return
+	}
+
+	user := "guest"
+	pass := ""
+	login := r.URL.Query().Get("login")
+	if login != "" {
+		msg := recvWS(ws, nil)
+		if msg == nil {
+			return
+		}
+		switch msg.(type) {
+		case ctlMsg:
+			m := msg.(ctlMsg)
+			if m.Command == 1 {
+				up := strings.Split(m.Text, ",")
+				if len(up) > 1 {
+					user = up[0][1:]
+					b, err := base64.StdEncoding.DecodeString(up[1][:len(up[1])-1])
+					if err != nil {
+						errmsg := "error decoding password"
+						log.WithField("err", err).Println(errmsg)
+						http.Error(w, errmsg, http.StatusUnauthorized)
+						return
+					}
+					pass = string(b)
+				} else {
+					user = up[0][1 : len(up[0])-1]
+				}
+			}
+		}
+	}
+
+	go wsHandler(user, pass, ws)
 }
