@@ -75,7 +75,13 @@ func recvWS(ws *websocket.Conn, lock *sync.Mutex) interface{} {
 	}
 }
 
-func wsHandler(w http.ResponseWriter, r *http.Request) {
+// handleWebsocket connection.
+func handleWebsocket(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "GET" {
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		m := "unable to upgrade to websockets"
@@ -145,14 +151,4 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 			log.WithField("err", err).Println("ignoring unknown message from client")
 		}
 	}
-}
-
-// handleWebsocket connection.
-func handleWebsocket(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "GET" {
-		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
-	go wsHandler(w, r)
 }
