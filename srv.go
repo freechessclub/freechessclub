@@ -237,6 +237,7 @@ func (s *Session) keepAlive(timeout time.Duration) {
 	atomic.StoreInt64(&lastResponse, time.Now().UnixNano())
 	s.rlock.Lock()
 	s.ws.SetPongHandler(func(msg string) error {
+		fmt.Println("pong ", &lastResponse)
 		atomic.StoreInt64(&lastResponse, time.Now().UnixNano())
 		return nil
 	})
