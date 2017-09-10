@@ -228,7 +228,7 @@ func newSession(user, pass string, ws *websocket.Conn) (*Session, error) {
 	}
 
 	go s.ficsReader()
-	go s.keepAlive(50 * time.Second)
+	go s.keepAlive(20 * time.Second)
 	return s, nil
 }
 
@@ -237,7 +237,6 @@ func (s *Session) keepAlive(timeout time.Duration) {
 	atomic.StoreInt64(&lastResponse, time.Now().UnixNano())
 	s.rlock.Lock()
 	s.ws.SetPongHandler(func(msg string) error {
-		fmt.Println("pong ", &lastResponse)
 		atomic.StoreInt64(&lastResponse, time.Now().UnixNano())
 		return nil
 	})
@@ -248,6 +247,7 @@ func (s *Session) keepAlive(timeout time.Duration) {
 		err := s.ws.WriteMessage(websocket.PingMessage, []byte("keepalive"))
 		s.wlock.Unlock()
 		if err != nil {
+			s.end()
 			return
 		}
 		time.Sleep(timeout / 2)
@@ -265,4 +265,5 @@ func (s *Session) end() {
 	send(s.conn, "exit")
 	s.conn.Close()
 	s.ws.Close()
+	s.ws = nil
 }
