@@ -4,6 +4,7 @@ import anchorme from 'anchorme';
 import 'bootstrap';
 import * as Chess from 'chess.js';
 import * as $ from 'jquery';
+import * as Cookies from 'js-cookie';
 
 import board from './board';
 import channelList from './channels';
@@ -603,7 +604,26 @@ $('#login').on('click', (event) => {
       session.connect(ICSMessageHandler, user, pass);
     }
   }
+  if ($('#remember-me').prop('checked')) {
+    Cookies.set('user', user);
+    Cookies.set('pass', btoa(pass));
+  } else {
+    Cookies.remove('user');
+    Cookies.remove('pass');
+  }
   $('#login-screen').modal('hide');
+});
+
+$('#login-screen').on('show.bs.modal', (e) => {
+  const user = Cookies.get('user');
+  if (user !== undefined) {
+    $('#login-user').val(user);
+  }
+  const pass = Cookies.get('pass');
+  if (pass !== undefined) {
+    $('#login-pass').val(atob(pass));
+    $('#remember-me').prop('checked', true);
+  }
 });
 
 $('#connect-user').on('click', (event) => {
