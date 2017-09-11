@@ -237,6 +237,7 @@ func (s *Session) keepAlive(timeout time.Duration) {
 	atomic.StoreInt64(&lastResponse, time.Now().UnixNano())
 	s.rlock.Lock()
 	s.ws.SetPongHandler(func(msg string) error {
+		fmt.Println("pong", &lastResponse)
 		atomic.StoreInt64(&lastResponse, time.Now().UnixNano())
 		return nil
 	})
@@ -246,6 +247,7 @@ func (s *Session) keepAlive(timeout time.Duration) {
 		s.wlock.Lock()
 		err := s.ws.WriteMessage(websocket.PingMessage, []byte("keepalive"))
 		s.wlock.Unlock()
+		fmt.Println("ping", &lastResponse)
 		if err != nil {
 			s.end()
 			return
