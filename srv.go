@@ -227,8 +227,8 @@ func newSession(user, pass string, ws *websocket.Conn) (*Session, error) {
 		username: username,
 	}
 
-	go s.ficsReader()
 	go s.keepAlive(80 * time.Second)
+	go s.ficsReader()
 	return s, nil
 }
 
