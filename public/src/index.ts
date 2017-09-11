@@ -326,6 +326,11 @@ function messageHandler(data) {
           $('#player-name').text(data.wname);
           $('#opponent-name').text(data.bname);
           if (data.role === 0) {
+            const nextMove = data.turn === 'W' ? 'b' : 'w';
+            const fen = data.fen + ' ' + nextMove + ' - - 0 1';
+            const loaded = game.chess.load(fen);
+            board.position(game.chess.fen(), false);
+            game.history = new History(board, game.chess.fen());
             game.obs = true;
           }
         // role -1: I am playing and it is NOW my opponent's move
@@ -381,11 +386,11 @@ function messageHandler(data) {
       }
       break;
     case MessageType.GameEnd:
-      if (data.reason < 4 && session.getHandle() === data.winner) {
+      if (data.reason < 4 && $('#player-name').text() === data.winner) {
         // player won
         $('#player-status').css('background-color', '#d4f9d9');
         $('#opponent-status').css('background-color', '#f9d4d4');
-      } else if (data.reason < 4 && session.getHandle() === data.loser) {
+      } else if (data.reason < 4 && $('#player-name').text() === data.loser) {
         // opponent won
         $('#player-status').css('background-color', '#f9d4d4');
         $('#opponent-status').css('background-color', '#d4f9d9');
@@ -592,6 +597,7 @@ $('#sound-toggle').on('click', (event) => {
 
 $('#disconnect').on('click', (event) => {
   session.disconnect();
+  session = null;
 });
 
 $('#login').on('click', (event) => {
@@ -629,6 +635,7 @@ $('#login-screen').on('show.bs.modal', (e) => {
 $('#connect-user').on('click', (event) => {
   if (session && session.isConnected()) {
     session.disconnect();
+    session = null;
   }
 
   $('#login-screen').modal('show');
