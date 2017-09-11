@@ -15,6 +15,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 	"os"
@@ -49,6 +50,17 @@ func checkSameOrigin(r *http.Request) bool {
 	return u.Host == r.Host
 }
 
+func redirectToHTTPSRouter(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		proto := r.Header.Get("X-Forwarded-Proto")
+		if proto == "http" || proto == "HTTP" {
+			http.Redirect(w, r, fmt.Sprintf("https://%s%s", r.Host, r.URL), http.StatusPermanentRedirect)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -75,5 +87,8 @@ func main() {
 	})
 	w := log.Writer()
 	defer w.Close()
-	log.Println(http.ListenAndServe(":"+port, handlers.LoggingHandler(w, http.DefaultServeMux)))
+	loggingRouter := handlers.LoggingHandler(w, http.DefaultServeMux)
+	httpsRouter := redirectToHTTPSRouter(loggingRouter)
+
+	log.Println(http.ListenAndServe(":"+port, httpsRouter))
 }
