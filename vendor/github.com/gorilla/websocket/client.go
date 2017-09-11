@@ -66,9 +66,8 @@ type Dialer struct {
 	// HandshakeTimeout specifies the duration for the handshake to complete.
 	HandshakeTimeout time.Duration
 
-	// ReadBufferSize and WriteBufferSize specify I/O buffer sizes. If a buffer
-	// size is zero, then a useful default size is used. The I/O buffer sizes
-	// do not limit the size of the messages that can be sent or received.
+	// Input and output buffer sizes. If the buffer size is zero, then a
+	// default value of 4096 is used.
 	ReadBufferSize, WriteBufferSize int
 
 	// Subprotocols specifies the client's requested subprotocols.
@@ -369,7 +368,7 @@ func (d *Dialer) Dial(urlStr string, requestHeader http.Header) (*Conn, *http.Re
 		return nil, resp, ErrBadHandshake
 	}
 
-	for _, ext := range parseExtensions(resp.Header) {
+	for _, ext := range parseExtensions(req.Header) {
 		if ext[""] != "permessage-deflate" {
 			continue
 		}
