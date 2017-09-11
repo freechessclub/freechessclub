@@ -235,12 +235,10 @@ func newSession(user, pass string, ws *websocket.Conn) (*Session, error) {
 func (s *Session) keepAlive(timeout time.Duration) {
 	var lastResponse int64
 	atomic.StoreInt64(&lastResponse, time.Now().UnixNano())
-	s.rlock.Lock()
 	s.ws.SetPongHandler(func(msg string) error {
 		atomic.StoreInt64(&lastResponse, time.Now().UnixNano())
 		return nil
 	})
-	s.rlock.Unlock()
 
 	for {
 		s.wlock.Lock()
