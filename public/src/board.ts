@@ -1,6 +1,6 @@
 // Copyright 2017 The Free Chess Club.
 
-import * as ChessBoard from 'chessboardjs';
+import * as ChessBoard from 'oakmac-chessboard';
 
 import game from './game';
 import * as highlight from './highlight';

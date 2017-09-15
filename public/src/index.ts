@@ -417,23 +417,6 @@ function getValue(elt: string): string {
   return $(elt).val() as string;
 }
 
-const chatHistory = new Array(15);
-let chatHistoryCounter = 0;
-let currentCounter = -1;
-
-$('#input-text').keydown((e) => {
-  const code = (e.keyCode ? e.keyCode : e.which);
-  if (code === 38 && chatHistoryCounter > 0) {
-    currentCounter = (currentCounter + 1) % chatHistoryCounter;
-    $('#input-text').val(chatHistory[chatHistoryCounter - currentCounter - 1]);
-  } else if (code === 40) {
-    if (currentCounter > 0 && chatHistoryCounter > 0) {
-      currentCounter = (currentCounter - 1) % (chatHistoryCounter - 1);
-    }
-    $('#input-text').val(chatHistory[chatHistoryCounter - currentCounter - 1]);
-  }
-});
-
 $('#input-form').on('submit', (event) => {
   event.preventDefault();
   let text;
@@ -441,9 +424,6 @@ $('#input-form').on('submit', (event) => {
   if (val === '' || val === '\n') {
     return;
   }
-  chatHistory[chatHistoryCounter] = val;
-  chatHistoryCounter = (chatHistoryCounter + 1) % chatHistory.length;
-  currentCounter = -1;
   const tab = $('ul#tabs a.active').attr('id');
   if (tab !== 'console') {
     if (val.charAt(0) !== '@') {
