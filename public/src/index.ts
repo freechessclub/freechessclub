@@ -428,6 +428,9 @@ $('#input-form').on('submit', (event) => {
   if (tab !== 'console') {
     if (val.charAt(0) !== '@') {
       text = 't ' + tab + ' ' + val;
+      if (!/^\d+$/.test(tab)) {
+        handleChatMsg(tab, { type: MessageType.PrivateTell, channel: tab, handle: session.getHandle(), text: val });
+      }
     } else {
       text = val.substr(1);
     }
@@ -652,4 +655,10 @@ $(window).focus(() => {
 $(window).resize(() => {
   board.resize();
   $('.chat-text').height($('#board').height() - 40);
+});
+
+$(window).bind('beforeunload', () => {
+  if (game.chess) {
+    return true;
+  }
 });
