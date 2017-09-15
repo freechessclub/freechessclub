@@ -68,6 +68,20 @@ const template = [{
       }
     },
   }, {
+    label: 'Toggle Dev Tools',
+    accelerator: (() => {
+      if (process.platform === 'darwin') {
+        return 'Command+Option+I';
+      } else {
+        return 'F12';
+      }
+    })(),
+    click: (item, focusedWindow) => {
+      if (focusedWindow) {
+        focusedWindow.toggleDevTools();
+      }
+    },
+  }, {
     type: 'separator',
   }, {
     label: 'App Menu Demo',

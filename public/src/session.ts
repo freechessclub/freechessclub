@@ -47,7 +47,7 @@ export default class Session {
     }
 
     let protocol = 'ws://';
-    if (location.protocol === 'https:') {
+    if (location.protocol === 'https:' || location.protocol === 'file:') {
       protocol = 'wss://';
     }
 

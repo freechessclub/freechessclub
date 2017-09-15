@@ -68,6 +68,21 @@ var template = [{
                     }
                 }
             }, {
+                label: 'Toggle Dev Tools',
+                accelerator: (function () {
+                    if (process.platform === 'darwin') {
+                        return 'Command+Option+I';
+                    }
+                    else {
+                        return 'F12';
+                    }
+                })(),
+                click: function (item, focusedWindow) {
+                    if (focusedWindow) {
+                        focusedWindow.toggleDevTools();
+                    }
+                }
+            }, {
                 type: 'separator'
             }, {
                 label: 'App Menu Demo',
@@ -218,10 +233,7 @@ function createWindow() {
         center: true,
         resizable: false,
         title: electron_1.app.getName(),
-        icon: path.join(__dirname, '../assets/img/tfcc-small.png'),
-        webPreferences: {
-            devTools: false
-        }
+        icon: path.join(__dirname, '../assets/img/tfcc-small.png')
     });
     var ur = url.format({
         protocol: 'file',
