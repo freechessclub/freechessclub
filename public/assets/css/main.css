@@ -309,10 +309,8 @@ a.logo img {
 	.ctas-button-2 {
 		margin: 10px 0 0 0;
 	}
-}.socialproof {
-	background-color: oldlace;
-	padding: 100px 0;
-}.ctas-button,
+}
+.ctas-button,
 .ctas-button-2 {
 	display: inline-block;
 	height: 40px;
