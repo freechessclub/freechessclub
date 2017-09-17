@@ -446,6 +446,15 @@ $('#input-form').on('submit', (event) => {
     } else {
       text = val.substr(1);
     }
+    const cmd = text.split(' ');
+    if (cmd[0].startsWith('t') && (!/^\d+$/.test(cmd[1]))) {
+      handleChatMsg(cmd[1], {
+        type: MessageType.PrivateTell,
+        channel: cmd[1],
+        handle: session.getHandle(),
+        text: cmd[2],
+      });
+    }
   }
 
   session.send({ type: MessageType.Control, command: 0, text });
