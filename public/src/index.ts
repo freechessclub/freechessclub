@@ -452,7 +452,7 @@ $('#input-form').on('submit', (event) => {
         type: MessageType.PrivateTell,
         channel: cmd[1],
         handle: session.getHandle(),
-        text: cmd.slice(2),
+        text: cmd.slice(2).join(' '),
       });
     }
   }
