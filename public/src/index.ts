@@ -82,6 +82,10 @@ function addMoveHistory(move: any): void {
 }
 
 export function movePiece(source, target) {
+  if (!game.chess) {
+    return;
+  }
+
   // see if the move is legal
   const move = game.chess.move({
     from: source,
@@ -140,9 +144,9 @@ $('#collapse-history').on('shown.bs.collapse', () => {
 $(document.body).on('click', '.closeTab', (event) => {
   const tabContentId: string = $(event.target).parent().attr('id');
   $(event.target).parent().remove();
-  delete tabsList[tabContentId];
+  delete tabsList[tabContentId.toLowerCase()];
   $('#tabs a:last').tab('show');
-  $('#content-' + tabContentId).remove();
+  $('#content-' + tabContentId.toLowerCase()).remove();
 });
 
 $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', (e) => {
@@ -155,9 +159,10 @@ function showStatusMsg(msg: string) {
   $('#left-panel').scrollTop(document.getElementById('left-panel').scrollHeight);
 }
 
-function createOrGetTab(from) {
-  if (tabsList.hasOwnProperty(from)) {
-    return tabsList[from];
+function createOrGetTab(from: string) {
+  const fromLC = from.toLowerCase();
+  if (tabsList.hasOwnProperty(fromLC)) {
+    return tabsList[fromLC];
   }
 
   let chName = from;
@@ -166,12 +171,12 @@ function createOrGetTab(from) {
   }
 
   $('<a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" href="#content-' +
-    from + '" id="' + from + '" role="tab">' + chName +
+    fromLC + '" id="' + fromLC + '" role="tab">' + chName +
     '<span class="btn btn-default btn-sm closeTab">×</span></a>').appendTo('#tabs');
-  $('<div class="tab-pane chat-text" id="content-' + from + '" role="tabpanel"></div>').appendTo('.tab-content');
+  $('<div class="tab-pane chat-text" id="content-' + fromLC + '" role="tabpanel"></div>').appendTo('.tab-content');
   $('.chat-text').height($('#board').height() - 40);
-  tabsList[from] = $('#content-' + from);
-  return tabsList[from];
+  tabsList[fromLC] = $('#content-' + fromLC);
+  return tabsList[fromLC];
 }
 
 function handleChatMsg(from, data) {
@@ -189,7 +194,7 @@ function handleChatMsg(from, data) {
   if (data.type === MessageType.ChannelTell) {
     tabheader = $('#' + data.channel);
   } else if (data.type === MessageType.PrivateTell) {
-    tabheader = $('#' + data.handle);
+    tabheader = $('#' + data.handle.toLowerCase());
   } else {
     tabheader = $('#console');
 
@@ -247,8 +252,7 @@ function handleChatMsg(from, data) {
 
         $('#ch-' + ch).on('click', (event) => {
           event.preventDefault();
-          createOrGetTab(Number(ch));
-          // createOrGetTab(Number(ch)).tab('show');
+          createOrGetTab(ch);
         });
       });
       return;
@@ -434,9 +438,6 @@ $('#input-form').on('submit', (event) => {
   if (tab !== 'console') {
     if (val.charAt(0) !== '@') {
       text = 't ' + tab + ' ' + val;
-      if (!/^\d+$/.test(tab)) {
-        handleChatMsg(tab, { type: MessageType.PrivateTell, channel: tab, handle: session.getHandle(), text: val });
-      }
     } else {
       text = val.substr(1);
     }
@@ -446,15 +447,16 @@ $('#input-form').on('submit', (event) => {
     } else {
       text = val.substr(1);
     }
-    const cmd = text.split(' ');
-    if (cmd[0].startsWith('t') && (!/^\d+$/.test(cmd[1]))) {
-      handleChatMsg(cmd[1], {
-        type: MessageType.PrivateTell,
-        channel: cmd[1],
-        handle: session.getHandle(),
-        text: cmd.slice(2).join(' '),
-      });
-    }
+  }
+
+  const cmd = text.split(' ');
+  if (cmd[0].startsWith('t') && (!/^\d+$/.test(cmd[1]))) {
+    handleChatMsg(cmd[1], {
+      type: MessageType.PrivateTell,
+      channel: cmd[1],
+      handle: session.getHandle(),
+      text: cmd.slice(2).join(' '),
+    });
   }
 
   session.send({ type: MessageType.Control, command: 0, text });
