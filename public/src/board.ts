@@ -7,13 +7,12 @@ import * as highlight from './highlight';
 import { movePiece } from './index';
 
 const onDragStart = (source, piece, position, orientation) => {
-  const chess = game.chess;
-  if (chess === null) {
+  if (!game.chess) {
     return false;
   }
 
   // stop dragging if the game is over or if it's opponents piece or if we are observing
-  if (chess.game_over() || (game.color !== piece.charAt(0)) || game.obs) {
+  if (game.chess.game_over() || (game.color !== piece.charAt(0)) || game.obs) {
     return false;
   }
 
@@ -24,7 +23,7 @@ const onDragStart = (source, piece, position, orientation) => {
   }
 
   // get list of possible moves for this square
-  const moves = chess.moves({square: source, verbose: true});
+  const moves = game.chess.moves({square: source, verbose: true});
   highlight.highlightSquare(source);
   for (const move of moves) {
     highlight.highlightSquare(move.to);
@@ -32,7 +31,7 @@ const onDragStart = (source, piece, position, orientation) => {
 };
 
 const onDrop = (source, target) => {
-  if (game.chess === null) {
+  if (!game.chess) {
     return;
   }
   // premove if it is not my turn yet
@@ -47,6 +46,9 @@ const onDrop = (source, target) => {
 // update the board position after the piece snap
 // for castling, en passant, pawn promotion
 const onSnapEnd = () => {
+  if (!game.chess) {
+    return;
+  }
   board.position(game.chess.fen());
 };
 

@@ -476,30 +476,6 @@ $(document).ready(() => {
   board.start(false);
 });
 
-$('#fast-backward').on('click', (event) => {
-  if (game.history) {
-    game.history.beginning();
-  }
-});
-
-$('#backward').on('click', (event) => {
-  if (game.history) {
-    game.history.backward();
-  }
-});
-
-$('#forward').on('click', (event) => {
-  if (game.history) {
-    game.history.forward();
-  }
-});
-
-$('#fast-forward').on('click', (event) => {
-  if (game.history) {
-    game.history.end();
-  }
-});
-
 $('#resign').on('click', (event) => {
   if (game.chess !== null) {
     session.send({ type: MessageType.Control, command: 0, text: 'resign' });

@@ -9,6 +9,7 @@ export default class History {
     this.board = board;
     this.moves = [ initialPosition ];
     this.id = 0;
+    this.render();
   }
 
   public add(move: string): void {
@@ -54,5 +55,12 @@ export default class History {
       this.display(this.id - 1);
       this.moves.pop();
     }
+  }
+
+  public render(): void {
+    $('#fast-backward').on('click', () => this.beginning());
+    $('#backward').on('click', () => this.backward());
+    $('#forward').on('click', () => this.forward());
+    $('#fast-forward').on('click', () => this.end());
   }
 }
