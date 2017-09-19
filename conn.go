@@ -79,6 +79,7 @@ func wsHandler(user, pass string, ws *websocket.Conn) {
 	s, err := newSession(user, pass, ws)
 	if err != nil {
 		log.WithField("err", err).Println("failed to create a new session")
+		return
 	}
 
 	for {
