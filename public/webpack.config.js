@@ -6,6 +6,14 @@ module.exports = {
         path: __dirname + "/assets/js/",
         filename: "bundle.js"
     },
+    externals: {
+        $: "jquery",
+        jquery: "jquery",
+        jQuery: "jquery",
+        "window.jQuery": "jquery",
+        Tether: "tether",
+        "window.Tether": "tether",
+    },
     resolve: {
         // Add '.ts' and '.tsx' as a resolvable extension.
         extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
@@ -33,12 +41,6 @@ module.exports = {
         }),
 
         new webpack.ProvidePlugin({
-            $: "jquery",
-            jquery: "jquery",
-            jQuery: "jquery",
-            "window.jQuery": "jquery",
-            Tether: "tether",
-            "window.Tether": "tether",
             Alert: "exports-loader?Alert!bootstrap/js/dist/alert",
             Button: "exports-loader?Button!bootstrap/js/dist/button",
             Carousel: "exports-loader?Carousel!bootstrap/js/dist/carousel",

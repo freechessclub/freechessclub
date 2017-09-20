@@ -1,9 +1,7 @@
 // Copyright 2017 The Free Chess Club.
 
 import anchorme from 'anchorme';
-import 'bootstrap';
 import * as Chess from 'chess.js';
-import * as $ from 'jquery';
 import * as Cookies from 'js-cookie';
 
 import board from './board';
@@ -266,8 +264,9 @@ function handleChatMsg(from, data) {
     }
   }
 
-  tab.append(who +
-    anchorme($('<span/>').text(data.text).html(), {attributes: [{name: 'target', value: '_blank'} ]}) + '</br>');
+  const text = anchorme($('<span/>').text(data.text).html(),
+    {attributes: [{name: 'target', value: '_blank'} ]}) + '</br>';
+  tab.append(who + text);
 
   if (tabheader.hasClass('active')) {
     tab.scrollTop(tab[0].scrollHeight);
