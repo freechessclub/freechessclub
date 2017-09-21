@@ -154,3 +154,8 @@ html, body {
   display: inline-block;
   position: relative;
 }
+
+.gh-emoji {
+  width: 18px;
+  height: 18px;
+}

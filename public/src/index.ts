@@ -2,6 +2,7 @@
 
 import anchorme from 'anchorme';
 import * as Chess from 'chess.js';
+import { load as loadEmojis, parse as parseEmojis } from 'gh-emoji';
 import * as Cookies from 'js-cookie';
 
 import board from './board';
@@ -27,6 +28,8 @@ let pendingTakeback = 0;
 const tabsList = {
   console: $('#content-console'),
 };
+
+let emojisLoaded = false;
 
 function showCapturePiece(color: string, piece: string): void {
   const p: string = highlight.swapColor(color) + piece.toUpperCase();
@@ -264,7 +267,12 @@ function handleChatMsg(from, data) {
     }
   }
 
-  const text = anchorme($('<span/>').text(data.text).html(),
+  let text = data.text;
+  if (emojisLoaded) {
+    text = parseEmojis(text);
+  }
+
+  text = anchorme(text,
     {attributes: [{name: 'target', value: '_blank'} ]}) + '</br>';
   tab.append(who + text);
 
@@ -463,6 +471,9 @@ $('#input-form').on('submit', (event) => {
 });
 
 $(document).ready(() => {
+  loadEmojis().then(() => {
+    emojisLoaded = true;
+  });
   session = new Session(ICSMessageHandler);
   $('#opponent-time').text('00:00');
   $('#player-time').text('00:00');

@@ -40,6 +40,7 @@
     "anchorme": "^1.1.2",
     "bootstrap": "v4.0.0-alpha.6",
     "chess.js": "^0.10.2",
+    "gh-emoji": "^0.2.5",
     "jquery": "^3.2.1",
     "js-cookie": "^2.1.4",
     "oakmac-chessboard": "freechessclub/chessboardjs#update",
