@@ -1,5 +1,7 @@
 // Copyright 2017 The Free Chess Club.
 
+import game from './game';
+
 export default class History {
   private board: any;
   private moves: string[];
@@ -9,7 +11,6 @@ export default class History {
     this.board = board;
     this.moves = [ initialPosition ];
     this.id = 0;
-    this.render();
   }
 
   public add(move: string): void {
@@ -56,11 +57,25 @@ export default class History {
       this.moves.pop();
     }
   }
-
-  public render(): void {
-    $('#fast-backward').on('click', () => this.beginning());
-    $('#backward').on('click', () => this.backward());
-    $('#forward').on('click', () => this.forward());
-    $('#fast-forward').on('click', () => this.end());
-  }
 }
+
+$('#fast-backward').on('click', () => {
+  if (game.history) {
+    game.history.beginning();
+  }
+});
+$('#backward').on('click', () => {
+  if (game.history) {
+    game.history.backward();
+  }
+});
+$('#forward').on('click', () => {
+  if (game.history) {
+    game.history.forward();
+  }
+});
+$('#fast-forward').on('click', () => {
+  if (game.history) {
+    game.history.end();
+  }
+});
