@@ -302,6 +302,12 @@ function messageHandler(data) {
       if (!session.isConnected() && data.command === 1) {
         session.setHandle(data.text);
         session.send({ type: MessageType.Control, command: 0, text: '=ch' });
+      } else if (data.command === 2) {
+        if (session.isConnected()) {
+          session.disconnect();
+        }
+        session.reset(undefined);
+        handleChatMsg('console', data);
       }
       break;
     case MessageType.ChannelTell:

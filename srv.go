@@ -108,27 +108,26 @@ func Login(conn *telnet.Conn, username, password string) (string, error) {
 	// wait for the login prompt
 	conn.SetReadDeadline(time.Now().Add(10 * time.Second))
 	conn.ReadUntil(loginPrompt)
-	out, err := sendAndReadUntil(conn, username, prompt)
+	_, err := sendAndReadUntil(conn, username, prompt)
 	if err != nil {
-		return "", fmt.Errorf("error creating new login session for %s: %v", username, err)
-	}
-
-	re := regexp.MustCompile("Logging you in as \"([a-zA-Z]+)\"")
-	user := re.FindSubmatch(out)
-	if user != nil {
-		username = string(user[1][:])
+		return "", fmt.Errorf("Error creating new login session for %s: %v", username, err)
 	}
 
 	// wait for the password prompt
-	_, err = sendAndReadUntil(conn, password, newLine)
+	out, err := sendAndReadUntil(conn, password, "****\n")
 	if err != nil {
-		return "", fmt.Errorf("failed authentication for %s (password %s): %v", username, password, err)
+		return "", fmt.Errorf("Failed authentication for %s: %v", username, err)
 	}
 
-	log.Printf("Logged in as %s", username)
-
-	//fmt.Println(string(motd[:]))
-	return username, nil
+	re := regexp.MustCompile("\\*\\*\\*\\* Starting FICS session as ([a-zA-Z]+)(?:\\(U\\))? \\*\\*\\*\\*")
+	user := re.FindSubmatch(out)
+	if user != nil && len(user) > 1 {
+		username = string(user[1][:])
+		log.Printf("Logged in as %s", username)
+		return username, nil
+	} else {
+		return "", fmt.Errorf("Invalid password for %s", username)
+	}
 }
 
 func (s *Session) ficsReader() {
@@ -147,7 +146,7 @@ func (s *Session) ficsReader() {
 
 		msgs, err := decodeMessage(out)
 		if err != nil {
-			log.Println("error decoding message")
+			log.Println("Error decoding message")
 		}
 
 		if msgs == nil {
@@ -161,7 +160,7 @@ func (s *Session) ficsReader() {
 
 		bs, err := json.Marshal(msgs)
 		if err != nil {
-			log.Println("error marshaling message")
+			log.Println("Error marshaling message")
 		}
 
 		if bs == nil {
@@ -189,17 +188,23 @@ func newSession(user, pass string, ws *websocket.Conn) (*Session, error) {
 	}
 
 	username, err := Login(conn, user, pass)
-	if err != nil {
-		return nil, err
+	cmd := 1
+	if (err != nil) {
+		cmd = 2
+		username = err.Error()
 	}
 
 	msg := &ctlMsg{
 		Type:    ctl,
-		Command: 1,
+		Command: cmd,
 		Text:    username,
 	}
 	bs, _ := json.Marshal(msg)
 	sendWS(ws, bs)
+
+	if err != nil {
+		return nil, err
+	}
 
 	_, err = sendAndReadUntil(conn, "set seek 0", newLine)
 	if err != nil {
