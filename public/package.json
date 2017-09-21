@@ -37,7 +37,7 @@
     }
   },
   "dependencies": {
-    "anchorme": "^1.1.2",
+    "autolink-js": "freechessclub/autolink-js",
     "bootstrap": "v4.0.0-alpha.6",
     "chess.js": "^0.10.2",
     "gh-emoji": "^0.2.5",

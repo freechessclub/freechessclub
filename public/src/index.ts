@@ -1,6 +1,6 @@
 // Copyright 2017 The Free Chess Club.
 
-import anchorme from 'anchorme';
+import { autoLink } from 'autolink-js';
 import * as Chess from 'chess.js';
 import { load as loadEmojis, parse as parseEmojis } from 'gh-emoji';
 import * as Cookies from 'js-cookie';
@@ -272,8 +272,16 @@ function handleChatMsg(from, data) {
     text = parseEmojis(text);
   }
 
-  text = anchorme(text,
-    {attributes: [{name: 'target', value: '_blank'} ]}) + '</br>';
+  // tslint:disable-next-line:no-string-literal
+  text = autoLink(text, {
+    target: '_blank',
+    rel: 'nofollow',
+    callback: (url) => {
+      return /\.(gif|png|jpe?g)$/i.test(url) ?
+        '<a href="' + url + '" target="_blank" rel="nofollow"><img width="60" src="' + url + '"></a>'
+        : null;
+    },
+  }) + '</br>';
   tab.append(who + text);
 
   if (tabheader.hasClass('active')) {
