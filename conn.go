@@ -36,7 +36,7 @@ func sendWS(ws *websocket.Conn, bs []byte) error {
 			"data": bs,
 			"err":  err,
 			"ws":   ws,
-		}).Error("error writting data to connection.")
+		}).Error("Error writing data to connection")
 	}
 	return err
 }
@@ -56,7 +56,7 @@ func recvWS(ws *websocket.Conn, lock *sync.Mutex) interface{} {
 		if err == io.EOF {
 			l.Info("websocket closed!")
 		} else {
-			l.Error("error reading websocket message")
+			l.Error("Error reading websocket message")
 		}
 		return nil
 	}
@@ -65,7 +65,7 @@ func recvWS(ws *websocket.Conn, lock *sync.Mutex) interface{} {
 	case websocket.TextMessage:
 		msg, err := validateMessage(data)
 		if err != nil {
-			log.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("invalid message")
+			log.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("Invalid message")
 			return nil
 		}
 		return msg
@@ -78,7 +78,7 @@ func recvWS(ws *websocket.Conn, lock *sync.Mutex) interface{} {
 func wsHandler(user, pass string, ws *websocket.Conn) {
 	s, err := newSession(user, pass, ws)
 	if err != nil {
-		log.WithField("err", err).Println("failed to create a new session")
+		log.WithField("err", err).Println("Failed to create a new session")
 		return
 	}
 
@@ -99,14 +99,14 @@ func wsHandler(user, pass string, ws *websocket.Conn) {
 				if s != nil {
 					err = s.send(m.Text)
 					if err != nil {
-						log.WithField("err", err).Println("error sending message")
+						log.WithField("err", err).Println("Error sending message")
 					}
 				}
 			} else {
-				log.WithField("err", err).Println("unknown ctl command")
+				log.WithField("err", err).Println("Unknown control command")
 			}
 		default:
-			log.WithField("err", err).Println("ignoring unknown message from client")
+			log.WithField("err", err).Println("Ignoring unknown message from client")
 		}
 	}
 }
@@ -114,13 +114,13 @@ func wsHandler(user, pass string, ws *websocket.Conn) {
 // handleWebsocket connection.
 func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
-		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		errmsg := "unable to upgrade to websockets"
+		errmsg := "Unable to upgrade to websockets"
 		log.WithField("err", err).Println(errmsg)
 		http.Error(w, errmsg, http.StatusBadRequest)
 		return
@@ -143,7 +143,7 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 					user = up[0][1:]
 					b, err := base64.StdEncoding.DecodeString(up[1][:len(up[1])-1])
 					if err != nil {
-						errmsg := "error decoding password"
+						errmsg := "Error decoding password"
 						log.WithField("err", err).Println(errmsg)
 						http.Error(w, errmsg, http.StatusUnauthorized)
 						return
