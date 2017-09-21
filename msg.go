@@ -299,7 +299,7 @@ func decodeMessage(msg []byte) (interface{}, error) {
 			Type:    chTell,
 			Channel: string(matches[2][:]),
 			Handle:  string(matches[1][:]),
-			Text:    string(bytes.Replace(matches[3][:], []byte("\n"), []byte(" "), -1)),
+			Text:    string(bytes.Replace(matches[3][:], []byte("\n"), []byte{}, -1)),
 		}, nil
 	}
 
@@ -308,7 +308,7 @@ func decodeMessage(msg []byte) (interface{}, error) {
 		return &pTellMsg{
 			Type:   pTell,
 			Handle: string(matches[1][:]),
-			Text:   string(matches[2][:]),
+			Text:   string(bytes.Replace(matches[2][:], []byte("\n"), []byte{}, -1)),
 		}, nil
 	}
 
