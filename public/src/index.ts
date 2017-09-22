@@ -195,7 +195,11 @@ function handleChatMsg(from, data) {
   if (data.type === MessageType.ChannelTell) {
     tabheader = $('#' + data.channel);
   } else if (data.type === MessageType.PrivateTell) {
-    tabheader = $('#' + data.handle.toLowerCase());
+    if (data.hasOwnProperty('channel')) {
+      tabheader = $('#' + data.channel.toLowerCase());
+    } else if (data.hasOwnProperty('handle')) {
+      tabheader = $('#' + data.handle.toLowerCase());
+    }
   } else {
     tabheader = $('#console');
 
@@ -471,7 +475,7 @@ $('#input-form').on('submit', (event) => {
   }
 
   const cmd = text.split(' ');
-  if (cmd[0].startsWith('t') && (!/^\d+$/.test(cmd[1]))) {
+  if (cmd.length > 2 && cmd[0].startsWith('t') && (!/^\d+$/.test(cmd[1]))) {
     handleChatMsg(cmd[1], {
       type: MessageType.PrivateTell,
       channel: cmd[1],
