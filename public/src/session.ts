@@ -1,16 +1,26 @@
 // Copyright 2017 The Free Chess Club.
 
-import MessageType from './message';
+export enum MessageType {
+  Control = 0,
+  ChannelTell,
+  PrivateTell,
+  GameMove,
+  GameStart,
+  GameEnd,
+  Unknown,
+}
 
-export default class Session {
+export class Session {
   private connected: boolean;
   private handle: string;
   private websocket: WebSocket;
+  private onRecv: (msg: any) => void;
 
-  constructor(onMessage: (msg: any) => void, user?: string, pass?: string) {
+  constructor(onRecv: (msg: any) => void, user?: string, pass?: string) {
     this.connected = false;
     this.handle = '';
-    this.connect(onMessage, user, pass);
+    this.onRecv = onRecv;
+    this.connect(user, pass);
   }
 
   public getHandle(): string {
@@ -27,7 +37,7 @@ export default class Session {
     return this.connected;
   }
 
-  public connect(onMessage: (msg: any) => void, user?: string, pass?: string) {
+  public connect(user?: string, pass?: string) {
     $('#chat-status').text('Connecting...');
     const login = (user !== undefined && pass !== undefined);
     let loginOptions = '';
@@ -52,7 +62,14 @@ export default class Session {
     }
 
     this.websocket = new WebSocket(protocol + host + '/ws' + loginOptions);
-    this.websocket.onmessage = onMessage;
+    this.websocket.onmessage = (message: any) => {
+      const data = JSON.parse(message.data);
+      if (Array.isArray(data)) {
+        data.map((m) => this.onRecv(m));
+      } else {
+        this.onRecv(data);
+      }
+    };
     this.websocket.onclose = this.reset;
     if (login) {
       this.websocket.onopen = () => {
@@ -89,3 +106,5 @@ export default class Session {
     this.websocket.send(data);
   }
 }
+
+export default Session;

@@ -1,35 +1,25 @@
 // Copyright 2017 The Free Chess Club.
 
-import { autoLink } from 'autolink-js';
 import * as Chess from 'chess.js';
-import { load as loadEmojis, parse as parseEmojis } from 'gh-emoji';
 import * as Cookies from 'js-cookie';
 
 import board from './board';
-import channelList from './channels';
+import Chat from './chat';
 import * as clock from './clock';
 import game from './game';
 import * as highlight from './highlight';
 import History from './history';
-import MessageType from './message';
-import Session from './session';
+import { MessageType, Session } from './session';
 import * as Sounds from './sounds';
 
-// ICS session
 let session: Session;
+let chat: Chat;
 
 // toggle game sounds
 let soundToggle: boolean = true;
 
 // pending takeback requests
 let pendingTakeback = 0;
-
-// list of active tabs
-const tabsList = {
-  console: $('#content-console'),
-};
-
-let emojisLoaded = false;
 
 function showCapturePiece(color: string, piece: string): void {
   const p: string = highlight.swapColor(color) + piece.toUpperCase();
@@ -127,14 +117,6 @@ $(() => {
   $('[data-toggle="tooltip"]').tooltip();
 });
 
-// Allow chat card to be collapsed
-$('#collapse-chat').on('hidden.bs.collapse', () => {
-  $('#chat-toggle-icon').removeClass('fa-toggle-up').addClass('fa-toggle-down');
-});
-$('#collapse-chat').on('shown.bs.collapse', () => {
-  $('#chat-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
-});
-
 $('#collapse-history').on('hidden.bs.collapse', () => {
   $('#history-toggle-icon').removeClass('fa-toggle-up').addClass('fa-toggle-down');
 });
@@ -142,166 +124,9 @@ $('#collapse-history').on('shown.bs.collapse', () => {
   $('#history-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
 });
 
-$(document.body).on('click', '.closeTab', (event) => {
-  const tabContentId: string = $(event.target).parent().attr('id');
-  $(event.target).parent().remove();
-  delete tabsList[tabContentId.toLowerCase()];
-  $('#tabs a:last').tab('show');
-  $('#content-' + tabContentId.toLowerCase()).remove();
-});
-
-$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', (e) => {
-  const tab = $(e.target);
-  tab.css('color', 'black');
-});
-
 function showStatusMsg(msg: string) {
   $('#game-status').html(msg + '<br/>');
   $('#left-panel').scrollTop(document.getElementById('left-panel').scrollHeight);
-}
-
-function createOrGetTab(from: string) {
-  const fromLC = from.toLowerCase();
-  if (tabsList.hasOwnProperty(fromLC)) {
-    return tabsList[fromLC];
-  }
-
-  let chName = from;
-  if (channelList[from] !== undefined) {
-    chName = channelList[from];
-  }
-
-  $('<a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" href="#content-' +
-    fromLC + '" id="' + fromLC + '" role="tab">' + chName +
-    '<span class="btn btn-default btn-sm closeTab">×</span></a>').appendTo('#tabs');
-  $('<div class="tab-pane chat-text" id="content-' + fromLC + '" role="tabpanel"></div>').appendTo('.tab-content');
-  $('.chat-text').height($('#board').height() - 40);
-  tabsList[fromLC] = $('#content-' + fromLC);
-  return tabsList[fromLC];
-}
-
-function handleChatMsg(from, data) {
-  const tab = createOrGetTab(from);
-  let who = '';
-  if (data.hasOwnProperty('handle')) {
-    let textclass = '';
-    if (session.getHandle() === data.handle) {
-      textclass = ' class="mine"';
-    }
-    who = '<strong' + textclass + '>' + $('<span/>').text(data.handle).html() + '</strong>: ';
-  }
-
-  let tabheader;
-  if (data.type === MessageType.ChannelTell) {
-    tabheader = $('#' + data.channel);
-  } else if (data.type === MessageType.PrivateTell) {
-    if (data.hasOwnProperty('channel')) {
-      tabheader = $('#' + data.channel.toLowerCase());
-    } else if (data.hasOwnProperty('handle')) {
-      tabheader = $('#' + data.handle.toLowerCase());
-    }
-  } else {
-    tabheader = $('#console');
-
-    let takeBacker = null;
-    let action = null;
-    if (pendingTakeback) {
-      let takebackMatches = data.text.match(/(\w+) (\w+) the takeback request\./);
-      if (takebackMatches !== null && takebackMatches.length > 1) {
-        takeBacker = takebackMatches[1];
-        action = takebackMatches[2];
-      } else {
-        takebackMatches = data.text.match(/You (\w+) the takeback request from (\w+)\./);
-        if (takebackMatches !== null && takebackMatches.length > 1) {
-          takeBacker = takebackMatches[2];
-          action = takebackMatches[1];
-        }
-      }
-
-      if (takeBacker !== null && action !== null) {
-        if (takeBacker === $('#opponent-name').text()) {
-          if (action.startsWith('decline')) {
-            pendingTakeback = 0;
-            return;
-          }
-          game.premove = null;
-          for (let i = 0; i < pendingTakeback; i++) {
-            if (game.chess) {
-              game.chess.undo();
-            }
-            if (game.history) {
-              game.history.undo();
-            }
-          }
-          pendingTakeback = 0;
-          return;
-        }
-      }
-    }
-
-    const takebackReq = data.text.match(/(\w+) would like to take back (\d+) half move\(s\)\./);
-    if (takebackReq != null && takebackReq.length > 1) {
-      if (takebackReq[1] === $('#opponent-name').text()) {
-        pendingTakeback = Number(takebackReq[2]);
-      }
-    }
-
-    const chListMatches = data.text.match(/-- channel list: \d+ channels --(?:\n)([\d\s]*)/);
-    if (chListMatches !== null && chListMatches.length > 1) {
-      $('#chan-dropdown-menu').empty();
-      const joinedChannels = chListMatches[1].split(/\s+/);
-      joinedChannels.forEach((ch) => {
-        $('#chan-dropdown-menu').append(
-          '<a class="dropdown-item noselect" id="ch-' + ch +
-          '">' + channelList[Number(ch)] + '</a>');
-
-        $('#ch-' + ch).on('click', (event) => {
-          event.preventDefault();
-          createOrGetTab(ch);
-        });
-      });
-      return;
-    }
-    if (
-      data.text === 'Style 12 set.' ||
-      data.text === 'You will not see seek ads.' ||
-      data.text === 'You will now hear communications echoed.'
-    ) {
-      return;
-    }
-  }
-
-  let text = data.text;
-  if (emojisLoaded) {
-    text = parseEmojis(text);
-  }
-
-  // tslint:disable-next-line:no-string-literal
-  text = autoLink(text, {
-    target: '_blank',
-    rel: 'nofollow',
-    callback: (url) => {
-      return /\.(gif|png|jpe?g)$/i.test(url) ?
-        '<a href="' + url + '" target="_blank" rel="nofollow"><img width="60" src="' + url + '"></a>'
-        : null;
-    },
-  }) + '</br>';
-  tab.append(who + text);
-
-  if (tabheader.hasClass('active')) {
-    tab.scrollTop(tab[0].scrollHeight);
-  } else {
-    tabheader.css('color', 'red');
-  }
-}
-
-function ICSMessageHandler(message) {
-  const data = JSON.parse(message.data);
-  if (Array.isArray(data)) {
-    data.map((m) => messageHandler(m));
-  } else {
-    messageHandler(data);
-  }
 }
 
 function messageHandler(data) {
@@ -313,20 +138,21 @@ function messageHandler(data) {
     case MessageType.Control:
       if (!session.isConnected() && data.command === 1) {
         session.setHandle(data.text);
+        chat = new Chat(session.getHandle());
         session.send({ type: MessageType.Control, command: 0, text: '=ch' });
       } else if (data.command === 2) {
         if (session.isConnected()) {
           session.disconnect();
         }
         session.reset(undefined);
-        handleChatMsg('console', data);
+        showStatusMsg(data.text);
       }
       break;
     case MessageType.ChannelTell:
-      handleChatMsg(data.channel, data);
+      chat.newMessage(data.channel, data);
       break;
     case MessageType.PrivateTell:
-      handleChatMsg(data.handle, data);
+      chat.newMessage(data.handle, data);
       break;
     case MessageType.GameMove:
       game.btime = data.btime;
@@ -409,9 +235,9 @@ function messageHandler(data) {
     case MessageType.GameStart:
       const handle = session.getHandle();
       if (data.playerone === handle) {
-        createOrGetTab(data.playertwo);
+        chat.createTab(data.playertwo);
       } else {
-        createOrGetTab(data.playerone);
+        chat.createTab(data.playerone);
       }
       break;
     case MessageType.GameEnd:
@@ -443,7 +269,62 @@ function messageHandler(data) {
       break;
     case MessageType.Unknown:
     default:
-      handleChatMsg('console', data);
+      let takeBacker = null;
+      let action = null;
+      if (pendingTakeback) {
+        let takebackMatches = data.text.match(/(\w+) (\w+) the takeback request\./);
+        if (takebackMatches !== null && takebackMatches.length > 1) {
+          takeBacker = takebackMatches[1];
+          action = takebackMatches[2];
+        } else {
+          takebackMatches = data.text.match(/You (\w+) the takeback request from (\w+)\./);
+          if (takebackMatches !== null && takebackMatches.length > 1) {
+            takeBacker = takebackMatches[2];
+            action = takebackMatches[1];
+          }
+        }
+
+        if (takeBacker !== null && action !== null) {
+          if (takeBacker === $('#opponent-name').text()) {
+            if (action.startsWith('decline')) {
+              pendingTakeback = 0;
+              return;
+            }
+            game.premove = null;
+            for (let i = 0; i < pendingTakeback; i++) {
+              if (game.chess) {
+                game.chess.undo();
+              }
+              if (game.history) {
+                game.history.undo();
+              }
+            }
+            pendingTakeback = 0;
+            return;
+          }
+        }
+      }
+
+      const takebackReq = data.text.match(/(\w+) would like to take back (\d+) half move\(s\)\./);
+      if (takebackReq != null && takebackReq.length > 1) {
+        if (takebackReq[1] === $('#opponent-name').text()) {
+          pendingTakeback = Number(takebackReq[2]);
+        }
+      }
+
+      const chListMatches = data.text.match(/-- channel list: \d+ channels --(?:\n)([\d\s]*)/);
+      if (chListMatches !== null && chListMatches.length > 1) {
+        return chat.addChannels(chListMatches[1].split(/\s+/));
+      }
+      if (
+        data.text === 'Style 12 set.' ||
+        data.text === 'You will not see seek ads.' ||
+        data.text === 'You will now hear communications echoed.'
+      ) {
+        return;
+      }
+
+      chat.newMessage('console', data);
       break;
   }
 }
@@ -459,7 +340,7 @@ $('#input-form').on('submit', (event) => {
   if (val === '' || val === '\n') {
     return;
   }
-  const tab = $('ul#tabs a.active').attr('id');
+  const tab = chat.currentTab();
   if (tab !== 'console') {
     if (val.charAt(0) !== '@') {
       text = 't ' + tab + ' ' + val;
@@ -476,9 +357,8 @@ $('#input-form').on('submit', (event) => {
 
   const cmd = text.split(' ');
   if (cmd.length > 2 && cmd[0].startsWith('t') && (!/^\d+$/.test(cmd[1]))) {
-    handleChatMsg(cmd[1], {
+    chat.newMessage(cmd[1], {
       type: MessageType.PrivateTell,
-      channel: cmd[1],
       handle: session.getHandle(),
       text: cmd.slice(2).join(' '),
     });
@@ -489,10 +369,7 @@ $('#input-form').on('submit', (event) => {
 });
 
 $(document).ready(() => {
-  loadEmojis().then(() => {
-    emojisLoaded = true;
-  });
-  session = new Session(ICSMessageHandler);
+  session = new Session(messageHandler);
   $('#opponent-time').text('00:00');
   $('#player-time').text('00:00');
   $('.chat-text').height($('#board').height() - 40);
@@ -591,6 +468,14 @@ $('#custom-control').on('click', (event) => {
   }
 });
 
+// allow chat card to be collapsed
+$('#collapse-chat').on('hidden.bs.collapse', () => {
+  $('#chat-toggle-icon').removeClass('fa-toggle-up').addClass('fa-toggle-down');
+});
+$('#collapse-chat').on('shown.bs.collapse', () => {
+  $('#chat-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
+});
+
 $('#sound-toggle').on('click', (event) => {
   // todo: disable sound
   const iconClass = 'dropdown-icon fa fa-volume-' + (soundToggle ? 'up' : 'off');
@@ -608,10 +493,10 @@ $('#login').on('click', (event) => {
   const user: string = getValue('#login-user');
   const pass: string = getValue('#login-pass');
   if (!session) {
-    session = new Session(ICSMessageHandler, user, pass);
+    session = new Session(messageHandler, user, pass);
   } else {
     if (!session.isConnected()) {
-      session.connect(ICSMessageHandler, user, pass);
+      session.connect(user, pass);
     }
   }
   if ($('#remember-me').prop('checked')) {
@@ -647,10 +532,10 @@ $('#connect-user').on('click', (event) => {
 
 $('#connect-guest').on('click', (event) => {
   if (!session) {
-    session = new Session(ICSMessageHandler);
+    session = new Session(messageHandler);
   } else {
     if (!session.isConnected()) {
-      session.connect(ICSMessageHandler);
+      session.connect();
     }
   }
 });
