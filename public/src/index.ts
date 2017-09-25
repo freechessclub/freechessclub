@@ -11,6 +11,7 @@ import * as highlight from './highlight';
 import History from './history';
 import { MessageType, Session } from './session';
 import * as Sounds from './sounds';
+import './ui';
 
 let session: Session;
 let chat: Chat;
@@ -53,25 +54,6 @@ function showCapturePiece(color: string, piece: string): void {
   }
 }
 
-(window as any).showMove = (id: number) => {
-  if (game.history) {
-    game.history.display(id);
-  }
-};
-
-function addMoveHistory(move: any): void {
-  const id: number = game.history.length();
-  if (id % 2 === 1) {
-    $('#move-history').append('<tr><td><div class="moveNumber">'
-      + (id + 1) / 2 + '.</div><a href="javascript:void(0);" onclick="showMove(' + id + ')">'
-      + move.san + '</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>');
-    $('#left-panel').scrollTop(document.getElementById('left-panel').scrollHeight);
-  } else {
-    $('#move-history tr:last td').eq(1).html('<a href="javascript:void(0);" onclick="showMove(' +
-      id + ')">' + move.san + '</a>');
-  }
-}
-
 export function movePiece(source, target) {
   if (!game.chess) {
     return;
@@ -91,8 +73,7 @@ export function movePiece(source, target) {
   }
 
   session.send({ type: MessageType.Control, command: 0, text: source + '-' + target });
-  game.history.add(game.chess.fen());
-  addMoveHistory(move);
+  game.history.add(move, game.chess.fen());
   highlight.highlightMove(move.from, move.to);
   if (move.captured) {
     showCapturePiece(move.color, move.captured);
@@ -111,18 +92,6 @@ export function movePiece(source, target) {
     }
   }
 }
-
-// enable tooltips
-$(() => {
-  $('[data-toggle="tooltip"]').tooltip();
-});
-
-$('#collapse-history').on('hidden.bs.collapse', () => {
-  $('#history-toggle-icon').removeClass('fa-toggle-up').addClass('fa-toggle-down');
-});
-$('#collapse-history').on('shown.bs.collapse', () => {
-  $('#history-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
-});
 
 function showStatusMsg(msg: string) {
   $('#game-status').html(msg + '<br/>');
@@ -167,7 +136,6 @@ function messageHandler(data) {
         $('#player-captured').text('');
         $('#opponent-captured').text('');
         showStatusMsg('');
-        $('#move-history').empty();
         $('#player-status').css('background-color', '');
         $('#opponent-status').css('background-color', '');
 
@@ -220,8 +188,7 @@ function messageHandler(data) {
                 }
               }
             }
-            game.history.add(game.chess.fen());
-            addMoveHistory(move);
+            game.history.add(move, game.chess.fen());
           }
 
           if (game.premove !== null) {
@@ -373,10 +340,6 @@ $(document).ready(() => {
   $('#opponent-time').text('00:00');
   $('#player-time').text('00:00');
   $('.chat-text').height($('#board').height() - 40);
-  if ($(window).width() < 767) {
-    $('#collapse-chat').collapse('hide');
-    $('#collapse-history').collapse('hide');
-  }
   $('#left-panel').height($('#board').height() - 30);
   board.start(false);
 });
@@ -468,14 +431,6 @@ $('#custom-control').on('click', (event) => {
   }
 });
 
-// allow chat card to be collapsed
-$('#collapse-chat').on('hidden.bs.collapse', () => {
-  $('#chat-toggle-icon').removeClass('fa-toggle-up').addClass('fa-toggle-down');
-});
-$('#collapse-chat').on('shown.bs.collapse', () => {
-  $('#chat-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
-});
-
 $('#sound-toggle').on('click', (event) => {
   // todo: disable sound
   const iconClass = 'dropdown-icon fa fa-volume-' + (soundToggle ? 'up' : 'off');
@@ -540,18 +495,6 @@ $('#connect-guest').on('click', (event) => {
   }
 });
 
-$('#colortheme-default').on('click', (event) => {
-  $('#colortheme').attr('href', 'assets/css/themes/default.css');
-});
-
-$('#colortheme-green').on('click', (event) => {
-  $('#colortheme').attr('href', 'assets/css/themes/green.css');
-});
-
-$('#colortheme-yellow').on('click', (event) => {
-  $('#colortheme').attr('href', 'assets/css/themes/yellow.css');
-});
-
 $(window).focus(() => {
   if (game.chess) {
     board.position(game.chess.fen());
@@ -563,6 +506,7 @@ $(window).resize(() => {
   $('.chat-text').height($('#board').height() - 40);
 });
 
+// prompt before unloading page if in a game
 $(window).bind('beforeunload', () => {
   if (game.chess) {
     return true;

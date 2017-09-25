@@ -110,6 +110,16 @@ export class Chat {
       $('#tabs a:last').tab('show');
       $('#content-' + name).remove();
     });
+
+    $('#collapse-chat').on('hidden.bs.collapse', () => {
+      $('#chat-toggle-icon').removeClass('fa-toggle-up').addClass('fa-toggle-down');
+    });
+    $('#collapse-chat').on('shown.bs.collapse', () => {
+      $('#chat-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
+    });
+    if ($(window).width() < 767) {
+      $('#collapse-chat').collapse('hide');
+    }
   }
 
   public createTab(name: string) {

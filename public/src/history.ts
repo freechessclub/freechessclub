@@ -1,8 +1,6 @@
 // Copyright 2017 The Free Chess Club.
 
-import game from './game';
-
-export default class History {
+export class History {
   private board: any;
   private moves: string[];
   private id: number;
@@ -11,11 +9,35 @@ export default class History {
     this.board = board;
     this.moves = [ initialPosition ];
     this.id = 0;
+
+    $('#move-history').empty();
+
+    $('#fast-backward').on('click', () => this.beginning());
+    $('#backward').on('click', () => this.backward());
+    $('#forward').on('click', () => this.forward());
+    $('#fast-forward').on('click', () => this.end());
+
+    (window as any).showMove = (id: number) => {
+      if (this) {
+        this.display(id);
+      }
+    };
+
+    $('#collapse-history').on('hidden.bs.collapse', () => {
+      $('#history-toggle-icon').removeClass('fa-toggle-up').addClass('fa-toggle-down');
+    });
+    $('#collapse-history').on('shown.bs.collapse', () => {
+      $('#history-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
+    });
+    if ($(window).width() < 767) {
+      $('#collapse-history').collapse('hide');
+    }
   }
 
-  public add(move: string): void {
-    this.moves.push(move);
+  public add(move: any, fen: string): void {
+    this.moves.push(fen);
     this.id = this.moves.length - 1;
+    this.update(move);
   }
 
   public length(): number {
@@ -57,25 +79,19 @@ export default class History {
       this.moves.pop();
     }
   }
+
+  private update(move: any): void {
+    const id: number = this.length();
+    if (id % 2 === 1) {
+      $('#move-history').append('<tr><td><div class="moveNumber">'
+        + (id + 1) / 2 + '.</div><a href="javascript:void(0);" onclick="showMove(' + id + ')">'
+        + move.san + '</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>');
+      $('#left-panel').scrollTop(document.getElementById('left-panel').scrollHeight);
+    } else {
+      $('#move-history tr:last td').eq(1).html('<a href="javascript:void(0);" onclick="showMove(' +
+        id + ')">' + move.san + '</a>');
+    }
+  }
 }
 
-$('#fast-backward').on('click', () => {
-  if (game.history) {
-    game.history.beginning();
-  }
-});
-$('#backward').on('click', () => {
-  if (game.history) {
-    game.history.backward();
-  }
-});
-$('#forward').on('click', () => {
-  if (game.history) {
-    game.history.forward();
-  }
-});
-$('#fast-forward').on('click', () => {
-  if (game.history) {
-    game.history.end();
-  }
-});
+export default History;
