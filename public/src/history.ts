@@ -12,9 +12,13 @@ export class History {
 
     $('#move-history').empty();
 
+    $('#fast-backward').off('click');
     $('#fast-backward').on('click', () => this.beginning());
+    $('#backward').off('click');
     $('#backward').on('click', () => this.backward());
+    $('#forward').off('click');
     $('#forward').on('click', () => this.forward());
+    $('#fast-forward').off('click');
     $('#fast-forward').on('click', () => this.end());
 
     (window as any).showMove = (id: number) => {
