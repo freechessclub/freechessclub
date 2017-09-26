@@ -244,7 +244,7 @@ function createWindow() {
     title: app.getName(),
     icon: path.join(__dirname, '../assets/img/tfcc-small.png'),
     webPreferences: {
-      devTools: false,
+      nodeIntegration: false,
     },
   });
 
