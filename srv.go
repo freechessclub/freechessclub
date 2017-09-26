@@ -34,12 +34,55 @@ const (
 	ficsPrompt     = "fics%"
 )
 
+const (
+	tsKey = "Timestamp (FICS) v1.0 - programmed by Henrik Gram."
+	hello = "TIMESEAL2|freeseal|The Free Chess Club|"
+)
+
 type Session struct {
 	conn     *telnet.Conn
 	ws       *websocket.Conn
 	username string
 	wlock    sync.Mutex
 	rlock    sync.Mutex
+}
+
+func Crypt(b []byte, l int) []byte {
+	s := make([]byte, l+30)
+	copy(s[:l], b)
+	s[l] = 0x18
+	l++
+	ts := fmt.Sprintf("%d", time.Now().UnixNano()/int64(time.Millisecond))
+	copy(s[l:], ts)
+	l += len(ts)
+	s[l] = 0x19
+	l++
+	for ; (l % 12) != 0; l++ {
+		s[l] = 0x31
+	}
+
+	for n := 0; n < l; n += 12 {
+		s[n] ^= s[n+11]
+		s[n+11] ^= s[n]
+		s[n] ^= s[n+11]
+		s[n+2] ^= s[n+9]
+		s[n+9] ^= s[n+2]
+		s[n+2] ^= s[n+9]
+		s[n+4] ^= s[n+7]
+		s[n+7] ^= s[n+4]
+		s[n+4] ^= s[n+7]
+	}
+
+	for n := 0; n < l; n++ {
+		var x = int8(((s[n] | 0x80) ^ tsKey[n%50]) - 32)
+		s[n] = byte(x)
+	}
+
+	s[l] = 0x80
+	l++
+	s[l] = 0x0a
+	l++
+	return s[:l]
 }
 
 func Connect(network, addr string, timeout, retries int) (*telnet.Conn, error) {
@@ -62,9 +105,10 @@ func Connect(network, addr string, timeout, retries int) (*telnet.Conn, error) {
 	}
 	log.Printf("Connected!")
 
-	conn.SetUnixWriteMode(true)
 	conn.SetReadDeadline(time.Now().Add(ts))
 	conn.SetWriteDeadline(time.Now().Add(ts))
+
+	send(conn, hello)
 	return conn, nil
 }
 
@@ -79,11 +123,22 @@ func sanitize(b []byte) []byte {
 
 func send(conn *telnet.Conn, cmd string) error {
 	conn.SetWriteDeadline(time.Now().Add(20 * time.Second))
-	buf := make([]byte, len(cmd)+1)
-	copy(buf, cmd)
-	buf[len(cmd)] = '\n'
-	_, err := conn.Write(buf)
+	buf := Crypt([]byte(cmd), len(cmd))
+	_, err := conn.Conn.Write(buf)
 	return err
+}
+
+func readUntil(conn *telnet.Conn, delims ...string) ([]byte, error) {
+	b, err := conn.ReadUntil(delims...)
+	for {
+		i := bytes.Index(b, []byte{'[', 'G', ']', 0x00})
+		if i == -1 {
+			break
+		}
+		send(conn, string([]byte{0x02, 0x39}))
+		b = append(b[:i], b[i+4:]...)
+	}
+	return sanitize(b), err
 }
 
 func sendAndReadUntil(conn *telnet.Conn, cmd string, delims ...string) ([]byte, error) {
@@ -91,8 +146,7 @@ func sendAndReadUntil(conn *telnet.Conn, cmd string, delims ...string) ([]byte, 
 	if err != nil {
 		return nil, err
 	}
-	b, err := conn.ReadUntil(delims...)
-	return sanitize(b), err
+	return readUntil(conn, delims...)
 }
 
 func Login(conn *telnet.Conn, username, password string) (string, error) {
@@ -107,7 +161,7 @@ func Login(conn *telnet.Conn, username, password string) (string, error) {
 
 	// wait for the login prompt
 	conn.SetReadDeadline(time.Now().Add(10 * time.Second))
-	conn.ReadUntil(loginPrompt)
+	readUntil(conn, loginPrompt)
 	_, err := sendAndReadUntil(conn, username, prompt)
 	if err != nil {
 		return "", fmt.Errorf("Error creating new login session for %s: %v", username, err)
@@ -133,13 +187,11 @@ func Login(conn *telnet.Conn, username, password string) (string, error) {
 func (s *Session) ficsReader() {
 	for {
 		s.conn.SetReadDeadline(time.Now().Add(3600 * time.Second))
-		out, err := s.conn.ReadUntil(ficsPrompt)
-
+		out, err := readUntil(s.conn, ficsPrompt)
 		if err != nil {
 			s.end()
 			return
 		}
-		out = sanitize(out)
 		if len(out) == 0 {
 			continue
 		}
@@ -148,7 +200,6 @@ func (s *Session) ficsReader() {
 		if err != nil {
 			log.Println("Error decoding message")
 		}
-
 		if msgs == nil {
 			continue
 		}
@@ -162,7 +213,6 @@ func (s *Session) ficsReader() {
 		if err != nil {
 			log.Println("Error marshaling message")
 		}
-
 		if bs == nil {
 			continue
 		}
@@ -189,7 +239,7 @@ func newSession(user, pass string, ws *websocket.Conn) (*Session, error) {
 
 	username, err := Login(conn, user, pass)
 	cmd := 1
-	if (err != nil) {
+	if err != nil {
 		cmd = 2
 		username = err.Error()
 	}
