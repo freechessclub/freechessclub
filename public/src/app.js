@@ -1,5 +1,5 @@
 "use strict";
-// Copyright 2017 The Free Chess Club.
+// Copyright 2017 Free Chess Club.
 exports.__esModule = true;
 var electron_1 = require("electron");
 var Electron = require("electron");
@@ -244,7 +244,7 @@ function createWindow() {
         pathname: path.join(__dirname, '../app.html')
     });
     mainWindow.loadURL(ur, {
-        userAgent: 'The Free Chess Club'
+        userAgent: 'Free Chess Club'
     });
     mainWindow.on('closed', function () {
         mainWindow = null;
@@ -259,13 +259,13 @@ electron_1.app.on('browser-window-created', function () {
         reopenMenuItem.enabled = false;
     }
 });
-electron_1.app.setName('The Free Chess Club');
+electron_1.app.setName('Free Chess Club');
 if (process.platform === 'darwin') {
     electron_1.app.setAboutPanelOptions({
         applicationName: electron_1.app.getName(),
         applicationVersion: electron_1.app.getVersion(),
         copyright: 'Released under the MIT license',
-        credits: 'The Free Chess Club Author(s)'
+        credits: 'Free Chess Club Author(s)'
     });
 }
 electron_1.app.on('ready', createWindow);

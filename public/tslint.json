@@ -12,7 +12,7 @@
         ],
         "file-header" : [
             true,
-            "Copyright \\d{4} The Free Chess Club."
+            "Copyright \\d{4} Free Chess Club."
         ],
         "object-literal-sort-keys": false,
         "indent": [

@@ -1,4 +1,4 @@
-// Copyright 2017 The Free Chess Club.
+// Copyright 2017 Free Chess Club.
 
 // tslint:disable:max-line-length
 

@@ -1,4 +1,4 @@
-// Copyright 2017 The Free Chess Club.
+// Copyright 2017 Free Chess Club.
 
 import { autoLink } from 'autolink-js';
 import { load as loadEmojis, parse as parseEmojis } from 'gh-emoji';

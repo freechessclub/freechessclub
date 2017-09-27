@@ -2,7 +2,7 @@
   "name": "freechessclub",
   "version": "1.1.0",
   "license": "MIT",
-  "description": "The Free Chess Club: A modern web client for FICS.",
+  "description": "Free Chess Club: A modern web client for FICS.",
   "main": "src/app.js",
   "scripts": {
     "app": "tsc src/app.ts && node app.js && electron src/app.js",
@@ -18,13 +18,13 @@
     "url": "https://github.com/freechessclub/freechessclub"
   },
   "author": {
-    "name": "The Free Chess Club Author(s)",
+    "name": "Free Chess Club Author(s)",
     "email": "support@freechess.club"
   },
   "build": {
-    "appId": "club.freechess.TheFreeChessClub",
-    "productName": "The Free Chess Club",
-    "copyright": "Copyright © 2017 The Free Chess Club Author(s)",
+    "appId": "club.freechess.FreeChessClub",
+    "productName": "Free Chess Club",
+    "copyright": "Copyright © 2017 Free Chess Club Author(s)",
     "mac": {
       "category": "public.app-category.board-games"
     },

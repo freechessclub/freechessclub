@@ -1,6 +1,6 @@
 {
-  "name": "The Free Chess Club",
-  "description": "The Free Chess Club: A modern web client for FICS.",
+  "name": "Free Chess Club",
+  "description": "Free Chess Club: A modern web client for FICS.",
   "keywords": ["chess", "fics", "freechessclub"],
   "image": "heroku/go:latest",
   "mount_dir": "src/github.com/freechessclub/freechessclub",

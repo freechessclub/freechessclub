@@ -1,4 +1,4 @@
-// Copyright 2017 The Free Chess Club.
+// Copyright 2017 Free Chess Club.
 
 import { app, BrowserWindow, dialog, Menu, session, shell } from 'electron';
 import * as Electron from 'electron';
@@ -255,7 +255,7 @@ function createWindow() {
   });
 
   mainWindow.loadURL(ur, {
-    userAgent: 'The Free Chess Club',
+    userAgent: 'Free Chess Club',
   });
 
   mainWindow.on('closed', () => {
@@ -274,14 +274,14 @@ app.on('browser-window-created', () => {
   }
 });
 
-app.setName('The Free Chess Club');
+app.setName('Free Chess Club');
 
 if (process.platform === 'darwin') {
   app.setAboutPanelOptions({
     applicationName: app.getName(),
     applicationVersion: app.getVersion(),
     copyright: 'Released under the MIT license',
-    credits: 'The Free Chess Club Author(s)',
+    credits: 'Free Chess Club Author(s)',
   });
 }
 
