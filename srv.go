@@ -1,4 +1,4 @@
-// Copyright © 2017 The Free Chess Club <help@freechess.club>
+// Copyright © 2017 Free Chess Club <help@freechess.club>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ const (
 
 const (
 	tsKey = "Timestamp (FICS) v1.0 - programmed by Henrik Gram."
-	hello = "TIMESEAL2|freeseal|The Free Chess Club|"
+	hello = "TIMESEAL2|freeseal|Free Chess Club|"
 )
 
 type Session struct {

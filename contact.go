@@ -1,4 +1,4 @@
-// Copyright © 2017 The Free Chess Club <help@freechess.club>
+// Copyright © 2017 Free Chess Club <help@freechess.club>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ func handleContact(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 	from := mail.NewEmail(contact.Email, contact.Email)
-	to := mail.NewEmail("The Free Chess Club", "feedback@freechess.club")
+	to := mail.NewEmail("Free Chess Club", "feedback@freechess.club")
 	content := mail.NewContent("text/plain", contact.Msg)
 	m := mail.NewV3MailInit(from, contact.Type, to, content)
 
