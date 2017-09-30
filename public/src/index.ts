@@ -22,34 +22,43 @@ let soundToggle: boolean = true;
 // pending takeback requests
 let pendingTakeback = 0;
 
-function showCapturePiece(color: string, piece: string): void {
-  const p: string = highlight.swapColor(color) + piece.toUpperCase();
+function showCapturePiece(color: string, p: string): void {
   if (game.color === color) {
-    if (game.playerCaptured[p] === undefined) {
-      game.playerCaptured[p] = 0;
+    if (game.oppCaptured[p] !== undefined && game.oppCaptured[p] > 0) {
+      game.oppCaptured[p]--;
+    } else {
+      if (game.playerCaptured[p] === undefined) {
+        game.playerCaptured[p] = 0;
+      }
+      game.playerCaptured[p]++;
     }
-    game.playerCaptured[p]++;
   } else {
-    if (game.oppCaptured[p] === undefined) {
-      game.oppCaptured[p] = 0;
+    if (game.playerCaptured[p] !== undefined && game.playerCaptured[p] > 0) {
+      game.playerCaptured[p]--;
+    } else {
+      if (game.oppCaptured[p] === undefined) {
+        game.oppCaptured[p] = 0;
+      }
+      game.oppCaptured[p]++;
     }
-    game.oppCaptured[p]++;
   }
 
   $('#player-captured').empty();
   $('#opponent-captured').empty();
   for (const key in game.playerCaptured) {
-    if (game.playerCaptured.hasOwnProperty(key)) {
+    if (game.playerCaptured.hasOwnProperty(key) && game.playerCaptured[key] > 0) {
+      const piece = highlight.swapColor(game.color) + key.toUpperCase();
       $('#player-captured').append(
-        '<img id="' + key + '" src="assets/img/chesspieces/wikipedia-svg/' +
-          key + '.svg"/><small>' + game.playerCaptured[key] + '</small>');
+        '<img id="' + piece + '" src="assets/img/chesspieces/wikipedia-svg/' +
+          piece + '.svg"/><small>' + game.playerCaptured[key] + '</small>');
     }
   }
   for (const key in game.oppCaptured) {
-    if (game.oppCaptured.hasOwnProperty(key)) {
+    if (game.oppCaptured.hasOwnProperty(key) && game.oppCaptured[key] > 0) {
+      const piece = game.color + key.toUpperCase();
       $('#opponent-captured').append(
-        '<img id="' + key + '" src="assets/img/chesspieces/wikipedia-svg/' +
-          key + '.svg"/><small>' + game.oppCaptured[key] + '</small>');
+        '<img id="' + piece + '" src="assets/img/chesspieces/wikipedia-svg/' +
+          piece + '.svg"/><small>' + game.oppCaptured[key] + '</small>');
     }
   }
 }
