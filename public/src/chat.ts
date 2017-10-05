@@ -27,6 +27,7 @@ const channels = {
   37:     'Philosophy',
   38:     'Literature & Poetry',
   39:     'Politics',
+  40:     'Religion',
   48:     'Mamer Managers',
   49:     'Mamer Tournament',
   50:     'Chat',
@@ -153,10 +154,13 @@ export class Chat {
   public addChannels(chans: string[]) {
     $('#chan-dropdown-menu').empty();
     chans.forEach((ch) => {
+      let chName = ch;
+      if (channels[Number(ch)] !== undefined) {
+        chName = channels[Number(ch)];
+      }
       $('#chan-dropdown-menu').append(
         '<a class="dropdown-item noselect" id="ch-' + ch +
-        '">' + channels[Number(ch)] + '</a>');
-
+        '">' + chName + '</a>');
       $('#ch-' + ch).on('click', (event) => {
         event.preventDefault();
         this.createTab(ch);
