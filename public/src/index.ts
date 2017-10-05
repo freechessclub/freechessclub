@@ -345,7 +345,14 @@ $('#input-form').on('submit', (event) => {
 });
 
 $(document).ready(() => {
-  session = new Session(messageHandler);
+  const user = Cookies.get('user');
+  const pass = Cookies.get('pass');
+  if (user !== undefined && pass !== undefined) {
+    session = new Session(messageHandler, user, atob(pass));
+  } else {
+    session = new Session(messageHandler);
+  }
+
   $('#opponent-time').text('00:00');
   $('#player-time').text('00:00');
   $('.chat-text').height($('#board').height() - 40);
