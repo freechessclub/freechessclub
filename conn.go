@@ -158,8 +158,11 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ipHostPort := r.Header.Get("X-Forwarded-For")
+	log.Println(ipHostPort)
+
 	if ipHostPort == "" {
 		ipHostPort = r.RemoteAddr
+		log.Println(ipHostPort)
 	}
 	ip, _, _ := net.SplitHostPort(ipHostPort)
 
