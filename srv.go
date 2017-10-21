@@ -103,7 +103,7 @@ func Connect(network, addr, ip string, timeout, retries int) (*telnet.Conn, erro
 	if err != nil || connected == false {
 		return nil, fmt.Errorf("error connecting to server %s: %v", addr, err)
 	}
-	log.Printf("Connected!", ip)
+	log.Printf("Connected!")
 
 	conn.SetReadDeadline(time.Now().Add(ts))
 	conn.SetWriteDeadline(time.Now().Add(ts))
