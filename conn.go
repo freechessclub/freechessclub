@@ -75,8 +75,8 @@ func recvWS(ws *websocket.Conn, lock *sync.Mutex) interface{} {
 	}
 }
 
-func wsHandler(user, pass string, ws *websocket.Conn) {
-	s, err := newSession(user, pass, ws)
+func wsHandler(user, pass, ip string, ws *websocket.Conn) {
+	s, err := newSession(user, pass, ip, ws)
 	if err != nil {
 		log.WithField("err", err).Println("Failed to create a new session")
 		return
@@ -156,5 +156,6 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	go wsHandler(user, pass, ws)
+	ip := r.RemoteAddr
+	go wsHandler(user, pass, ip, ws)
 }
