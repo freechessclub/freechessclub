@@ -17,6 +17,7 @@ package main
 import (
 	"encoding/base64"
 	"io"
+	"net"
 	"net/http"
 	"strings"
 	"sync"
@@ -156,6 +157,11 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	ip := r.RemoteAddr
+	ipHostPort := r.Header.Get("X-Forwarded-For")
+	if ipHostPort == "" {
+		ipHostPort = r.RemoteAddr
+	}
+	ip, _, _ := net.SplitHostPort(ipHostPort)
+
 	go wsHandler(user, pass, ip, ws)
 }
