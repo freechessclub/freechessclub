@@ -158,7 +158,7 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ip := r.Header.Get("X-Forwarded-For")
-	if len(ipHostPort) == 0 {
+	if len(ip) == 0 {
 		ip, _, _ := net.SplitHostPort(r.RemoteAddr)
 	}
 
