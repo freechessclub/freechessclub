@@ -85,7 +85,7 @@ func Crypt(b []byte, l int) []byte {
 	return s[:l]
 }
 
-func Connect(network, addr string, timeout, retries int) (*telnet.Conn, error) {
+func Connect(network, addr, ip string, timeout, retries int) (*telnet.Conn, error) {
 	ts := time.Duration(timeout) * time.Second
 
 	var conn *telnet.Conn
@@ -103,7 +103,7 @@ func Connect(network, addr string, timeout, retries int) (*telnet.Conn, error) {
 	if err != nil || connected == false {
 		return nil, fmt.Errorf("error connecting to server %s: %v", addr, err)
 	}
-	log.Printf("Connected!")
+	log.Printf("Connected! (%s)", ip)
 
 	conn.SetReadDeadline(time.Now().Add(ts))
 	conn.SetWriteDeadline(time.Now().Add(ts))
@@ -231,8 +231,8 @@ func (s *Session) recvWS() interface{} {
 	return recvWS(s.ws, &s.rlock)
 }
 
-func newSession(user, pass string, ws *websocket.Conn) (*Session, error) {
-	conn, err := Connect("tcp", "freechess.org:5000", 5, 5)
+func newSession(user, pass, ip string, ws *websocket.Conn) (*Session, error) {
+	conn, err := Connect("tcp", "freechess.org:5000", ip, 5, 5)
 	if err != nil {
 		return nil, err
 	}
