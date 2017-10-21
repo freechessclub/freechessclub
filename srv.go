@@ -110,7 +110,7 @@ func Connect(network, addr, ip string, timeout, retries int) (*telnet.Conn, erro
 
 	send(conn, hello)
 
-	log.Printf("Registering IP: %s\n", "%i"+ip)
+	log.Printf("Registering IP: %s", "%i"+ip)
 	send(conn, "%i"+ip)
 
 	return conn, nil
