@@ -33,9 +33,6 @@ export class History {
     $('#collapse-history').on('shown.bs.collapse', () => {
       $('#history-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
     });
-    if ($(window).width() < 767) {
-      $('#collapse-history').collapse('hide');
-    }
   }
 
   public add(move: any, fen: string): void {

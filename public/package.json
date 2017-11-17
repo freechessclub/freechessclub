@@ -6,7 +6,7 @@
   "main": "src/app.js",
   "scripts": {
     "app": "tsc src/app.ts && node app.js && electron src/app.js",
-    "lint": "tslint -c tslint.json --type-check --fix -p tsconfig.json",
+    "lint": "tslint -c tslint.json --fix -p tsconfig.json",
     "bundle": "webpack",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
@@ -42,13 +42,13 @@
     "chess.js": "^0.10.2",
     "gh-emoji": "^0.2.5",
     "jquery": "^3.2.1",
-    "js-cookie": "^2.1.4",
+    "js-cookie": "^2.2.0",
     "oakmac-chessboard": "freechessclub/chessboardjs#update",
-    "tether": "^1.4.0"
+    "tether": "^1.4.1"
   },
   "devDependencies": {
     "@types/bootstrap": "^3.3.34",
-    "@types/jquery": "^3.2.6",
+    "@types/jquery": "^3.2.16",
     "@types/websocket": "^0.0.34",
     "cheerio": "^1.0.0-rc.2",
     "css-loader": "^0.28.4",
@@ -58,9 +58,9 @@
     "file-loader": "^0.11.2",
     "style-loader": "^0.18.2",
     "ts-loader": "^2.2.2",
-    "tslint": "^5.7.0",
-    "typescript": "^2.5.3",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.1",
     "url-loader": "^0.5.9",
-    "webpack": "^3.6.0"
+    "webpack": "^3.8.1"
   }
 }

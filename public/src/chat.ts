@@ -118,9 +118,6 @@ export class Chat {
     $('#collapse-chat').on('shown.bs.collapse', () => {
       $('#chat-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
     });
-    if ($(window).width() < 767) {
-      $('#collapse-chat').collapse('hide');
-    }
   }
 
   public createTab(name: string) {

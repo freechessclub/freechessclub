@@ -1,6 +1,6 @@
 // Copyright 2017 Free Chess Club.
 
-export enum MessageType {
+export const enum MessageType {
   Control = 0,
   ChannelTell,
   PrivateTell,
@@ -96,14 +96,7 @@ export class Session {
     if (!this.isConnected()) {
       throw new Error('Session not connected.');
     }
-
-    let data: string;
-    if (typeof payload === 'object') {
-      data = JSON.stringify(payload);
-    } else {
-      data = payload;
-    }
-    this.websocket.send(data);
+    this.websocket.send(JSON.stringify(payload));
   }
 }
 
