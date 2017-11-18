@@ -84,8 +84,10 @@ export class Chat {
   private handle: string;
   private tabs: object;
   private emojisLoaded: boolean;
+  private autoscrollToggle: boolean;
 
   constructor(handle: string) {
+    this.autoscrollToggle = true;
     // load emojis
     this.emojisLoaded = false;
     loadEmojis().then(() => {
@@ -117,6 +119,13 @@ export class Chat {
     });
     $('#collapse-chat').on('shown.bs.collapse', () => {
       $('#chat-toggle-icon').removeClass('fa-toggle-down').addClass('fa-toggle-up');
+    });
+
+    $('#autoscroll-toggle').on('click', (event) => {
+      const iconClass = 'dropdown-icon fa fa-toggle-' + (this.autoscrollToggle ? 'on' : 'off');
+      $('#autoscroll-toggle').html('<span id="autoscroll-toggle-icon" class="' + iconClass +
+        '" aria-hidden="false"></span>Auto-scroll ' + (this.autoscrollToggle ? 'ON' : 'OFF'));
+      this.autoscrollToggle = !this.autoscrollToggle;
     });
   }
 
@@ -194,7 +203,9 @@ export class Chat {
 
     const tabheader = $('#' + from.toLowerCase());
     if (tabheader.hasClass('active')) {
-      tab.scrollTop(tab[0].scrollHeight);
+      if (this.autoscrollToggle) {
+        tab.scrollTop(tab[0].scrollHeight);
+      }
     } else {
       tabheader.css('color', 'red');
     }
