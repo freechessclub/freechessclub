@@ -28,6 +28,7 @@ const channels = {
   38:     'Literature & Poetry',
   39:     'Politics',
   40:     'Religion',
+  41:     'Current Affairs',
   48:     'Mamer Managers',
   49:     'Mamer Tournament',
   50:     'Chat',
