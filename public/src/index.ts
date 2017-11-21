@@ -272,7 +272,7 @@ function messageHandler(data) {
                 game.chess.undo();
               }
               if (game.history) {
-                game.history.undo();
+                game.history.removeLast();
               }
             }
             pendingTakeback = 0;
@@ -332,12 +332,14 @@ $('#input-form').on('submit', (event) => {
   }
 
   const cmd = text.split(' ');
-  if (cmd.length > 2 && cmd[0].startsWith('t') && (!/^\d+$/.test(cmd[1]))) {
+  if (cmd.length > 2 && (cmd[0] === 't' || cmd[0].startsWith('te')) && (!/^\d+$/.test(cmd[1]))) {
     chat.newMessage(cmd[1], {
       type: MessageType.PrivateTell,
       handle: session.getHandle(),
       text: cmd.slice(2).join(' '),
     });
+  } else if (cmd.length > 1 && cmd[0].startsWith('ta') && (/^\d+$/.test(cmd[1]))) {
+    pendingTakeback = parseInt(cmd[1], 10);
   }
 
   session.send({ type: MessageType.Control, command: 0, text });

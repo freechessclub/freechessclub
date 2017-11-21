@@ -41,6 +41,16 @@ export class History {
     this.update(move);
   }
 
+  public removeLast(): void {
+    this.undo();
+    const id: number = this.length();
+    if (id % 2 === 1) {
+      $('#move-history tr:last td').children().last().remove();
+    } else {
+      $('#move-history tr:last').remove();
+    }
+  }
+
   public length(): number {
     return this.moves.length - 1;
   }
