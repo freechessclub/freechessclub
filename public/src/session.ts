@@ -30,7 +30,8 @@ export class Session {
   public setHandle(handle: string): void {
     this.connected = true;
     this.handle = handle;
-    $('#chat-status').text('Connected as ' + handle);
+    $('#chat-status').html('<span class="badge badge-success">Connected</span><span class="align-middle"> '
+      + handle + '</span>');
   }
 
   public isConnected(): boolean {
@@ -38,7 +39,7 @@ export class Session {
   }
 
   public connect(user?: string, pass?: string) {
-    $('#chat-status').text('Connecting...');
+    $('#chat-status').html('<span class="badge badge-info">Connecting...</span>');
     const login = (user !== undefined && pass !== undefined);
     let loginOptions = '';
     if (login) {
@@ -81,7 +82,7 @@ export class Session {
 
   public disconnect() {
     if (this.isConnected()) {
-      $('#chat-status').text('Disconnecting...');
+      $('#chat-status').html('<span class="badge badge-info">Disconnecting...</span>');
       this.websocket.close();
       this.connected = false;
       this.handle = '';
@@ -89,7 +90,7 @@ export class Session {
   }
 
   public reset(evt) {
-    $('#chat-status').text('Disconnected');
+    $('#chat-status').html('<span class="badge badge-danger">Disconnected</span>');
   }
 
   public send(payload: string | object) {
