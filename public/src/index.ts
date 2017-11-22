@@ -290,23 +290,68 @@ function messageHandler(data) {
       }
 
       const gameCreateMsg =
-        data.text.match(/Creating: (\w+) \(([\d\+\-\s]{4})\) (\w+) \(([\d\-\+\s]{4})\).*/);
+        data.text.match(/Creating: (\w+) \(([\d\+\-\s]{4})\) (\w+) \(([\d\-\+\s]{4})\).+/);
       if (gameCreateMsg != null && gameCreateMsg.length > 4) {
         if (gameCreateMsg[1] === session.getHandle()) {
           if (!isNaN(gameCreateMsg[2])) {
             $('#player-rating').text(gameCreateMsg[2]);
+          } else {
+            $('#player-rating').text('');
           }
           if (!isNaN(gameCreateMsg[4])) {
             $('#opponent-rating').text(gameCreateMsg[4]);
+          } else {
+            $('#opponent-rating').text('');
           }
         } else if (gameCreateMsg[3] === session.getHandle()) {
           if (!isNaN(gameCreateMsg[2])) {
             $('#opponent-rating').text(gameCreateMsg[2]);
+          } else {
+            $('#opponent-rating').text('');
           }
           if (!isNaN(gameCreateMsg[4])) {
             $('#player-rating').text(gameCreateMsg[4]);
+          } else {
+            $('#player-rating').text('');
           }
         }
+        return;
+      }
+
+      const challengeMsg = data.text.match(
+        // tslint:disable-next-line:max-line-length
+        /Challenge: (\w+) \(([\d\+\-\s]{4})\) (\w+) \(([\d\-\+\s]{4})\)(.+)\.[\r\n]+You can "accept" or "decline", or propose different parameters./m);
+      if (challengeMsg != null && challengeMsg.length > 3) {
+        const [opponentName, opponentRating] = (challengeMsg[1] === session.getHandle()) ?
+          challengeMsg.slice(3, 5) : challengeMsg.slice(1, 3);
+        $('#game-requests').html(`
+          <div class="card text-center mt-3" id="match-request">
+            <p class="card-header p-0">Match Request</p>
+            <div class="card-block p-2">
+              <p class="card-title text-primary">` + opponentName +
+              ` (` + opponentRating +
+              `)</p>
+              <p class="card-text">` + challengeMsg[5] +
+              `</p>
+              <button type="button" id="accept" class="btn btn-sm btn-outline-success mr-2">
+                <span class="fa fa-check-circle-o" aria-hidden="false"></span> Accept</button>
+              <button type="button" id="decline" class="btn btn-sm btn-outline-danger">
+                <span class="fa fa-times-circle-o" aria-hidden="false"></span> Decline</button>
+            </div>
+          </div>
+        `);
+
+        $('#accept').on('click', (event) => {
+          session.send({ type: MessageType.Control, command: 0, text: 'accept' });
+          $('#game-requests').html('');
+        });
+
+        $('#decline').on('click', (event) => {
+          session.send({ type: MessageType.Control, command: 0, text: 'decline' });
+          $('#game-requests').html('');
+        });
+
+        $('#left-panel').scrollTop(document.getElementById('left-panel').scrollHeight);
         return;
       }
 
