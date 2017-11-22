@@ -107,6 +107,29 @@ function showStatusMsg(msg: string) {
   $('#left-panel').scrollTop(document.getElementById('left-panel').scrollHeight);
 }
 
+function showGameReq(type: string, title: string, msg: string, btnFailure: string[], btnSuccess: string[]) {
+  let req = `
+  <div class="card text-center mt-3" id="match-request">
+    <p class="card-header p-0">` + type + `Request</p>
+    <div class="card-block p-2">
+      <p class="card-title text-primary">` + title +
+      `</p><p class="card-text">` + msg + `</p>`;
+
+  if (btnSuccess !== undefined) {
+    req += `<button type="button" id="` + btnSuccess[0] + `" class="btn btn-sm btn-outline-success mr-2">
+        <span class="fa fa-check-circle-o" aria-hidden="false"></span> ` + btnSuccess[1] + `</button>`;
+  }
+
+  if (btnFailure !== undefined) {
+    req += `<button type="button" id="` + btnFailure[0] + `" class="btn btn-sm btn-outline-danger">
+        <span class="fa fa-times-circle-o" aria-hidden="false"></span> ` + btnFailure[1] + `</button>`;
+  }
+
+  req += `</div></div>`;
+  $('#game-requests').html(req);
+  $('#left-panel').scrollTop(document.getElementById('left-panel').scrollHeight);
+}
+
 function messageHandler(data) {
   if (data === undefined || data === null) {
     return;
@@ -285,6 +308,8 @@ function messageHandler(data) {
       if (takebackReq != null && takebackReq.length > 1) {
         if (takebackReq[1] === $('#opponent-name').text()) {
           pendingTakeback = Number(takebackReq[2]);
+          showGameReq('Takeback', takebackReq[1], 'would like to take back ' + takebackReq[2] + ' half move(s).',
+            ['decline', 'Decline'], ['accept', 'Accept']);
         }
         return;
       }
@@ -324,34 +349,28 @@ function messageHandler(data) {
       if (challengeMsg != null && challengeMsg.length > 3) {
         const [opponentName, opponentRating] = (challengeMsg[1] === session.getHandle()) ?
           challengeMsg.slice(3, 5) : challengeMsg.slice(1, 3);
-        $('#game-requests').html(`
-          <div class="card text-center mt-3" id="match-request">
-            <p class="card-header p-0">Match Request</p>
-            <div class="card-block p-2">
-              <p class="card-title text-primary">` + opponentName +
-              ` (` + opponentRating +
-              `)</p>
-              <p class="card-text">` + challengeMsg[5] +
-              `</p>
-              <button type="button" id="accept" class="btn btn-sm btn-outline-success mr-2">
-                <span class="fa fa-check-circle-o" aria-hidden="false"></span> Accept</button>
-              <button type="button" id="decline" class="btn btn-sm btn-outline-danger">
-                <span class="fa fa-times-circle-o" aria-hidden="false"></span> Decline</button>
-            </div>
-          </div>
-        `);
+        showGameReq('Match', opponentName + '(' + opponentRating + ')',
+          challengeMsg[5], ['decline', 'Decline'], ['accept', 'Accept']);
+        return;
+      }
 
-        $('#accept').on('click', (event) => {
-          session.send({ type: MessageType.Control, command: 0, text: 'accept' });
-          $('#game-requests').html('');
-        });
+      const abortMsg = data.text.match(
+        /(\w+) would like to abort the game; type "abort" to accept./);
+      if (abortMsg != null && abortMsg.length > 1) {
+        if (abortMsg[1] === $('#opponent-name').text()) {
+          showGameReq('Abort', abortMsg[1], 'would like to abort the game.',
+            ['decline', 'Decline'], ['accept', 'Accept']);
+        }
+        return;
+      }
 
-        $('#decline').on('click', (event) => {
-          session.send({ type: MessageType.Control, command: 0, text: 'decline' });
-          $('#game-requests').html('');
-        });
-
-        $('#left-panel').scrollTop(document.getElementById('left-panel').scrollHeight);
+      const drawMsg = data.text.match(
+        /(\w+) offers you a draw./);
+      if (drawMsg != null && drawMsg.length > 1) {
+        if (drawMsg[1] === $('#opponent-name').text()) {
+          showGameReq('Draw', drawMsg[1], 'offers you a draw.',
+            ['decline', 'Decline'], ['accept', 'Accept']);
+        }
         return;
       }
 
@@ -376,6 +395,25 @@ function messageHandler(data) {
 function getValue(elt: string): string {
   return $(elt).val() as string;
 }
+
+$('body').on('click', '#accept', (event) => {
+  session.send({ type: MessageType.Control, command: 0, text: 'accept' });
+  $('#game-requests').html('');
+});
+
+$('body').on('click', '#decline', (event) => {
+  session.send({ type: MessageType.Control, command: 0, text: 'decline' });
+  $('#game-requests').html('');
+});
+
+$('body').on('click', '#close-request', (event) => {
+  $('#game-requests').html('');
+});
+
+$('body').on('click', '#abort', (event) => {
+  session.send({ type: MessageType.Control, command: 0, text: 'abort' });
+  $('#game-requests').html('');
+});
 
 $('#input-form').on('submit', (event) => {
   event.preventDefault();
