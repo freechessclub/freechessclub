@@ -320,7 +320,7 @@ function messageHandler(data) {
 
       const challengeMsg = data.text.match(
         // tslint:disable-next-line:max-line-length
-        /Challenge: (\w+) \(([\d\+\-\s]{4})\) (\w+) \(([\d\-\+\s]{4})\)(.+)\.[\r\n]+You can "accept" or "decline", or propose different parameters./m);
+        /Challenge: (\w+) \(([\d\+\-\s]{4})\) (\w+) \(([\d\-\+\s]{4})\)\s((?:.+[\.\r\n])+)You can "accept" or "decline", or propose different parameters./m);
       if (challengeMsg != null && challengeMsg.length > 3) {
         const [opponentName, opponentRating] = (challengeMsg[1] === session.getHandle()) ?
           challengeMsg.slice(3, 5) : challengeMsg.slice(1, 3);
