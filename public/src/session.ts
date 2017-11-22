@@ -30,7 +30,7 @@ export class Session {
   public setHandle(handle: string): void {
     this.connected = true;
     this.handle = handle;
-    $('#chat-status').html('<span class="badge badge-success">Connected</span><span class="align-middle"> '
+    $('#chat-status').html('<span class="badge badge-success">Connected</span><span class="h6 align-middle"> '
       + handle + '</span>');
   }
 

@@ -286,12 +286,35 @@ function messageHandler(data) {
         if (takebackReq[1] === $('#opponent-name').text()) {
           pendingTakeback = Number(takebackReq[2]);
         }
+        return;
+      }
+
+      const gameCreateMsg =
+        data.text.match(/Creating: (\w+) \(([\d\+\-\s]{4})\) (\w+) \(([\d\-\+\s]{4})\).*/);
+      if (gameCreateMsg != null && gameCreateMsg.length > 4) {
+        if (gameCreateMsg[1] === session.getHandle()) {
+          if (!isNaN(gameCreateMsg[2])) {
+            $('#player-rating').text(gameCreateMsg[2]);
+          }
+          if (!isNaN(gameCreateMsg[4])) {
+            $('#opponent-rating').text(gameCreateMsg[4]);
+          }
+        } else if (gameCreateMsg[3] === session.getHandle()) {
+          if (!isNaN(gameCreateMsg[2])) {
+            $('#opponent-rating').text(gameCreateMsg[2]);
+          }
+          if (!isNaN(gameCreateMsg[4])) {
+            $('#player-rating').text(gameCreateMsg[4]);
+          }
+        }
+        return;
       }
 
       const chListMatches = data.text.match(/-- channel list: \d+ channels --(?:\n)([\d\s]*)/);
       if (chListMatches !== null && chListMatches.length > 1) {
         return chat.addChannels(chListMatches[1].split(/\s+/));
       }
+
       if (
         data.text === 'Style 12 set.' ||
         data.text === 'You will not see seek ads.' ||
