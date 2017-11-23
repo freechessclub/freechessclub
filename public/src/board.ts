@@ -60,7 +60,7 @@ export const board: any = ChessBoard('board', {
   onDragStart,
   onDrop,
   onSnapEnd,
-  pieceTheme: 'assets/img/chesspieces/wikipedia-svg/{piece}.svg',
+  pieceTheme: 'www/img/chesspieces/wikipedia-svg/{piece}.svg',
 });
 
 export default board;

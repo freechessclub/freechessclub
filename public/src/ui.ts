@@ -15,13 +15,13 @@ if ($(window).width() < 767) {
 
 // color theme controls
 $('#colortheme-default').on('click', (event) => {
-  $('#colortheme').attr('href', 'assets/css/themes/default.css');
+  $('#colortheme').attr('href', 'www/css/themes/default.css');
 });
 
 $('#colortheme-green').on('click', (event) => {
-  $('#colortheme').attr('href', 'assets/css/themes/green.css');
+  $('#colortheme').attr('href', 'www/css/themes/green.css');
 });
 
 $('#colortheme-yellow').on('click', (event) => {
-  $('#colortheme').attr('href', 'assets/css/themes/yellow.css');
+  $('#colortheme').attr('href', 'www/css/themes/yellow.css');
 });

@@ -233,7 +233,7 @@ function createWindow() {
         center: true,
         resizable: false,
         title: electron_1.app.getName(),
-        icon: path.join(__dirname, '../assets/img/tfcc-small.png'),
+        icon: path.join(__dirname, '../www/img/tfcc-small.png'),
         webPreferences: {
             nodeIntegration: false
         }

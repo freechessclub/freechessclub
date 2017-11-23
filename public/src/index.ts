@@ -49,7 +49,7 @@ function showCapturePiece(color: string, p: string): void {
     if (game.playerCaptured.hasOwnProperty(key) && game.playerCaptured[key] > 0) {
       const piece = highlight.swapColor(game.color) + key.toUpperCase();
       $('#player-captured').append(
-        '<img id="' + piece + '" src="assets/img/chesspieces/wikipedia-svg/' +
+        '<img id="' + piece + '" src="www/img/chesspieces/wikipedia-svg/' +
           piece + '.svg"/><small>' + game.playerCaptured[key] + '</small>');
     }
   }
@@ -57,7 +57,7 @@ function showCapturePiece(color: string, p: string): void {
     if (game.oppCaptured.hasOwnProperty(key) && game.oppCaptured[key] > 0) {
       const piece = game.color + key.toUpperCase();
       $('#opponent-captured').append(
-        '<img id="' + piece + '" src="assets/img/chesspieces/wikipedia-svg/' +
+        '<img id="' + piece + '" src="www/img/chesspieces/wikipedia-svg/' +
           piece + '.svg"/><small>' + game.oppCaptured[key] + '</small>');
     }
   }
