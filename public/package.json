@@ -36,6 +36,14 @@
       "category": "Game"
     }
   },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  },
   "dependencies": {
     "autolink-js": "freechessclub/autolink-js",
     "bootstrap": "v4.0.0-alpha.6",
@@ -51,6 +59,8 @@
     "@types/jquery": "^3.2.16",
     "@types/websocket": "^0.0.34",
     "cheerio": "^1.0.0-rc.2",
+    "cordova-android": "^6.4.0",
+    "cordova-plugin-whitelist": "^1.3.3",
     "css-loader": "^0.28.4",
     "electron": "^1.7.8",
     "electron-builder": "^19.33.0",
