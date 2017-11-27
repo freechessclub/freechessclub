@@ -19,6 +19,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/gorilla/handlers"
@@ -35,7 +36,7 @@ var (
 )
 
 func checkSameOrigin(r *http.Request) bool {
-	if r.UserAgent() == "Free Chess Club" {
+	if strings.Contains(r.UserAgent(), "Free Chess Club") {
 		return true
 	}
 
