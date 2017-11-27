@@ -452,7 +452,7 @@ $('#input-form').on('submit', (event) => {
   $('#input-text').val('');
 });
 
-$(document).ready(() => {
+function onDeviceReady() {
   const user = Cookies.get('user');
   const pass = Cookies.get('pass');
   if (user !== undefined && pass !== undefined) {
@@ -466,6 +466,14 @@ $(document).ready(() => {
   $('.chat-text').height($('#board').height() - 40);
   $('#left-panel').height($('#board').height() - 30);
   board.start(false);
+}
+
+$(document).ready(() => {
+  if ((window as any).cordova !== undefined) {
+    document.addEventListener('deviceready', onDeviceReady, false);
+  } else {
+    onDeviceReady();
+  }
 });
 
 $('#resign').on('click', (event) => {

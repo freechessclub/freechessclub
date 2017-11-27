@@ -1,3 +1,6 @@
 node_modules
 dist
+platforms
+plugins
+package-lock.json
 yarn-error.log

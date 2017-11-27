@@ -22,6 +22,7 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-    <engine name="android" spec="^6.3.0" />
+    <preference name="AppendUserAgent" value="Free Chess Club Mobile" />
+    <engine name="android" spec="^6.4.0" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
 </widget>
