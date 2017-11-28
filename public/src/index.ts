@@ -110,7 +110,7 @@ function showStatusMsg(msg: string) {
 function showGameReq(type: string, title: string, msg: string, btnFailure: string[], btnSuccess: string[]) {
   let req = `
   <div class="card text-center mt-3" id="match-request">
-    <p class="card-header p-0">` + type + `Request</p>
+    <p class="card-header p-0">` + type + ` Request</p>
     <div class="card-block p-2">
       <p class="card-title text-primary">` + title +
       `</p><p class="card-text">` + msg + `</p>`;
