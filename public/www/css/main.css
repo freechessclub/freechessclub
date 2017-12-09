@@ -129,19 +129,19 @@ p.paragraph {
 }
 
 a.logo {
-  font-family: 'Pacifico', serif;
+  font-family: 'Fredoka One', serif;
   font-size: 44px;
-  line-height: 60px;
-  font-weight: 900;
+  line-height: 50px;
+  font-weight: 600;
 	text-decoration: none;
 	text-shadow: 0 0.032em 0 #32230B, 0px 0.15em 0.11em rgba(0,0,0,0.15), 0px 0.25em 0.021em rgba(0,0,0,0.1), 0px 0.32em 0.32em rgba(0,0,0,0.1);
 	color: #97E3F9;
 }
 
 a.logo img {
-	margin-top: -10px;
-	margin-right: 10px;
-	width: 60px;
+	margin-top: -5px;
+	margin-right: 15px;
+	width: 50px;
 	height: auto;
 }
 
