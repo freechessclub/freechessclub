@@ -145,7 +145,7 @@ export class Chat {
       from + '" id="' + from + '" role="tab">' + chName +
       '<span class="btn btn-default btn-sm closeTab">×</span></a>').appendTo('#tabs');
     $('<div class="tab-pane chat-text" id="content-' + from + '" role="tabpanel"></div>').appendTo('.tab-content');
-    $('.chat-text').height($('#board').height() - 40);
+    $('.chat-text').height($('#board').height() - 60);
     this.tabs[from] = $('#content-' + from);
     return this.tabs[from];
   }
