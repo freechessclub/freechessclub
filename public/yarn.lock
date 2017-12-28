@@ -2544,7 +2544,7 @@ number-is-nan@^1.0.0:
 
 oakmac-chessboard@freechessclub/chessboardjs#update:
   version "1.0.0"
-  resolved "https://codeload.github.com/freechessclub/chessboardjs/tar.gz/e38f2b56dc49e4b78dbe9198b9c1b4a1e18cf6ac"
+  resolved "https://codeload.github.com/freechessclub/chessboardjs/tar.gz/a8fa688075289753f384e48dc5444c00e1d1f28c"
   dependencies:
     jquery "^3.2.1"
 

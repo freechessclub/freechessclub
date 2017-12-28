@@ -199,6 +199,7 @@ function messageHandler(data) {
         }
       }
 
+      board.position(data.fen);
       if (data.role >= 0) {
         if (data.move !== 'none') {
           const move = game.chess.move(data.move);
@@ -229,7 +230,6 @@ function messageHandler(data) {
           }
         }
       }
-      board.position(data.fen);
       break;
     case MessageType.GameStart:
       const handle = session.getHandle();
