@@ -229,7 +229,7 @@ function messageHandler(data) {
           }
         }
       }
-      board.position(game.chess.fen());
+      board.position(data.fen);
       break;
     case MessageType.GameStart:
       const handle = session.getHandle();
