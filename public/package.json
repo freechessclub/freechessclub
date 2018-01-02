@@ -30,10 +30,17 @@
     },
     "linux": {
       "target": [
+        "snap",
         "tar.gz",
         "zip"
       ],
       "category": "Game"
+    },
+    "snap": {
+      "plugs": [
+        "default",
+        "desktop"
+      ]
     }
   },
   "cordova": {
