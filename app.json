@@ -5,5 +5,5 @@
   "image": "heroku/go:latest",
   "mount_dir": "src/github.com/freechessclub/freechessclub",
   "website": "http://www.freechess.club",
-  "repository": "https://github.com/freechessclub/freechessclub",
+  "repository": "https://github.com/freechessclub/freechessclub"
 }
