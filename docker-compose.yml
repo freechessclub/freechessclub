@@ -4,23 +4,15 @@ web:
   working_dir: /app/user/src/github.com/freechessclub/freechessclub
   environment:
     PORT: 8080
-    REDIS_URL: 'redis://herokuRedis:6379'
   ports:
     - '8080:8080'
-  links:
-    - herokuRedis
 shell:
   build: .
   command: bash
   working_dir: /app/user/src/github.com/freechessclub/freechessclub
   environment:
     PORT: 8080
-    REDIS_URL: 'redis://herokuRedis:6379'
   ports:
     - '8080:8080'
-  links:
-    - herokuRedis
   volumes:
     - '.:/app/user/src/github.com/freechessclub/freechessclub'
-herokuRedis:
-  image: redis
