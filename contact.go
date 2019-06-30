@@ -42,13 +42,9 @@ func handleContact(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	from := mail.NewEmail(contact.Email, contact.Email)
 	to := mail.NewEmail("Free Chess Club", "feedback@freechess.club")
-	content := mail.NewContent("text/plain", contact.Msg)
-	m := mail.NewV3MailInit(from, contact.Type, to, content)
-
-	request := sendgrid.GetRequest(os.Getenv("SENDGRID_API_KEY"), "/v3/mail/send", "https://api.sendgrid.com")
-	request.Method = "POST"
-	request.Body = mail.GetRequestBody(m)
-	response, err := sendgrid.API(request)
+	m := mail.NewSingleEmail(from, contact.Type, to, contact.Msg, "")
+	client := sendgrid.NewSendClient(os.Getenv("SENDGRID_API_KEY"))
+	response, err := client.Send(m)
 	if err != nil {
 		log.Println(err)
 	} else {
