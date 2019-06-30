@@ -26,9 +26,9 @@ import (
 
 // Contact information
 type Contact struct {
-	Email string `json:"email"`
-	Type  string `json:"type"`
-	Msg   string `json:"message"`
+	Email   string `json:"email"`
+	Type    string `json:"type"`
+	Message string `json:"message"`
 }
 
 func handleContact(w http.ResponseWriter, r *http.Request) {
@@ -39,10 +39,11 @@ func handleContact(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+	log.Println(contact)
 	defer r.Body.Close()
 	from := mail.NewEmail(contact.Email, contact.Email)
 	to := mail.NewEmail("Free Chess Club", "feedback@freechess.club")
-	m := mail.NewSingleEmail(from, contact.Type, to, contact.Msg, "")
+	m := mail.NewSingleEmail(from, contact.Type, to, contact.Message, "<b>www.freechess.club</b>")
 	client := sendgrid.NewSendClient(os.Getenv("SENDGRID_API_KEY"))
 	response, err := client.Send(m)
 	if err != nil {
