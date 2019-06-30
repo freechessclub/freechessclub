@@ -20,7 +20,6 @@ import (
 	"net"
 	"net/http"
 	"strings"
-	"sync"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/gorilla/websocket"
@@ -42,16 +41,8 @@ func sendWS(ws *websocket.Conn, bs []byte) error {
 	return err
 }
 
-func recvWS(ws *websocket.Conn, lock *sync.Mutex) interface{} {
-	if lock != nil {
-		lock.Lock()
-	}
-	ws.SetReadLimit(2048)
+func recvWS(ws *websocket.Conn) []byte {
 	mt, data, err := ws.ReadMessage()
-	if lock != nil {
-		lock.Unlock()
-	}
-
 	if err != nil {
 		l := log.WithFields(logrus.Fields{"mt": mt, "data": data, "err": err})
 		if err == io.EOF {
@@ -64,12 +55,7 @@ func recvWS(ws *websocket.Conn, lock *sync.Mutex) interface{} {
 
 	switch mt {
 	case websocket.TextMessage:
-		msg, err := validateMessage(data)
-		if err != nil {
-			log.WithFields(logrus.Fields{"msg": msg, "err": err}).Error("Invalid message")
-			return nil
-		}
-		return msg
+		return data
 	default:
 		log.Warning("unknown message!")
 		return nil
@@ -92,22 +78,12 @@ func wsHandler(user, pass, ip string, ws *websocket.Conn) {
 			return
 		}
 
-		switch msg.(type) {
-		case ctlMsg:
-			m := msg.(ctlMsg)
-			if m.Command == 0 {
-				// log.Printf("Sending text to server: %s", msg.Text)
-				if s != nil {
-					err = s.send(m.Text)
-					if err != nil {
-						log.WithField("err", err).Println("Error sending message")
-					}
-				}
-			} else {
-				log.WithField("err", err).Println("Unknown control command")
+		// log.Printf("Sending msg to server: %s", msg.Message)
+		if s != nil {
+			err = s.send(string(msg))
+			if err != nil {
+				log.WithField("err", err).Println("Error sending message")
 			}
-		default:
-			log.WithField("err", err).Println("Ignoring unknown message from client")
 		}
 	}
 }
@@ -126,34 +102,30 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, errmsg, http.StatusBadRequest)
 		return
 	}
+	ws.SetReadLimit(2048)
 
 	user := "guest"
 	pass := ""
 	login := r.URL.Query().Get("login")
 	if login != "" {
-		msg := recvWS(ws, nil)
+		msg := recvWS(ws)
 		if msg == nil {
 			return
 		}
-		switch msg.(type) {
-		case ctlMsg:
-			m := msg.(ctlMsg)
-			if m.Command == 1 {
-				up := strings.Split(m.Text, ",")
-				if len(up) > 1 {
-					user = up[0][1:]
-					b, err := base64.StdEncoding.DecodeString(up[1][:len(up[1])-1])
-					if err != nil {
-						errmsg := "Error decoding password"
-						log.WithField("err", err).Println(errmsg)
-						http.Error(w, errmsg, http.StatusUnauthorized)
-						return
-					}
-					pass = string(b)
-				} else {
-					user = up[0][1 : len(up[0])-1]
-				}
+
+		up := strings.Split(string(msg), ",")
+		if len(up) > 1 {
+			user = up[0][1:]
+			b, err := base64.StdEncoding.DecodeString(up[1][:len(up[1])-1])
+			if err != nil {
+				errmsg := "Error decoding password"
+				log.WithField("err", err).Println(errmsg)
+				http.Error(w, errmsg, http.StatusUnauthorized)
+				return
 			}
+			pass = string(b)
+		} else {
+			user = up[0][1 : len(up[0])-1]
 		}
 	}
 

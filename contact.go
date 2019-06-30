@@ -16,13 +16,15 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/sendgrid/sendgrid-go"
-	"github.com/sendgrid/sendgrid-go/helpers/mail"
 	"net/http"
 	"net/http/httputil"
 	"os"
+
+	"github.com/sendgrid/sendgrid-go"
+	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
 
+// Contact information
 type Contact struct {
 	Email string `json:"email"`
 	Type  string `json:"type"`

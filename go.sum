@@ -4,6 +4,8 @@ github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/freechessclub/icsgo v0.0.0-20190609221411-287215d52df8 h1:Embapfpy9vO4KT0JUf6Ygd87WOYtkTDfGq1TYdymuHk=
 github.com/freechessclub/icsgo v0.0.0-20190609221411-287215d52df8/go.mod h1:Qs+u8obsw5K5onzVOTG2UJnXgYPZbPY4SehCJRQvizM=
+github.com/freechessclub/icsgo v0.0.0-20190623235857-6adf147c32d5 h1:Fz3wTNSc7eNb+sSSnE86d6pbEaegbkALLWUu34pl5qk=
+github.com/freechessclub/icsgo v0.0.0-20190623235857-6adf147c32d5/go.mod h1:Qs+u8obsw5K5onzVOTG2UJnXgYPZbPY4SehCJRQvizM=
 github.com/golang/protobuf v1.3.1 h1:YF8+flBXS5eO826T4nzqPrxfhQThhXl0YzfuUPu4SBg=
 github.com/golang/protobuf v1.3.1/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/gorilla/handlers v0.0.0-20170224193955-13d73096a474 h1:KNovrfevBTefw9X8FKnoaKhKOc+UWmGsQRsiZRTkGl4=
