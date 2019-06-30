@@ -55,10 +55,10 @@ func newSession(user, pass, ip string, ws *websocket.Conn) (*Session, error) {
 		return nil, fmt.Errorf("failed to create a new ICS client: %v", err)
 	}
 
-	log.Printf("Registering IP: %s", "%i"+ip)
-	if err := client.Send("%i" + ip); err != nil {
-		return nil, err
-	}
+	// log.Printf("Registering IP: %s", "%i"+ip)
+	// if err := client.Send("%i" + ip); err != nil {
+	// 	return nil, err
+	// }
 
 	username = client.Username()
 	msg := &ctlMsg{
