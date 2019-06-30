@@ -15,34 +15,46 @@
 package main
 
 import (
-	"encoding/json"
 	"net/http"
-	"net/http/httputil"
 	"os"
 
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
 
-// Contact information
-type Contact struct {
-	Email string `json:"email"`
-	Type  string `json:"type"`
-	Msg   string `json:"message"`
-}
-
 func handleContact(w http.ResponseWriter, r *http.Request) {
-	var contact Contact
-	httputil.DumpRequest(r, true)
-	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(&contact)
-	if err != nil {
-		log.Println(err)
+	params := r.URL.Query()
+	if params == nil {
+		return
 	}
-	defer r.Body.Close()
-	from := mail.NewEmail(contact.Email, contact.Email)
+
+	email := ""
+	typ := ""
+	msg := ""
+
+	if len(params["email"]) > 0 {
+		email = params["email"][0]
+	}
+	if len(params["type"]) > 0 {
+		typ = params["type"][0]
+	}
+	if len(params["message"]) > 0 {
+		msg = params["message"][0]
+	}
+
+	if email == "" {
+		w.Write([]byte("\"Email address\" not specified"))
+		return
+	}
+
+	if msg == "" {
+		w.Write([]byte("\"Message\" not specified"))
+		return
+	}
+
+	from := mail.NewEmail(email, email)
 	to := mail.NewEmail("Free Chess Club", "feedback@freechess.club")
-	m := mail.NewSingleEmail(from, contact.Type, to, contact.Msg, "")
+	m := mail.NewSingleEmail(from, typ, to, msg, "")
 	client := sendgrid.NewSendClient(os.Getenv("SENDGRID_API_KEY"))
 	response, err := client.Send(m)
 	if err != nil {
