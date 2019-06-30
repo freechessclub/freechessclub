@@ -33,8 +33,7 @@ type Contact struct {
 
 func handleContact(w http.ResponseWriter, r *http.Request) {
 	var contact Contact
-	d, _ := httputil.DumpRequest(r, true)
-	log.Println(string(d))
+	httputil.DumpRequest(r, true)
 	decoder := json.NewDecoder(r.Body)
 	err := decoder.Decode(&contact)
 	if err != nil {
