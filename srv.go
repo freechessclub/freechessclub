@@ -17,7 +17,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -38,7 +37,6 @@ type Session struct {
 	ws       *websocket.Conn
 	username string
 	wlock    sync.Mutex
-	rlock    sync.Mutex
 }
 
 func newSession(user, pass, ip string, ws *websocket.Conn) (*Session, error) {
@@ -61,13 +59,11 @@ func newSession(user, pass, ip string, ws *websocket.Conn) (*Session, error) {
 	// }
 
 	username = client.Username()
-	msg := &ctlMsg{
+	bs, _ := json.Marshal(&ctlMsg{
 		Command: cmd,
 		Control: username,
-	}
-	bs, _ := json.Marshal(msg)
-	sendWS(ws, bs)
-
+	})
+	err = sendWS(ws, bs)
 	if err != nil {
 		return nil, err
 	}
@@ -102,11 +98,8 @@ func newSession(user, pass, ip string, ws *websocket.Conn) (*Session, error) {
 func (s *Session) ficsReader() {
 	for {
 		msgs, err := s.client.Recv()
-		if err == io.EOF {
-			break
-		}
 		if err != nil {
-			log.Fatalf("error receiving server output: %v", err)
+			s.end()
 			break
 		}
 		if msgs == nil {
@@ -124,24 +117,14 @@ func (s *Session) ficsReader() {
 		if err != nil {
 			log.Println("Error marshaling message")
 		}
-		if bs == nil {
+		if len(bs) == 0 {
 			continue
 		}
 
 		s.wlock.Lock()
-		sendWS(s.ws, bs)
+		sendWS(s.ws, []byte(bs))
 		s.wlock.Unlock()
 	}
-}
-
-func (s *Session) send(msg string) error {
-	return s.client.Send(msg)
-}
-
-func (s *Session) recvWS() []byte {
-	s.rlock.Lock()
-	defer s.rlock.Unlock()
-	return recvWS(s.ws)
 }
 
 func (s *Session) keepAlive(timeout time.Duration) {
@@ -168,11 +151,16 @@ func (s *Session) keepAlive(timeout time.Duration) {
 	}
 }
 
+// Send sends a message to the server
+func (s *Session) Send(msg string) error {
+	return s.client.Send(msg)
+}
+
 func (s *Session) end() {
 	s.wlock.Lock()
 	s.ws.WriteMessage(websocket.CloseMessage, []byte{})
 	s.wlock.Unlock()
-	s.send("exit")
+	s.client.Send("exit")
 	s.client.Destroy()
 	s.ws.Close()
 }

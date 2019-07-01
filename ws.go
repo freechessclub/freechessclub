@@ -16,7 +16,6 @@ package main
 
 import (
 	"encoding/base64"
-	"io"
 	"net"
 	"net/http"
 	"strings"
@@ -36,7 +35,7 @@ func sendWS(ws *websocket.Conn, bs []byte) error {
 			"data": bs,
 			"err":  err,
 			"ws":   ws,
-		}).Error("Error writing data to connection")
+		}).Error("error writing data to connection")
 	}
 	return err
 }
@@ -45,45 +44,34 @@ func recvWS(ws *websocket.Conn) []byte {
 	mt, data, err := ws.ReadMessage()
 	if err != nil {
 		l := log.WithFields(logrus.Fields{"mt": mt, "data": data, "err": err})
-		if err == io.EOF {
+		if websocket.IsUnexpectedCloseError(err) {
 			l.Info("websocket closed!")
 		} else {
-			l.Error("Error reading websocket message")
+			l.Error("error reading websocket message")
 		}
 		return nil
 	}
-
-	switch mt {
-	case websocket.TextMessage:
-		return data
-	default:
-		log.Warning("unknown message!")
-		return nil
-	}
+	return data
 }
 
 func wsHandler(user, pass, ip string, ws *websocket.Conn) {
 	s, err := newSession(user, pass, ip, ws)
-	if err != nil {
-		log.WithField("err", err).Println("Failed to create a new session")
+	if s == nil || err != nil {
+		log.WithField("err", err).Println("failed to create a new session")
 		return
 	}
 
 	for {
-		msg := s.recvWS()
+		msg := recvWS(ws)
 		if msg == nil {
-			if s != nil {
-				s.end()
-			}
+			s.end()
 			return
 		}
 
 		// log.Printf("Sending msg to server: %s", msg.Message)
-		if s != nil {
-			err = s.send(string(msg))
-			if err != nil {
-				log.WithField("err", err).Println("Error sending message")
-			}
+		err = s.Send(string(msg))
+		if err != nil {
+			log.WithField("err", err).Println("error sending message")
 		}
 	}
 }
@@ -97,7 +85,7 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		errmsg := "Unable to upgrade to websockets"
+		errmsg := "unable to upgrade to websockets"
 		log.WithField("err", err).Println(errmsg)
 		http.Error(w, errmsg, http.StatusBadRequest)
 		return
@@ -118,7 +106,7 @@ func handleWebsocket(w http.ResponseWriter, r *http.Request) {
 			user = up[0][1:]
 			b, err := base64.StdEncoding.DecodeString(up[1][:len(up[1])-1])
 			if err != nil {
-				errmsg := "Error decoding password"
+				errmsg := "error decoding password"
 				log.WithField("err", err).Println(errmsg)
 				http.Error(w, errmsg, http.StatusUnauthorized)
 				return
