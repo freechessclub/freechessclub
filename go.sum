@@ -6,6 +6,8 @@ github.com/freechessclub/icsgo v0.0.0-20190701005054-5934ed26c68f h1:jHkDlQZExhy
 github.com/freechessclub/icsgo v0.0.0-20190701005054-5934ed26c68f/go.mod h1:Qs+u8obsw5K5onzVOTG2UJnXgYPZbPY4SehCJRQvizM=
 github.com/freechessclub/icsgo v0.0.0-20190907200010-56fd7154778e h1:f8GNlSxDifqXD7/oFRftuzBlVgFbUkQsgr0lNT/EVPA=
 github.com/freechessclub/icsgo v0.0.0-20190907200010-56fd7154778e/go.mod h1:Qs+u8obsw5K5onzVOTG2UJnXgYPZbPY4SehCJRQvizM=
+github.com/freechessclub/icsgo v0.0.0-20190907203343-802ca215c371 h1:3RrAMI9XwOl5KZN7gmz/a9UOtQvf9neqahmGkKdkDE4=
+github.com/freechessclub/icsgo v0.0.0-20190907203343-802ca215c371/go.mod h1:Qs+u8obsw5K5onzVOTG2UJnXgYPZbPY4SehCJRQvizM=
 github.com/golang/protobuf v1.3.1 h1:YF8+flBXS5eO826T4nzqPrxfhQThhXl0YzfuUPu4SBg=
 github.com/golang/protobuf v1.3.1/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/golang/protobuf v1.3.2 h1:6nsPYzhq5kReh6QImI3k5qWzO4PEbvbIW2cwSfR/6xs=
