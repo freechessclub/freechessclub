@@ -1,4 +1,4 @@
-// Copyright © 2017 Free Chess Club <help@freechess.club>
+// Copyright © 2019 Free Chess Club <help@freechess.club>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
