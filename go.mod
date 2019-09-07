@@ -4,7 +4,8 @@ go 1.12
 
 require (
 	github.com/Sirupsen/logrus v1.0.0
-	github.com/freechessclub/icsgo v0.0.0-20190701005054-5934ed26c68f
+	github.com/freechessclub/icsgo v0.0.0-20190907200010-56fd7154778e
+	github.com/golang/protobuf v1.3.2 // indirect
 	github.com/gorilla/handlers v0.0.0-20170224193955-13d73096a474
 	github.com/gorilla/websocket v1.4.0
 	github.com/sendgrid/rest v2.4.1+incompatible // indirect
