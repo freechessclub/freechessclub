@@ -19,6 +19,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path"
 	"strings"
 
 	"github.com/Sirupsen/logrus"
@@ -69,22 +70,23 @@ func main() {
 		log.Println("Using default port 8080")
 	}
 
+	root := os.Getenv("WEB_ROOT")
 	http.HandleFunc("/ws", handleWebsocket)
 	http.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./public/www/img/favicon.ico")
+		http.ServeFile(w, r, path.Join(root, "public/www/img/favicon.ico"))
 	})
 	http.HandleFunc("/privacy", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./public/privacy.html")
+		http.ServeFile(w, r, path.Join(root, "public/privacy.html"))
 	})
 	http.HandleFunc("/contact/submit", handleContact)
 	http.HandleFunc("/contact", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./public/contact.html")
+		http.ServeFile(w, r, path.Join(root, "public/contact.html"))
 	})
 	http.HandleFunc("/play", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./public/play.html")
+		http.ServeFile(w, r, path.Join(root, "public/play.html"))
 	})
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./public/"+r.URL.Path[1:])
+		http.ServeFile(w, r, path.Join(root, "public/", r.URL.Path[1:]))
 	})
 	w := log.Writer()
 	defer w.Close()
