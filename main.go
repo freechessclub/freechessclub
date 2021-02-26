@@ -22,7 +22,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/websocket"
 )
