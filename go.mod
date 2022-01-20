@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	github.com/felixge/httpsnoop v1.0.2 // indirect
-	github.com/freechessclub/icsgo v0.0.0-20220118075620-939b56c48ec8
+	github.com/freechessclub/icsgo v0.0.0-20220120010136-6e0625250229
 	github.com/gorilla/handlers v1.5.1
 	github.com/gorilla/websocket v1.4.2
 	github.com/sendgrid/rest v2.6.7+incompatible // indirect
