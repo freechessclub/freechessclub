@@ -20,8 +20,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/sirupsen/logrus"
 	"github.com/gorilla/websocket"
+	"github.com/sirupsen/logrus"
 )
 
 func sendWS(ws *websocket.Conn, bs []byte) error {
@@ -64,12 +64,13 @@ func wsHandler(user, pass, ip string, ws *websocket.Conn) {
 	for {
 		msg := recvWS(ws)
 		if msg == nil {
+			log.WithField("err", err).Println("failed to receive from websocket")
 			s.end()
 			return
 		}
 
-		// log.Printf("Sending msg to server: %s", msg.Message)
-		err = s.Send(string(msg))
+		// log.Printf("Sending msg to server: %v", msg)
+		err = s.Send([]byte(msg))
 		if err != nil {
 			log.WithField("err", err).Println("error sending message")
 		}

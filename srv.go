@@ -68,22 +68,6 @@ func newSession(user, pass, ip string, ws *websocket.Conn) (*Session, error) {
 		return nil, err
 	}
 
-	if err := client.Send("set seek 0"); err != nil {
-		return nil, err
-	}
-
-	if err := client.Send("set echo 1"); err != nil {
-		return nil, err
-	}
-
-	if err := client.Send("set style 12"); err != nil {
-		return nil, err
-	}
-
-	if err := client.Send("set interface www.freechess.club"); err != nil {
-		return nil, err
-	}
-
 	s := &Session{
 		client:   client,
 		ws:       ws,
@@ -99,6 +83,7 @@ func (s *Session) ficsReader() {
 	for {
 		msgs, err := s.client.Recv()
 		if err != nil {
+			log.WithField("err", err).Println("failed to create a new session")
 			s.end()
 			break
 		}
@@ -140,11 +125,13 @@ func (s *Session) keepAlive(timeout time.Duration) {
 		err := s.ws.WriteMessage(websocket.PingMessage, []byte("keepalive"))
 		s.wlock.Unlock()
 		if err != nil {
+			log.WithField("err", err).Println("failed to write to websocket")
 			s.end()
 			return
 		}
 		time.Sleep(timeout / 2)
 		if atomic.LoadInt64(&lastResponse) < time.Now().Add(-timeout).UnixNano() {
+			log.WithField("err", err).Println("timeout failed")
 			s.end()
 			return
 		}
@@ -152,15 +139,20 @@ func (s *Session) keepAlive(timeout time.Duration) {
 }
 
 // Send sends a message to the server
-func (s *Session) Send(msg string) error {
+func (s *Session) Send(msg []byte) error {
 	return s.client.Send(msg)
+}
+
+// Send sends a raw encoded message to the server
+func (s *Session) RawSend(msg []byte) error {
+	return s.client.RawSend(msg)
 }
 
 func (s *Session) end() {
 	s.wlock.Lock()
 	s.ws.WriteMessage(websocket.CloseMessage, []byte{})
 	s.wlock.Unlock()
-	s.client.Send("exit")
+	s.client.Send([]byte("exit"))
 	s.client.Destroy()
 	s.ws.Close()
 }
