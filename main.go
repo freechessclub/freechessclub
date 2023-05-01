@@ -73,7 +73,7 @@ func main() {
 	root := os.Getenv("WEB_ROOT")
 	http.HandleFunc("/ws", handleWebsocket)
 	http.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, path.Join(root, "public/www/img/favicon.ico"))
+		http.ServeFile(w, r, path.Join(root, "public/assets/img/favicon.ico"))
 	})
 	http.HandleFunc("/privacy", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, path.Join(root, "public/privacy.html"))
