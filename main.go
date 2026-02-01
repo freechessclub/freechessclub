@@ -81,20 +81,20 @@ func main() {
 	root := os.Getenv("WEB_ROOT")
 	http.HandleFunc("/ws", handleWebsocket)
 	http.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, path.Join(root, "public/assets/img/favicon.ico"))
+		http.ServeFile(w, r, path.Join(root, "public/www/assets/img/favicon.ico"))
 	})
 	http.HandleFunc("/privacy", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, path.Join(root, "public/privacy.html"))
+		http.ServeFile(w, r, path.Join(root, "public/www/privacy.html"))
 	})
 	http.HandleFunc("/contact/submit", handleContact)
 	http.HandleFunc("/contact", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, path.Join(root, "public/contact.html"))
+		http.ServeFile(w, r, path.Join(root, "public/www/contact.html"))
 	})
 	http.HandleFunc("/play", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, path.Join(root, "public/play.html"))
+		http.ServeFile(w, r, path.Join(root, "public/www/play.html"))
 	})
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, path.Join(root, "public/", r.URL.Path[1:]))
+		http.ServeFile(w, r, path.Join(root, "public/www/", r.URL.Path[1:]))
 	})
 	w := log.Writer()
 	defer w.Close()
