@@ -63,6 +63,14 @@ func redirectToHTTPSRouter(next http.Handler) http.Handler {
 	})
 }
 
+func securityHeadersRouter(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cross-Origin-Opener-Policy", "same-origin")
+		w.Header().Set("Cross-Origin-Embedder-Policy", "require-corp")
+		next.ServeHTTP(w, r)
+	})
+}
+
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -92,6 +100,7 @@ func main() {
 	defer w.Close()
 	loggingRouter := handlers.LoggingHandler(w, http.DefaultServeMux)
 	httpsRouter := redirectToHTTPSRouter(loggingRouter)
+	securityRouter := securityHeadersRouter(httpsRouter)
 
-	log.Println(http.ListenAndServe(":"+port, httpsRouter))
+	log.Println(http.ListenAndServe(":"+port, securityRouter))
 }
