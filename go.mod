@@ -11,5 +11,5 @@ require (
 	github.com/sendgrid/sendgrid-go v3.10.5+incompatible
 	github.com/sirupsen/logrus v1.8.1
 	github.com/stretchr/testify v1.3.0 // indirect
-	golang.org/x/net v0.7.0 // indirect
+	golang.org/x/net v0.17.0 // indirect
 )
